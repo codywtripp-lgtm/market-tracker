@@ -1,7 +1,10 @@
-"""One-off exploration probe for the USDA MARS API.
+"""One-off exploration probe for the USDA MARS API (round 2).
 
 Runs in GitHub Actions (where the MARS_API_KEY secret lives) and writes
 findings to probe_output/ for download. Not part of the production pipeline.
+
+Round 1 finding: commodity names contain commas ("Peppers, Bell Type") and the
+API treats commas in q= as OR, so commodity filters are applied client-side here.
 """
 
 import collections
@@ -36,7 +39,7 @@ def log(msg):
 def get(url, params=None, auth=True, tries=3):
     for attempt in range(tries):
         try:
-            r = session.get(url, params=params, auth=(KEY, "") if auth else None, timeout=180)
+            r = session.get(url, params=params, auth=(KEY, "") if auth else None, timeout=300)
             if r.status_code == 200:
                 return r.json()
             log(f"HTTP {r.status_code} for {r.url}: {r.text[:300]}")
@@ -64,117 +67,92 @@ def mmddyyyy(d):
     return d.strftime("%m/%d/%Y")
 
 
+def fetch_range(slug, start, end, section="Report Details", chunk_days=31):
+    rows = []
+    s = start
+    while s <= end:
+        e = min(s + dt.timedelta(days=chunk_days - 1), end)
+        q = f"report_begin_date={mmddyyyy(s)}:{mmddyyyy(e)}"
+        rows += rows_of(get(f"{MARS}/reports/{slug}/{section}", {"q": q}))
+        s = e + dt.timedelta(days=1)
+    return rows
+
+
 today = dt.date.today()
 
-# 1. Report catalog
-catalog = rows_of(get(f"{MARS}/reports"))
-log(f"catalog: {len(catalog)} reports")
-save("catalog.json", catalog)
-
-# 2. Samples of each report type (field names + a few rows)
-SAMPLE_SLUGS = {
-    "2314": "NY terminal fruit",
-    "2315": "NY terminal veg",
-    "2316": "NY terminal onions",
-    "2390": "Fresno SP fruit (Mexico avocados)",
-    "2403": "Phoenix SP veg (lettuce/tomato/pepper)",
-    "2393": "Idaho Falls SP onions",
-    "3324": "Retail specialty crops",
-    "1662": "National SP trends",
-    "3646": "Weekly national chicken",
-    "2756": "Retail chicken",
-    "3228": "Retail beef",
-}
-samples = {}
-for slug, label in SAMPLE_SLUGS.items():
-    data = get(f"{MARS}/reports/{slug}/Report Details", {"lastReports": 1})
-    rows = rows_of(data)
-    fields = sorted({k for r in rows for k in r})
-    commodities = collections.Counter(r.get("commodity") for r in rows)
-    samples[slug] = {
-        "label": label,
-        "n_rows": len(rows),
-        "fields": fields,
-        "commodities": commodities.most_common(80),
-        "first_rows": rows[:3],
-    }
-    log(f"sample {slug} {label}: {len(rows)} rows, {len(fields)} fields")
-save("samples.json", samples)
-
-# 3. Which shipping-point reports carry each target commodity (last 20 reports)
-TARGETS = ["Avocados", "Tomatoes", "Tomatoes, Plum Type", "Peppers, Bell Type",
-           "Onions, Dry", "Lettuce, Iceberg", "Lettuce, Romaine", "Strawberries"]
-sp_slugs = [r["slug_id"] for r in catalog
-            if "Shipping Point" in (r.get("report_title") or r.get("report_name") or "")
-            and "Discontinued" not in (r.get("report_title") or r.get("report_name") or "")]
-sp_map = collections.defaultdict(list)
-for slug in sp_slugs:
-    rows = rows_of(get(f"{MARS}/reports/{slug}/Report Details", {"lastReports": 20}))
-    for (c, d), n in collections.Counter((r.get("commodity"), r.get("district")) for r in rows).items():
-        if c in TARGETS:
-            sp_map[c].append({"slug": slug, "district": d, "rows": n})
-save("shipping_point_map.json", sp_map)
-log(f"shipping point reports scanned: {len(sp_slugs)}")
-
-# 4. Consistency: one year of terminal data for the shortlist
+# 1. Terminal consistency for the comma-named commodities (client-side filter)
 TERMINALS = {
-    "NY": {"fruit": "2314", "veg": "2315", "onion": "2316"},
-    "LA": {"fruit": "2306", "veg": "2307", "onion": "2308"},
-    "CHI": {"fruit": "2290", "veg": "2291", "onion": "2292"},
+    "NY": {"veg": "2315", "onion": "2316"},
+    "LA": {"veg": "2307", "onion": "2308"},
+    "CHI": {"veg": "2291", "onion": "2292"},
 }
-COMMODITY_GROUP = {
-    "Avocados": "fruit", "Strawberries": "fruit",
-    "Tomatoes": "veg", "Tomatoes, Plum Type": "veg", "Peppers, Bell Type": "veg",
-    "Lettuce, Iceberg": "veg", "Lettuce, Romaine": "veg",
-    "Onions, Dry": "onion",
+WANTED = {
+    "veg": {"Tomatoes", "Tomatoes, Plum Type", "Peppers, Bell Type", "Lettuce, Iceberg", "Lettuce, Romaine"},
+    "onion": {"Onions, Dry"},
 }
 start = today - dt.timedelta(days=365)
 combo_days = collections.defaultdict(set)
-combo_prices = collections.defaultdict(list)
-fields_seen = set()
+combo_origins = collections.defaultdict(collections.Counter)
+rows_per_day = collections.Counter()
 for market, groups in TERMINALS.items():
-    for commodity, group in COMMODITY_GROUP.items():
-        slug = groups[group]
-        rows = []
-        # quarterly chunks to stay well under the 100k row cap
-        chunk_start = start
-        while chunk_start < today:
-            chunk_end = min(chunk_start + dt.timedelta(days=91), today)
-            q = f"report_begin_date={mmddyyyy(chunk_start)}:{mmddyyyy(chunk_end)};commodity={commodity}"
-            rows += rows_of(get(f"{MARS}/reports/{slug}/Report Details", {"q": q}))
-            chunk_start = chunk_end + dt.timedelta(days=1)
-        log(f"{market} {commodity}: {len(rows)} rows in last year")
+    for group, slug in groups.items():
+        rows = [r for r in fetch_range(slug, start, today) if r.get("commodity") in WANTED[group]]
+        log(f"{market} {group} ({slug}): {len(rows)} wanted rows in last year")
         for r in rows:
-            fields_seen.update(r)
-            key = (market, commodity, r.get("variety"), r.get("package"), r.get("item_size"),
+            day = r.get("report_date") or r.get("report_begin_date")
+            rows_per_day[(market, day)] += 1
+            key = (market, r.get("commodity"), r.get("variety"), r.get("package"), r.get("item_size"),
                    r.get("properties"), r.get("organic"))
-            combo_days[key].add(r.get("report_date") or r.get("report_begin_date"))
-            if r.get("origin"):
-                combo_prices[key].append(r.get("origin"))
+            combo_days[key].add(day)
+            combo_origins[key][r.get("origin")] += 1
 
-with open(OUT / "terminal_consistency.csv", "w", newline="") as f:
+with open(OUT / "terminal_consistency_veg.csv", "w", newline="") as f:
     w = csv.writer(f)
     w.writerow(["market", "commodity", "variety", "package", "item_size", "properties",
                 "organic", "days_reported", "top_origins"])
     for key, days in sorted(combo_days.items(), key=lambda kv: -len(kv[1])):
-        origins = collections.Counter(combo_prices[key]).most_common(3)
+        origins = combo_origins[key].most_common(3)
         w.writerow(list(key) + [len(days), "; ".join(f"{o}({n})" for o, n in origins)])
-save("terminal_fields.json", sorted(fields_seen))
 
-# 5. History depth check: earliest data for NY fruit
-old = rows_of(get(f"{MARS}/reports/2314/Report Details",
-                  {"q": "report_begin_date=01/02/2015:01/09/2015;commodity=Avocados"}))
-log(f"NY avocados Jan 2015 rows: {len(old)}")
-save("ny_avocado_2015_sample.json", old[:10])
+# 2. Size estimate: all rows per report for one recent week (whole reports, unfiltered)
+week_start = today - dt.timedelta(days=7)
+size = {}
+for slug in ["2314", "2315", "2316", "2306", "2307", "2308", "2290", "2291", "2292",
+             "2390", "2403", "2393", "3324"]:
+    rows = fetch_range(slug, week_start, today, chunk_days=8)
+    size[slug] = {"rows_last_7_days": len(rows),
+                  "approx_bytes_as_json": len(json.dumps(rows))}
+    log(f"size {slug}: {len(rows)} rows last 7 days")
+save("size_estimate.json", size)
 
-# 6. Beef and poultry: LMR datamart (public, no key) + MARS poultry
-dm_catalog = get(f"{DATAMART}/reports", auth=False)
-save("datamart_catalog.json", dm_catalog)
-dm_rows = dm_catalog if isinstance(dm_catalog, list) else rows_of(dm_catalog)
-log(f"datamart catalog entries: {len(dm_rows)}")
-for slug in ["2453", "2461", "2466"]:  # boxed beef cutout candidates
-    info = get(f"{DATAMART}/reports/{slug}", auth=False)
-    save(f"datamart_{slug}.json", info if info is None else (info if isinstance(info, dict) else {"results": info[:20]}))
+# 3. History depth: 10 years back for NY veg
+for year in (2016, 2017):
+    rows = fetch_range("2315", dt.date(year, 3, 1), dt.date(year, 3, 7), chunk_days=8)
+    peppers = [r for r in rows if r.get("commodity") == "Peppers, Bell Type"]
+    log(f"NY veg first week of March {year}: {len(rows)} rows, {len(peppers)} bell pepper rows")
+    save(f"ny_veg_{year}_peppers.json", peppers[:15])
+
+# 4. Chicken: report metadata + sections for the weekly national chicken report
+meta = get(f"{MARS}/reports/3646")
+save("chicken_3646_meta.json", meta if isinstance(meta, dict) else {"results": rows_of(meta)[:5]})
+sections = meta.get("reportSections", []) if isinstance(meta, dict) else []
+log(f"3646 sections: {sections}")
+for sec in sections:
+    rows = rows_of(get(f"{MARS}/reports/3646/{sec}", {"lastReports": 1}))
+    save(f"chicken_3646_{sec.replace(' ', '_').replace('/', '-')}.json", rows[:40])
+    log(f"3646 section {sec}: {len(rows)} rows")
+
+# 5. Beef: boxed beef cutout sections (LMR datamart, no key)
+for sec in ["Current Cutout Values", "Choice Cuts", "Composite Primal Values"]:
+    rows = rows_of(get(f"{DATAMART}/reports/2453/{sec}", {"q": f"report_date={mmddyyyy(today - dt.timedelta(days=1))}"}, auth=False))
+    if not rows:
+        rows = rows_of(get(f"{DATAMART}/reports/2453/{sec}", {"lastReports": 1}, auth=False))
+    save(f"beef_2453_{sec.replace(' ', '_')}.json", rows[:60])
+    log(f"2453 section {sec}: {len(rows)} rows")
+old = rows_of(get(f"{DATAMART}/reports/2453/Current Cutout Values",
+                  {"q": "report_date=03/01/2016:03/07/2016"}, auth=False))
+log(f"2453 cutout rows first week of March 2016: {len(old)}")
+save("beef_2453_2016.json", old[:10])
 
 (OUT / "log.txt").write_text("\n".join(log_lines))
 log("done")
