@@ -214,16 +214,15 @@ def _gbm(cols):
     return fit, predict
 
 
+# Kept in the nightly run: baselines, v1, and the v2 winner. Variants tried on 2026-09-26 and
+# dropped for not helping (see docs/forecast.md): last week's shipping-point move (sp_prev),
+# gradient boosting (_gbm), shrinkage strengths of 250 and 4000 rows. Re-enable to re-test.
 METHODS = {
     "naive": _naive(),
     "seasonal": _seasonal(),
-    "pooled": _pooled(BASE),                 # v1
-    "pooled+sp_prev": _pooled(EXTENDED),
+    "pooled": _pooled(BASE),                                              # v1
     "by_commodity": _by_group(BASE),
-    "by_commodity_250": _by_group(BASE, prior_rows=250),
-    "by_commodity_4000": _by_group(BASE, prior_rows=4000),
-    "by_commodity_market": _by_group(BASE, keys=("commodity", "market")),
-    "gbm": _gbm(EXTENDED),
+    "by_commodity_market": _by_group(BASE, keys=("commodity", "market")),  # v2
 }
 
 
@@ -246,8 +245,10 @@ def backtest(panel, last_year):
                              "mae_log": float(np.mean(np.abs(err))),
                              "direction_hit": float(np.mean(np.sign(pred) == np.sign(test[f"y{h}"].to_numpy())))
                              if m != "naive" else float("nan")})
-                residuals.append(pd.DataFrame({"horizon": h, "year": Y, "method": m,
-                                               "commodity": test["commodity"].to_numpy(), "resid": err}))
+                residuals.append(pd.DataFrame({
+                    "horizon": h, "year": Y, "method": m, "commodity": test["commodity"].to_numpy(),
+                    "market": test["market"].to_numpy(), "resid": err,
+                    "ape": np.abs(np.expm1(pred) - np.expm1(test[f"y{h}"].to_numpy())) * 100}))
     return pd.DataFrame(rows), pd.concat(residuals, ignore_index=True) if residuals else pd.DataFrame()
 
 
@@ -318,6 +319,16 @@ def main():
         "asOf": dt.date.today().isoformat(), "method": {str(h): best[h] for h in HORIZONS},
         "range": "80%", "coverage_backtest": round(cov, 3), "series": out}, separators=(",", ":")))
     summary.round(4).to_csv(EXPORT / "forecast_backtest.csv", index=False)
+
+    # Report card: typical 2-week miss per commodity x market, ours vs. "no change"
+    two = resid[resid["horizon"] == 2]
+    card = (two[two["method"].isin([best[2], "naive"])]
+            .groupby(["commodity", "market", "method"])["ape"].mean().unstack("method").round(1)
+            .rename(columns={best[2]: "forecast_miss_pct", "naive": "no_change_miss_pct"}).reset_index())
+    card["better_by_pct"] = (100 * (1 - card["forecast_miss_pct"] / card["no_change_miss_pct"])).round(0)
+    card.sort_values(["market", "forecast_miss_pct"]).to_csv(EXPORT / "forecast_report_card.csv", index=False)
+    print("2-week report card, New York:")
+    print(card[card["market"] == "New York"].sort_values("forecast_miss_pct").to_string(index=False))
     print(summary.round(3).to_string(index=False))
     print(f"80% range coverage (walk-forward): {cov:.1%}; methods used: {best}; series forecast: {len(out)}")
 
