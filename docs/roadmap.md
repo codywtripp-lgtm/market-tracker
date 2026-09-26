@@ -36,6 +36,13 @@ Early-warning signals to test first (all from data we already collect):
 3. Shipment volume drops (movement report 3283, trends 1662) leading price rises.
 4. Later: weather at origin, tariffs/trade events, holidays.
 
+### Ideas from Macrotrends (2026-09-26)
+Macrotrends' food pages (e.g. /3710/us-strawberry-prices) chart a single national monthly *retail* average (likely BLS Average Price data) over decades. Different product from ours (wholesale, daily, pack-level, forward-looking), but worth borrowing:
+1. **BLS average retail prices** (monthly, back to the 1980s, same free BLS API as CPI) as a "grocery shelf price" layer — long-run context and a view of wholesale → retail pass-through.
+2. **Search-findable landing page per commodity** (e.g. `/strawberries/`) that opens the one-page dashboard pre-filtered. Keeps the single-page UX while getting search traffic.
+3. **Yearly summary table** (average price per year, % change) under the chart.
+4. Keep it that simple: plain sentences, one clear chart.
+
 ## Phases
 
 1. **Data pipeline** — done: daily fetch, 10-year backfill, export with cheap/normal/expensive.
