@@ -188,7 +188,12 @@ function newsLine(i) {
   else if (i.vs4w != null) parts.push("steady over 4 weeks");
   if (i.tone) parts.push(`USDA says “${cap(i.tone)}”`);
   const f2 = i.forecast && i.forecast["2"];
-  if (f2) parts.push(`next 2 weeks: likely ${rangeMoney(f2[0])}–${rangeMoney(f2[2])}${unitLabel(i.unit)}`);
+  if (f2) {
+    const miss = i.fcMiss != null ? ` (forecasts for this item typically miss by ~${Math.round(i.fcMiss)}%)` : "";
+    parts.push(i.fcStable
+      ? `usually a steady price; expect about the same over the next 2 weeks (${rangeMoney(f2[0])}–${rangeMoney(f2[2])})`
+      : `next 2 weeks: likely ${rangeMoney(f2[0])}–${rangeMoney(f2[2])}${unitLabel(i.unit)}${miss}`);
+  }
   if (i.origins) parts.push(`coming from ${i.origins.split("; ").slice(0, 3).map(cap).join(", ")}`);
   return parts.join("; ") + ".";
 }
