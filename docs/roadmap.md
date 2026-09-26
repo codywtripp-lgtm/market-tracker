@@ -23,7 +23,7 @@ Layout (desktop: filter rail on the left; phone: the same filters in a bottom sh
   2. **What's going on** — one short line per selected commodity: price vs. normal, direction, what USDA reporters say, current origins, what to expect.
   3. **The chart** — every selected commodity together. With several selected it plots **% vs usual for this time of year** (one shared scale, so avocados and onions are comparable); with one isolated it plots the actual case price with the usual range and the **forecast band**.
   4. **Cheap / expensive list** — tapping a row adds or isolates it in the chart.
-- **Alert delivery**: on the page + a GitHub issue per alert batch (push notification to the owner) now; public email/SMS signup later (needs a small free email service).
+- **Alert delivery**: on the website only (owner, 2026-09-26: "not actual phone alerts, just alerts in the website").
 
 Principles:
 - **Prices in the trade's own units** (per case/package with pack and count, $/cwt for beef). Buyers think "$33 for 48s", not per lb; per-lb is secondary.

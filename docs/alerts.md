@@ -23,9 +23,8 @@ Every alert quotes its record, e.g. *"New York followed 26 of the last 30 times 
 As of the first backtest, qualifying NY examples: Roma tomatoes (both directions), celery, strawberries, romaine (up), broccoli, limes, iceberg. **Round tomatoes, cucumbers and bell peppers don't qualify** — NY sources them from many regions at once, so no single shipping point leads.
 
 ## Where alerts appear
-- Top of the website.
-- A GitHub issue titled "Price alerts YYYY-MM-DD" tagging the owner (GitHub sends a notification), only for **new** alerts. One alert per signal/item/market/direction per week, so a running signal isn't re-sent every day.
-- `data/alerts/log.csv` keeps every alert ever issued. This becomes the public track record (did it come true?).
+- **On the website only** (top of the page), by owner's choice — no phone/email/GitHub notifications.
+- `data/alerts/log.csv` keeps every alert ever issued (once per signal/item/market/direction per week). This becomes the public track record (did it come true?).
 
 ## Files
 - Rules (track records): `data/signals/rules.csv` — produced by `scripts/backtest_signals.py` (Actions → "Backtest signals"). Re-run the backtest every few months and review before replacing the file.
