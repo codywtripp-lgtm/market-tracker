@@ -31,10 +31,13 @@ def weekly():
 
 
 def supply_features(vol):
-    """Per commodity-week: supply vs the usual for this time of year (prior years), and recent change.
+    """Per commodity-week: supply vs the same weeks LAST YEAR, and recent change.
 
-    supply_gap  log(this week's volume / average for the same weeks +/-2 in prior years)
+    supply_gap  log(this week's volume / average for the same weeks +/-2 last year)
     supply_chg  log(this week's volume / average of the previous 2 weeks)
+
+    Only last year is used as the baseline because USDA's coverage changed a lot (import ports
+    added to the national report 2023-2025): older years count a different set of shipments.
     """
     out = []
     for c, g in vol.groupby("commodity"):
@@ -46,8 +49,8 @@ def supply_features(vol):
         prior = np.full(len(g), np.nan)
         for i in range(len(g)):
             d = np.minimum(np.abs(woy - woy[i]), 52 - np.abs(woy - woy[i]))
-            m = (years < years[i]) & (d <= 2) & lv.notna().to_numpy()
-            if m.sum() >= 6:  # need a few prior-year weeks
+            m = (years == years[i] - 1) & (d <= 2) & lv.notna().to_numpy()
+            if m.sum() >= 3:  # need a few of last year's weeks
                 prior[i] = lv.to_numpy()[m].mean()
         g["supply_gap"] = lv - prior
         g["supply_chg"] = lv - np.log(g["volume_lb"].shift(1).add(g["volume_lb"].shift(2)).div(2).where(lambda s: s > 0))
@@ -56,7 +59,7 @@ def supply_features(vol):
 
 
 def main():
-    """Write data/export/supply.csv: latest complete week's shipments per commodity vs. usual."""
+    """Write data/export/supply.csv: latest complete week's shipments per commodity vs. the same weeks last year."""
     import datetime as dt
     vol = weekly()
     feats = supply_features(vol)
@@ -66,9 +69,9 @@ def main():
     this_week = pd.Timestamp(dt.date.today()).to_period("W-SUN").start_time
     done = feats[feats["week"] < this_week].dropna(subset=["supply_gap"])  # last COMPLETE week
     latest = done.sort_values("week").groupby("commodity").tail(1).merge(vol, on=["commodity", "week"])
-    latest["vs_usual_pct"] = (np.expm1(latest["supply_gap"]) * 100).round(0)
+    latest["vs_last_year_pct"] = (np.expm1(latest["supply_gap"]) * 100).round(0)
     latest["vs_prior_2wk_pct"] = (np.expm1(latest["supply_chg"]) * 100).round(0)
-    out = latest[["commodity", "week", "volume_lb", "vs_usual_pct", "vs_prior_2wk_pct"]]
+    out = latest[["commodity", "week", "volume_lb", "vs_last_year_pct", "vs_prior_2wk_pct"]]
     out.to_csv(store.DATA / "export" / "supply.csv", index=False)
     print(out.to_string(index=False))
 
