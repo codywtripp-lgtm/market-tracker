@@ -130,7 +130,8 @@ def evaluate(term, ship, today, rules):
                 })
         # usda_tone
         rows = term[(term["commodity"] == commodity) & (term["market"] == market) & (term["report_date"] >= since)]
-        scores = [s for s in rows["market_tone"].map(tone_score) if s is not None]
+        # pandas turns tone_score's None (no comment) into NaN, so drop NaNs, not just None
+        scores = [s for s in rows["market_tone"].map(tone_score) if pd.notna(s)]
         if scores:
             avg = sum(scores) / len(scores)
             direction = "up" if round(avg) >= 1 else "down" if round(avg) <= -1 else None
