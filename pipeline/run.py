@@ -18,7 +18,7 @@ from .usda import Client, USDAError
 
 log = logging.getLogger("pipeline")
 
-SOURCES = ["terminal", "shipping_point", "retail", "beef", "chicken"]
+SOURCES = ["terminal", "shipping_point", "retail", "beef", "chicken", "movement"]
 
 
 def run(client, start, end, sources):
@@ -55,6 +55,13 @@ def run(client, start, end, sources):
                 normalize.retail(r, fetched_at)
                 for r in client.mars(slug, "Report Details", start, end)
                 if r.get("commodity") in config.RETAIL_COMMODITIES])
+
+    if "movement" in sources:
+        for slug in config.MOVEMENT_REPORTS:
+            job("movement", slug, lambda slug=slug: [
+                normalize.movement(r, fetched_at)
+                for r in client.mars(slug, "Report Details", start, end)
+                if r.get("commodity") in config.PRODUCE_COMMODITIES])
 
     if "beef" in sources:
         for section in config.BEEF_SECTIONS:

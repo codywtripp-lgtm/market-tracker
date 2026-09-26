@@ -145,6 +145,25 @@ def test_ground_beef_uses_trim_description():
     assert r73["row_id"] != r["row_id"]
 
 
+def test_stored_row_id_is_stable():
+    # This exact ID is in data/raw/terminal/2026/2026-09.csv. If a code change alters it, every
+    # stored row would be re-keyed and the next fetch would duplicate them.
+    assert n.terminal(NY_AVOCADO, "New York", TS)["row_id"] == "b4e70220a467564d"
+
+
+def test_movement():
+    raw = {"report_date": "09/25/2026", "slug_id": 3283, "commodity": "Avocados", "variety": "HASS",
+           "district": "MEXICO CROSSINGS THROUGH PHARR TEXAS", "origin": "Mexico", "trans_Mode": "Truck",
+           "import/Export": "I (import)", "organic": "No", "1 lb units": 2807816, "package": None}
+    r = n.movement(raw, TS)
+    assert r["volume"] == 2807816 and r["volume_unit"] == "lb" and r["market_type"] == "movement"
+    assert r["market"] == "MEXICO CROSSINGS THROUGH PHARR TEXAS" and r["origin"] == "Mexico"
+    assert "trans_Mode=Truck" in r["other_attributes"]
+    boat = n.movement({**raw, "trans_Mode": "Boat"}, TS)
+    assert boat["row_id"] != r["row_id"]
+    assert n.movement({**raw, "1 lb units": None}, TS) is None
+
+
 def test_chicken():
     raw = {"report_date": "09/21/2026", "slug_id": 3646, "item": "Breast - B/S", "region": "National",
            "trade_status": "Domestic", "condition": "Fresh", "low_price": "98.00", "high_price": "142.00",

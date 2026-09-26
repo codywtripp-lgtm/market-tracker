@@ -30,7 +30,10 @@ RETAIL_NAMES = {"Peppers (Bell Type)": "Peppers, Bell Type"}
 # Less common produce descriptors, kept as "k=v; ..." in other_attributes (only when set).
 # Terminal and shipping-point names both listed; whichever exists is used.
 OTHER_ATTRIBUTES = ["repack", "storage", "crop", "environment", "env", "unit_sales",
-                    "transportation_mode", "season", "import_export_flag", "basis_of_sale"]
+                    "transportation_mode", "season", "import_export_flag", "basis_of_sale",
+                    "trans_Mode", "import/Export"]  # last two exist only in movement reports
+# NOTE: adding a field here changes row_id for every source that has it, which would duplicate
+# rows already stored. Add source-specific fields in that source's normalizer instead.
 
 BLANKS = {"", "n/a", "null", "none", None}
 
@@ -255,6 +258,24 @@ def beef(raw, section, fetched_at):
         "volume": num(raw.get("total_pounds")), "volume_unit": "lb",
     }, fetched_at))
     return out
+
+
+def movement(raw, fetched_at):
+    """Shipment volume rows (movement reports). No price; volume in pounds."""
+    volume = num(raw.get("1 lb units"))
+    if volume is None:
+        return None
+    return finish({
+        "report_date": iso_date(raw.get("report_date") or raw.get("report_begin_date")),
+        "commodity": clean(raw.get("commodity")), "variety": clean(raw.get("variety")),
+        "properties": clean(raw.get("properties")), "organic": clean(raw.get("organic")),
+        "market": clean(raw.get("district")), "market_type": "movement",
+        "origin": clean(raw.get("origin")),
+        "other_attributes": "; ".join(x for x in (other_attributes(raw),
+                                                  f"package={clean(raw.get('package'))}" if clean(raw.get("package")) else "") if x),
+        "volume": volume, "volume_unit": "lb",
+        "report_id": clean(raw.get("slug_id")), "report_title": clean(raw.get("report_title")),
+    }, fetched_at)
 
 
 def chicken(raw, fetched_at):
