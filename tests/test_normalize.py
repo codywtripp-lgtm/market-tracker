@@ -102,6 +102,23 @@ def test_beef_cutout_and_cuts():
     assert [x["grade"] for x in rows] == ["Choice", "Select"]
 
 
+def test_other_attributes_distinguish_rows():
+    a = n.terminal({**NY_AVOCADO, "crop": "NEW CROP"}, "New York", TS)
+    b = n.terminal({**NY_AVOCADO, "crop": "OLD CROP"}, "New York", TS)
+    assert a["other_attributes"] == "crop=NEW CROP"
+    assert a["row_id"] != b["row_id"]
+    assert n.terminal(NY_AVOCADO, "New York", TS)["other_attributes"] == ""
+
+
+def test_ground_beef_uses_trim_description():
+    raw = {"report_date": "09/25/2026", "slug_id": "2453", "trim_description": "Ground Beef 81%",
+           "price_range_low": "317.00", "price_range_high": "378.03", "weighted_average": "330.01"}
+    [r] = n.beef(raw, "Ground Beef", TS)
+    assert r["variety"] == "Ground Beef 81%"
+    [r73] = n.beef({**raw, "trim_description": "Ground Beef 73%"}, "Ground Beef", TS)
+    assert r73["row_id"] != r["row_id"]
+
+
 def test_chicken():
     raw = {"report_date": "09/21/2026", "slug_id": 3646, "item": "Breast - B/S", "region": "National",
            "trade_status": "Domestic", "condition": "Fresh", "low_price": "98.00", "high_price": "142.00",

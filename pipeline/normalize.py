@@ -12,7 +12,7 @@ COLUMNS = [
     "properties", "grade", "organic", "appearance", "condition", "quality",
     "low_price", "high_price", "mostly_low_price", "mostly_high_price",
     "unit_price", "price_unit", "normalized_price", "normalized_unit",
-    "market", "market_type", "origin", "origin_detail",
+    "market", "market_type", "origin", "origin_detail", "other_attributes",
     "market_tone", "volume", "volume_unit", "store_count",
     "report_id", "report_title", "fetched_at",
 ]
@@ -21,8 +21,13 @@ COLUMNS = [
 KEY_FIELDS = [
     "report_id", "report_date", "commodity", "variety", "pack_size", "item_size", "properties",
     "grade", "organic", "appearance", "condition", "quality", "market", "origin",
-    "origin_detail", "price_unit",
+    "origin_detail", "other_attributes", "price_unit",
 ]
+
+# Less common produce descriptors, kept as "k=v; ..." in other_attributes (only when set).
+# Terminal and shipping-point names both listed; whichever exists is used.
+OTHER_ATTRIBUTES = ["repack", "storage", "crop", "environment", "env", "unit_sales",
+                    "transportation_mode", "season", "import_export_flag", "basis_of_sale"]
 
 BLANKS = {"", "n/a", "null", "none", None}
 
@@ -149,6 +154,7 @@ def _produce(raw, market, market_type, fetched_at, field_map):
         market = g("district")
     else:
         origin, origin_detail = g("origin"), g("district")
+    other = "; ".join(f"{k}={clean(raw.get(k))}" for k in OTHER_ATTRIBUTES if clean(raw.get(k)))
     return finish({
         "report_date": iso_date(raw.get("report_date") or raw.get("report_begin_date")),
         "commodity": commodity, "variety": g("variety"), "pack_size": pack,
@@ -159,7 +165,7 @@ def _produce(raw, market, market_type, fetched_at, field_map):
         "unit_price": unit_price, "price_unit": "$/package",
         "normalized_price": norm, "normalized_unit": norm_unit,
         "market": market, "market_type": market_type,
-        "origin": origin, "origin_detail": origin_detail,
+        "origin": origin, "origin_detail": origin_detail, "other_attributes": other,
         "market_tone": g("market_tone_comments"),
         "report_id": clean(raw.get("slug_id")), "report_title": g("report_title"),
     }, fetched_at)
@@ -222,7 +228,8 @@ def beef(raw, section, fetched_at):
         return out  # no trades
     grade = {"Choice Cuts": "Choice", "Select Cuts": "Select"}.get(section, "")
     out.append(finish({
-        **base, "variety": clean(raw.get("item_description")), "grade": grade,
+        # cuts use item_description; the Ground Beef section uses trim_description
+        **base, "variety": clean(raw.get("item_description") or raw.get("trim_description")), "grade": grade,
         "pack_size": section, "low_price": num(raw.get("price_range_low")),
         "high_price": num(raw.get("price_range_high")), "unit_price": price,
         "normalized_price": round(price / 100, 4),

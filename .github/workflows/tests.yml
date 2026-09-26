@@ -27,7 +27,7 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
-      - run: python -m pipeline.run --start "$(date -u -d '4 days ago' +%F)"
+      - run: python -m pipeline.run
         env:
           MARS_API_KEY: ${{ secrets.MARS_API_KEY }}
       - uses: actions/upload-artifact@v4

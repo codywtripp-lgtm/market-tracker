@@ -1,10 +1,13 @@
 """Monthly CSV partitions: data/raw/<source>/<YYYY>/<YYYY-MM>.csv, deduplicated by row_id."""
 
 import csv
-from collections import defaultdict
+import logging
+from collections import Counter, defaultdict
 from pathlib import Path
 
 from .normalize import COLUMNS
+
+log = logging.getLogger(__name__)
 
 DATA = Path(__file__).resolve().parent.parent / "data"
 
@@ -22,6 +25,11 @@ def read_partition(path):
 
 def write_rows(source, rows):
     """Upsert rows into their monthly files. Returns (new, updated) counts."""
+    ids = Counter(r["row_id"] for r in rows)
+    dupes = sum(n - 1 for n in ids.values() if n > 1)
+    if dupes:
+        # Two incoming rows share a key: the key is missing a distinguishing field.
+        log.warning("%s: %d incoming rows collided on row_id (last one kept)", source, dupes)
     by_path = defaultdict(list)
     for r in rows:
         if r.get("report_date"):
