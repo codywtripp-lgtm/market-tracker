@@ -36,6 +36,26 @@ Early-warning signals to test first (all from data we already collect):
 3. Shipment volume drops (movement report 3283, trends 1662) leading price rises.
 4. Later: weather at origin, tariffs/trade events, holidays.
 
+### Forecasting approach (owner: "our other big differentiator")
+- **Owner: forecasts must be week-level.** Annual averages are useless (huge within-year variance). Priorities: (1) next 1–4 weeks, week by week, as ranges; (2) turning points / spike risk ("chance of +30% in the next month"); (3) the seasonal calendar — which weeks are usually cheapest/dearest and why (crop transitions).
+- **Horizons**: 1–2 weeks (strong: shipping point, loads, USDA tone, recent weather already in the pipeline); 1–3 months (fair: seasonality, crop transitions, NASS acreage/progress, seasonal outlooks); longer = seasonal range only.
+- **Driver candidates (free data)**: NOAA / Mexico SMN weather at origins; USDA shipments & border crossings (3283, 1662); NASS acreage/crop progress; shipping-point prices & USDA tone; trade/tariff events (dated list); MXN/USD (FRED); diesel (EIA) & truck rates (USDA 2375); holiday/demand calendar; FDA recalls (e.g. romaine E. coli).
+- **Method**: baseline = seasonal pattern + recent trend; add one driver at a time; keep it only if it improves **out-of-sample** backtests.
+- **Trust**: forecasts are ranges, and the site publishes its own **track record** (past forecasts vs. what happened).
+
+### Two audiences, one page (owner, 2026-09-26)
+A switch at the top — **Buying for: Business | Household** — remembered per visitor.
+- **Business**: wholesale case prices (current design).
+- **Household**: prices in the unit people buy (one 1-lb clamshell, one avocado, one head, per lb). Sources: weekly grocery ad prices (report 3324), BLS monthly average retail prices, and wholesale translated per unit ("stores pay ~$1.40 per clamshell; typical ad $2.99"). Alerts in shopper language ("expect store specials in 1–2 weeks") — only after backtesting how long wholesale moves take to reach retail ads.
+- Per-unit conversion reuses `normalized_price` (count-based "per each" and pack-based "per lb" = per 1-lb clamshell).
+
+### Ideas from Macrotrends (2026-09-26)
+Macrotrends' food pages (e.g. /3710/us-strawberry-prices) chart a single national monthly *retail* average (likely BLS Average Price data) over decades. Different product from ours (wholesale, daily, pack-level, forward-looking), but worth borrowing:
+1. **BLS average retail prices** (monthly, back to the 1980s, same free BLS API as CPI) as a "grocery shelf price" layer — long-run context and a view of wholesale → retail pass-through.
+2. **Search-findable landing page per commodity** (e.g. `/strawberries/`) that opens the one-page dashboard pre-filtered. Keeps the single-page UX while getting search traffic.
+3. **Yearly summary table** (average price per year, % change) under the chart.
+4. Keep it that simple: plain sentences, one clear chart.
+
 ## Phases
 
 1. **Data pipeline** — done: daily fetch, 10-year backfill, export with cheap/normal/expensive.

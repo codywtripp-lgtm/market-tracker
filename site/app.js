@@ -23,7 +23,7 @@ const state = {
   market: "ny", range: "1y", view: "auto",
   selected: [],            // item keys, in the order added
   slots: {},               // item key -> color slot 1..8 (stable while selected)
-  items: [], asOf: "",
+  items: [], asOf: "", alerts: [],
   histories: {},           // series id -> rows
 };
 
@@ -131,6 +131,31 @@ function renderFilters() {
     </li>`;
   }).join("") || `<li class="hint">No items for this market yet.</li>`;
   $("filter-count").textContent = state.selected.length ? `(${state.selected.length})` : "";
+}
+
+// ---------- alerts (backtested early warnings) ----------
+const MARKET_KEY = { "New York": "ny", "Los Angeles": "la", "Chicago": "chi" };
+function renderAlerts() {
+  const here = market().label;
+  const terminal = ["ny", "la", "chi"].includes(state.market);
+  const mine = terminal ? state.alerts.filter((a) => a.market === here) : state.alerts;
+  const elsewhere = terminal ? state.alerts.length - mine.length : 0;
+  $("alerts-h").textContent = terminal ? `Alerts · ${here}` : "Alerts";
+  const body = mine.map((a) => `<button class="alert" data-alert="${esc(a.market)}|${esc(a.commodity)}">
+      <span class="arrow ${a.direction}" aria-hidden="true">${a.direction === "up" ? "▲" : "▼"}</span>
+      <span class="h">${esc(a.headline)}</span>
+      <span class="e">${esc(a.expect)}</span>
+      <span class="r">Track record: ${esc(a.record)}</span></button>`).join("");
+  $("alerts-list").innerHTML = (body || `<p class="hint">No alerts for ${esc(here)} right now. Alerts only fire when a signal with a strong 10-year track record is on.</p>`)
+    + (elsewhere ? `<p class="hint">${elsewhere} more in other markets — switch market above.</p>` : "");
+}
+function openAlert(marketName, commodity) {
+  const key = MARKET_KEY[marketName];
+  if (key && key !== state.market) { state.market = key; }
+  [...state.selected].forEach(remove);
+  add(commodity);
+  update();
+  $("chart-h").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 // ---------- big moves ----------
@@ -339,7 +364,7 @@ function renderList() {
 
 // ---------- wiring ----------
 function update() {
-  renderFilters(); renderMoves(); renderNews(); renderList(); renderChart(); writeUrl();
+  renderFilters(); renderAlerts(); renderMoves(); renderNews(); renderList(); renderChart(); writeUrl();
 }
 function setMarket(key) {
   if (key === state.market) return;
@@ -355,9 +380,10 @@ function openSheet(open) {
 }
 
 document.addEventListener("click", (e) => {
-  const t = e.target.closest("[data-market],[data-range],[data-view],[data-only],[data-toggle]");
+  const t = e.target.closest("[data-market],[data-range],[data-view],[data-only],[data-toggle],[data-alert]");
   if (!t) return;
-  if (t.dataset.market) setMarket(t.dataset.market);
+  if (t.dataset.alert) { const [mk, c] = t.dataset.alert.split("|"); openAlert(mk, c); }
+  else if (t.dataset.market) setMarket(t.dataset.market);
   else if (t.dataset.range) { state.range = t.dataset.range; update(); }
   else if (t.dataset.view) { state.view = t.dataset.view; update(); }
   else if (t.dataset.only) { only(t.dataset.only); if (t.classList.contains("move")) $("chart-h").scrollIntoView({ behavior: "smooth", block: "start" }); }
@@ -379,6 +405,11 @@ window.addEventListener("resize", () => { clearTimeout(resizeTimer); resizeTimer
     $("asof").textContent = data.asOf ? `Week of ${new Date(data.asOf + "T00:00:00").toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" })}.` : "";
   } catch (e) {
     $("news").innerHTML = `<li class="hint">Couldn't load prices.</li>`;
+  }
+  try {
+    state.alerts = (await (await fetch("data/alerts.json")).json()).alerts || [];
+  } catch (e) {
+    state.alerts = [];
   }
   readUrl();
   state.selected.filter((k) => !itemsInMarket().some((i) => i.key === k)).forEach(remove);
