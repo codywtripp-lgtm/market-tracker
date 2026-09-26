@@ -158,22 +158,28 @@ def _pooled(cols):
     return fit, (lambda coef, rows, h: design(rows, h, cols) @ coef)
 
 
-def _by_commodity(cols):
-    """Per-commodity regression, shrunk toward the pooled fit (thin commodities stay near pooled)."""
+def _by_group(cols, keys=("commodity",), prior_rows=PRIOR_ROWS):
+    """Per-group regression (e.g. per commodity), shrunk toward the pooled fit (thin groups stay near pooled)."""
+    keys = list(keys)
+
+    def group(df):
+        return df[keys].astype(str).agg("|".join, axis=1) if len(keys) > 1 else df[keys[0]]
+
     def fit(train, h):
         X, y = design(train, h, cols), train[f"y{h}"].to_numpy()
         pooled = ols(X, y)
         per = {}
-        lam = np.diag(np.diag(X.T @ X) / len(X) * PRIOR_ROWS)  # scale-aware penalty per feature
-        for c, idx in train.groupby("commodity").indices.items():
-            Xc, yc = X[idx], y[idx]
-            per[c] = np.linalg.solve(Xc.T @ Xc + lam, Xc.T @ yc + lam @ pooled)
+        lam = np.diag(np.diag(X.T @ X) / len(X) * prior_rows)  # scale-aware penalty per feature
+        for g, idx in pd.Series(np.arange(len(train))).groupby(group(train).to_numpy()).groups.items():
+            idx = np.asarray(idx)
+            Xg, yg = X[idx], y[idx]
+            per[g] = np.linalg.solve(Xg.T @ Xg + lam, Xg.T @ yg + lam @ pooled)
         return pooled, per
 
     def predict(model, rows, h):
         pooled, per = model
         X = design(rows, h, cols)
-        coefs = np.stack([per.get(c, pooled) for c in rows["commodity"]])
+        coefs = np.stack([per.get(g, pooled) for g in group(rows)])
         return np.einsum("ij,ij->i", X, coefs)
     return fit, predict
 
@@ -213,7 +219,10 @@ METHODS = {
     "seasonal": _seasonal(),
     "pooled": _pooled(BASE),                 # v1
     "pooled+sp_prev": _pooled(EXTENDED),
-    "by_commodity": _by_commodity(EXTENDED),
+    "by_commodity": _by_group(BASE),
+    "by_commodity_250": _by_group(BASE, prior_rows=250),
+    "by_commodity_4000": _by_group(BASE, prior_rows=4000),
+    "by_commodity_market": _by_group(BASE, keys=("commodity", "market")),
     "gbm": _gbm(EXTENDED),
 }
 
