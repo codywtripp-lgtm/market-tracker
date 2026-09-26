@@ -2,3 +2,5 @@ probe_output/
 probe2_tmp/
 __pycache__/
 .env
+_site/
+_preview/

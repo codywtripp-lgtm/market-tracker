@@ -17,7 +17,11 @@ const state = { market: "New York", status: "all", items: [] };
 
 const $ = (id) => document.getElementById(id);
 const money = (v) => (v == null ? "—" : v >= 100 ? `$${v.toFixed(0)}` : `$${v.toFixed(2)}`);
-const unitShort = (u) => ({ "per lb": "/lb", "per each": "/ea" }[u] || (u ? ` ${u}` : ""));
+const unitShort = (u) => {
+  if (!u) return "";
+  const known = { "per lb": "/lb", "per each": "/ea", "$/package": "/case", "$/cwt": "/cwt", "cents/lb": "¢/lb" };
+  return known[u] || "/" + u.replace(/^\$\//, "");
+};
 const pct = (v) => (v == null ? "—" : `${v > 0 ? "+" : ""}${v.toFixed(0)}%`);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const tidy = (s) => (!s || s === "N/A" ? "" : s.charAt(0) + s.slice(1).toLowerCase());
@@ -26,7 +30,7 @@ function badge(item) {
   if (item.status === "cheap") return `<span class="badge cheap"><span class="dot"></span>▼ Cheap</span>`;
   if (item.status === "expensive") return `<span class="badge expensive"><span class="dot"></span>▲ Expensive</span>`;
   if (item.status === "normal") return `<span class="badge normal">Normal</span>`;
-  return `<span class="badge none">New — no history yet</span>`;
+  return `<span class="badge none">Not enough history</span>`;
 }
 
 function vsText(item) {
@@ -109,7 +113,9 @@ function seasonal(history) {
 }
 
 function drawChart(el, data, unit) {
-  const W = 640, H = 260, m = { t: 10, r: 12, b: 26, l: 48 };
+  // Draw at the real on-screen width so text stays 11px on phones (no viewBox shrinking).
+  const W = Math.max(280, Math.round(el.clientWidth || 640)), H = Math.round(Math.min(260, W * 0.62));
+  const m = { t: 10, r: 12, b: 26, l: 48 };
   const vals = data.weeks.flatMap((w) => [w.cur, w.last, w.lo, w.hi]).filter((v) => v != null);
   if (!vals.length) { el.innerHTML = `<p class="sub">No history yet.</p>`; return; }
   let lo = Math.min(...vals), hi = Math.max(...vals);
@@ -142,13 +148,15 @@ function drawChart(el, data, unit) {
       <text x="${m.l - 6}" y="${y(v) + 4}" text-anchor="end" font-size="11" fill="var(--muted)">${money(v)}</text>`);
   }
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const monthTicks = months.map((mo, i) => `<text x="${x(1 + i * 4.345)}" y="${H - 6}" font-size="11" fill="var(--muted)">${mo}</text>`).join("");
+  const every = W < 420 ? 2 : 1; // every other month on narrow screens
+  const monthTicks = months.map((mo, i) => i % every ? "" :
+    `<text x="${x(1 + i * 4.345)}" y="${H - 6}" font-size="11" fill="var(--muted)">${mo}</text>`).join("");
 
   // end label on the current-year line
   const lastCur = [...data.weeks].reverse().find((w) => w.cur != null);
   const endLabel = lastCur ? `<circle cx="${x(lastCur.week)}" cy="${y(lastCur.cur)}" r="4" fill="var(--series-1)" stroke="var(--surface)" stroke-width="2"/>` : "";
 
-  el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Weekly price this year vs last year and the usual range">
+  el.innerHTML = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Weekly price this year vs last year and the usual range">
     ${grid.join("")}
     ${band}
     <line x1="${m.l}" x2="${W - m.r}" y1="${H - m.b}" y2="${H - m.b}" stroke="var(--axis)"/>
