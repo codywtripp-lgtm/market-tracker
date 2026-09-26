@@ -29,8 +29,9 @@ PRODUCE_COMMODITIES = {
     "Grapes",
 }
 
-# Retail report 3324 uses its own commodity names (e.g. a single "Lettuce").
-RETAIL_COMMODITIES = PRODUCE_COMMODITIES | {"Lettuce"}
+# Retail report 3324 uses its own commodity names (a single "Lettuce", "Peppers (Bell Type)").
+# normalize.RETAIL_NAMES maps them back to the wholesale names where they differ.
+RETAIL_COMMODITIES = PRODUCE_COMMODITIES | {"Lettuce", "Peppers (Bell Type)"}
 
 TERMINAL_REPORTS = {
     # slug: market name

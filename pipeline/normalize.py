@@ -13,7 +13,7 @@ COLUMNS = [
     "low_price", "high_price", "mostly_low_price", "mostly_high_price",
     "unit_price", "price_unit", "normalized_price", "normalized_unit",
     "market", "market_type", "origin", "origin_detail", "other_attributes",
-    "market_tone", "volume", "volume_unit", "store_count",
+    "reporter_comment", "market_tone", "volume", "volume_unit", "store_count",
     "report_id", "report_title", "fetched_at",
 ]
 
@@ -21,8 +21,11 @@ COLUMNS = [
 KEY_FIELDS = [
     "report_id", "report_date", "commodity", "variety", "pack_size", "item_size", "properties",
     "grade", "organic", "appearance", "condition", "quality", "market", "origin",
-    "origin_detail", "other_attributes", "price_unit",
+    "origin_detail", "other_attributes", "reporter_comment", "price_unit",
 ]
+
+# Retail names that differ from the wholesale reports.
+RETAIL_NAMES = {"Peppers (Bell Type)": "Peppers, Bell Type"}
 
 # Less common produce descriptors, kept as "k=v; ..." in other_attributes (only when set).
 # Terminal and shipping-point names both listed; whichever exists is used.
@@ -128,6 +131,10 @@ def normalize_price(commodity, unit_price, pack, count):
     return None, ""
 
 
+def other_attributes(raw):
+    return "; ".join(f"{k}={clean(raw.get(k))}" for k in OTHER_ATTRIBUTES if clean(raw.get(k)))
+
+
 def row_id(r):
     raw = "|".join(str(r.get(k, "")) for k in KEY_FIELDS)
     return hashlib.sha1(raw.encode()).hexdigest()[:16]
@@ -154,7 +161,7 @@ def _produce(raw, market, market_type, fetched_at, field_map):
         market = g("district")
     else:
         origin, origin_detail = g("origin"), g("district")
-    other = "; ".join(f"{k}={clean(raw.get(k))}" for k in OTHER_ATTRIBUTES if clean(raw.get(k)))
+    other = other_attributes(raw)
     return finish({
         "report_date": iso_date(raw.get("report_date") or raw.get("report_begin_date")),
         "commodity": commodity, "variety": g("variety"), "pack_size": pack,
@@ -166,6 +173,8 @@ def _produce(raw, market, market_type, fetched_at, field_map):
         "normalized_price": norm, "normalized_unit": norm_unit,
         "market": market, "market_type": market_type,
         "origin": origin, "origin_detail": origin_detail, "other_attributes": other,
+        # often holds pack detail ("5lb. film bag orange", "(35 Lb) (Peeled)"), so it's part of the key
+        "reporter_comment": clean(raw.get("reporter_comment") or raw.get("rep_cmt")),
         "market_tone": g("market_tone_comments"),
         "report_id": clean(raw.get("slug_id")), "report_title": g("report_title"),
     }, fetched_at)
@@ -196,8 +205,10 @@ def retail(raw, fetched_at):
         norm, norm_unit = (round(price / lb, 4), "per lb") if (price and lb) else (None, "")
     return finish({
         "report_date": iso_date(raw.get("report_end_date") or raw.get("report_begin_date")),
-        "commodity": clean(raw.get("commodity")), "variety": clean(raw.get("variety")),
+        "commodity": RETAIL_NAMES.get(clean(raw.get("commodity")), clean(raw.get("commodity"))),
+        "variety": clean(raw.get("variety")),
         "pack_size": unit, "organic": clean(raw.get("organic")),
+        "other_attributes": other_attributes(raw),  # e.g. environment=Greenhouse
         "unit_price": price, "price_unit": "$/" + (unit or "unit"),
         "normalized_price": norm, "normalized_unit": norm_unit,
         "market": clean(raw.get("region")), "market_type": "retail",

@@ -110,6 +110,25 @@ def test_other_attributes_distinguish_rows():
     assert n.terminal(NY_AVOCADO, "New York", TS)["other_attributes"] == ""
 
 
+def test_reporter_comment_distinguishes_rows():
+    base = {**NY_AVOCADO, "commodity": "Carrots", "package": "cartons 10 5-lb film bags"}
+    a = n.terminal({**base, "reporter_comment": "5lb. film bag orange"}, "New York", TS)
+    b = n.terminal({**base, "reporter_comment": "5lb. film bag mixed color"}, "New York", TS)
+    assert a["row_id"] != b["row_id"] and a["reporter_comment"] == "5lb. film bag orange"
+    sp = n.shipping_point({"report_date": "09/25/2026", "commodity": "Carrots", "rep_cmt": "orange"}, TS)
+    assert sp["reporter_comment"] == "orange"
+
+
+def test_retail_names_and_greenhouse():
+    raw = {"report_end_date": "09/25/2026", "slug_id": "3324", "commodity": "Peppers (Bell Type)",
+           "variety": "Red", "region": "National", "size": "each", "wtd_avg_price": "1.33"}
+    field = n.retail({**raw, "environment": "N/A"}, TS)
+    house = n.retail({**raw, "environment": "Greenhouse", "wtd_avg_price": "1.00"}, TS)
+    assert field["commodity"] == "Peppers, Bell Type"
+    assert house["other_attributes"] == "environment=Greenhouse"
+    assert field["row_id"] != house["row_id"]
+
+
 def test_ground_beef_uses_trim_description():
     raw = {"report_date": "09/25/2026", "slug_id": "2453", "trim_description": "Ground Beef 81%",
            "price_range_low": "317.00", "price_range_high": "378.03", "weighted_average": "330.01"}
