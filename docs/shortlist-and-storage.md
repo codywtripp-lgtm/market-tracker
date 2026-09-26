@@ -2,6 +2,22 @@
 
 Status: **proposal, pending owner approval.** Evidence is in `usda-exploration.md`.
 
+## Commodity list (18) — approved direction 2026-09-26
+
+Owner's core list plus high-volume staples, all reported in NY on ~242–244 of ~248 trading days:
+
+| Core (owner) | Added for volume |
+|---|---|
+| Avocados, strawberries, iceberg, romaine, round tomatoes, Roma tomatoes, bell peppers, dry onions | Potatoes, lemons, limes, cucumbers, broccoli, celery, carrots, bananas, blueberries, grapes |
+
+**How "volume" was measured.** USDA doesn't publish NY-specific arrival volumes anymore. I summed 12 months of the national truck/air/boat shipments report (WA_FV170, slug 3283, field `1 lb units`) and checked NY price coverage. **Caveat:** that report over-represents imports (bananas, pineapples, limes top it) and under-counts domestic shipping districts (it shows only ~220M lb of iceberg). So the list mixes that ranking with industry judgment (foodservice staples like potatoes, celery, carrots, lemons).
+
+Top of the national shipments ranking (M lb, last 12 months): bananas 8,567 · avocados 3,040 · cucumbers 2,696 · watermelons 2,637 · pineapples 2,580 · Roma tomatoes 2,001 · grapes 1,880 · bell peppers 1,808 · limes 1,732 · round tomatoes 1,409 · mangoes 1,222 · plantains 1,127 · dry onions 950 · blueberries 816 · cantaloupes 774 · potatoes 731 · strawberries 729 · carrots 720.
+
+Candidates not yet included (high volume but more seasonal or import-only): watermelons, pineapples, mangoes, plantains, cantaloupes. Easy to add in `pipeline/config.py`.
+
+The headline "series" (specific pack/size per market) for the 10 added commodities will be picked from backfilled data using the same consistency test as the core list.
+
 ## Principle
 
 Store **every row for our commodities** from the chosen reports (all packs and sizes), but build the headline "cheap vs. expensive" series only from the shortlist below. A series is keyed on **commodity + variety + pack + size + market** with origin kept as an attribute, because origin rotates with the season.
