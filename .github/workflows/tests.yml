@@ -32,8 +32,13 @@ jobs:
           MARS_API_KEY: ${{ secrets.MARS_API_KEY }}
       - run: python -m pipeline.cpi
       - run: python -m pipeline.export
+      - run: python scripts/build_site.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: smoke-data
-          path: data/
+          path: data/export/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site-preview
+          path: _site/
