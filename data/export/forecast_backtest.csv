@@ -1,0 +1,13 @@
+horizon,method,mae_pct,direction_hit
+1,model,7.5175,0.4818
+1,naive,7.6922,0.0
+1,seasonal,8.4168,0.4176
+2,model,12.281,0.5316
+2,naive,13.0156,0.0
+2,seasonal,13.7563,0.458
+3,model,15.7983,0.5604
+3,naive,16.9557,0.0
+3,seasonal,17.6482,0.4771
+4,model,18.2978,0.5796
+4,naive,19.923,0.0
+4,seasonal,20.4188,0.4859
