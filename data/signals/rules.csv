@@ -1,0 +1,202 @@
+signal,commodity,market,direction,horizon_weeks,cases,hits,hit_rate,base_rate
+sp_lead,Avocados,Chicago,up,2,9,7,0.778,0.23
+sp_lead,Avocados,Chicago,down,2,3,1,0.333,0.264
+usda_tone,Avocados,Chicago,up,1,20,8,0.4,0.15
+usda_tone,Avocados,Chicago,down,1,11,4,0.364,0.133
+sp_lead,Avocados,Los Angeles,up,2,11,8,0.727,0.213
+sp_lead,Avocados,Los Angeles,down,2,5,3,0.6,0.257
+usda_tone,Avocados,Los Angeles,up,1,13,6,0.462,0.125
+usda_tone,Avocados,Los Angeles,down,1,35,22,0.629,0.145
+sp_lead,Avocados,New York,up,2,5,2,0.4,0.284
+sp_lead,Avocados,New York,down,2,5,2,0.4,0.329
+usda_tone,Avocados,New York,up,1,56,25,0.446,0.199
+usda_tone,Avocados,New York,down,1,58,22,0.379,0.208
+usda_tone,Bananas,Los Angeles,up,1,3,0,0.0,0.013
+usda_tone,Bananas,Los Angeles,down,1,2,0,0.0,0.006
+usda_tone,Bananas,New York,up,1,1,1,1.0,0.011
+usda_tone,Bananas,New York,down,1,1,0,0.0,0.014
+sp_lead,Blueberries,Chicago,up,2,31,24,0.774,0.321
+sp_lead,Blueberries,Chicago,down,2,28,19,0.679,0.447
+usda_tone,Blueberries,Chicago,up,1,6,2,0.333,0.295
+usda_tone,Blueberries,Chicago,down,1,7,4,0.571,0.326
+sp_lead,Blueberries,Los Angeles,up,2,27,19,0.704,0.359
+sp_lead,Blueberries,Los Angeles,down,2,34,28,0.824,0.378
+usda_tone,Blueberries,Los Angeles,up,1,8,3,0.375,0.249
+usda_tone,Blueberries,Los Angeles,down,1,19,16,0.842,0.27
+sp_lead,Blueberries,New York,up,2,15,8,0.533,0.34
+sp_lead,Blueberries,New York,down,2,15,11,0.733,0.517
+usda_tone,Blueberries,New York,up,1,30,18,0.6,0.342
+usda_tone,Blueberries,New York,down,1,66,47,0.712,0.398
+sp_lead,Broccoli,Chicago,up,2,54,43,0.796,0.368
+sp_lead,Broccoli,Chicago,down,2,51,41,0.804,0.355
+usda_tone,Broccoli,Chicago,up,1,23,11,0.478,0.267
+usda_tone,Broccoli,Chicago,down,1,26,11,0.423,0.292
+sp_lead,Broccoli,Los Angeles,up,2,46,30,0.652,0.345
+sp_lead,Broccoli,Los Angeles,down,2,45,29,0.644,0.352
+usda_tone,Broccoli,Los Angeles,up,1,34,26,0.765,0.244
+usda_tone,Broccoli,Los Angeles,down,1,31,19,0.613,0.246
+sp_lead,Broccoli,New York,up,2,57,45,0.789,0.357
+sp_lead,Broccoli,New York,down,2,43,31,0.721,0.379
+usda_tone,Broccoli,New York,up,1,31,20,0.645,0.262
+usda_tone,Broccoli,New York,down,1,32,28,0.875,0.297
+sp_lead,Carrots,Chicago,up,2,2,0,0.0,0.052
+sp_lead,Carrots,Chicago,down,2,2,0,0.0,0.048
+usda_tone,Carrots,Chicago,up,1,6,0,0.0,0.027
+usda_tone,Carrots,Chicago,down,1,6,0,0.0,0.023
+sp_lead,Carrots,Los Angeles,up,2,2,0,0.0,0.027
+sp_lead,Carrots,Los Angeles,down,2,2,0,0.0,0.02
+sp_lead,Carrots,New York,up,2,1,0,0.0,0.133
+sp_lead,Carrots,New York,down,2,1,0,0.0,0.153
+usda_tone,Carrots,New York,up,1,7,3,0.429,0.091
+usda_tone,Carrots,New York,down,1,6,2,0.333,0.081
+sp_lead,Celery,Chicago,up,2,30,24,0.8,0.355
+sp_lead,Celery,Chicago,down,2,30,20,0.667,0.314
+usda_tone,Celery,Chicago,up,1,19,12,0.632,0.252
+usda_tone,Celery,Chicago,down,1,25,15,0.6,0.243
+sp_lead,Celery,Los Angeles,up,2,19,15,0.789,0.302
+sp_lead,Celery,Los Angeles,down,2,20,13,0.65,0.345
+usda_tone,Celery,Los Angeles,up,1,28,23,0.821,0.225
+usda_tone,Celery,Los Angeles,down,1,22,16,0.727,0.237
+sp_lead,Celery,New York,up,2,30,26,0.867,0.319
+sp_lead,Celery,New York,down,2,25,17,0.68,0.345
+usda_tone,Celery,New York,up,1,29,16,0.552,0.231
+usda_tone,Celery,New York,down,1,25,21,0.84,0.251
+sp_lead,Cucumbers,Chicago,up,2,71,35,0.493,0.329
+sp_lead,Cucumbers,Chicago,down,2,60,32,0.533,0.329
+usda_tone,Cucumbers,Chicago,up,1,20,8,0.4,0.247
+usda_tone,Cucumbers,Chicago,down,1,25,8,0.32,0.231
+sp_lead,Cucumbers,Los Angeles,up,2,60,24,0.4,0.298
+sp_lead,Cucumbers,Los Angeles,down,2,70,29,0.414,0.268
+usda_tone,Cucumbers,Los Angeles,up,1,18,7,0.389,0.188
+usda_tone,Cucumbers,Los Angeles,down,1,17,9,0.529,0.186
+sp_lead,Cucumbers,New York,up,2,70,33,0.471,0.311
+sp_lead,Cucumbers,New York,down,2,47,22,0.468,0.384
+usda_tone,Cucumbers,New York,up,1,23,9,0.391,0.252
+usda_tone,Cucumbers,New York,down,1,28,19,0.679,0.306
+sp_lead,Grapes,Chicago,up,2,3,1,0.333,0.117
+sp_lead,Grapes,Chicago,down,2,21,14,0.667,0.232
+usda_tone,Grapes,Chicago,up,1,2,1,0.5,0.073
+usda_tone,Grapes,Chicago,down,1,3,1,0.333,0.131
+sp_lead,Grapes,Los Angeles,up,2,3,1,0.333,0.079
+sp_lead,Grapes,Los Angeles,down,2,12,6,0.5,0.21
+usda_tone,Grapes,Los Angeles,up,1,8,1,0.125,0.051
+usda_tone,Grapes,Los Angeles,down,1,36,16,0.444,0.157
+sp_lead,Grapes,New York,up,2,3,0,0.0,0.127
+sp_lead,Grapes,New York,down,2,14,6,0.429,0.236
+usda_tone,Grapes,New York,down,1,6,3,0.5,0.167
+sp_lead,Lemons,Chicago,up,2,2,2,1.0,0.192
+sp_lead,Lemons,Chicago,down,2,3,1,0.333,0.215
+usda_tone,Lemons,Chicago,up,1,3,0,0.0,0.104
+usda_tone,Lemons,Chicago,down,1,11,1,0.091,0.1
+sp_lead,Lemons,Los Angeles,down,2,3,1,0.333,0.18
+usda_tone,Lemons,Los Angeles,up,1,17,1,0.059,0.085
+usda_tone,Lemons,Los Angeles,down,1,20,3,0.15,0.104
+sp_lead,Lemons,New York,up,2,3,0,0.0,0.179
+sp_lead,Lemons,New York,down,2,5,1,0.2,0.212
+usda_tone,Lemons,New York,up,1,5,2,0.4,0.114
+usda_tone,Lemons,New York,down,1,6,1,0.167,0.136
+sp_lead,"Lettuce, Iceberg",Chicago,up,2,43,34,0.791,0.382
+sp_lead,"Lettuce, Iceberg",Chicago,down,2,37,29,0.784,0.404
+usda_tone,"Lettuce, Iceberg",Chicago,up,1,26,17,0.654,0.339
+usda_tone,"Lettuce, Iceberg",Chicago,down,1,52,33,0.635,0.339
+sp_lead,"Lettuce, Iceberg",Los Angeles,up,2,20,14,0.7,0.355
+sp_lead,"Lettuce, Iceberg",Los Angeles,down,2,18,10,0.556,0.397
+usda_tone,"Lettuce, Iceberg",Los Angeles,up,1,47,34,0.723,0.283
+usda_tone,"Lettuce, Iceberg",Los Angeles,down,1,61,46,0.754,0.324
+sp_lead,"Lettuce, Iceberg",New York,up,2,34,24,0.706,0.406
+sp_lead,"Lettuce, Iceberg",New York,down,2,27,19,0.704,0.418
+usda_tone,"Lettuce, Iceberg",New York,up,1,34,19,0.559,0.346
+usda_tone,"Lettuce, Iceberg",New York,down,1,57,38,0.667,0.371
+sp_lead,"Lettuce, Romaine",Chicago,up,2,28,22,0.786,0.329
+sp_lead,"Lettuce, Romaine",Chicago,down,2,25,23,0.92,0.346
+usda_tone,"Lettuce, Romaine",Chicago,up,1,17,11,0.647,0.286
+usda_tone,"Lettuce, Romaine",Chicago,down,1,20,12,0.6,0.272
+sp_lead,"Lettuce, Romaine",Los Angeles,up,2,15,10,0.667,0.284
+sp_lead,"Lettuce, Romaine",Los Angeles,down,2,24,19,0.792,0.293
+usda_tone,"Lettuce, Romaine",Los Angeles,up,1,30,25,0.833,0.207
+usda_tone,"Lettuce, Romaine",Los Angeles,down,1,41,29,0.707,0.205
+sp_lead,"Lettuce, Romaine",New York,up,2,19,15,0.789,0.343
+sp_lead,"Lettuce, Romaine",New York,down,2,14,11,0.786,0.357
+usda_tone,"Lettuce, Romaine",New York,up,1,31,24,0.774,0.278
+usda_tone,"Lettuce, Romaine",New York,down,1,40,25,0.625,0.275
+sp_lead,Limes,Chicago,up,2,36,29,0.806,0.343
+sp_lead,Limes,Chicago,down,2,36,24,0.667,0.361
+usda_tone,Limes,Chicago,up,1,20,11,0.55,0.254
+usda_tone,Limes,Chicago,down,1,13,9,0.692,0.275
+sp_lead,Limes,Los Angeles,up,2,27,24,0.889,0.361
+sp_lead,Limes,Los Angeles,down,2,25,15,0.6,0.393
+usda_tone,Limes,Los Angeles,up,1,45,35,0.778,0.264
+usda_tone,Limes,Los Angeles,down,1,52,40,0.769,0.313
+sp_lead,Limes,New York,up,2,28,19,0.679,0.359
+sp_lead,Limes,New York,down,2,24,17,0.708,0.413
+usda_tone,Limes,New York,up,1,56,40,0.714,0.278
+usda_tone,Limes,New York,down,1,71,43,0.606,0.322
+sp_lead,"Onions, Dry",Chicago,up,2,12,2,0.167,0.063
+sp_lead,"Onions, Dry",Chicago,down,2,5,0,0.0,0.054
+usda_tone,"Onions, Dry",Chicago,up,1,13,1,0.077,0.032
+usda_tone,"Onions, Dry",Chicago,down,1,10,1,0.1,0.025
+sp_lead,"Onions, Dry",Los Angeles,up,2,7,3,0.429,0.105
+sp_lead,"Onions, Dry",Los Angeles,down,2,6,1,0.167,0.099
+usda_tone,"Onions, Dry",Los Angeles,up,1,11,3,0.273,0.05
+usda_tone,"Onions, Dry",Los Angeles,down,1,9,1,0.111,0.036
+sp_lead,"Onions, Dry",New York,up,2,5,4,0.8,0.088
+sp_lead,"Onions, Dry",New York,down,2,4,1,0.25,0.068
+usda_tone,"Onions, Dry",New York,up,1,10,4,0.4,0.03
+usda_tone,"Onions, Dry",New York,down,1,5,2,0.4,0.03
+sp_lead,"Peppers, Bell Type",Chicago,up,2,43,32,0.744,0.316
+sp_lead,"Peppers, Bell Type",Chicago,down,2,56,37,0.661,0.35
+usda_tone,"Peppers, Bell Type",Chicago,up,1,16,11,0.688,0.217
+usda_tone,"Peppers, Bell Type",Chicago,down,1,19,10,0.526,0.255
+sp_lead,"Peppers, Bell Type",Los Angeles,up,2,50,28,0.56,0.265
+sp_lead,"Peppers, Bell Type",Los Angeles,down,2,68,36,0.529,0.307
+usda_tone,"Peppers, Bell Type",Los Angeles,up,1,11,6,0.545,0.175
+usda_tone,"Peppers, Bell Type",Los Angeles,down,1,14,7,0.5,0.188
+sp_lead,"Peppers, Bell Type",New York,up,2,32,17,0.531,0.359
+sp_lead,"Peppers, Bell Type",New York,down,2,30,13,0.433,0.416
+usda_tone,"Peppers, Bell Type",New York,up,1,39,20,0.513,0.285
+usda_tone,"Peppers, Bell Type",New York,down,1,60,38,0.633,0.35
+sp_lead,Potatoes,Chicago,down,2,1,1,1.0,0.074
+usda_tone,Potatoes,Chicago,up,1,5,1,0.2,0.023
+usda_tone,Potatoes,Chicago,down,1,6,0,0.0,0.02
+sp_lead,Potatoes,Los Angeles,down,2,1,1,1.0,0.043
+usda_tone,Potatoes,Los Angeles,up,1,8,0,0.0,0.023
+usda_tone,Potatoes,Los Angeles,down,1,10,0,0.0,0.016
+sp_lead,Potatoes,New York,down,2,1,0,0.0,0.097
+usda_tone,Potatoes,New York,up,1,9,3,0.333,0.036
+usda_tone,Potatoes,New York,down,1,6,1,0.167,0.034
+sp_lead,Strawberries,Chicago,up,2,37,29,0.784,0.427
+sp_lead,Strawberries,Chicago,down,2,35,26,0.743,0.398
+usda_tone,Strawberries,Chicago,up,1,17,9,0.529,0.373
+usda_tone,Strawberries,Chicago,down,1,25,12,0.48,0.333
+sp_lead,Strawberries,Los Angeles,up,2,45,26,0.578,0.36
+sp_lead,Strawberries,Los Angeles,down,2,33,19,0.576,0.325
+usda_tone,Strawberries,Los Angeles,up,1,36,20,0.556,0.267
+usda_tone,Strawberries,Los Angeles,down,1,35,15,0.429,0.223
+sp_lead,Strawberries,New York,up,2,27,22,0.815,0.441
+sp_lead,Strawberries,New York,down,2,18,13,0.722,0.475
+usda_tone,Strawberries,New York,up,1,44,27,0.614,0.396
+usda_tone,Strawberries,New York,down,1,87,54,0.621,0.43
+sp_lead,Tomatoes,Chicago,up,2,58,34,0.586,0.314
+sp_lead,Tomatoes,Chicago,down,2,61,37,0.607,0.363
+usda_tone,Tomatoes,Chicago,up,1,29,12,0.414,0.216
+usda_tone,Tomatoes,Chicago,down,1,27,16,0.593,0.247
+sp_lead,Tomatoes,Los Angeles,up,2,48,30,0.625,0.309
+sp_lead,Tomatoes,Los Angeles,down,2,57,33,0.579,0.321
+usda_tone,Tomatoes,Los Angeles,up,1,25,19,0.76,0.204
+usda_tone,Tomatoes,Los Angeles,down,1,21,16,0.762,0.202
+sp_lead,Tomatoes,New York,up,2,45,23,0.511,0.388
+sp_lead,Tomatoes,New York,down,2,46,24,0.522,0.422
+usda_tone,Tomatoes,New York,up,1,56,37,0.661,0.298
+usda_tone,Tomatoes,New York,down,1,69,49,0.71,0.372
+sp_lead,"Tomatoes, Plum Type",Chicago,up,2,43,29,0.674,0.357
+sp_lead,"Tomatoes, Plum Type",Chicago,down,2,29,23,0.793,0.354
+usda_tone,"Tomatoes, Plum Type",Chicago,up,1,23,11,0.478,0.275
+usda_tone,"Tomatoes, Plum Type",Chicago,down,1,26,21,0.808,0.295
+sp_lead,"Tomatoes, Plum Type",Los Angeles,up,2,52,32,0.615,0.343
+sp_lead,"Tomatoes, Plum Type",Los Angeles,down,2,40,25,0.625,0.339
+usda_tone,"Tomatoes, Plum Type",Los Angeles,up,1,15,9,0.6,0.249
+usda_tone,"Tomatoes, Plum Type",Los Angeles,down,1,14,12,0.857,0.241
+sp_lead,"Tomatoes, Plum Type",New York,up,2,28,23,0.821,0.37
+sp_lead,"Tomatoes, Plum Type",New York,down,2,23,21,0.913,0.401
+usda_tone,"Tomatoes, Plum Type",New York,up,1,46,35,0.761,0.307
+usda_tone,"Tomatoes, Plum Type",New York,down,1,60,43,0.717,0.313
