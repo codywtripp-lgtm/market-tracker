@@ -162,6 +162,16 @@ def test_movement():
     boat = n.movement({**raw, "trans_Mode": "Boat"}, TS)
     assert boat["row_id"] != r["row_id"]
     assert n.movement({**raw, "1 lb units": None}, TS) is None
+    late = n.movement({**raw, "asw_Flag": "Add", "asw_date": "09/18/2026"}, TS)
+    assert "asw=Add:09/18/2026" in late["other_attributes"] and late["row_id"] != r["row_id"]
+
+
+def test_movement_duplicates_are_summed():
+    from pipeline.run import sum_duplicates
+    raw = {"report_date": "09/21/2026", "slug_id": 3283, "commodity": "Cucumbers",
+           "district": "MEXICO CROSSINGS THROUGH OTAY MESA CALIFORNIA", "origin": "Mexico", "1 lb units": 11827}
+    rows = sum_duplicates([n.movement(raw, TS), n.movement({**raw, "1 lb units": 683936}, TS)])
+    assert len(rows) == 1 and rows[0]["volume"] == 11827 + 683936
 
 
 def test_chicken():

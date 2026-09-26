@@ -23,7 +23,10 @@ def weekly():
     df["volume"] = pd.to_numeric(df["volume"], errors="coerce").fillna(0)
     key = ["report_date", "commodity", "variety", "organic", "market", "origin", "other_attributes"]
     df = df.groupby(key, as_index=False)["volume"].max()  # same shipment in two reports -> count once
-    df["week"] = pd.to_datetime(df["report_date"]).dt.to_period("W-SUN").dt.start_time
+    # late additions count toward the date they belong to ("asw=Add:09/18/2026")
+    asw = df["other_attributes"].str.extract(r"asw=[^:;]*:(\d\d/\d\d/\d{4})")[0]
+    effective = pd.to_datetime(asw, format="%m/%d/%Y", errors="coerce").fillna(pd.to_datetime(df["report_date"]))
+    df["week"] = effective.dt.to_period("W-SUN").dt.start_time
     return df.groupby(["commodity", "week"], as_index=False)["volume"].sum().rename(columns={"volume": "volume_lb"})
 
 

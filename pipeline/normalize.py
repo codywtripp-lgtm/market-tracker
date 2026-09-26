@@ -265,6 +265,8 @@ def movement(raw, fetched_at):
     volume = num(raw.get("1 lb units"))
     if volume is None:
         return None
+    # Late additions ("added for 09/18/2026 on 09/25/2026") are separate rows credited to asw_date.
+    asw = f"asw={clean(raw.get('asw_Flag'))}:{clean(raw.get('asw_date'))}" if clean(raw.get("asw_date")) else ""
     return finish({
         "report_date": iso_date(raw.get("report_date") or raw.get("report_begin_date")),
         "commodity": clean(raw.get("commodity")), "variety": clean(raw.get("variety")),
@@ -272,7 +274,8 @@ def movement(raw, fetched_at):
         "market": clean(raw.get("district")), "market_type": "movement",
         "origin": clean(raw.get("origin")),
         "other_attributes": "; ".join(x for x in (other_attributes(raw),
-                                                  f"package={clean(raw.get('package'))}" if clean(raw.get("package")) else "") if x),
+                                                  f"package={clean(raw.get('package'))}" if clean(raw.get("package")) else "",
+                                                  asw) if x),
         "volume": volume, "volume_unit": "lb",
         "report_id": clean(raw.get("slug_id")), "report_title": clean(raw.get("report_title")),
     }, fetched_at)
