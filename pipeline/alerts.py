@@ -122,7 +122,7 @@ def evaluate(term, ship, today, rules):
                 word = "up" if direction == "up" else "down"
                 alerts.append({
                     "signal": "sp_lead", "commodity": commodity, "market": market, "direction": direction,
-                    "headline": f"{commodity}: shipping point {word} {pct(sc).lstrip('+-')} this week; {market} hasn't moved yet ({pct(tc)}).",
+                    "headline": f"{commodity}: shipping point {word} {pct(sc).lstrip('+-')} this week; {market} hasn't followed yet ({pct(tc)} this week).",
                     "expect": f"Expect {market} prices to {'rise' if direction == 'up' else 'fall'} within ~2 weeks.",
                     "record": f"{market} followed {rule['hits']} of the last {rule['cases']} times (normally {float(rule['base_rate']):.0%}).",
                     "hit_rate": float(rule["hit_rate"]), "sp_change": round((math.exp(sc) - 1) * 100, 1),
@@ -136,7 +136,9 @@ def evaluate(term, ship, today, rules):
             direction = "up" if round(avg) >= 1 else "down" if round(avg) <= -1 else None
             rule = rules.get(("usda_tone", commodity, market, direction)) if direction else None
             if rule:
-                tones = rows.loc[rows["market_tone"] != "", "market_tone"]
+                # quote the comment that actually says "higher"/"lower", not a "steady" one from the same week
+                want = 1 if direction == "up" else -1
+                tones = rows.loc[rows["market_tone"].map(tone_score) == want, "market_tone"]
                 tone = tones.mode().iat[0] if not tones.empty else ""
                 alerts.append({
                     "signal": "usda_tone", "commodity": commodity, "market": market, "direction": direction,

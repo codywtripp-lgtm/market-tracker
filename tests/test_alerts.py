@@ -75,6 +75,18 @@ def test_weak_or_thin_rules_never_alert(tmp_path, monkeypatch):
     assert ("usda_tone", "Romaine", "New York", "up") not in rules   # only 10 cases: too thin
 
 
+def test_tone_alert_quotes_a_matching_comment(tmp_path, monkeypatch):
+    setup(tmp_path, monkeypatch, sp_now=20, ny_now=30)
+    (tmp_path / "data" / "signals" / "rules.csv").write_text(RULES + "usda_tone,Celery,New York,down,1,40,30,0.75,0.3\n")
+    days = [TODAY - dt.timedelta(days=b) for b in range(4)]
+    tones = ["MARKET LOWER", "MARKET LOWER", "MARKET SLIGHTLY LOWER", "MARKET ABOUT STEADY"]
+    store.write_rows("terminal", [celery(d, 30, tone=t) for d, t in zip(days, tones)])
+    alerts.main(today=TODAY)
+    [a] = json.loads((tmp_path / "data" / "export" / "alerts.json").read_text())["alerts"]
+    assert a["signal"] == "usda_tone" and a["direction"] == "down"
+    assert "Steady" not in a["headline"] and "Market lower" in a["headline"]
+
+
 def test_tone_scoring():
     assert alerts.tone_score("MARKET SLIGHTLY HIGHER") == 1
     assert alerts.tone_score("Lower") == -1
