@@ -278,6 +278,17 @@ def coverage(resid):
     return hits / total if total else float("nan")
 
 
+MODEL = "by_commodity_market"
+
+
+def _choices(r):
+    """(commodity, market) -> MODEL or "naive", whichever had the smaller average miss in `r`."""
+    if r.empty:
+        return {}
+    means = r.groupby(["commodity", "market", "method"])["ape"].mean().unstack("method")
+    return {k: (MODEL if row.get(MODEL, np.inf) <= row.get("naive", np.inf) else "naive") for k, row in means.iterrows()}
+
+
 def main():
     panel = add_seasonal(add_drivers(weekly_panel()))
     last_year = int(panel["year"].max())
@@ -286,25 +297,36 @@ def main():
         lambda g: pd.Series({"mae_pct": np.average(g["mae_pct"], weights=g["n"]),
                              "direction_hit": np.average(g["direction_hit"].fillna(0), weights=g["n"])}),
         include_groups=False).reset_index()
-    # choose per horizon: the model only if it beats both baselines on average error
-    best = {}
+    # Per item and market: use the model only where it has beaten "no change" (stable items such
+    # as onions barely move, and a model adds noise there). Scored honestly: each test year's
+    # choice uses only earlier years.
+    hybrid_rows, choice = [], {}
     for h in HORIZONS:
-        s = summary[summary["horizon"] == h].set_index("method")["mae_pct"]
-        best[h] = s.idxmin() if not s.empty else "seasonal"
-    # ranges come from the out-of-sample errors of the method actually used
-    used = pd.concat([resid[(resid["horizon"] == h) & (resid["method"] == best[h])] for h in HORIZONS])
-    cov = coverage(used) if not used.empty else float("nan")
+        r = resid[(resid["horizon"] == h) & resid["method"].isin([MODEL, "naive"])]
+        for Y in sorted(r["year"].unique()):
+            prior = _choices(r[r["year"] < Y])
+            cur = r[r["year"] == Y]
+            pick = [prior.get((c, m), MODEL) for c, m in zip(cur["commodity"], cur["market"])]
+            hybrid_rows.append(cur[cur["method"].to_numpy() == np.array(pick)].assign(method="per_item"))
+        choice[h] = _choices(r)  # live choice uses all years
+    hybrid = pd.concat(hybrid_rows, ignore_index=True)
+    summary = pd.concat([summary, hybrid.groupby("horizon")["ape"].mean().rename("mae_pct").reset_index()
+                        .assign(method="per_item", direction_hit=float("nan"))], ignore_index=True)
+    best = {h: "per_item" for h in HORIZONS}
+    cov = coverage(hybrid)
 
-    # live forecast: train on everything available
+    # live forecast: train on everything available; ranges from the chosen method's past errors
     usable = panel.dropna(subset=["lp"])
-    table, pooled = interval_table(used)
+    table, pooled = interval_table(hybrid)
     latest = usable.sort_values("week").groupby("series_id").tail(1)
     today = pd.Timestamp(dt.date.today())
     latest = latest[(today - latest["week"]).dt.days <= 14]  # skip series that stopped reporting
     out = {}
     for h in HORIZONS:
-        fit_fn, pred_fn = METHODS[best[h]]
-        pred = pred_fn(fit_fn(usable.dropna(subset=[f"y{h}"]), h), latest, h)
+        fit_fn, pred_fn = METHODS[MODEL]
+        model_pred = pred_fn(fit_fn(usable.dropna(subset=[f"y{h}"]), h), latest, h)
+        use_model = np.array([choice[h].get((c, m), MODEL) == MODEL for c, m in zip(latest["commodity"], latest["market"])])
+        pred = np.where(use_model, model_pred, 0.0)
         for (_, r), p in zip(latest.iterrows(), pred):
             lo, hi = table.get((r["commodity"], h), pooled[h])
             wk = (r["week"] + pd.Timedelta(weeks=h)).date().isoformat()
@@ -321,10 +343,11 @@ def main():
     summary.round(4).to_csv(EXPORT / "forecast_backtest.csv", index=False)
 
     # Report card: typical 2-week miss per commodity x market, ours vs. "no change"
-    two = resid[resid["horizon"] == 2]
-    card = (two[two["method"].isin([best[2], "naive"])]
-            .groupby(["commodity", "market", "method"])["ape"].mean().unstack("method").round(1)
-            .rename(columns={best[2]: "forecast_miss_pct", "naive": "no_change_miss_pct"}).reset_index())
+    two = pd.concat([hybrid[hybrid["horizon"] == 2], resid[(resid["horizon"] == 2) & (resid["method"] == "naive")]])
+    card = (two.groupby(["commodity", "market", "method"])["ape"].mean().unstack("method").round(1)
+            .rename(columns={"per_item": "forecast_miss_pct", "naive": "no_change_miss_pct"}).reset_index())
+    card["uses"] = [("model" if choice[2].get((c, m), MODEL) == MODEL else "no change")
+                    for c, m in zip(card["commodity"], card["market"])]
     card["better_by_pct"] = (100 * (1 - card["forecast_miss_pct"] / card["no_change_miss_pct"])).round(0)
     card.sort_values(["market", "forecast_miss_pct"]).to_csv(EXPORT / "forecast_report_card.csv", index=False)
     print("2-week report card, New York:")
