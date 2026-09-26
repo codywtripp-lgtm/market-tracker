@@ -78,7 +78,7 @@ SOURCES = {
 def _get(url, params, tries=4):
     for attempt in range(tries):
         try:
-            r = requests.get(url, params=params, timeout=120)
+            r = requests.get(url, params=params, timeout=240)  # the archive can be slow for 10-year ranges
             if r.status_code == 200:
                 return r.json()["daily"]
             log.warning("HTTP %s %s", r.status_code, r.text[:200])

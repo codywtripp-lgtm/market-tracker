@@ -253,7 +253,9 @@ METHODS = {
 # here and to MODEL_CANDIDATES to re-test.
 METHODS["by_commodity_market+weather"] = _by_group(WEATHER, keys=("commodity", "market"))
 METHODS["pooled+weather"] = _pooled(WEATHER)  # weather effects shared across items (more data per effect)
-MODEL_CANDIDATES = ["by_commodity_market", "by_commodity_market+weather"]
+MODEL_CANDIDATES = ["by_commodity_market", "by_commodity_market+weather"]  # first = base
+MIN_GAIN = 0.01
+# Tested 2026-09-26: weather gave 13.222% vs 13.229% avg miss (noise), so the base model stays.
 
 
 def backtest(panel, last_year):
@@ -330,7 +332,13 @@ def main():
     # The regression variant with the smallest average miss over all horizons becomes the model.
     global MODEL
     overall = summary[summary["method"].isin(MODEL_CANDIDATES)].groupby("method")["mae_pct"].mean()
-    MODEL = overall.idxmin()
+    # A more complex variant must beat the base model by at least MIN_GAIN (relative) to be used,
+    # so noise-level differences don't switch models.
+    base = MODEL_CANDIDATES[0]
+    MODEL = base
+    for m in MODEL_CANDIDATES[1:]:
+        if m in overall and overall[m] < overall[base] * (1 - MIN_GAIN) and overall[m] < overall[MODEL]:
+            MODEL = m
     print("model variants (avg miss over 1-4 weeks):", overall.round(3).to_dict(), "->", MODEL)
     cmp = (resid[(resid["horizon"] == 2) & resid["method"].isin(MODEL_CANDIDATES + ["naive", "pooled", "pooled+weather"])]
            .groupby(["commodity", "method"])["ape"].mean().unstack("method").round(2))
