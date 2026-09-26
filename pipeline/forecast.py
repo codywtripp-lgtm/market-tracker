@@ -34,7 +34,7 @@ import json
 import numpy as np
 import pandas as pd
 
-from . import signals, store, volumes
+from . import signals, store, volumes, weather
 
 EXPORT = store.DATA / "export"
 HORIZONS = [1, 2, 3, 4]
@@ -86,6 +86,17 @@ def add_drivers(panel):
     panel = panel.sort_values(["series_id", "week"]).reset_index(drop=True)
     panel["sp_prev"] = panel.groupby("series_id")["sp"].shift(1)
     # shipment volumes from the last COMPLETE week (this week is partial, and USDA publishes a day late)
+    # weather stress at the regions supplying each commodity this month (known by week's end)
+    wx = weather.weekly_stress()
+    if wx.empty:
+        for c in WEATHER_COLS:
+            panel[c] = np.nan
+    else:
+        panel = panel.merge(wx, on=["commodity", "week"], how="left")
+        # and the week before, since damage often shows up in supply a week or two later
+        panel = panel.sort_values(["series_id", "week"]).reset_index(drop=True)
+        for c in ("freeze_days", "heat_days", "rain_days", "precip_anom"):
+            panel[f"{c}_prev"] = panel.groupby("series_id")[c].shift(1)
     supply = volumes.supply_features(volumes.weekly())
     if supply.empty:  # no movement data yet
         panel["supply_gap"] = panel["supply_chg"] = np.nan
@@ -138,6 +149,9 @@ def add_seasonal(panel):
 BASE = ["seasonal", "gap", "mom1", "mom4", "sp", "tone"]
 EXTENDED = BASE + ["sp_prev"]
 SUPPLY = BASE + ["supply_gap", "supply_chg"]  # + shipment volumes vs usual, and their recent change
+WEATHER_COLS = ["freeze_days", "heat_days", "rain_days", "precip_anom",
+                "freeze_days_prev", "heat_days_prev", "rain_days_prev", "precip_anom_prev"]
+WEATHER = BASE + WEATHER_COLS
 # Pull toward the pooled coefficients, expressed as "worth this many rows of data": a commodity
 # with far more rows than this mostly follows its own data; a thin one stays near the pooled fit.
 PRIOR_ROWS = 1000
@@ -237,7 +251,11 @@ METHODS = {
 # Tested 2026-09-26: adding shipment volumes (SUPPLY) did not help (avg miss 13.24% vs 13.23%),
 # so it's off. Add "by_commodity_market+supply": _by_group(SUPPLY, keys=("commodity", "market"))
 # here and to MODEL_CANDIDATES to re-test.
-MODEL_CANDIDATES = ["by_commodity_market"]
+METHODS["by_commodity_market+weather"] = _by_group(WEATHER, keys=("commodity", "market"))
+METHODS["pooled+weather"] = _pooled(WEATHER)  # weather effects shared across items (more data per effect)
+MODEL_CANDIDATES = ["by_commodity_market", "by_commodity_market+weather"]  # first = base
+MIN_GAIN = 0.01
+# Tested 2026-09-26: weather gave 13.222% vs 13.229% avg miss (noise), so the base model stays.
 
 
 def backtest(panel, last_year):
@@ -314,9 +332,15 @@ def main():
     # The regression variant with the smallest average miss over all horizons becomes the model.
     global MODEL
     overall = summary[summary["method"].isin(MODEL_CANDIDATES)].groupby("method")["mae_pct"].mean()
-    MODEL = overall.idxmin()
+    # A more complex variant must beat the base model by at least MIN_GAIN (relative) to be used,
+    # so noise-level differences don't switch models.
+    base = MODEL_CANDIDATES[0]
+    MODEL = base
+    for m in MODEL_CANDIDATES[1:]:
+        if m in overall and overall[m] < overall[base] * (1 - MIN_GAIN) and overall[m] < overall[MODEL]:
+            MODEL = m
     print("model variants (avg miss over 1-4 weeks):", overall.round(3).to_dict(), "->", MODEL)
-    cmp = (resid[(resid["horizon"] == 2) & resid["method"].isin(MODEL_CANDIDATES + ["naive"])]
+    cmp = (resid[(resid["horizon"] == 2) & resid["method"].isin(MODEL_CANDIDATES + ["naive", "pooled", "pooled+weather"])]
            .groupby(["commodity", "method"])["ape"].mean().unstack("method").round(2))
     print("2-week miss by commodity (all markets):")
     print(cmp.to_string())
