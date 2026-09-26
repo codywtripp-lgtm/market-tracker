@@ -32,6 +32,7 @@ jobs:
           MARS_API_KEY: ${{ secrets.MARS_API_KEY }}
       - run: python -m pipeline.cpi
       - run: python -m pipeline.export
+      - run: python -m pipeline.volumes
       - run: python -m pipeline.alerts
       - run: python -m pipeline.forecast
       - run: python scripts/build_site.py

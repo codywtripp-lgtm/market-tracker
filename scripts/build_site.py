@@ -84,6 +84,8 @@ def main():
     fc = json.loads(forecasts.read_text())["series"] if forecasts.exists() else {}
     # typical 2-week forecast miss per commodity x market (walk-forward), shown next to forecasts
     card = {(r["commodity"], r["market"]): r for r in read("forecast_report_card.csv")}
+    # last complete week's shipments vs. the same weeks last year, per commodity (all origins)
+    supply = {r["commodity"]: num(r.get("vs_last_year_pct")) for r in read("supply.csv")}
     # Chicken is quoted in cents/lb; show it in dollars like everything else.
     scale = {sid: 0.01 if s["compare_unit"] == "cents/lb" else 1 for sid, s in series.items()}
 
@@ -115,6 +117,7 @@ def main():
             "forecast": {p["h"]: [p["lo"], p["mid"], p["hi"]] for p in fc.get(sid, {}).get("points", [])},
             "fcMiss": num(card.get((r["commodity"], r["market"]), {}).get("forecast_miss_pct")),
             "fcStable": card.get((r["commodity"], r["market"]), {}).get("uses") == "no change",
+            "supplyVsLastYear": supply.get(r["commodity"]) if r["market_type"] in ("terminal", "shipping point") else None,
         })
     alerts = EXPORT / "alerts.json"
     if alerts.exists():

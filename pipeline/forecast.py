@@ -34,7 +34,7 @@ import json
 import numpy as np
 import pandas as pd
 
-from . import signals, store
+from . import signals, store, volumes
 
 EXPORT = store.DATA / "export"
 HORIZONS = [1, 2, 3, 4]
@@ -85,6 +85,14 @@ def add_drivers(panel):
     # last week's shipping-point move too (terminals often lag by about a week)
     panel = panel.sort_values(["series_id", "week"]).reset_index(drop=True)
     panel["sp_prev"] = panel.groupby("series_id")["sp"].shift(1)
+    # shipment volumes from the last COMPLETE week (this week is partial, and USDA publishes a day late)
+    supply = volumes.supply_features(volumes.weekly())
+    if supply.empty:  # no movement data yet
+        panel["supply_gap"] = panel["supply_chg"] = np.nan
+    else:
+        supply["week"] = pd.to_datetime(supply["week"]) + pd.Timedelta(weeks=1)
+        panel = panel.merge(supply, on=["commodity", "week"], how="left")
+    panel = panel.sort_values(["series_id", "week"]).reset_index(drop=True)
     return panel
 
 
@@ -129,6 +137,7 @@ def add_seasonal(panel):
 
 BASE = ["seasonal", "gap", "mom1", "mom4", "sp", "tone"]
 EXTENDED = BASE + ["sp_prev"]
+SUPPLY = BASE + ["supply_gap", "supply_chg"]  # + shipment volumes vs usual, and their recent change
 # Pull toward the pooled coefficients, expressed as "worth this many rows of data": a commodity
 # with far more rows than this mostly follows its own data; a thin one stays near the pooled fit.
 PRIOR_ROWS = 1000
@@ -169,7 +178,8 @@ def _by_group(cols, keys=("commodity",), prior_rows=PRIOR_ROWS):
         X, y = design(train, h, cols), train[f"y{h}"].to_numpy()
         pooled = ols(X, y)
         per = {}
-        lam = np.diag(np.diag(X.T @ X) / len(X) * prior_rows)  # scale-aware penalty per feature
+        # scale-aware penalty per feature; tiny floor keeps it solvable if an input is all zeros
+        lam = np.diag(np.diag(X.T @ X) / len(X) * prior_rows + 1e-9)
         for g, idx in pd.Series(np.arange(len(train))).groupby(group(train).to_numpy()).groups.items():
             idx = np.asarray(idx)
             Xg, yg = X[idx], y[idx]
@@ -224,6 +234,10 @@ METHODS = {
     "by_commodity": _by_group(BASE),
     "by_commodity_market": _by_group(BASE, keys=("commodity", "market")),  # v2
 }
+# Tested 2026-09-26: adding shipment volumes (SUPPLY) did not help (avg miss 13.24% vs 13.23%),
+# so it's off. Add "by_commodity_market+supply": _by_group(SUPPLY, keys=("commodity", "market"))
+# here and to MODEL_CANDIDATES to re-test.
+MODEL_CANDIDATES = ["by_commodity_market"]
 
 
 def backtest(panel, last_year):
@@ -278,7 +292,7 @@ def coverage(resid):
     return hits / total if total else float("nan")
 
 
-MODEL = "by_commodity_market"
+MODEL = "by_commodity_market"  # replaced in main() by the best of MODEL_CANDIDATES
 
 
 def _choices(r):
@@ -297,6 +311,16 @@ def main():
         lambda g: pd.Series({"mae_pct": np.average(g["mae_pct"], weights=g["n"]),
                              "direction_hit": np.average(g["direction_hit"].fillna(0), weights=g["n"])}),
         include_groups=False).reset_index()
+    # The regression variant with the smallest average miss over all horizons becomes the model.
+    global MODEL
+    overall = summary[summary["method"].isin(MODEL_CANDIDATES)].groupby("method")["mae_pct"].mean()
+    MODEL = overall.idxmin()
+    print("model variants (avg miss over 1-4 weeks):", overall.round(3).to_dict(), "->", MODEL)
+    cmp = (resid[(resid["horizon"] == 2) & resid["method"].isin(MODEL_CANDIDATES + ["naive"])]
+           .groupby(["commodity", "method"])["ape"].mean().unstack("method").round(2))
+    print("2-week miss by commodity (all markets):")
+    print(cmp.to_string())
+
     # Per item and market: use the model only where it has beaten "no change" (stable items such
     # as onions barely move, and a model adds noise there). Scored honestly: each test year's
     # choice uses only earlier years.

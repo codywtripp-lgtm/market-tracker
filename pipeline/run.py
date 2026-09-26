@@ -18,7 +18,21 @@ from .usda import Client, USDAError
 
 log = logging.getLogger("pipeline")
 
-SOURCES = ["terminal", "shipping_point", "retail", "beef", "chicken"]
+SOURCES = ["terminal", "shipping_point", "retail", "beef", "chicken", "movement"]
+
+
+def sum_duplicates(rows):
+    """Movement reports list some shipments as several rows identical except for volume
+    (e.g. separate entries at one crossing). Add them up rather than keep only one."""
+    merged = {}
+    for r in rows:
+        if not r:
+            continue
+        if r["row_id"] in merged:
+            merged[r["row_id"]]["volume"] += r["volume"]
+        else:
+            merged[r["row_id"]] = dict(r)
+    return list(merged.values())
 
 
 def run(client, start, end, sources):
@@ -55,6 +69,13 @@ def run(client, start, end, sources):
                 normalize.retail(r, fetched_at)
                 for r in client.mars(slug, "Report Details", start, end)
                 if r.get("commodity") in config.RETAIL_COMMODITIES])
+
+    if "movement" in sources:
+        for slug in config.MOVEMENT_REPORTS:
+            job("movement", slug, lambda slug=slug: sum_duplicates([
+                normalize.movement(r, fetched_at)
+                for r in client.mars(slug, "Report Details", start, end)
+                if r.get("commodity") in config.PRODUCE_COMMODITIES]))
 
     if "beef" in sources:
         for section in config.BEEF_SECTIONS:

@@ -56,6 +56,25 @@ SHIPPING_POINT_REPORTS = [
 
 RETAIL_REPORTS = ["3324"]
 
+# Shipment volumes (truck/air/boat movement, pounds). USDA moved the Mexico-crossing and
+# Miami numbers from the regional reports into the national one (WA_FV170) around 2024, so
+# all are fetched and de-duplicated when volumes are totalled (pipeline/volumes.py).
+MOVEMENT_REPORTS = [
+    "3283",  # National (WA_FV170): imports, Mexico crossings (recent years), Canada
+    "3119",  # El Centro: CA lettuce, celery, broccoli, carrots
+    "3127",  # Phoenix: AZ lettuce, celery, broccoli
+    "2899",  # Fresno: strawberries, CA avocados, grapes
+    "2925",  # Idaho Falls: potatoes, onions
+    "3123",  # McAllen: Mexico via Texas (avocados, limes, tomatoes) until ~2024
+    "3125",  # Nogales: Mexico via Arizona (tomatoes, cucumbers, peppers) until ~2024
+    "3031",  # Miami: bananas and Caribbean imports until ~2024
+    "3105",  # Orlando: Florida tomatoes, peppers, cucumbers
+    "2717",  # Thomasville: Georgia vegetables
+    "3165",  # Raleigh: Carolina vegetables
+    "2768",  # Benton Harbor: Michigan
+    "3332",  # Yakima: Washington
+]
+
 BEEF_REPORT = "2453"  # LMR datamart, National Daily Boxed Beef Cutout (LM_XB403), $/cwt
 BEEF_SECTIONS = ["Current Cutout Values", "Choice Cuts", "Select Cuts", "Ground Beef"]
 

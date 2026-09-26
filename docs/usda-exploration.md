@@ -98,6 +98,26 @@ Example (NY, 2026-09-24): `HASS | cartons 2 layer | 48s | origin=Mexico | 32.00�
 Section is `Report Detail` (singular). Fields: `item` ("Breast - B/S", "Wings - Whole", "Leg quarters - Bulk", ...), `trade_status` (Domestic/Export), `condition` (Fresh/Frozen), `low_price, high_price, wtd_avg_price, volume`. **Units: cents/lb**, volume in pounds (reported as thousands? unverified). Weekly.
 Retail: 2756 (chicken) and 3228 (beef) weekly grocery feature reports: `region, type, price_unit, price_avg/min/max, store_count`.
 
+## Shipment volumes — movement reports (added 2026-09-26)
+
+Daily truck/air/boat movement in pounds (`1 lb units`) by commodity, district (crossing, port or growing district), origin, transport mode and import/export flag. Stored in `data/raw/movement/` (`volume` column), totalled weekly by `pipeline/volumes.py`.
+
+| Reports | Covers |
+|---|---|
+| 3283 National (WA_FV170) | Imports by port, Canada; **Mexico crossings from ~2024** |
+| 3119 El Centro, 3127 Phoenix | CA/AZ lettuce, celery, broccoli, carrots (Salinas, Santa Maria, Yuma…) |
+| 2899 Fresno | Strawberries, CA avocados, grapes |
+| 2925 Idaho Falls | Potatoes, onions |
+| 3123 McAllen, 3125 Nogales | Mexico crossings via Texas / Arizona **until ~2024** (now in 3283) |
+| 3031 Miami | Bananas & Caribbean imports until ~2024 |
+| 3105 Orlando, 2717, 3165, 2768, 3332 | FL, GA, Carolinas, MI, WA |
+
+Gotchas:
+- **Reorganization ~2024**: Mexico-crossing and Miami numbers moved from regional reports to the national one. Weekly totals de-duplicate on date/commodity/district/origin/variety/attributes (keeping the larger figure), but district names can differ between reports, so a level shift around the transition is possible.
+- **Split entries**: some shipments appear as several rows identical except volume (e.g. Otay Mesa). They're **summed** at fetch time.
+- **Late additions** (`asw_Flag`=Add, `adjustments`="added for 09/18/2026 on 09/25/2026") are separate rows; weekly totals credit them to `asw_date`.
+- National report history is thin before ~2022 (hundreds of rows/week vs thousands now).
+
 ## Terminal consistency (days reported, last 12 months, ~248 possible)
 
 | Item | NY | LA | CHI |
