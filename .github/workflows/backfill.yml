@@ -56,6 +56,7 @@ jobs:
               git push
             fi
           done
+          python -m pipeline.cpi
           python -m pipeline.export
           git add data
           if ! git diff --cached --quiet; then

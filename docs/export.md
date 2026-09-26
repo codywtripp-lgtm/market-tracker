@@ -38,4 +38,10 @@ Excluded from headline prices: rows marked Fair/Poor/Ordinary/Fine appearance or
 - `status`: **cheap** ≤ 25th percentile, **expensive** ≥ 75th, otherwise **normal**. Needs at least 3 prior years; else "not enough history".
 - Also: `pct_vs_norm`, `pct_vs_4_weeks_ago`, `pct_vs_last_year`.
 
-Not yet adjusted for inflation; a later step can deflate by CPI so a 2016 price compares fairly with today.
+## Inflation
+
+The seasonal norm and percentile use **inflation-adjusted** prices: every past week is restated in today's dollars using the BLS CPI "Food at home" index (series CUUR0000SAF11, `data/raw/cpi/food_at_home.csv`, refreshed daily). So a 2016 avocado price is compared fairly with today's. `seasonal_norm` is in today's dollars.
+
+`prices_weekly.csv` has both `compare_price` (actual dollars) and `real_compare_price` (today's dollars). `pct_vs_4_weeks_ago` and `pct_vs_last_year` use actual dollars.
+
+Caveat: this is a retail food index applied to wholesale prices. It removes general inflation, not commodity-specific cost trends; good enough for "cheap vs. expensive", worth revisiting for forecasting (e.g. a PPI series).

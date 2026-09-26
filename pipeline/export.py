@@ -19,7 +19,7 @@ import statistics
 from collections import defaultdict
 from pathlib import Path
 
-from . import store
+from . import cpi, store
 
 EXPORT = store.DATA / "export"
 
@@ -199,8 +199,9 @@ def seasonal_status(weekly, week, value):
             "percentile": round(pct * 100), "status": status, "years_of_history": len(years)}
 
 
-def build(rows, today=None):
+def build(rows, today=None, deflator=None):
     today = today or dt.date.today()
+    deflator = deflator or cpi.Deflator({})
     grouped = load(rows)
     chosen = select(grouped, today)
 
@@ -231,9 +232,12 @@ def build(rows, today=None):
                                    "compare_price": value, "compare_unit": unit, "low": v["low"],
                                    "high": v["high"], "origins": v["origins"], "quotes": v["quotes"]})
         weekly_avg = {w: round(statistics.mean(vs), 4) for w, vs in weekly.items()}
+        # Same prices in today's dollars (CPI food at home), for fair multi-year comparisons.
+        weekly_real = {w: round(v * deflator.factor(w.isoformat()), 4) for w, v in weekly_avg.items()}
         for w, v in sorted(weekly_avg.items()):
             weekly_rows.append({**base, "week_start": w.isoformat(), "compare_price": v,
-                                "compare_unit": unit, "days": len(weekly[w])})
+                                "real_compare_price": weekly_real[w], "compare_unit": unit,
+                                "days": len(weekly[w])})
 
         last_week = max(weekly_avg)
         if (today - last_week).days <= 14:  # skip series that stopped reporting
@@ -244,15 +248,15 @@ def build(rows, today=None):
                                 "compare_price": value, "compare_unit": unit,
                                 "pct_vs_4_weeks_ago": round((value / prev - 1) * 100, 1) if prev else "",
                                 "pct_vs_last_year": round((value / yago - 1) * 100, 1) if yago else "",
-                                **seasonal_status(weekly_avg, last_week, value)})
+                                **seasonal_status(weekly_real, last_week, weekly_real[last_week])})
 
     base_f = ["series_id", "commodity", "market", "market_type"]
     write_csv(EXPORT / "series.csv", base_f + ["label", "variety", "pack_size", "item_size", "properties",
               "organic", "price_unit", "compare_unit", "coverage_last_year", "first_date", "last_date"], series_rows)
     write_csv(EXPORT / "prices_daily_365.csv", base_f + ["date", "price", "price_unit", "compare_price",
               "compare_unit", "low", "high", "origins", "quotes"], daily_rows)
-    write_csv(EXPORT / "prices_weekly.csv", base_f + ["week_start", "compare_price", "compare_unit", "days"],
-              weekly_rows)
+    write_csv(EXPORT / "prices_weekly.csv", base_f + ["week_start", "compare_price", "real_compare_price",
+              "compare_unit", "days"], weekly_rows)
     write_csv(EXPORT / "latest.csv", base_f + ["label", "week_start", "compare_price", "compare_unit",
               "seasonal_norm", "pct_vs_norm", "percentile", "status", "years_of_history",
               "pct_vs_4_weeks_ago", "pct_vs_last_year"],
@@ -262,7 +266,7 @@ def build(rows, today=None):
 
 
 def main():
-    counts = build(store.iter_all())
+    counts = build(store.iter_all(), deflator=cpi.Deflator(cpi.load()))
     print("export:", counts)
 
 
