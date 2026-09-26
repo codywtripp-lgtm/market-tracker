@@ -4,3 +4,4 @@ __pycache__/
 .env
 _site/
 _preview/
+backtest_output/
