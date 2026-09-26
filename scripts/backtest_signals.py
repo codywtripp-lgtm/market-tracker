@@ -138,6 +138,18 @@ def main():
                 if r:
                     results.append({"signal": "shipping point lead", "direction": "up" if d > 0 else "down",
                                     "commodity": commodity, "market": mkt, "horizon_weeks": HORIZON, **r})
+            # 1b. the actionable case: shipping point moved, the terminal hasn't caught up yet
+            #     (terminal moved < 3% the same way this week)
+            same_week = t.reindex(sig.index)
+            lagging = sig.copy()
+            lagging[(sig == 1) & (same_week >= math.log(1.03))] = 0
+            lagging[(sig == -1) & (same_week <= math.log(0.97))] = 0
+            lagging[same_week.isna()] = float("nan")
+            for d in (1, -1):
+                r = evaluate(lagging, fwd, d)
+                if r:
+                    results.append({"signal": "shipping point lead, terminal not yet moved", "direction": "up" if d > 0 else "down",
+                                    "commodity": commodity, "market": mkt, "horizon_weeks": HORIZON, **r})
             # correlation of this week's shipping-point change with terminal change k weeks later
             for k in range(0, 4):
                 pair = pd.concat([sp, t.shift(-k)], axis=1).dropna()
