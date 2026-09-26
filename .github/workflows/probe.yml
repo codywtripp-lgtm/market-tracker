@@ -1,0 +1,24 @@
+# One-off exploration job; run manually from the Actions tab if needed.
+name: API probe
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+      - run: python scripts/probe_api.py
+        env:
+          MARS_API_KEY: ${{ secrets.MARS_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: probe-output
+          path: probe_output/
