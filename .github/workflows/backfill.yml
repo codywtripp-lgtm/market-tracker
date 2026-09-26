@@ -56,3 +56,10 @@ jobs:
               git push
             fi
           done
+          python -m pipeline.export
+          git add data
+          if ! git diff --cached --quiet; then
+            git commit -m "Data: rebuild export after backfill"
+            git pull --rebase
+            git push
+          fi

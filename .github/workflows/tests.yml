@@ -30,6 +30,7 @@ jobs:
       - run: python -m pipeline.run
         env:
           MARS_API_KEY: ${{ secrets.MARS_API_KEY }}
+      - run: python -m pipeline.export
       - uses: actions/upload-artifact@v4
         if: always()
         with:
