@@ -1,248 +1,387 @@
-// Produce Price Check: list of this week's prices and a seasonal chart per item.
+// Produce Price Check — one page: filters on the left, big moves, what's going on, one chart, cheap/expensive list.
+"use strict";
+
 const MARKETS = [
-  { key: "New York", label: "New York", match: (i) => i.type === "terminal" && i.market === "New York" },
-  { key: "Los Angeles", label: "Los Angeles", match: (i) => i.type === "terminal" && i.market === "Los Angeles" },
-  { key: "Chicago", label: "Chicago", match: (i) => i.type === "terminal" && i.market === "Chicago" },
+  { key: "ny", label: "New York", match: (i) => i.type === "terminal" && i.market === "New York" },
+  { key: "la", label: "Los Angeles", match: (i) => i.type === "terminal" && i.market === "Los Angeles" },
+  { key: "chi", label: "Chicago", match: (i) => i.type === "terminal" && i.market === "Chicago" },
   { key: "sp", label: "Shipping point", match: (i) => i.type === "shipping point" },
   { key: "retail", label: "Grocery ads", match: (i) => i.type === "retail" },
   { key: "meat", label: "Beef & chicken", match: (i) => i.type === "wholesale" },
 ];
-const STATUSES = [
-  { key: "all", label: "All" },
-  { key: "cheap", label: "▼ Cheap" },
-  { key: "expensive", label: "▲ Expensive" },
+const RANGES = [
+  { key: "3m", label: "3 mo", days: 92 }, { key: "1y", label: "1 yr", days: 366 },
+  { key: "5y", label: "5 yr", days: 1827 }, { key: "all", label: "All", days: 1e6 },
 ];
-const ORDER = { cheap: 0, normal: 1, expensive: 2 };
-const state = { market: "New York", status: "all", items: [] };
+const VIEWS = [
+  { key: "auto", label: "Auto" }, { key: "pct", label: "% vs usual" }, { key: "price", label: "Price" },
+];
+const MAX_SERIES = 8; // categorical palette has 8 validated slots
+const ORDER = { cheap: 0, expensive: 1, normal: 2 };
 
-const $ = (id) => document.getElementById(id);
-const money = (v) => (v == null ? "—" : v >= 100 ? `$${v.toFixed(0)}` : `$${v.toFixed(2)}`);
-const unitShort = (u) => {
-  if (!u) return "";
-  const known = { "per lb": "/lb", "per each": "/ea", "$/package": "/case", "$/cwt": "/cwt", "cents/lb": "¢/lb" };
-  return known[u] || "/" + u.replace(/^\$\//, "");
+const state = {
+  market: "ny", range: "1y", view: "auto",
+  selected: [],            // item keys, in the order added
+  slots: {},               // item key -> color slot 1..8 (stable while selected)
+  items: [], asOf: "",
+  histories: {},           // series id -> rows
 };
-const pct = (v) => (v == null ? "—" : `${v > 0 ? "+" : ""}${v.toFixed(0)}%`);
+
+// ---------- helpers ----------
+const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const tidy = (s) => (!s || s === "N/A" ? "" : s.charAt(0) + s.slice(1).toLowerCase());
+const cap = (s) => (!s || s === "N/A" ? "" : s.charAt(0).toUpperCase() + s.slice(1).toLowerCase());
+const money = (v) => (v == null ? "—" : v >= 100 ? `$${Math.round(v).toLocaleString()}` : `$${v.toFixed(2)}`);
+const pct = (v) => (v == null ? "—" : `${v > 0 ? "+" : ""}${Math.round(v)}%`);
+const unitLabel = (u) => ({ "$/package": "/case", "$/cwt": "/cwt", "per lb": "/lb", "$/per lb": "/lb", "$/each": " each" }[u]
+  || (u ? " / " + u.replace(/^\$\//, "").replace(/^per /, "") : ""));
+const color = (key) => `var(--s${state.slots[key] || 1})`;
+const market = () => MARKETS.find((m) => m.key === state.market);
 
-function badge(item) {
-  if (item.status === "cheap") return `<span class="badge cheap"><span class="dot"></span>▼ Cheap</span>`;
-  if (item.status === "expensive") return `<span class="badge expensive"><span class="dot"></span>▲ Expensive</span>`;
-  if (item.status === "normal") return `<span class="badge normal">Normal</span>`;
-  return `<span class="badge none">Not enough history</span>`;
+// One "item" per commodity in a market (its best-covered series); for meat, one per cut/grade.
+function itemKey(i) {
+  if (i.type === "wholesale") return `${i.commodity}: ${cap(i.variety.replace(/\s*\(.*\)$/, ""))}${i.props ? " · " + i.props : ""}`;
+  return i.commodity;
 }
-
-function vsText(item) {
-  if (item.vsNorm == null) return "";
-  const v = Math.round(item.vsNorm);
-  if (v === 0) return "about usual";
-  return `${Math.abs(v)}% ${v < 0 ? "below" : "above"} usual`;
-}
-
-function title(item) {
-  const variety = tidy(item.variety);
-  return variety && !item.commodity.toLowerCase().includes(variety.toLowerCase())
-    ? `${item.commodity} · ${variety}` : item.commodity;
-}
-
-function describe(item) {
-  const bits = [item.pack, item.size && item.size !== "N/A" ? item.size : ""].filter(Boolean);
-  if (item.type !== "terminal") bits.push(tidy(item.market));
-  return bits.join(" · ");
-}
-
-function renderChips() {
-  $("markets").innerHTML = MARKETS.map((m) =>
-    `<button class="chip" aria-pressed="${m.key === state.market}" data-m="${m.key}">${m.label}</button>`).join("");
-  $("statuses").innerHTML = STATUSES.map((s) =>
-    `<button class="chip" aria-pressed="${s.key === state.status}" data-s="${s.key}">${s.label}</button>`).join("");
-}
-
-function renderList() {
-  const market = MARKETS.find((m) => m.key === state.market);
-  let items = state.items.filter(market.match);
-  const counts = { cheap: 0, expensive: 0 };
-  items.forEach((i) => { if (i.status in counts) counts[i.status]++; });
-  if (state.status !== "all") items = items.filter((i) => i.status === state.status);
-  items.sort((a, b) => (ORDER[a.status] ?? 3) - (ORDER[b.status] ?? 3) || (a.vsNorm ?? 0) - (b.vsNorm ?? 0));
-
-  $("summary").textContent = `${counts.cheap} cheap and ${counts.expensive} expensive right now in ${market.label}.`;
-  $("list").innerHTML = items.map((i) => `
-    <li><button class="item" data-id="${esc(i.id)}">
-      <span class="name">${esc(title(i))}</span>
-      <span class="right"><span class="price">${money(i.price)}<small>${unitShort(i.unit)}</small></span><br>${badge(i)}</span>
-      <span class="detail">${esc(describe(i))}${vsText(i) ? " · " + vsText(i) : ""}</span>
-    </button></li>`).join("");
-  $("empty").hidden = items.length > 0;
-}
-
-// ---- Seasonal chart -------------------------------------------------------
-
-function isoWeek(dateStr) {
-  const d = new Date(dateStr + "T00:00:00Z");
-  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7)); // Thursday of this ISO week
-  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  return { year: d.getUTCFullYear(), week: Math.ceil(((d - yearStart) / 86400000 + 1) / 7) };
-}
-
-function quantile(sorted, q) {
-  if (!sorted.length) return null;
-  const pos = (sorted.length - 1) * q, lo = Math.floor(pos), hi = Math.ceil(pos);
-  return sorted[lo] + (sorted[hi] - sorted[lo]) * (pos - lo);
-}
-
-function seasonal(history) {
-  // history: [[week_start, nominal, real], ...] -> per week-of-year: this year, last year, usual range
-  const rows = history.map(([d, nominal, real]) => ({ d, v: real ?? nominal, ...isoWeek(d) }));
-  const thisYear = rows.length ? rows[rows.length - 1].year : new Date().getFullYear();
-  const byWeek = Array.from({ length: 53 }, (_, i) => ({ week: i + 1, cur: null, last: null, past: [], date: null }));
-  for (const r of rows) {
-    const w = byWeek[r.week - 1];
-    if (r.year === thisYear) { w.cur = r.v; w.date = r.d; }
-    else if (r.year === thisYear - 1) { w.last = r.v; w.past.push(r.v); w.lastDate = r.d; }
-    else w.past.push(r.v);
+function itemsInMarket() {
+  const best = new Map();
+  for (const i of state.items.filter(market().match)) {
+    const k = itemKey(i);
+    const cur = best.get(k);
+    if (!cur || (i.coverage ?? 0) > (cur.coverage ?? 0)) best.set(k, i);
   }
-  for (const w of byWeek) {
-    // smooth the band with neighbouring weeks so it isn't jagged
-    const pool = [-1, 0, 1].flatMap((o) => byWeek[(w.week - 1 + o + 53) % 53].past).sort((a, b) => a - b);
-    w.lo = pool.length >= 3 ? quantile(pool, 0.25) : null;
-    w.hi = pool.length >= 3 ? quantile(pool, 0.75) : null;
-  }
-  return { thisYear, weeks: byWeek.slice(0, 52) };
+  return [...best.entries()].map(([key, i]) => ({ key, ...i })).sort((a, b) => a.key.localeCompare(b.key));
+}
+const findItem = (key) => itemsInMarket().find((i) => i.key === key);
+
+function describePack(i) {
+  const bits = [cap(i.variety) && !i.commodity.toLowerCase().includes(i.variety.toLowerCase()) && i.type !== "wholesale" ? cap(i.variety) : "",
+    i.pack, i.size && i.size !== "N/A" ? i.size : "", i.props && i.type !== "wholesale" ? cap(i.props) : ""];
+  if (i.type === "shipping point") bits.push(cap(i.market));
+  return bits.filter(Boolean).join(" · ");
 }
 
-function drawChart(el, data, unit) {
-  // Draw at the real on-screen width so text stays 11px on phones (no viewBox shrinking).
-  const W = Math.max(280, Math.round(el.clientWidth || 640)), H = Math.round(Math.min(260, W * 0.62));
-  const m = { t: 10, r: 12, b: 26, l: 48 };
-  const vals = data.weeks.flatMap((w) => [w.cur, w.last, w.lo, w.hi]).filter((v) => v != null);
-  if (!vals.length) { el.innerHTML = `<p class="sub">No history yet.</p>`; return; }
-  let lo = Math.min(...vals), hi = Math.max(...vals);
-  const pad = (hi - lo) * 0.1 || hi * 0.1 || 1;
-  lo = Math.max(0, lo - pad); hi += pad;
-  const x = (wk) => m.l + ((wk - 1) / 51) * (W - m.l - m.r);
+function badge(i) {
+  if (i.status === "cheap") return `<span class="badge cheap">▼ Cheap</span>`;
+  if (i.status === "expensive") return `<span class="badge expensive">▲ Expensive</span>`;
+  if (i.status === "normal") return `<span class="badge normal">Normal</span>`;
+  return `<span class="badge none">New</span>`;
+}
+
+// ---------- URL state ----------
+function readUrl() {
+  const p = new URLSearchParams(location.search);
+  if (MARKETS.some((m) => m.key === p.get("m"))) state.market = p.get("m");
+  if (RANGES.some((r) => r.key === p.get("r"))) state.range = p.get("r");
+  if (VIEWS.some((v) => v.key === p.get("v"))) state.view = p.get("v");
+  if (p.get("c")) p.get("c").split("|").filter(Boolean).slice(0, MAX_SERIES).forEach(add);
+}
+function writeUrl() {
+  const p = new URLSearchParams({ m: state.market, r: state.range, v: state.view, c: state.selected.join("|") });
+  history.replaceState(null, "", `?${p}`);
+}
+
+// ---------- selection ----------
+function add(key) {
+  if (state.selected.includes(key)) return true;
+  if (state.selected.length >= MAX_SERIES) { toast(`Up to ${MAX_SERIES} items at once — take one off first.`); return false; }
+  const used = new Set(Object.values(state.slots));
+  let slot = 1; while (used.has(slot)) slot++;
+  state.slots[key] = slot;
+  state.selected.push(key);
+  return true;
+}
+function remove(key) {
+  state.selected = state.selected.filter((k) => k !== key);
+  delete state.slots[key];
+}
+function toggle(key) { state.selected.includes(key) ? remove(key) : add(key); update(); }
+function only(key) { [...state.selected].forEach(remove); add(key); update(); }
+function defaultSelection() {
+  // Start with what's moving most vs. usual (falls back to best-covered items).
+  const items = itemsInMarket();
+  const ranked = [...items].sort((a, b) => Math.abs(b.vsNorm ?? -1) - Math.abs(a.vsNorm ?? -1) || (b.coverage ?? 0) - (a.coverage ?? 0));
+  ranked.slice(0, 4).forEach((i) => add(i.key));
+}
+
+let toastTimer;
+function toast(msg) {
+  const t = $("toast"); t.textContent = msg; t.hidden = false;
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => (t.hidden = true), 2600);
+}
+
+// ---------- filters ----------
+function seg(el, options, current, attr) {
+  el.innerHTML = options.map((o) =>
+    `<button role="radio" aria-checked="${o.key === current}" data-${attr}="${o.key}">${o.label}</button>`).join("");
+}
+function renderFilters() {
+  seg($("f-market"), MARKETS, state.market, "market");
+  seg($("f-range"), RANGES, state.range, "range");
+  seg($("f-view"), VIEWS, state.view, "view");
+  $("view-hint").textContent = "Auto: % vs usual when several items are selected, price when one is.";
+  $("f-items").innerHTML = itemsInMarket().map((i) => {
+    const on = state.selected.includes(i.key);
+    return `<li>
+      <label><input type="checkbox" data-toggle="${esc(i.key)}" ${on ? "checked" : ""}>
+        <span class="sw" style="background:${on ? color(i.key) : "transparent"}"></span>
+        <span class="dot ${i.status === "cheap" || i.status === "expensive" || i.status === "normal" ? i.status : "none"}" title="${esc(i.status)}"></span>
+        ${esc(i.key)}</label>
+      <button class="link only" data-only="${esc(i.key)}" aria-label="Show only ${esc(i.key)}">only</button>
+    </li>`;
+  }).join("") || `<li class="hint">No items for this market yet.</li>`;
+  $("filter-count").textContent = state.selected.length ? `(${state.selected.length})` : "";
+}
+
+// ---------- big moves ----------
+function renderMoves() {
+  const moves = itemsInMarket()
+    .filter((i) => (i.vs4w != null && Math.abs(i.vs4w) >= 15) || (i.vsNorm != null && Math.abs(i.vsNorm) >= 25))
+    .map((i) => ({ i, size: Math.max(Math.abs(i.vs4w ?? 0), Math.abs(i.vsNorm ?? 0)) }))
+    .sort((a, b) => b.size - a.size).slice(0, 3);
+  $("moves-h").textContent = `Big moves · ${market().label}`;
+  $("moves-list").innerHTML = moves.length ? `<div class="moves">${moves.map(({ i }) => {
+    const up = (i.vs4w ?? i.vsNorm ?? 0) > 0;
+    const why = [i.vs4w != null ? `${pct(i.vs4w)} in 4 weeks` : "", i.vsNorm != null ? `${pct(i.vsNorm)} vs usual for this time of year` : "",
+      i.tone ? `USDA: “${cap(i.tone)}”` : ""].filter(Boolean).join(" · ");
+    return `<button class="move" data-only="${esc(i.key)}">
+      <span class="arrow ${up ? "up" : "down"}" aria-hidden="true">${up ? "▲" : "▼"}</span>
+      <span><strong>${esc(i.key)}</strong> ${money(i.price)}${unitLabel(i.unit)}</span>
+      <span class="why">${esc(why)}</span></button>`;
+  }).join("")}</div><p class="hint">Tap one to chart it. Predictive alerts are being tested against 10 years of history before they go live.</p>`
+    : `<p class="hint">Nothing unusual this week in ${market().label}.</p>`;
+}
+
+// ---------- what's going on ----------
+function newsLine(i) {
+  const parts = [];
+  if (i.vsNorm != null) parts.push(Math.abs(i.vsNorm) < 5 ? "about usual for this time of year" : `${Math.abs(Math.round(i.vsNorm))}% ${i.vsNorm > 0 ? "above" : "below"} usual for this time of year`);
+  else parts.push("not enough history yet to say what's usual");
+  if (i.vs4w != null && Math.abs(i.vs4w) >= 3) parts.push(`${i.vs4w > 0 ? "up" : "down"} ${Math.abs(Math.round(i.vs4w))}% in 4 weeks`);
+  else if (i.vs4w != null) parts.push("steady over 4 weeks");
+  if (i.tone) parts.push(`USDA says “${cap(i.tone)}”`);
+  if (i.origins) parts.push(`coming from ${i.origins.split("; ").slice(0, 3).map(cap).join(", ")}`);
+  return parts.join("; ") + ".";
+}
+function renderNews() {
+  const sel = state.selected.map(findItem).filter(Boolean);
+  $("news").innerHTML = sel.length ? sel.map((i) => `<li>
+      <span class="sw" style="background:${color(i.key)}"></span>
+      <div><div class="t">${esc(i.key)} · ${money(i.price)}${unitLabel(i.unit)} ${badge(i)}</div>
+      <div class="d">${esc(describePack(i))}</div>
+      <div class="d">${esc(newsLine(i))}</div></div></li>`).join("")
+    : `<li class="hint">Pick items in Filters to see what's going on.</li>`;
+}
+
+// ---------- chart ----------
+async function history(id) {
+  if (!state.histories[id]) {
+    state.histories[id] = fetch(`data/s/${encodeURIComponent(id)}.json`).then((r) => r.json()).catch(() => []);
+  }
+  return state.histories[id];
+}
+
+function chartMode(n) {
+  if (state.view === "pct") return "pct";
+  if (state.view === "price") return n > 1 ? "pct" : "price";
+  return n > 1 ? "pct" : "price";
+}
+
+let lastChart = null;
+async function renderChart() {
+  const sel = state.selected.map(findItem).filter(Boolean);
+  const mode = chartMode(sel.length);
+  const range = RANGES.find((r) => r.key === state.range);
+  const cutoff = new Date(Date.now() - range.days * 86400000).toISOString().slice(0, 10);
+  $("chart-h").textContent = mode === "pct" ? "Price vs. usual for this time of year" : sel[0] ? `${sel[0].key} price` : "Chart";
+  $("chart-sub").textContent = mode === "pct" ? "0% = usual · above the line = pricier than usual" : sel[0] ? `${unitLabel(sel[0].unit).replace(/^\s*\/\s*/, "per ").replace(/^\//, "per ")}, today's dollars` : "";
+  $("chart-note").textContent = state.view === "price" && sel.length > 1 ? "Different items can't share a price scale, so several items are shown as % vs usual. Tap “only” to see one item's price." : "";
+
+  const series = await Promise.all(sel.map(async (i) => {
+    const rows = (await history(i.id)).filter((r) => r[0] >= cutoff);
+    return { item: i, rows };
+  }));
+  lastChart = { series, mode };
+  draw();
+}
+
+function draw() {
+  const el = $("chart");
+  if (!lastChart) return;
+  const { series, mode } = lastChart;
+  const valueOf = (r) => (mode === "pct" ? r[3] : r[2] ?? r[1]);
+  const drawn = series.filter((s) => s.rows.some((r) => valueOf(r) != null));
+  const missing = series.filter((s) => !drawn.includes(s)).map((s) => s.item.key);
+
+  // legend (always for >= 2 series; single series gets line + band key)
+  $("legend").innerHTML = drawn.length > 1
+    ? drawn.map((s) => `<span><i class="ln" style="background:${color(s.item.key)}"></i>${esc(s.item.key)}</span>`).join("") + `<span><i class="zero"></i>Usual</span>`
+    : drawn.length === 1 ? `<span><i class="ln" style="background:${color(drawn[0].item.key)}"></i>Weekly price</span>` + (mode === "price" ? `<span><i class="bd"></i>Usual range (past years)</span>` : `<span><i class="zero"></i>Usual</span>`) : "";
+
+  if (!drawn.length) {
+    el.innerHTML = `<div class="empty-chart">${series.length ? "Not enough history yet to chart these." : "Pick items in Filters to chart them."}</div>`;
+    $("table").innerHTML = "";
+    return;
+  }
+  if (missing.length) $("chart-note").textContent = `Not enough history yet: ${missing.join(", ")}.`;
+
+  const W = Math.max(200, Math.round(el.clientWidth)), H = Math.round(Math.min(340, Math.max(220, W * 0.5)));
+  const direct = drawn.length <= 4 && W >= 520;
+  const m = { t: 12, r: direct ? 110 : 14, b: 26, l: 52 };
+  const dates = [...new Set(drawn.flatMap((s) => s.rows.map((r) => r[0])))].sort();
+  const t0 = Date.parse(dates[0]), t1 = Date.parse(dates[dates.length - 1]) || t0 + 1;
+  const x = (d) => m.l + ((Date.parse(d) - t0) / Math.max(1, t1 - t0)) * (W - m.l - m.r);
+  const vals = drawn.flatMap((s) => s.rows.flatMap((r) => mode === "price" ? [valueOf(r), r[4], r[5]] : [valueOf(r)])).filter((v) => v != null);
+  let lo = Math.min(...vals, mode === "pct" ? 0 : Infinity), hi = Math.max(...vals, mode === "pct" ? 0 : -Infinity);
+  const pad = (hi - lo) * 0.08 || 1; lo -= pad; hi += pad;
+  if (mode === "price") lo = Math.max(0, lo);
+  // round tick values (…, 10, 20, 25, 50, 100 …) and snap the scale to them
+  const raw = (hi - lo) / 4, mag = 10 ** Math.floor(Math.log10(raw));
+  const step = [1, 2, 2.5, 5, 10].map((f) => f * mag).find((s) => s >= raw) || 10 * mag;
+  lo = Math.floor(lo / step) * step; hi = Math.ceil(hi / step) * step;
   const y = (v) => m.t + (1 - (v - lo) / (hi - lo)) * (H - m.t - m.b);
-  const line = (key) => {
+  const fmt = (v) => (mode === "pct" ? (Math.abs(v) < 1e-9 ? "0%" : pct(v)) : money(v));
+
+  const path = (s) => {
     let d = "", pen = false;
-    for (const w of data.weeks) {
-      if (w[key] == null) { pen = false; continue; }
-      d += `${pen ? "L" : "M"}${x(w.week).toFixed(1)},${y(w[key]).toFixed(1)}`;
-      pen = true;
+    for (const r of s.rows) {
+      const v = valueOf(r);
+      if (v == null) { pen = false; continue; }
+      d += `${pen ? "L" : "M"}${x(r[0]).toFixed(1)},${y(v).toFixed(1)}`; pen = true;
     }
     return d;
   };
-  // band as separate polygons over runs of weeks that have a range
-  let band = "", run = [];
-  const flush = () => {
-    if (run.length > 1) band += `<path d="M${run.map((w) => `${x(w.week)},${y(w.hi)}`).join("L")}L${run.slice().reverse().map((w) => `${x(w.week)},${y(w.lo)}`).join("L")}Z" fill="var(--band)"/>`;
-    run = [];
-  };
-  for (const w of data.weeks) { if (w.lo != null) run.push(w); else flush(); }
-  flush();
-
-  const ticks = 4, grid = [];
-  for (let i = 0; i <= ticks; i++) {
-    const v = lo + ((hi - lo) * i) / ticks;
-    grid.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)"/>
-      <text x="${m.l - 6}" y="${y(v) + 4}" text-anchor="end" font-size="11" fill="var(--muted)">${money(v)}</text>`);
+  let band = "";
+  if (mode === "price" && drawn.length === 1) {
+    const rs = drawn[0].rows; let run = [];
+    const flush = () => { if (run.length > 1) band += `<path d="M${run.map((r) => `${x(r[0])},${y(r[5])}`).join("L")}L${run.slice().reverse().map((r) => `${x(r[0])},${y(r[4])}`).join("L")}Z" fill="var(--band)"/>`; run = []; };
+    for (const r of rs) { if (r[4] != null) run.push(r); else flush(); } flush();
   }
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const every = W < 420 ? 2 : 1; // every other month on narrow screens
-  const monthTicks = months.map((mo, i) => i % every ? "" :
-    `<text x="${x(1 + i * 4.345)}" y="${H - 6}" font-size="11" fill="var(--muted)">${mo}</text>`).join("");
 
-  // end label on the current-year line
-  const lastCur = [...data.weeks].reverse().find((w) => w.cur != null);
-  const endLabel = lastCur ? `<circle cx="${x(lastCur.week)}" cy="${y(lastCur.cur)}" r="4" fill="var(--series-1)" stroke="var(--surface)" stroke-width="2"/>` : "";
+  const grid = [];
+  for (let v = lo; v <= hi + step / 2; v += step) {
+    grid.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)"/>
+      <text x="${m.l - 6}" y="${y(v) + 4}" text-anchor="end" font-size="11" fill="var(--muted)">${fmt(v)}</text>`);
+  }
+  const xt = [], nx = W < 480 ? 3 : 5;
+  for (let i = 0; i <= nx; i++) {
+    const t = new Date(t0 + ((t1 - t0) * i) / nx);
+    const lbl = (t1 - t0) > 400 * 86400000 ? t.toLocaleDateString(undefined, { month: "short", year: "2-digit" }) : t.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+    xt.push(`<text x="${x(t.toISOString().slice(0, 10))}" y="${H - 6}" font-size="11" fill="var(--muted)" text-anchor="${i === 0 ? "start" : i === nx ? "end" : "middle"}">${lbl}</text>`);
+  }
+  const zero = mode === "pct" ? `<line x1="${m.l}" x2="${W - m.r}" y1="${y(0)}" y2="${y(0)}" stroke="var(--muted)" stroke-dasharray="4 3"/>` : "";
 
-  el.innerHTML = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Weekly price this year vs last year and the usual range">
-    ${grid.join("")}
-    ${band}
+  // direct end labels, nudged apart so they don't collide
+  let labels = "";
+  if (direct) {
+    const ends = drawn.map((s) => { const r = [...s.rows].reverse().find((q) => valueOf(q) != null); return { s, yy: y(valueOf(r)), r }; })
+      .sort((a, b) => a.yy - b.yy);
+    for (let i = 1; i < ends.length; i++) ends[i].yy = Math.max(ends[i].yy, ends[i - 1].yy + 14);
+    labels = ends.map((e) => `<text x="${W - m.r + 8}" y="${e.yy + 4}" font-size="11" fill="var(--ink-2)">${esc(e.s.item.key.length > 16 ? e.s.item.key.slice(0, 15) + "…" : e.s.item.key)}</text>`).join("");
+  }
+  const endDots = drawn.map((s) => { const r = [...s.rows].reverse().find((q) => valueOf(q) != null);
+    return `<circle cx="${x(r[0])}" cy="${y(valueOf(r))}" r="4" fill="${color(s.item.key)}" stroke="var(--surface)" stroke-width="2"/>`; }).join("");
+
+  el.innerHTML = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc($("chart-h").textContent)}">
+    ${grid.join("")}${band}
     <line x1="${m.l}" x2="${W - m.r}" y1="${H - m.b}" y2="${H - m.b}" stroke="var(--axis)"/>
-    ${monthTicks}
-    <path d="${line("last")}" fill="none" stroke="var(--muted)" stroke-width="2" stroke-dasharray="4 3"/>
-    <path d="${line("cur")}" fill="none" stroke="var(--series-1)" stroke-width="2" stroke-linejoin="round"/>
-    ${endLabel}
-    <line id="xh" y1="${m.t}" y2="${H - m.b}" stroke="var(--axis)" visibility="hidden"/>
-    <rect x="${m.l}" y="${m.t}" width="${W - m.l - m.r}" height="${H - m.t - m.b}" fill="transparent" id="hit"/>
+    ${zero}${xt.join("")}
+    ${drawn.map((s) => `<path d="${path(s)}" fill="none" stroke="${color(s.item.key)}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`).join("")}
+    ${endDots}${labels}
+    <line class="xh" y1="${m.t}" y2="${H - m.b}" stroke="var(--axis)" visibility="hidden"/>
+    <rect class="hit" x="${m.l}" y="0" width="${W - m.l - m.r}" height="${H}" fill="transparent"/>
   </svg><div class="tip" hidden></div>`;
 
-  const svg = el.querySelector("svg"), tip = el.querySelector(".tip"), xh = el.querySelector("#xh");
+  // crosshair + tooltip (all series at the nearest date)
+  const svg = el.querySelector("svg"), tip = el.querySelector(".tip"), xh = el.querySelector(".xh");
+  const byDate = drawn.map((s) => new Map(s.rows.map((r) => [r[0], r])));
   const move = (evt) => {
-    const pt = svg.getBoundingClientRect();
-    const px = ((evt.clientX - pt.left) / pt.width) * W;
-    const wk = Math.min(52, Math.max(1, Math.round(((px - m.l) / (W - m.l - m.r)) * 51) + 1));
-    const w = data.weeks[wk - 1];
-    xh.setAttribute("x1", x(wk)); xh.setAttribute("x2", x(wk)); xh.setAttribute("visibility", "visible");
+    const box = svg.getBoundingClientRect();
+    const px = evt.clientX - box.left;
+    let best = dates[0], bd = Infinity;
+    for (const d of dates) { const dd = Math.abs(x(d) - px); if (dd < bd) { bd = dd; best = d; } }
+    xh.setAttribute("x1", x(best)); xh.setAttribute("x2", x(best)); xh.setAttribute("visibility", "visible");
+    const rows = drawn.map((s, k) => ({ s, r: byDate[k].get(best) })).filter((o) => o.r && valueOf(o.r) != null)
+      .sort((a, b) => valueOf(b.r) - valueOf(a.r));
+    tip.innerHTML = `<strong>Week of ${new Date(best + "T00:00:00").toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}</strong>` +
+      rows.map(({ s, r }) => `<div class="trow"><span><i style="background:${color(s.item.key)}"></i>${esc(s.item.key)}</span><span>${fmt(valueOf(r))}</span></div>`).join("") +
+      (mode === "price" && rows[0] && rows[0].r[4] != null ? `<div class="trow"><span>Usual</span><span>${money(rows[0].r[4])}–${money(rows[0].r[5])}</span></div>` : "");
     tip.hidden = false;
-    tip.innerHTML = `<strong>Week ${wk}${w.date ? " · " + w.date : ""}</strong><br>
-      ${data.thisYear}: ${money(w.cur)}${unitShort(unit)}<br>
-      ${data.thisYear - 1}: ${money(w.last)}${unitShort(unit)}<br>
-      Usual: ${w.lo == null ? "—" : `${money(w.lo)}–${money(w.hi)}`}`;
-    const left = (x(wk) / W) * pt.width;
-    tip.style.left = `${Math.min(Math.max(0, left - 70), pt.width - 150)}px`;
-    tip.style.top = `0px`;
+    const tw = tip.offsetWidth;
+    tip.style.left = `${Math.min(Math.max(0, x(best) + 12), W - tw)}px`;
   };
-  const leave = () => { tip.hidden = true; xh.setAttribute("visibility", "hidden"); };
-  const hit = el.querySelector("#hit");
+  const hit = el.querySelector(".hit");
   hit.addEventListener("pointermove", move);
   hit.addEventListener("pointerdown", move);
-  hit.addEventListener("pointerleave", leave);
+  hit.addEventListener("pointerleave", () => { tip.hidden = true; xh.setAttribute("visibility", "hidden"); });
+
+  // table view
+  const recent = dates.slice(-26).reverse();
+  $("table").innerHTML = `<div class="table-wrap"><table><thead><tr><th>Week of</th>${drawn.map((s) => `<th>${esc(s.item.key)}</th>`).join("")}</tr></thead><tbody>
+    ${recent.map((d) => `<tr><td>${d}</td>${drawn.map((s, k) => { const r = byDate[k].get(d); return `<td>${r && valueOf(r) != null ? fmt(valueOf(r)) : "—"}</td>`; }).join("")}</tr>`).join("")}
+    </tbody></table></div><p class="hint">Last 26 weeks shown.</p>`;
 }
 
-function drawTable(el, data, unit) {
-  const rows = data.weeks.filter((w) => w.cur != null || w.last != null).reverse();
-  el.innerHTML = `<table><thead><tr><th>Week</th><th>${data.thisYear}</th><th>${data.thisYear - 1}</th><th>Usual range</th></tr></thead><tbody>
-    ${rows.map((w) => `<tr><td>${w.week}</td><td>${money(w.cur)}</td><td>${money(w.last)}</td>
-      <td>${w.lo == null ? "—" : `${money(w.lo)}–${money(w.hi)}`}</td></tr>`).join("")}
-  </tbody></table><p class="note">Prices ${unit || ""}, today's dollars.</p>`;
+// ---------- list ----------
+function renderList() {
+  const items = itemsInMarket().sort((a, b) => (ORDER[a.status] ?? 3) - (ORDER[b.status] ?? 3) || Math.abs(b.vsNorm ?? 0) - Math.abs(a.vsNorm ?? 0));
+  $("list-h").textContent = `Cheap & expensive right now · ${market().label}`;
+  $("list").innerHTML = items.map((i) => {
+    const on = state.selected.includes(i.key);
+    return `<li><button class="row" aria-pressed="${on}" data-toggle="${esc(i.key)}">
+      <span class="sw" style="background:${on ? color(i.key) : "transparent"}"></span>
+      <span class="name">${esc(i.key)}</span>
+      <span class="right">${money(i.price)}<small>${unitLabel(i.unit)}</small><br>${badge(i)}</span>
+      <span class="det">${esc(describePack(i))}${i.vsNorm != null ? ` · ${pct(i.vsNorm)} vs usual` : ""}</span>
+    </button></li>`;
+  }).join("");
 }
 
-async function openDetail(id) {
-  const item = state.items.find((i) => i.id === id);
-  if (!item) return;
-  $("d-title").textContent = title(item);
-  $("d-sub").textContent = [describe(item), item.type === "terminal" ? item.market : ""].filter(Boolean).join(" · ");
-  $("d-stats").innerHTML = [
-    ["This week", `${money(item.price)}${unitShort(item.unit)}`],
-    ["Usual for this week", item.norm == null ? "—" : `${money(item.norm)}${unitShort(item.unit)}`],
-    ["Status", badge(item)],
-    ["vs 4 weeks ago", pct(item.vs4w)],
-    ["vs last year", pct(item.vsYear)],
-  ].map(([k, v]) => `<div class="stat"><div class="k">${k}</div><div class="v">${v}</div></div>`).join("");
-  $("d-cap").textContent = `Weekly price ${item.unit || ""}`;
-  $("d-legend").innerHTML = `<span><i class="sw-line"></i>This year</span><span><i class="sw-last"></i>Last year</span><span><i class="sw-band"></i>Usual range (past years)</span>`;
-  $("d-chart").innerHTML = `<p class="sub">Loading…</p>`;
-  $("d-table").innerHTML = "";
-  $("detail").showModal();
-  try {
-    const history = await (await fetch(`data/s/${encodeURIComponent(id)}.json`)).json();
-    const data = seasonal(history);
-    drawChart($("d-chart"), data, item.unit);
-    drawTable($("d-table"), data, item.unit);
-  } catch (e) {
-    $("d-chart").innerHTML = `<p class="sub">Couldn't load history.</p>`;
-  }
+// ---------- wiring ----------
+function update() {
+  renderFilters(); renderMoves(); renderNews(); renderList(); renderChart(); writeUrl();
+}
+function setMarket(key) {
+  if (key === state.market) return;
+  state.market = key;
+  [...state.selected].forEach(remove);
+  defaultSelection();
+  update();
+}
+function openSheet(open) {
+  $("filters").classList.toggle("open", open);
+  $("scrim").hidden = !open;
+  $("open-filters").setAttribute("aria-expanded", String(open));
 }
 
 document.addEventListener("click", (e) => {
-  const m = e.target.closest("[data-m]"), s = e.target.closest("[data-s]"), it = e.target.closest("[data-id]");
-  if (m) { state.market = m.dataset.m; renderChips(); renderList(); }
-  else if (s) { state.status = s.dataset.s; renderChips(); renderList(); }
-  else if (it) openDetail(it.dataset.id);
+  const t = e.target.closest("[data-market],[data-range],[data-view],[data-only],[data-toggle]");
+  if (!t) return;
+  if (t.dataset.market) setMarket(t.dataset.market);
+  else if (t.dataset.range) { state.range = t.dataset.range; update(); }
+  else if (t.dataset.view) { state.view = t.dataset.view; update(); }
+  else if (t.dataset.only) { only(t.dataset.only); if (t.classList.contains("move")) $("chart-h").scrollIntoView({ behavior: "smooth", block: "start" }); }
+  else if (t.dataset.toggle && t.tagName !== "INPUT") toggle(t.dataset.toggle);
 });
-$("d-close").addEventListener("click", () => $("detail").close());
-$("detail").addEventListener("click", (e) => { if (e.target === $("detail")) $("detail").close(); });
+document.addEventListener("change", (e) => { if (e.target.dataset.toggle) toggle(e.target.dataset.toggle); });
+$("clear").addEventListener("click", () => { [...state.selected].forEach(remove); update(); });
+$("open-filters").addEventListener("click", () => openSheet(true));
+$("close-filters").addEventListener("click", () => openSheet(false));
+$("scrim").addEventListener("click", () => openSheet(false));
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") openSheet(false); });
+let resizeTimer;
+window.addEventListener("resize", () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(draw, 150); });
 
 (async function init() {
-  renderChips();
   try {
     const data = await (await fetch("data/latest.json")).json();
-    state.items = data.items;
-    $("asof").textContent = data.asOf ? `Week of ${data.asOf}.` : "";
+    state.items = data.items; state.asOf = data.asOf;
+    $("asof").textContent = data.asOf ? `Week of ${new Date(data.asOf + "T00:00:00").toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" })}.` : "";
   } catch (e) {
-    $("summary").textContent = "Couldn't load prices.";
+    $("news").innerHTML = `<li class="hint">Couldn't load prices.</li>`;
   }
-  renderList();
+  readUrl();
+  state.selected.filter((k) => !itemsInMarket().some((i) => i.key === k)).forEach(remove);
+  if (!state.selected.length) defaultSelection();
+  update();
 })();

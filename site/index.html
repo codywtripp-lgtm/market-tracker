@@ -4,46 +4,86 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Produce Price Check</title>
-  <meta name="description" content="What's cheap and expensive in wholesale produce, beef and chicken this week, compared with the usual price for this time of year. USDA data.">
+  <meta name="description" content="Wholesale produce, beef and chicken prices this week vs. the usual price for this time of year. USDA data, updated every evening.">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="top">
-    <h1>Produce Price Check</h1>
-    <p class="sub">This week's USDA prices vs. the usual price for this time of year. <span id="asof"></span></p>
+    <div>
+      <h1>Produce Price Check</h1>
+      <p class="sub">USDA wholesale prices vs. what's usual for this time of year. <span id="asof"></span></p>
+    </div>
+    <button id="open-filters" class="btn filters-btn" aria-controls="filters" aria-expanded="false">Filters <span id="filter-count"></span></button>
   </header>
 
-  <nav class="filters" aria-label="Market">
-    <div class="chips" id="markets" role="tablist"></div>
-    <div class="chips" id="statuses"></div>
-  </nav>
-
-  <main>
-    <p id="summary" class="summary"></p>
-    <ul id="list" class="list"></ul>
-    <p id="empty" class="empty" hidden>No items match.</p>
-  </main>
-
-  <dialog id="detail" aria-labelledby="d-title">
-    <div class="d-head">
-      <div>
-        <h2 id="d-title"></h2>
-        <p id="d-sub" class="sub"></p>
+  <div class="layout">
+    <aside id="filters" class="filters" aria-label="Filters">
+      <div class="sheet-head">
+        <strong>Filters</strong>
+        <button id="close-filters" class="btn">Done</button>
       </div>
-      <button id="d-close" class="close" aria-label="Close">✕</button>
-    </div>
-    <div id="d-stats" class="stats"></div>
-    <figure class="chart-fig">
-      <figcaption id="d-cap" class="cap"></figcaption>
-      <div id="d-legend" class="legend"></div>
-      <div id="d-chart" class="chart"></div>
-      <details class="table-view"><summary>Show as table</summary><div id="d-table"></div></details>
-    </figure>
-    <p class="note">Prices in today's dollars (adjusted for food inflation). "Usual range" = the middle half of prices in the same weeks of past years.</p>
-  </dialog>
+
+      <section class="fgroup">
+        <h2 class="fh">Market</h2>
+        <div id="f-market" class="seg" role="radiogroup"></div>
+      </section>
+
+      <section class="fgroup">
+        <div class="fh-row">
+          <h2 class="fh">Items</h2>
+          <button id="clear" class="link">Clear</button>
+        </div>
+        <ul id="f-items" class="checks"></ul>
+      </section>
+
+      <section class="fgroup">
+        <h2 class="fh">Time range</h2>
+        <div id="f-range" class="seg" role="radiogroup"></div>
+      </section>
+
+      <section class="fgroup">
+        <h2 class="fh">Chart shows</h2>
+        <div id="f-view" class="seg" role="radiogroup"></div>
+        <p class="hint" id="view-hint"></p>
+      </section>
+    </aside>
+    <div id="scrim" class="scrim" hidden></div>
+
+    <main>
+      <section id="moves" class="card" aria-labelledby="moves-h">
+        <h2 id="moves-h" class="sh">Big moves</h2>
+        <div id="moves-list"></div>
+      </section>
+
+      <section class="card" aria-labelledby="news-h">
+        <h2 id="news-h" class="sh">What's going on</h2>
+        <ul id="news" class="news"></ul>
+      </section>
+
+      <section class="card" aria-labelledby="chart-h">
+        <div class="chart-head">
+          <h2 id="chart-h" class="sh"></h2>
+          <span id="chart-sub" class="sub"></span>
+        </div>
+        <div id="legend" class="legend"></div>
+        <div id="chart" class="chart"></div>
+        <p id="chart-note" class="hint"></p>
+        <details class="table-view"><summary>Show as table</summary><div id="table"></div></details>
+      </section>
+
+      <section class="card" aria-labelledby="list-h">
+        <h2 id="list-h" class="sh">Cheap &amp; expensive right now</h2>
+        <p class="hint">Tap a row to add it to the chart or take it off.</p>
+        <ul id="list" class="list"></ul>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" hidden></div>
 
   <footer class="foot">
-    Data: USDA AMS Market News (terminal, shipping point, retail, boxed beef, chicken). Updated every evening.
+    Data: USDA AMS Market News (terminal markets, shipping point, retail ads, boxed beef, chicken). Updated every evening.
+    Prices in today's dollars where compared across years (adjusted for food inflation). "Usual" = typical price for the same weeks in past years.
     <a href="https://github.com/codywtripp-lgtm/market-tracker">Source &amp; data</a>
   </footer>
   <script src="app.js"></script>
