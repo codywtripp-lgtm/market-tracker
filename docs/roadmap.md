@@ -36,6 +36,12 @@ Early-warning signals to test first (all from data we already collect):
 3. Shipment volume drops (movement report 3283, trends 1662) leading price rises.
 4. Later: weather at origin, tariffs/trade events, holidays.
 
+### Forecasting approach (owner: "our other big differentiator")
+- **Horizons**: 1–2 weeks (strong: shipping point, loads, USDA tone, recent weather already in the pipeline); 1–3 months (fair: seasonality, crop transitions, NASS acreage/progress, seasonal outlooks); longer = seasonal range only.
+- **Driver candidates (free data)**: NOAA / Mexico SMN weather at origins; USDA shipments & border crossings (3283, 1662); NASS acreage/crop progress; shipping-point prices & USDA tone; trade/tariff events (dated list); MXN/USD (FRED); diesel (EIA) & truck rates (USDA 2375); holiday/demand calendar; FDA recalls (e.g. romaine E. coli).
+- **Method**: baseline = seasonal pattern + recent trend; add one driver at a time; keep it only if it improves **out-of-sample** backtests.
+- **Trust**: forecasts are ranges, and the site publishes its own **track record** (past forecasts vs. what happened).
+
 ### Two audiences, one page (owner, 2026-09-26)
 A switch at the top — **Buying for: Business | Household** — remembered per visitor.
 - **Business**: wholesale case prices (current design).
