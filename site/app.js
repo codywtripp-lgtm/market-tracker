@@ -32,6 +32,8 @@ const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const cap = (s) => (!s || s === "N/A" ? "" : s.charAt(0).toUpperCase() + s.slice(1).toLowerCase());
 const money = (v) => (v == null ? "—" : v >= 100 ? `$${Math.round(v).toLocaleString()}` : `$${v.toFixed(2)}`);
+// ranges are estimates: whole dollars (cents would be false precision), except for small unit prices
+const rangeMoney = (v) => (v == null ? "—" : v >= 10 ? `$${Math.round(v)}` : `$${v.toFixed(2)}`);
 const pct = (v) => (v == null ? "—" : `${v > 0 ? "+" : ""}${Math.round(v)}%`);
 const unitLabel = (u) => ({ "$/package": "/case", "$/cwt": "/cwt", "per lb": "/lb", "$/per lb": "/lb", "$/each": " each" }[u]
   || (u ? " / " + u.replace(/^\$\//, "").replace(/^per /, "") : ""));
@@ -173,7 +175,7 @@ function renderMoves() {
       <span class="arrow ${up ? "up" : "down"}" aria-hidden="true">${up ? "▲" : "▼"}</span>
       <span><strong>${esc(i.key)}</strong> ${money(i.price)}${unitLabel(i.unit)}</span>
       <span class="why">${esc(why)}</span></button>`;
-  }).join("")}</div><p class="hint">Tap one to chart it. Predictive alerts are being tested against 10 years of history before they go live.</p>`
+  }).join("")}</div><p class="hint">Biggest recent moves. Tap one to chart it.</p>`
     : `<p class="hint">Nothing unusual this week in ${market().label}.</p>`;
 }
 
@@ -186,7 +188,7 @@ function newsLine(i) {
   else if (i.vs4w != null) parts.push("steady over 4 weeks");
   if (i.tone) parts.push(`USDA says “${cap(i.tone)}”`);
   const f2 = i.forecast && i.forecast["2"];
-  if (f2) parts.push(`next 2 weeks: likely ${money(f2[0])}–${money(f2[2])}${unitLabel(i.unit)}`);
+  if (f2) parts.push(`next 2 weeks: likely ${rangeMoney(f2[0])}–${rangeMoney(f2[2])}${unitLabel(i.unit)}`);
   if (i.origins) parts.push(`coming from ${i.origins.split("; ").slice(0, 3).map(cap).join(", ")}`);
   return parts.join("; ") + ".";
 }
@@ -361,7 +363,7 @@ function draw() {
       .sort((a, b) => valueOf(b.r) - valueOf(a.r));
     const f = fc.find((p) => p.d === best && p.h > 0);
     tip.innerHTML = `<strong>Week of ${new Date(best + "T00:00:00").toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}</strong>` +
-      (f ? `<div class="trow"><span>Forecast</span><span>${money(f.mid)}</span></div><div class="trow"><span>80% range</span><span>${money(f.lo)}–${money(f.hi)}</span></div>` : "") +
+      (f ? `<div class="trow"><span>Forecast</span><span>${rangeMoney(f.mid)}</span></div><div class="trow"><span>80% range</span><span>${rangeMoney(f.lo)}–${rangeMoney(f.hi)}</span></div>` : "") +
       rows.map(({ s, r }) => `<div class="trow"><span><i style="background:${color(s.item.key)}"></i>${esc(s.item.key)}</span><span>${fmt(valueOf(r))}</span></div>`).join("") +
       (mode === "price" && rows[0] && rows[0].r[4] != null ? `<div class="trow"><span>Usual</span><span>${money(rows[0].r[4])}–${money(rows[0].r[5])}</span></div>` : "");
     tip.hidden = false;
