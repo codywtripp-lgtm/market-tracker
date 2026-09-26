@@ -25,7 +25,13 @@ Also keep: low/high/mostly prices, appearance/condition/quality (needed for dedu
   - Commodities: avocados, tomatoes, bell peppers, onions, lettuce (iceberg + romaine), strawberries. Beef and poultry wanted too (high-volume at Baldor) — sources TBD (boxed beef is on the LMR datamart `mpr.datamart.ams.usda.gov`, not MARS; chicken via MARS weekly/retail reports).
   - Terminal markets: New York (critical), Los Angeles, Chicago.
   - Backfill depth: 10 years.
-  - `MARS_API_KEY` secret added to the GitHub repo. `scripts/probe_api.py` + `.github/workflows/probe.yml` (branch `api-probe`) is a throwaway job to verify the API and measure reporting consistency.
+  - `MARS_API_KEY` secret added to the GitHub repo. `scripts/probe_api.py` + `.github/workflows/probe.yml` is a throwaway exploration job (manual trigger) that verifies the API and measures reporting consistency.
+- 2026-09-26: API verified. Proposed shortlist + storage (slim monthly-partitioned CSV) in `docs/shortlist-and-storage.md` — awaiting owner approval before building parsers.
+
+## API gotchas (verified)
+- **Never filter commodity in `q=`** — commas in names ("Peppers, Bell Type") are parsed as OR. Filter client-side.
+- Beef (LMR datamart 2453) prices are $/cwt, numbers are strings with commas. Chicken (3646, section `Report Detail`) is cents/lb, weekly.
+- Market-specific labels for the same pack (strawberry flat = "extra large" in NY, "medium" in CHI; iceberg "24s film wrapped" vs "film lined 24s"). Map series per market.
 
 ## Data quirks (summary — details in docs/usda-exploration.md)
 - Terminal, shipping-point and retail reports use different column names (`variety`/`var`, `package`/`pkg`, ...).

@@ -79,9 +79,40 @@ Example (NY, 2026-09-24): `HASS | cartons 2 layer | 48s | origin=Mexico | 32.00�
 10. **Retail variety labels are inconsistent** ("HASS" vs "Hass-Marked Large"); units mixed in one table; prices are *advertised specials*, not everyday shelf prices; `store count` = number of stores running the ad.
 11. **Coverage has shrunk.** Terminal markets like SF and St. Louis are discontinued, so multi-city averages will have composition changes over time.
 
-## Still unverified (needs API key)
-- Exact JSON field names (API may use snake_case like `low_price`, `item_size`).
-- How consistently each commodity × pack × size combo is reported over years (the basis for the shortlist).
-- Whether the API returns commodity as a column (the viewer groups by it).
-- Volume units in report 1662.
-- Actual row counts / repo size for a backfill.
+## API verification (2026-09-26, via `scripts/probe_api.py` in GitHub Actions)
+
+- Key works. API field names are snake_case: `commodity, variety, package, item_size, properties, origin, district, appearance, condition, quality, organic, low_price, high_price, mostly_low_price, mostly_high_price, report_date, ...` (terminal). `commodity` is a column.
+- **Commodity filter gotcha:** names contain commas ("Peppers, Bell Type") and the API treats commas in `q=` as OR. `commodity=Tomatoes, Plum Type` silently returns all Tomatoes. **Always filter commodity client-side.**
+- History: NY veg March 2016 returns full data (2,242 rows/week) → 10-year backfill is available. Boxed beef also has 2016 data.
+- Volume: the 9 terminal reports (NY/LA/CHI × fruit/veg/onion) total ~12,400 rows/week, all commodities. Our commodities only: ~63,000 terminal rows/year.
+- Raw JSON is ~1.3 KB/row (mostly repeated narrative text) → store a slim column set.
+
+### Beef — LMR datamart (no key)
+`https://mpr.datamart.ams.usda.gov/services/v1.1/reports/2453/{section}` — National Daily Boxed Beef Cutout, Negotiated, PM (LM_XB403), daily.
+- `Current Cutout Values`: `choice_600_900_current`, `select_600_900_current`.
+- `Choice Cuts` / `Select Cuts`: `item_description` includes IMPS code, e.g. "Rib, ribeye, bnls, heavy (112A  3)", plus `number_trades, total_pounds, price_range_low/high, weighted_average`.
+- **Units: $/cwt (per 100 lb).** Numbers are strings with thousands separators ("1,357.22"). Empty/`.00` rows mean no trades.
+- Other sections: Composite Primal Values, Ground Beef, Blended Ground Beef, Beef Trimmings, Current Volume.
+
+### Chicken — MARS 3646 Weekly National Chicken Report
+Section is `Report Detail` (singular). Fields: `item` ("Breast - B/S", "Wings - Whole", "Leg quarters - Bulk", ...), `trade_status` (Domestic/Export), `condition` (Fresh/Frozen), `low_price, high_price, wtd_avg_price, volume`. **Units: cents/lb**, volume in pounds (reported as thousands? unverified). Weekly.
+Retail: 2756 (chicken) and 3228 (beef) weekly grocery feature reports: `region, type, price_unit, price_avg/min/max, store_count`.
+
+## Terminal consistency (days reported, last 12 months, ~248 possible)
+
+| Item | NY | LA | CHI |
+|---|---|---|---|
+| Avocado Hass 2-layer 48s | 242 | 239 | 248 |
+| Avocado Hass 2-layer 60s | 242 | 239 | 248 |
+| Strawberries 8×1-lb flats (size label varies: NY "extra large", LA "medium-large", CHI "medium") | 242 | 217 | 247 |
+| Iceberg 24s (NY/CHI "24s film wrapped", LA "film lined 24s") | 244 | 246 | 248 |
+| Romaine 24s (LA "cartons film lined") | 244 | 247 | 248 |
+| Romaine hearts 12×3 | 244 | 247 | 248 |
+| Roma 25 lb loose XL | 154 | 247 | 248 |
+| Green bell 1 1/9 bu (NY large/jumbo, LA XL, CHI jumbo) | ~168 | 247 | 244 |
+| Round tomato vine-ripe 2-layer 4x5s | — | 244 | 243 |
+| Mature green 25 lb 5x6 (NY) | 174 | — | — |
+| White onion 50 lb jumbo | 244 | 222 | 248 |
+| Yellow onion 50 lb jumbo (split by type: Spanish/Hybrid/Grano) | 155–169 each | 205 | — |
+
+NY is weaker on green bells and Romas because it splits them into more size grades and the colored 11-lb bells dominate there. Yellow onions are split by `properties` (Spanish Hybrid / Hybrid / Grano) as origin rotates; combining types gives a continuous series.

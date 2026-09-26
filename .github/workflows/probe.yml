@@ -1,9 +1,7 @@
-# One-off exploration job. Runs on pushes to the api-probe branch only.
+# One-off exploration job; run manually from the Actions tab if needed.
 name: API probe
 
 on:
-  push:
-    branches: [api-probe]
   workflow_dispatch:
 
 jobs:
