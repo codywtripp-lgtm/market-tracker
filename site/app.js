@@ -225,7 +225,7 @@ function draw() {
   }
   if (missing.length) $("chart-note").textContent = `Not enough history yet: ${missing.join(", ")}.`;
 
-  const W = Math.max(280, Math.round(el.clientWidth)), H = Math.round(Math.min(340, Math.max(220, W * 0.5)));
+  const W = Math.max(200, Math.round(el.clientWidth)), H = Math.round(Math.min(340, Math.max(220, W * 0.5)));
   const direct = drawn.length <= 4 && W >= 520;
   const m = { t: 12, r: direct ? 110 : 14, b: 26, l: 52 };
   const dates = [...new Set(drawn.flatMap((s) => s.rows.map((r) => r[0])))].sort();
@@ -235,8 +235,12 @@ function draw() {
   let lo = Math.min(...vals, mode === "pct" ? 0 : Infinity), hi = Math.max(...vals, mode === "pct" ? 0 : -Infinity);
   const pad = (hi - lo) * 0.08 || 1; lo -= pad; hi += pad;
   if (mode === "price") lo = Math.max(0, lo);
+  // round tick values (…, 10, 20, 25, 50, 100 …) and snap the scale to them
+  const raw = (hi - lo) / 4, mag = 10 ** Math.floor(Math.log10(raw));
+  const step = [1, 2, 2.5, 5, 10].map((f) => f * mag).find((s) => s >= raw) || 10 * mag;
+  lo = Math.floor(lo / step) * step; hi = Math.ceil(hi / step) * step;
   const y = (v) => m.t + (1 - (v - lo) / (hi - lo)) * (H - m.t - m.b);
-  const fmt = (v) => (mode === "pct" ? pct(v) : money(v));
+  const fmt = (v) => (mode === "pct" ? (Math.abs(v) < 1e-9 ? "0%" : pct(v)) : money(v));
 
   const path = (s) => {
     let d = "", pen = false;
@@ -254,9 +258,8 @@ function draw() {
     for (const r of rs) { if (r[4] != null) run.push(r); else flush(); } flush();
   }
 
-  const ticks = 4, grid = [];
-  for (let i = 0; i <= ticks; i++) {
-    const v = lo + ((hi - lo) * i) / ticks;
+  const grid = [];
+  for (let v = lo; v <= hi + step / 2; v += step) {
     grid.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)"/>
       <text x="${m.l - 6}" y="${y(v) + 4}" text-anchor="end" font-size="11" fill="var(--muted)">${fmt(v)}</text>`);
   }

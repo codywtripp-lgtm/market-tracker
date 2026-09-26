@@ -64,7 +64,7 @@ h1 { font-size: 22px; margin: 0 0 2px; }
 
 .layout { max-width: 1200px; margin: 0 auto; padding: 0 16px; display: grid; grid-template-columns: 260px 1fr; gap: 16px; }
 main { min-width: 0; display: grid; gap: 12px; align-content: start; }
-.card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; }
+.card { min-width: 0; overflow-wrap: anywhere; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; }
 .sh { font-size: 15px; margin: 0 0 8px; }
 .hint { color: var(--muted); font-size: 12px; margin: 4px 0 0; }
 
