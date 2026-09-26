@@ -314,6 +314,10 @@ def main():
     overall = summary[summary["method"].isin(MODEL_CANDIDATES)].groupby("method")["mae_pct"].mean()
     MODEL = overall.idxmin()
     print("model variants (avg miss over 1-4 weeks):", overall.round(3).to_dict(), "->", MODEL)
+    cmp = (resid[(resid["horizon"] == 2) & resid["method"].isin(MODEL_CANDIDATES + ["naive"])]
+           .groupby(["commodity", "method"])["ape"].mean().unstack("method").round(2))
+    print("2-week miss by commodity (all markets):")
+    print(cmp.to_string())
 
     # Per item and market: use the model only where it has beaten "no change" (stable items such
     # as onions barely move, and a model adds noise there). Scored honestly: each test year's
