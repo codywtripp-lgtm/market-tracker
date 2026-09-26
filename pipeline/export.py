@@ -156,6 +156,8 @@ def daily_value(rows):
     lows = [fnum(r["low_price"]) for r in rows if fnum(r["low_price"]) is not None]
     highs = [fnum(r["high_price"]) for r in rows if fnum(r["high_price"]) is not None]
     origins = sorted({r["origin"] for r in rows if r["origin"]})
+    # USDA reporter's read of the market ("MARKET ABOUT STEADY", "Slightly Higher"); most common that day
+    tones = [r["market_tone"] for r in rows if r["market_tone"]]
     return {
         "price": round(price, 4),
         "normalized_price": round(statistics.median(norms), 4) if norms else "",
@@ -163,6 +165,7 @@ def daily_value(rows):
         "high": max(highs) if highs else "",
         "origins": "; ".join(origins),
         "quotes": len(rows),
+        "market_tone": max(tones, key=tones.count) if tones else "",
     }
 
 
@@ -232,7 +235,8 @@ def build(rows, today=None, deflator=None):
                                    "compare_price": value, "compare_unit": unit, "low": v["low"],
                                    "high": v["high"], "normalized_price": v["normalized_price"],
                                    "normalized_unit": any_row["normalized_unit"],
-                                   "origins": v["origins"], "quotes": v["quotes"]})
+                                   "origins": v["origins"], "quotes": v["quotes"],
+                                   "market_tone": v["market_tone"]})
         weekly_avg = {w: round(statistics.mean(vs), 4) for w, vs in weekly.items()}
         # Same prices in today's dollars (CPI food at home), for fair multi-year comparisons.
         weekly_real = {w: round(v * deflator.factor(w.isoformat()), 4) for w, v in weekly_avg.items()}
@@ -256,7 +260,7 @@ def build(rows, today=None, deflator=None):
     write_csv(EXPORT / "series.csv", base_f + ["label", "variety", "pack_size", "item_size", "properties",
               "organic", "price_unit", "compare_unit", "coverage_last_year", "first_date", "last_date"], series_rows)
     write_csv(EXPORT / "prices_daily_365.csv", base_f + ["date", "price", "price_unit", "compare_price",
-              "compare_unit", "low", "high", "normalized_price", "normalized_unit", "origins", "quotes"],
+              "compare_unit", "low", "high", "normalized_price", "normalized_unit", "origins", "quotes", "market_tone"],
               daily_rows)
     write_csv(EXPORT / "prices_weekly.csv", base_f + ["week_start", "compare_price", "real_compare_price",
               "compare_unit", "days"], weekly_rows)
