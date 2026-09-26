@@ -37,7 +37,9 @@ HORIZONS = [1, 2, 3, 4]
 FEATURES = ["seasonal", "gap", "mom1", "mom4", "sp", "tone"]
 TERMINALS = ["New York", "Los Angeles", "Chicago"]
 FIRST_TEST_YEAR = 2021
-LO_Q, HI_Q = 0.10, 0.90  # 80% range
+# 80% range. Plain 10th/90th error percentiles covered only 77% out of sample (errors in a
+# new year run a bit bigger than in past years), so the quantiles are set slightly wider.
+LO_Q, HI_Q = 0.085, 0.915
 SEASON_WINDOW = 1        # weeks either side when averaging seasonal changes
 NORM_WINDOW = 2          # weeks either side for the usual price
 

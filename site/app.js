@@ -185,6 +185,8 @@ function newsLine(i) {
   if (i.vs4w != null && Math.abs(i.vs4w) >= 3) parts.push(`${i.vs4w > 0 ? "up" : "down"} ${Math.abs(Math.round(i.vs4w))}% in 4 weeks`);
   else if (i.vs4w != null) parts.push("steady over 4 weeks");
   if (i.tone) parts.push(`USDA says “${cap(i.tone)}”`);
+  const f2 = i.forecast && i.forecast["2"];
+  if (f2) parts.push(`next 2 weeks: likely ${money(f2[0])}–${money(f2[2])}${unitLabel(i.unit)}`);
   if (i.origins) parts.push(`coming from ${i.origins.split("; ").slice(0, 3).map(cap).join(", ")}`);
   return parts.join("; ") + ".";
 }
@@ -230,6 +232,20 @@ async function renderChart() {
   draw();
 }
 
+// Forecast points for a single item in price view, starting at its last actual week.
+// Forecasts are in actual dollars; the chart line is in today's dollars (nearly identical for
+// recent weeks), so they're scaled by the last week's ratio to join up smoothly.
+function forecastPoints(drawn, mode) {
+  if (mode !== "price" || drawn.length !== 1) return [];
+  const item = drawn[0].item, f = item.forecast || {};
+  const last = [...drawn[0].rows].reverse().find((r) => r[1] != null);
+  if (!last || !f["1"]) return [];
+  const k = (last[2] ?? last[1]) / last[1];
+  const addWeeks = (d, n) => new Date(Date.parse(d + "T00:00:00Z") + n * 7 * 86400000).toISOString().slice(0, 10);
+  return [{ d: last[0], h: 0, lo: last[2] ?? last[1], mid: last[2] ?? last[1], hi: last[2] ?? last[1] }]
+    .concat([1, 2, 3, 4].filter((h) => f[h]).map((h) => ({ d: addWeeks(last[0], h), h, lo: f[h][0] * k, mid: f[h][1] * k, hi: f[h][2] * k })));
+}
+
 function draw() {
   const el = $("chart");
   if (!lastChart) return;
@@ -241,7 +257,8 @@ function draw() {
   // legend (always for >= 2 series; single series gets line + band key)
   $("legend").innerHTML = drawn.length > 1
     ? drawn.map((s) => `<span><i class="ln" style="background:${color(s.item.key)}"></i>${esc(s.item.key)}</span>`).join("") + `<span><i class="zero"></i>Usual</span>`
-    : drawn.length === 1 ? `<span><i class="ln" style="background:${color(drawn[0].item.key)}"></i>Weekly price</span>` + (mode === "price" ? `<span><i class="bd"></i>Usual range (past years)</span>` : `<span><i class="zero"></i>Usual</span>`) : "";
+    : drawn.length === 1 ? `<span><i class="ln" style="background:${color(drawn[0].item.key)}"></i>Weekly price</span>` + (mode === "price" ? `<span><i class="bd"></i>Usual range (past years)</span>` : `<span><i class="zero"></i>Usual</span>`)
+      + (forecastPoints(drawn, mode).length ? `<span><i class="fc" style="border-color:${color(drawn[0].item.key)}"></i>Forecast, 80% range</span>` : "") : "";
 
   if (!drawn.length) {
     el.innerHTML = `<div class="empty-chart">${series.length ? "Not enough history yet to chart these." : "Pick items in Filters to chart them."}</div>`;
@@ -253,10 +270,12 @@ function draw() {
   const W = Math.max(200, Math.round(el.clientWidth)), H = Math.round(Math.min(340, Math.max(220, W * 0.5)));
   const direct = drawn.length <= 4 && W >= 520;
   const m = { t: 12, r: direct ? 110 : 14, b: 26, l: 52 };
-  const dates = [...new Set(drawn.flatMap((s) => s.rows.map((r) => r[0])))].sort();
+  const fc = forecastPoints(drawn, mode);
+  const dates = [...new Set(drawn.flatMap((s) => s.rows.map((r) => r[0])).concat(fc.map((p) => p.d)))].sort();
   const t0 = Date.parse(dates[0]), t1 = Date.parse(dates[dates.length - 1]) || t0 + 1;
   const x = (d) => m.l + ((Date.parse(d) - t0) / Math.max(1, t1 - t0)) * (W - m.l - m.r);
-  const vals = drawn.flatMap((s) => s.rows.flatMap((r) => mode === "price" ? [valueOf(r), r[4], r[5]] : [valueOf(r)])).filter((v) => v != null);
+  const vals = drawn.flatMap((s) => s.rows.flatMap((r) => mode === "price" ? [valueOf(r), r[4], r[5]] : [valueOf(r)]))
+    .concat(fc.flatMap((p) => [p.lo, p.hi])).filter((v) => v != null);
   let lo = Math.min(...vals, mode === "pct" ? 0 : Infinity), hi = Math.max(...vals, mode === "pct" ? 0 : -Infinity);
   const pad = (hi - lo) * 0.08 || 1; lo -= pad; hi += pad;
   if (mode === "price") lo = Math.max(0, lo);
@@ -283,6 +302,17 @@ function draw() {
     for (const r of rs) { if (r[4] != null) run.push(r); else flush(); } flush();
   }
 
+  // forecast: 80% range + dashed middle line, continuing from the last actual week
+  let fcSvg = "";
+  if (fc.length) {
+    const c = color(drawn[0].item.key), start = fc[0];
+    const pts = fc.slice(1);
+    fcSvg = `<path d="M${x(start.d)},${y(start.mid)}${pts.map((p) => `L${x(p.d)},${y(p.hi)}`).join("")}` +
+      `${pts.slice().reverse().map((p) => `L${x(p.d)},${y(p.lo)}`).join("")}Z" fill="${c}" opacity="0.15"/>` +
+      `<path d="M${fc.map((p) => `${x(p.d)},${y(p.mid)}`).join("L")}" fill="none" stroke="${c}" stroke-width="2" stroke-dasharray="5 4"/>` +
+      `<line x1="${x(start.d)}" x2="${x(start.d)}" y1="${m.t}" y2="${H - m.b}" stroke="var(--axis)" stroke-dasharray="2 3"/>` +
+      `<text x="${x(start.d) + 4}" y="${m.t + 10}" font-size="11" fill="var(--muted)">forecast</text>`;
+  }
   const grid = [];
   for (let v = lo; v <= hi + step / 2; v += step) {
     grid.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)"/>
@@ -311,6 +341,7 @@ function draw() {
     ${grid.join("")}${band}
     <line x1="${m.l}" x2="${W - m.r}" y1="${H - m.b}" y2="${H - m.b}" stroke="var(--axis)"/>
     ${zero}${xt.join("")}
+    ${fcSvg}
     ${drawn.map((s) => `<path d="${path(s)}" fill="none" stroke="${color(s.item.key)}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`).join("")}
     ${endDots}${labels}
     <line class="xh" y1="${m.t}" y2="${H - m.b}" stroke="var(--axis)" visibility="hidden"/>
@@ -328,7 +359,9 @@ function draw() {
     xh.setAttribute("x1", x(best)); xh.setAttribute("x2", x(best)); xh.setAttribute("visibility", "visible");
     const rows = drawn.map((s, k) => ({ s, r: byDate[k].get(best) })).filter((o) => o.r && valueOf(o.r) != null)
       .sort((a, b) => valueOf(b.r) - valueOf(a.r));
+    const f = fc.find((p) => p.d === best && p.h > 0);
     tip.innerHTML = `<strong>Week of ${new Date(best + "T00:00:00").toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}</strong>` +
+      (f ? `<div class="trow"><span>Forecast</span><span>${money(f.mid)}</span></div><div class="trow"><span>80% range</span><span>${money(f.lo)}–${money(f.hi)}</span></div>` : "") +
       rows.map(({ s, r }) => `<div class="trow"><span><i style="background:${color(s.item.key)}"></i>${esc(s.item.key)}</span><span>${fmt(valueOf(r))}</span></div>`).join("") +
       (mode === "price" && rows[0] && rows[0].r[4] != null ? `<div class="trow"><span>Usual</span><span>${money(rows[0].r[4])}–${money(rows[0].r[5])}</span></div>` : "");
     tip.hidden = false;
