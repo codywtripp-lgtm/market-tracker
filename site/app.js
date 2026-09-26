@@ -195,6 +195,11 @@ function newsLine(i) {
       : `next 2 weeks: likely ${rangeMoney(f2[0])}–${rangeMoney(f2[2])}${unitLabel(i.unit)}${miss}`);
   }
   if (i.origins) parts.push(`coming from ${i.origins.split("; ").slice(0, 3).map(cap).join(", ")}`);
+  if (i.supplyVsUsual != null) {
+    const s = Math.round(i.supplyVsUsual);
+    parts.push(Math.abs(s) < 10 ? "shipments about normal for this time of year"
+      : `shipments ${Math.abs(s)}% ${s < 0 ? "below" : "above"} normal for this time of year`);
+  }
   return parts.join("; ") + ".";
 }
 function renderNews() {

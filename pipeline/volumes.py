@@ -53,3 +53,25 @@ def supply_features(vol):
         g["supply_chg"] = lv - np.log(g["volume_lb"].shift(1).add(g["volume_lb"].shift(2)).div(2).where(lambda s: s > 0))
         out.append(g[["commodity", "week", "supply_gap", "supply_chg"]])
     return pd.concat(out, ignore_index=True) if out else pd.DataFrame(columns=["commodity", "week", "supply_gap", "supply_chg"])
+
+
+def main():
+    """Write data/export/supply.csv: latest complete week's shipments per commodity vs. usual."""
+    import datetime as dt
+    vol = weekly()
+    feats = supply_features(vol)
+    if feats.empty:
+        print("supply: no movement data")
+        return
+    this_week = pd.Timestamp(dt.date.today()).to_period("W-SUN").start_time
+    done = feats[feats["week"] < this_week].dropna(subset=["supply_gap"])  # last COMPLETE week
+    latest = done.sort_values("week").groupby("commodity").tail(1).merge(vol, on=["commodity", "week"])
+    latest["vs_usual_pct"] = (np.expm1(latest["supply_gap"]) * 100).round(0)
+    latest["vs_prior_2wk_pct"] = (np.expm1(latest["supply_chg"]) * 100).round(0)
+    out = latest[["commodity", "week", "volume_lb", "vs_usual_pct", "vs_prior_2wk_pct"]]
+    out.to_csv(store.DATA / "export" / "supply.csv", index=False)
+    print(out.to_string(index=False))
+
+
+if __name__ == "__main__":
+    main()

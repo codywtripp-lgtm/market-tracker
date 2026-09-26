@@ -37,8 +37,10 @@ Results (average miss in % of price, lower is better; the per-item choice for ea
 
 Tried and dropped on 2026-09-26 (no improvement): last week's shipping-point move as an extra input; gradient boosting (worse at 2–4 weeks); weaker (250 rows) or stronger (4,000 rows) pull toward the pooled pattern.
 
+**Shipment volumes (tested 2026-09-26, not used):** adding "shipments vs. usual for this time of year" and "shipments vs. the last 2 weeks" (from the USDA movement reports, last complete week) did not improve forecasts (average miss 13.24% vs 13.23% without; tiny gains for strawberries, limes and peppers only). Likely because shipping-point and terminal prices already reflect supply by the time weekly volume totals are available. Volumes are still collected nightly and shown on the site as context ("shipments 18% below normal").
+
 Honest read: produce prices are volatile (a typical 4-week move is ~20%), so the **range** is the most useful output. More model tuning now gives tiny gains; the next real improvement needs **new information** (weather, shipment volumes).
 
 ## Next improvements (each kept only if the walk-forward score improves)
-- Weather at origin (NOAA), shipment volumes (USDA 3283/1662), MXN/USD, diesel, holidays, FDA recalls.
+- Weather at origin (NOAA), MXN/USD, diesel, holidays, FDA recalls. (Shipment volumes: tested, didn't help.)
 - A public track record on the site (past forecasts vs. what happened).

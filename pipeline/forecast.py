@@ -233,9 +233,11 @@ METHODS = {
     "pooled": _pooled(BASE),                                              # v1
     "by_commodity": _by_group(BASE),
     "by_commodity_market": _by_group(BASE, keys=("commodity", "market")),  # v2
-    "by_commodity_market+supply": _by_group(SUPPLY, keys=("commodity", "market")),
 }
-MODEL_CANDIDATES = ["by_commodity_market", "by_commodity_market+supply"]
+# Tested 2026-09-26: adding shipment volumes (SUPPLY) did not help (avg miss 13.24% vs 13.23%),
+# so it's off. Add "by_commodity_market+supply": _by_group(SUPPLY, keys=("commodity", "market"))
+# here and to MODEL_CANDIDATES to re-test.
+MODEL_CANDIDATES = ["by_commodity_market"]
 
 
 def backtest(panel, last_year):
