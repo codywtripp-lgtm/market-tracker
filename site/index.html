@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Produce Price Check</title>
+  <meta name="description" content="What's cheap and expensive in wholesale produce, beef and chicken this week, compared with the usual price for this time of year. USDA data.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <h1>Produce Price Check</h1>
+    <p class="sub">This week's USDA prices vs. the usual price for this time of year. <span id="asof"></span></p>
+  </header>
+
+  <nav class="filters" aria-label="Market">
+    <div class="chips" id="markets" role="tablist"></div>
+    <div class="chips" id="statuses"></div>
+  </nav>
+
+  <main>
+    <p id="summary" class="summary"></p>
+    <ul id="list" class="list"></ul>
+    <p id="empty" class="empty" hidden>No items match.</p>
+  </main>
+
+  <dialog id="detail" aria-labelledby="d-title">
+    <div class="d-head">
+      <div>
+        <h2 id="d-title"></h2>
+        <p id="d-sub" class="sub"></p>
+      </div>
+      <button id="d-close" class="close" aria-label="Close">✕</button>
+    </div>
+    <div id="d-stats" class="stats"></div>
+    <figure class="chart-fig">
+      <figcaption id="d-cap" class="cap"></figcaption>
+      <div id="d-legend" class="legend"></div>
+      <div id="d-chart" class="chart"></div>
+      <details class="table-view"><summary>Show as table</summary><div id="d-table"></div></details>
+    </figure>
+    <p class="note">Prices in today's dollars (adjusted for food inflation). "Usual range" = the middle half of prices in the same weeks of past years.</p>
+  </dialog>
+
+  <footer class="foot">
+    Data: USDA AMS Market News (terminal, shipping point, retail, boxed beef, chicken). Updated every evening.
+    <a href="https://github.com/codywtripp-lgtm/market-tracker">Source &amp; data</a>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>
