@@ -19,8 +19,9 @@ const $ = (id) => document.getElementById(id);
 const money = (v) => (v == null ? "—" : v >= 100 ? `$${v.toFixed(0)}` : `$${v.toFixed(2)}`);
 const unitShort = (u) => {
   if (!u) return "";
-  const known = { "per lb": "/lb", "per each": "/ea", "$/package": "/case", "$/cwt": "/cwt", "cents/lb": "¢/lb" };
-  return known[u] || "/" + u.replace(/^\$\//, "");
+  const known = { "per lb": "/lb", "per each": "/ea", "$/package": "/case", "$/cwt": "/cwt",
+    "cents/lb": "¢/lb", "$/per lb": "/lb", "$/each": " each" };
+  return known[u] || " / " + u.replace(/^\$\//, "").replace(/^per /, "");
 };
 const pct = (v) => (v == null ? "—" : `${v > 0 ? "+" : ""}${v.toFixed(0)}%`);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));

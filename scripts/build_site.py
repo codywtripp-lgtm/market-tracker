@@ -40,13 +40,25 @@ def main():
     (OUT / "data" / "s").mkdir(parents=True)
 
     series = {r["series_id"]: r for r in read("series.csv")}
+    # Chicken is quoted in cents/lb; show it in dollars like everything else.
+    scale = {sid: 0.01 if s["compare_unit"] == "cents/lb" else 1 for sid, s in series.items()}
+
+    def unit_of(sid, unit):
+        return "per lb" if scale.get(sid) == 0.01 else unit
+
+    def price(sid, v):
+        v = num(v)
+        return None if v is None else round(v * scale.get(sid, 1), 4)
+
     latest = []
     for r in read("latest.csv"):
-        s = series.get(r["series_id"], {})
+        sid = r["series_id"]
+        s = series.get(sid, {})
         latest.append({
-            "id": r["series_id"], "label": r["label"], "commodity": r["commodity"], "market": r["market"],
-            "type": r["market_type"], "week": r["week_start"], "price": num(r["compare_price"]),
-            "unit": r["compare_unit"], "norm": num(r["seasonal_norm"]), "vsNorm": num(r["pct_vs_norm"]),
+            "id": sid, "label": r["label"], "commodity": r["commodity"], "market": r["market"],
+            "type": r["market_type"], "week": r["week_start"], "price": price(sid, r["compare_price"]),
+            "unit": unit_of(sid, r["compare_unit"]), "norm": price(sid, r["seasonal_norm"]),
+            "vsNorm": num(r["pct_vs_norm"]),
             "pctile": num(r["percentile"]), "status": r["status"], "years": num(r["years_of_history"]),
             "vs4w": num(r["pct_vs_4_weeks_ago"]), "vsYear": num(r["pct_vs_last_year"]),
             "variety": s.get("variety", ""), "pack": s.get("pack_size", ""), "size": s.get("item_size", ""),
@@ -56,7 +68,8 @@ def main():
 
     weekly = defaultdict(list)
     for r in read("prices_weekly.csv"):
-        weekly[r["series_id"]].append([r["week_start"], num(r["compare_price"]), num(r["real_compare_price"])])
+        sid = r["series_id"]
+        weekly[sid].append([r["week_start"], price(sid, r["compare_price"]), price(sid, r["real_compare_price"])])
     for sid, rows in weekly.items():
         (OUT / "data" / "s" / f"{sid}.json").write_text(json.dumps(sorted(rows), separators=(",", ":")))
     print(f"site: {len(latest)} items, {len(weekly)} series histories")

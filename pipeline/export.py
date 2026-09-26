@@ -214,9 +214,9 @@ def build(rows, today=None, deflator=None):
         base = {"series_id": sid, "commodity": commodity, "market": market, "market_type": mt}
 
         by_day = {d: daily_value(rs) for d, rs in sorted(grouped[key].items())}
-        # Use $/lb or $/each when available so the website compares like with like.
-        use_norm = all(v["normalized_price"] != "" for v in by_day.values())
-        unit = any_row["normalized_unit"] if use_norm else any_row["price_unit"]
+        # Compare in the trade's own unit (per case/package, $/cwt, ...): a series is one pack and
+        # count, so per-lb conversion adds nothing and depends on assumed weights.
+        unit = any_row["price_unit"]
 
         series_rows.append({**base, "label": label(key), "variety": variety, "pack_size": pack,
                             "item_size": size, "properties": prop, "organic": organic,
@@ -225,12 +225,14 @@ def build(rows, today=None, deflator=None):
 
         weekly = defaultdict(list)
         for d, v in by_day.items():
-            value = v["normalized_price"] if use_norm else v["price"]
+            value = v["price"]
             weekly[iso_week_start(dt.date.fromisoformat(d))].append(value)
             if d >= cutoff:
                 daily_rows.append({**base, "date": d, "price": v["price"], "price_unit": any_row["price_unit"],
                                    "compare_price": value, "compare_unit": unit, "low": v["low"],
-                                   "high": v["high"], "origins": v["origins"], "quotes": v["quotes"]})
+                                   "high": v["high"], "normalized_price": v["normalized_price"],
+                                   "normalized_unit": any_row["normalized_unit"],
+                                   "origins": v["origins"], "quotes": v["quotes"]})
         weekly_avg = {w: round(statistics.mean(vs), 4) for w, vs in weekly.items()}
         # Same prices in today's dollars (CPI food at home), for fair multi-year comparisons.
         weekly_real = {w: round(v * deflator.factor(w.isoformat()), 4) for w, v in weekly_avg.items()}
@@ -254,7 +256,8 @@ def build(rows, today=None, deflator=None):
     write_csv(EXPORT / "series.csv", base_f + ["label", "variety", "pack_size", "item_size", "properties",
               "organic", "price_unit", "compare_unit", "coverage_last_year", "first_date", "last_date"], series_rows)
     write_csv(EXPORT / "prices_daily_365.csv", base_f + ["date", "price", "price_unit", "compare_price",
-              "compare_unit", "low", "high", "origins", "quotes"], daily_rows)
+              "compare_unit", "low", "high", "normalized_price", "normalized_unit", "origins", "quotes"],
+              daily_rows)
     write_csv(EXPORT / "prices_weekly.csv", base_f + ["week_start", "compare_price", "real_compare_price",
               "compare_unit", "days"], weekly_rows)
     write_csv(EXPORT / "latest.csv", base_f + ["label", "week_start", "compare_price", "compare_unit",

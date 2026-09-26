@@ -39,9 +39,10 @@ def test_cheap_week_is_flagged(tmp_path, monkeypatch):
     assert counts["series"] == 1
     [latest] = read(tmp_path / "latest.csv")
     assert latest["status"] == "cheap"
-    assert latest["compare_unit"] == "per each"
-    assert float(latest["compare_price"]) == round(30 / 48, 4)
-    assert float(latest["seasonal_norm"]) == round(40 / 48, 4)
+    # quoted per case, like the trade does (not per avocado)
+    assert latest["compare_unit"] == "$/package"
+    assert float(latest["compare_price"]) == 30
+    assert float(latest["seasonal_norm"]) == 40
 
 
 def test_distressed_rows_excluded(tmp_path, monkeypatch):
