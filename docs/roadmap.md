@@ -37,6 +37,7 @@ Early-warning signals to test first (all from data we already collect):
 4. Later: weather at origin, tariffs/trade events, holidays.
 
 ### Forecasting approach (owner: "our other big differentiator")
+- **Owner: forecasts must be week-level.** Annual averages are useless (huge within-year variance). Priorities: (1) next 1–4 weeks, week by week, as ranges; (2) turning points / spike risk ("chance of +30% in the next month"); (3) the seasonal calendar — which weeks are usually cheapest/dearest and why (crop transitions).
 - **Horizons**: 1–2 weeks (strong: shipping point, loads, USDA tone, recent weather already in the pipeline); 1–3 months (fair: seasonality, crop transitions, NASS acreage/progress, seasonal outlooks); longer = seasonal range only.
 - **Driver candidates (free data)**: NOAA / Mexico SMN weather at origins; USDA shipments & border crossings (3283, 1662); NASS acreage/crop progress; shipping-point prices & USDA tone; trade/tariff events (dated list); MXN/USD (FRED); diesel (EIA) & truck rates (USDA 2375); holiday/demand calendar; FDA recalls (e.g. romaine E. coli).
 - **Method**: baseline = seasonal pattern + recent trend; add one driver at a time; keep it only if it improves **out-of-sample** backtests.
