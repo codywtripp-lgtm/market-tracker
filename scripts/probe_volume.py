@@ -77,9 +77,8 @@ for r in move[:500]:
         except (TypeError, ValueError):
             pass
 print("numeric fields:", num_fields.most_common(15), flush=True)
-vol_field = next((k for k, _ in num_fields.most_common()
-                  if any(w in k.lower() for w in ("volume", "shipment", "movement", "current", "qty", "quantity"))), None)
-unit_field = next((k for k in (move[0] if move else {}) if "unit" in k.lower()), None)
+vol_field = "1 lb units"  # shipments in pounds (round 3a finding)
+unit_field = None
 print("volume field:", vol_field, "unit field:", unit_field, flush=True)
 
 volume = collections.Counter()
