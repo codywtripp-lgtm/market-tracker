@@ -1,0 +1,58 @@
+name: Backfill history
+
+# Run from the Actions tab: pick a year range. Commits after each year so progress
+# is kept if a later year fails or the job times out.
+on:
+  workflow_dispatch:
+    inputs:
+      first_year:
+        description: "First year (e.g. 2016)"
+        required: true
+        default: "2016"
+      last_year:
+        description: "Last year (e.g. 2026)"
+        required: true
+        default: "2026"
+      sources:
+        description: "Sources (space separated): terminal shipping_point retail beef chicken"
+        required: true
+        default: "terminal shipping_point retail beef chicken"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-writes
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Backfill year by year
+        env:
+          MARS_API_KEY: ${{ secrets.MARS_API_KEY }}
+          FIRST: ${{ inputs.first_year }}
+          LAST: ${{ inputs.last_year }}
+          SOURCES: ${{ inputs.sources }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for year in $(seq "$FIRST" "$LAST"); do
+            end="$year-12-31"
+            today=$(date -u +%F)
+            if [[ "$end" > "$today" ]]; then end="$today"; fi
+            python -m pipeline.run --start "$year-01-01" --end "$end" --sources $SOURCES || echo "Year $year had failures"
+            git add data
+            if ! git diff --cached --quiet; then
+              git commit -m "Data: backfill $year"
+              git pull --rebase
+              git push
+            fi
+          done

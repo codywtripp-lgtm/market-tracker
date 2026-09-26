@@ -1,9 +1,7 @@
-# One-off exploration job (volume ranking). Runs on pushes to api-probe or manually.
+# One-off exploration job (volume ranking); run manually from the Actions tab if needed.
 name: API probe - volume
 
 on:
-  push:
-    branches: [api-probe]
   workflow_dispatch:
 
 jobs:

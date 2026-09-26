@@ -26,6 +26,8 @@ Also keep: low/high/mostly prices, appearance/condition/quality (needed for dedu
   - Terminal markets: New York (critical), Los Angeles, Chicago.
   - Backfill depth: 10 years.
   - `MARS_API_KEY` secret added to the GitHub repo. `scripts/probe_api.py` + `.github/workflows/probe.yml` is a throwaway exploration job (manual trigger) that verifies the API and measures reporting consistency.
+- 2026-09-26: Owner wants the top 10–20 NY-volume items. Added potatoes, lemons, limes, cucumbers, broccoli, celery, carrots, bananas, blueberries, grapes (18 produce commodities total). Volume source = national movement report 3283 (import-biased; see shortlist doc) + judgment.
+- 2026-09-26: Pipeline built (`pipeline/`): fetch → normalize → monthly CSV upsert. Workflows: `daily.yml` (cron), `backfill.yml` (manual, year range), `tests.yml` (pytest + real smoke fetch on PRs). No local Python on the owner's machine — tests run in GitHub Actions.
 - 2026-09-26: API verified. Proposed shortlist + storage (slim monthly-partitioned CSV) in `docs/shortlist-and-storage.md` — awaiting owner approval before building parsers.
 
 ## API gotchas (verified)
