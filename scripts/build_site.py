@@ -80,6 +80,8 @@ def main():
     (OUT / "data" / "s").mkdir(parents=True)
 
     series = {r["series_id"]: r for r in read("series.csv")}
+    forecasts = EXPORT / "forecasts.json"
+    fc = json.loads(forecasts.read_text())["series"] if forecasts.exists() else {}
     # Chicken is quoted in cents/lb; show it in dollars like everything else.
     scale = {sid: 0.01 if s["compare_unit"] == "cents/lb" else 1 for sid, s in series.items()}
 
@@ -108,6 +110,7 @@ def main():
             "props": s.get("properties", ""), "organic": s.get("organic", ""),
             "coverage": num(s.get("coverage_last_year")),
             "tone": day.get("market_tone", ""), "origins": day.get("origins", ""),
+            "forecast": {p["h"]: [p["lo"], p["mid"], p["hi"]] for p in fc.get(sid, {}).get("points", [])},
         })
     alerts = EXPORT / "alerts.json"
     if alerts.exists():

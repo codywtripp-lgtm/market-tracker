@@ -27,7 +27,6 @@ def setup(tmp_path, monkeypatch, sp_now, ny_now, tone=""):
     monkeypatch.setattr(alerts, "RULES", tmp_path / "data" / "signals" / "rules.csv")
     monkeypatch.setattr(alerts, "LOG", tmp_path / "data" / "alerts" / "log.csv")
     monkeypatch.setattr(alerts, "OUT_JSON", tmp_path / "data" / "export" / "alerts.json")
-    monkeypatch.setattr(alerts, "NEW_MD", tmp_path / "new_alerts.md")
     (tmp_path / "data" / "signals").mkdir(parents=True)
     (tmp_path / "data" / "signals" / "rules.csv").write_text(RULES)
     term, ship = [], []
@@ -47,11 +46,11 @@ def test_fires_when_shipping_point_moved_and_ny_has_not(tmp_path, monkeypatch):
     [a] = out["alerts"]
     assert a["commodity"] == "Celery" and a["market"] == "New York" and a["direction"] == "up"
     assert "26 of the last 30" in a["record"]
-    assert (tmp_path / "new_alerts.md").exists()
 
-    # Same signal the next day: still shown, but not re-sent.
+    # Same signal the next day: still shown, but logged only once.
     alerts.main(today=TODAY + dt.timedelta(days=1))
-    assert not (tmp_path / "new_alerts.md").exists()
+    log = (tmp_path / "data" / "alerts" / "log.csv").read_text().strip().splitlines()
+    assert len(log) == 2  # header + one alert
 
 
 def test_no_alert_when_ny_already_moved(tmp_path, monkeypatch):

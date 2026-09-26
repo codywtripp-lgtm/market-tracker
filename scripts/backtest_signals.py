@@ -21,66 +21,21 @@ different prices can be combined.
 
 import csv
 import math
-import re
-from collections import defaultdict
+import sys
 from pathlib import Path
 
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
-RAW = ROOT / "data" / "raw"
+sys.path.insert(0, str(ROOT))
+from pipeline.signals import index_changes, load  # noqa: E402  (shared with alerts/forecast)
+
 OUT = ROOT / "backtest_output"
 
 MOVE = 0.10          # signal threshold: 10% weekly move
 FOLLOW = 0.05        # "followed" = terminal moved >= 5% the same way within the horizon
 HORIZON = 2          # weeks
-NON_STANDARD = re.compile(r"fair|poor|ordinary|holdover|decay|damage|scar|fine|mixed condition", re.I)
 TERMINALS = ["New York", "Los Angeles", "Chicago"]
-
-UP_WORDS = re.compile(r"\b(higher|firmer|stronger|advanc|increas)", re.I)
-DOWN_WORDS = re.compile(r"\b(lower|weaker|declin|decreas)", re.I)
-
-
-def tone_score(text):
-    """+1 higher, -1 lower, 0 steady/mixed, None if no tone."""
-    if not text:
-        return None
-    up, down = bool(UP_WORDS.search(text)), bool(DOWN_WORDS.search(text))
-    if up and not down:
-        return 1
-    if down and not up:
-        return -1
-    return 0
-
-
-def load(source):
-    frames = []
-    cols = ["report_date", "commodity", "variety", "pack_size", "item_size", "properties", "organic",
-            "appearance", "condition", "quality", "unit_price", "market", "market_tone"]
-    for path in sorted((RAW / source).glob("*/*.csv")):
-        frames.append(pd.read_csv(path, usecols=cols, dtype=str, keep_default_na=False))
-    df = pd.concat(frames, ignore_index=True)
-    df["unit_price"] = pd.to_numeric(df["unit_price"], errors="coerce")
-    df = df[df["unit_price"] > 0]
-    std = ~(df["appearance"].str.contains(NON_STANDARD) | df["condition"].str.contains(NON_STANDARD)
-            | df["quality"].str.contains(NON_STANDARD))
-    df = df[std].copy()
-    df["week"] = pd.to_datetime(df["report_date"]).dt.to_period("W-SUN").dt.start_time
-    df["series"] = df[["market", "variety", "pack_size", "item_size", "properties", "organic"]].agg("|".join, axis=1)
-    df["tone"] = df["market_tone"].map(tone_score)
-    return df
-
-
-def index_changes(df):
-    """(commodity, market) -> Series of weekly mean log price change, indexed by week."""
-    wk = df.groupby(["commodity", "market", "series", "week"])["unit_price"].median().reset_index()
-    wk = wk.sort_values("week")
-    wk["prev_week"] = wk.groupby(["commodity", "market", "series"])["week"].shift()
-    wk["prev_price"] = wk.groupby(["commodity", "market", "series"])["unit_price"].shift()
-    consecutive = (wk["week"] - wk["prev_week"]).dt.days == 7
-    wk = wk[consecutive].copy()
-    wk["chg"] = (wk["unit_price"] / wk["prev_price"]).map(math.log)
-    return wk.groupby(["commodity", "market", "week"])["chg"].mean()
 
 
 def forward(changes, weeks):

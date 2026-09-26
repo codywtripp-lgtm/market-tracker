@@ -11,9 +11,8 @@ that has a strong 10-year track record for that commodity, market and direction 
   usda_tone  USDA reporters at the terminal call the market higher/lower -> next week
 
 Writes:
-  data/export/alerts.json   current alerts (the website shows these)
-  data/alerts/log.csv       every alert ever fired (for dedup and a public track record)
-  new_alerts.md             only when new alerts fired today (the workflow opens a GitHub issue)
+  data/export/alerts.json   current alerts (the website shows these; website-only by design)
+  data/alerts/log.csv       every alert ever fired, with the day it first appeared (for a public track record)
 
 Details: docs/alerts.md
 """
@@ -32,7 +31,6 @@ from . import store
 RULES = store.DATA / "signals" / "rules.csv"
 LOG = store.DATA / "alerts" / "log.csv"
 OUT_JSON = store.DATA / "export" / "alerts.json"
-NEW_MD = store.DATA.parent / "new_alerts.md"
 
 # Same thresholds as the backtest
 MOVE = 0.10
@@ -183,15 +181,6 @@ def main(today=None):
     OUT_JSON.parent.mkdir(parents=True, exist_ok=True)
     OUT_JSON.write_text(json.dumps({"asOf": today.isoformat(), "alerts": alerts}, indent=1))
 
-    if new:
-        lines = [f"**{len(new)} new price alert{'s' if len(new) > 1 else ''}** ({today.isoformat()})", ""]
-        for a in new:
-            lines += [f"- **{a['headline']}** {a['expect']} _{a['record']}_"]
-        lines += ["", "See the dashboard: https://codywtripp-lgtm.github.io/market-tracker/", "",
-                  "@codywtripp-lgtm"]
-        NEW_MD.write_text("\n".join(lines))
-    elif NEW_MD.exists():
-        NEW_MD.unlink()
     print(f"alerts: {len(alerts)} active, {len(new)} new, {len(rules)} qualifying rules")
 
 
