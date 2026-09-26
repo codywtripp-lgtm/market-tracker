@@ -109,6 +109,11 @@ def main():
             "coverage": num(s.get("coverage_last_year")),
             "tone": day.get("market_tone", ""), "origins": day.get("origins", ""),
         })
+    alerts = EXPORT / "alerts.json"
+    if alerts.exists():
+        shutil.copy(alerts, OUT / "data" / "alerts.json")
+    else:
+        (OUT / "data" / "alerts.json").write_text('{"alerts":[]}')
     as_of = max((x["week"] for x in latest), default="")
     (OUT / "data" / "latest.json").write_text(json.dumps({"asOf": as_of, "items": latest}, separators=(",", ":")))
 

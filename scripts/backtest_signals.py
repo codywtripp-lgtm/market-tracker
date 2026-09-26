@@ -186,6 +186,16 @@ def main():
         w.writeheader()
         w.writerows(results)
 
+    # Track records the live alerts quote (copy to data/signals/rules.csv after reviewing).
+    live = {"shipping point lead, terminal not yet moved": "sp_lead", "USDA tone (terminal)": "usda_tone"}
+    with open(OUT / "rules.csv", "w", newline="") as f:
+        w = csv.writer(f, lineterminator="\n")
+        w.writerow(["signal", "commodity", "market", "direction", "horizon_weeks", "cases", "hits", "hit_rate", "base_rate"])
+        for r in results:
+            if r["signal"] in live:
+                w.writerow([live[r["signal"]], r["commodity"], r["market"], r["direction"], r["horizon_weeks"],
+                            r["fired"], round(r["hit_rate"] * r["fired"]), r["hit_rate"], r["base_rate"]])
+
     # Summary: pooled across commodities, per signal / direction / market
     df = pd.DataFrame([r for r in results if not r["signal"].startswith("corr")])
     lines = ["# Signal backtest summary", "",
