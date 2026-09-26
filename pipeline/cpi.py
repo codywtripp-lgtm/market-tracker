@@ -36,8 +36,14 @@ def fetch(first_year=FIRST_YEAR, last_year=None):
         if body.get("status") != "REQUEST_SUCCEEDED":
             raise RuntimeError(f"BLS: {body.get('status')} {body.get('message')}")
         for p in body["Results"]["series"][0]["data"]:
-            if p["period"].startswith("M") and p["period"] != "M13":
+            if not p["period"].startswith("M") or p["period"] == "M13":
+                continue
+            try:
                 values[f"{p['year']}-{p['period'][1:]}"] = float(p["value"])
+            except ValueError:
+                # BLS publishes "-" for months with no data (e.g. Oct 2025 shutdown);
+                # Deflator.factor falls back to the previous month.
+                log.warning("CPI %s-%s missing (%r), skipped", p["year"], p["period"], p["value"])
         start = end + 1
     return values
 
