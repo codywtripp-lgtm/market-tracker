@@ -152,6 +152,9 @@ main { min-width: 0; display: grid; gap: 12px; align-content: start; }
 .table-view td, .table-view th { padding: 4px 6px; border-bottom: 1px solid var(--grid); text-align: right; }
 .table-view th:first-child, .table-view td:first-child { text-align: left; }
 .table-wrap { overflow-x: auto; max-height: 320px; }
+table.mini { border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; margin-top: 6px; }
+table.mini td, table.mini th { padding: 4px 10px; border-bottom: 1px solid var(--grid); text-align: right; }
+table.mini th:first-child, table.mini td:first-child { text-align: left; }
 
 /* List */
 .list { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }

@@ -36,6 +36,7 @@ jobs:
       - run: python -m pipeline.volumes
       - run: python -m pipeline.alerts
       - run: python -m pipeline.forecast
+      - run: python -m pipeline.track_record
       - run: python scripts/build_site.py
       - uses: actions/upload-artifact@v4
         if: always()
