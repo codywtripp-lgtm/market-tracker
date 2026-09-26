@@ -44,6 +44,7 @@ CONTAINER_LB = {
     ("Peppers, Bell Type", "1 1/9 bushel cartons place pack"): 25.0,
     ("Tomatoes", "cartons 2 layer"): 20.0,
     ("Avocados", "cartons 2 layer"): 25.0,
+    ("Cucumbers", "1 1/9 bushel cartons"): 55.0,
 }
 
 LB_PER_KG = 2.20462
@@ -102,6 +103,9 @@ def package_lb(commodity, pack):
     m = re.search(r"(\d+(?:\.\d+)?)\s*kg", p)  # "4 kg cartons"
     if m:
         return round(float(m.group(1)) * LB_PER_KG, 3)
+    m = re.search(r"(\d+(?:\.\d+)?)\s*oz", p)  # retail "18 oz package"
+    if m:
+        return round(float(m.group(1)) / 16, 4)
     return CONTAINER_LB.get((commodity, pack.strip()))
 
 
@@ -113,6 +117,10 @@ def count_size(item_size, pack):
     s = item_size.lower()
     if re.search(r"\d+x\d+", s):  # tomato layer sizes like 4x5s are not counts
         return None
+    m = re.search(r"(\d+)(?:\s+(\d+)/(\d+))?\s*dozen", s)  # celery "2 dozen", "2 1/2 dozen"
+    if m:
+        dozens = int(m.group(1)) + (int(m.group(2)) / int(m.group(3)) if m.group(2) else 0)
+        return int(round(dozens * 12))
     m = re.search(r"\b(\d+)s\b", s)
     return int(m.group(1)) if m else None
 

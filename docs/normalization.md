@@ -25,9 +25,14 @@ Code: `pipeline/normalize.py`. Every stored row keeps the prices exactly as USDA
    - Bell peppers, `1 1/9 bushel cartons` (incl. place pack): **25 lb**
    - Tomatoes, `cartons 2 layer`: **20 lb**
    - Avocados, `cartons 2 layer`: **25 lb** (only used if no count is given)
+   - Cucumbers, `1 1/9 bushel cartons`: **55 lb**
 4. **Otherwise per each if a count is known**, else blank.
 5. **Beef**: $/cwt ÷ 100 → $/lb. **Chicken**: cents/lb ÷ 100 → $/lb.
 6. **Retail**: `each` and `per lb` pass through; bag sizes (`3 lb bag`) are divided by their weight; other units (e.g. `4 count mesh bags`) are left blank for now.
+
+Counts in dozens (celery `2 dozen`, `2 1/2 dozen`) become 24 and 30. Retail single packs (`18 oz package`) are converted by weight.
+
+Rows graded "Fair Appearance", "Fair Condition" and similar are distressed product (e.g. NY strawberries at $5/flat next to $37 for fine fruit). They're stored, but headline series should exclude them.
 
 Tomato sizes like `4x5s` or `5x6 size` describe layer patterns, not counts, so they're never used as a count.
 

@@ -57,6 +57,13 @@ def test_counts():
     assert n.count_size("N/A", "cartons 12 3-count packages") == 36
     assert n.count_size("4x5s", "cartons 2 layer") is None
     assert n.count_size("extra large", "25 lb cartons loose") is None
+    assert n.count_size("2 dozen", "cartons") == 24
+    assert n.count_size("2 1/2 dozen", "cartons") == 30
+
+
+def test_single_package_ounces():
+    assert n.package_lb("Blueberries", "18 oz package") == 1.125
+    assert n.package_lb("Cucumbers", "1 1/9 bushel cartons") == 55
 
 
 def test_lettuce_per_head():
