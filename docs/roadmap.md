@@ -36,6 +36,12 @@ Early-warning signals to test first (all from data we already collect):
 3. Shipment volume drops (movement report 3283, trends 1662) leading price rises.
 4. Later: weather at origin, tariffs/trade events, holidays.
 
+### Two audiences, one page (owner, 2026-09-26)
+A switch at the top — **Buying for: Business | Household** — remembered per visitor.
+- **Business**: wholesale case prices (current design).
+- **Household**: prices in the unit people buy (one 1-lb clamshell, one avocado, one head, per lb). Sources: weekly grocery ad prices (report 3324), BLS monthly average retail prices, and wholesale translated per unit ("stores pay ~$1.40 per clamshell; typical ad $2.99"). Alerts in shopper language ("expect store specials in 1–2 weeks") — only after backtesting how long wholesale moves take to reach retail ads.
+- Per-unit conversion reuses `normalized_price` (count-based "per each" and pack-based "per lb" = per 1-lb clamshell).
+
 ### Ideas from Macrotrends (2026-09-26)
 Macrotrends' food pages (e.g. /3710/us-strawberry-prices) chart a single national monthly *retail* average (likely BLS Average Price data) over decades. Different product from ours (wholesale, daily, pack-level, forward-looking), but worth borrowing:
 1. **BLS average retail prices** (monthly, back to the 1980s, same free BLS API as CPI) as a "grocery shelf price" layer — long-run context and a view of wholesale → retail pass-through.
