@@ -1,0 +1,5 @@
+alert_id,first_seen,signal,commodity,market,direction,headline
+sp_lead|Broccoli|Chicago|up|2026-09-21,2026-09-26,sp_lead,Broccoli,Chicago,up,Broccoli: shipping point up 16% this week; Chicago hasn't followed yet (+2% this week).
+"usda_tone|Lettuce, Iceberg|Los Angeles|up|2026-09-21",2026-09-26,usda_tone,"Lettuce, Iceberg",Los Angeles,up,"Lettuce, Iceberg: USDA reporters in Los Angeles call the market higher (“Market slightly higher”)."
+usda_tone|Tomatoes|New York|down|2026-09-21,2026-09-26,usda_tone,Tomatoes,New York,down,"Tomatoes: USDA reporters in New York call the market lower (“Market mature greens slightly lower, others about steady”)."
+"sp_lead|Peppers, Bell Type|Chicago|down|2026-09-21",2026-09-26,sp_lead,"Peppers, Bell Type",Chicago,down,"Peppers, Bell Type: shipping point down 24% this week; Chicago hasn't followed yet (+7% this week)."

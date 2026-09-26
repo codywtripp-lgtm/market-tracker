@@ -1,0 +1,53 @@
+{
+ "asOf": "2026-09-26",
+ "alerts": [
+  {
+   "signal": "sp_lead",
+   "commodity": "Broccoli",
+   "market": "Chicago",
+   "direction": "up",
+   "headline": "Broccoli: shipping point up 16% this week; Chicago hasn't followed yet (+2% this week).",
+   "expect": "Expect Chicago prices to rise within ~2 weeks.",
+   "record": "Chicago followed 43 of the last 54 times (normally 37%).",
+   "hit_rate": 0.796,
+   "sp_change": 15.9,
+   "terminal_change": 1.6,
+   "id": "sp_lead|Broccoli|Chicago|up|2026-09-21"
+  },
+  {
+   "signal": "usda_tone",
+   "commodity": "Lettuce, Iceberg",
+   "market": "Los Angeles",
+   "direction": "up",
+   "headline": "Lettuce, Iceberg: USDA reporters in Los Angeles call the market higher (\u201cMarket slightly higher\u201d).",
+   "expect": "Expect Los Angeles prices to rise next week.",
+   "record": "That happened 34 of the last 47 times (normally 28%).",
+   "hit_rate": 0.723,
+   "id": "usda_tone|Lettuce, Iceberg|Los Angeles|up|2026-09-21"
+  },
+  {
+   "signal": "usda_tone",
+   "commodity": "Tomatoes",
+   "market": "New York",
+   "direction": "down",
+   "headline": "Tomatoes: USDA reporters in New York call the market lower (\u201cMarket mature greens slightly lower, others about steady\u201d).",
+   "expect": "Expect New York prices to fall next week.",
+   "record": "That happened 49 of the last 69 times (normally 37%).",
+   "hit_rate": 0.71,
+   "id": "usda_tone|Tomatoes|New York|down|2026-09-21"
+  },
+  {
+   "signal": "sp_lead",
+   "commodity": "Peppers, Bell Type",
+   "market": "Chicago",
+   "direction": "down",
+   "headline": "Peppers, Bell Type: shipping point down 24% this week; Chicago hasn't followed yet (+7% this week).",
+   "expect": "Expect Chicago prices to fall within ~2 weeks.",
+   "record": "Chicago followed 37 of the last 56 times (normally 35%).",
+   "hit_rate": 0.661,
+   "sp_change": -24.5,
+   "terminal_change": 6.7,
+   "id": "sp_lead|Peppers, Bell Type|Chicago|down|2026-09-21"
+  }
+ ]
+}
