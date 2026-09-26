@@ -27,6 +27,8 @@ jobs:
         run: python -m pipeline.run
         env:
           MARS_API_KEY: ${{ secrets.MARS_API_KEY }}
+      - name: Update CPI (inflation adjustment)
+        run: python -m pipeline.cpi
       - name: Build export files (Tableau / website)
         run: python -m pipeline.export
       - name: Commit new data
