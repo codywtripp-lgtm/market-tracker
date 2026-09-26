@@ -178,7 +178,8 @@ def _by_group(cols, keys=("commodity",), prior_rows=PRIOR_ROWS):
         X, y = design(train, h, cols), train[f"y{h}"].to_numpy()
         pooled = ols(X, y)
         per = {}
-        lam = np.diag(np.diag(X.T @ X) / len(X) * prior_rows)  # scale-aware penalty per feature
+        # scale-aware penalty per feature; tiny floor keeps it solvable if an input is all zeros
+        lam = np.diag(np.diag(X.T @ X) / len(X) * prior_rows + 1e-9)
         for g, idx in pd.Series(np.arange(len(train))).groupby(group(train).to_numpy()).groups.items():
             idx = np.asarray(idx)
             Xg, yg = X[idx], y[idx]
