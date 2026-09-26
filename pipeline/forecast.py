@@ -13,12 +13,16 @@ Features (all known at the time of the forecast; nothing from the future):
   sp         this week's shipping-point price change for the commodity
   tone       USDA reporters' market call at this terminal this week (-1..1)
 
-Models compared by walk-forward testing (train on years before Y, test on year Y):
-  naive      no change
-  seasonal   the seasonal change only
-  model      linear regression on all features (one per horizon, pooled across series)
-The live forecast uses the model only for horizons where it beat both baselines; otherwise
-the better baseline.
+  sp_prev    last week's shipping-point change
+
+Methods compared by walk-forward testing (train on years before Y, test on year Y):
+  naive           no change
+  seasonal        the seasonal change only
+  pooled          linear regression, one per horizon, pooled across series (v1)
+  pooled+sp_prev  the same plus last week's shipping-point change
+  by_commodity    per-commodity regression, shrunk toward the pooled one
+  gbm             gradient boosting (learns interactions; also sees week-of-year, commodity, market)
+The live forecast uses whichever method had the smallest average miss for each horizon.
 
 Writes data/export/forecasts.json (live) and data/export/forecast_backtest.csv (scores).
 Details: docs/forecast.md
@@ -34,7 +38,6 @@ from . import signals, store
 
 EXPORT = store.DATA / "export"
 HORIZONS = [1, 2, 3, 4]
-FEATURES = ["seasonal", "gap", "mom1", "mom4", "sp", "tone"]
 TERMINALS = ["New York", "Los Angeles", "Chicago"]
 FIRST_TEST_YEAR = 2021
 # 80% range. Plain 10th/90th error percentiles covered only 77% out of sample (errors in a
@@ -79,6 +82,9 @@ def add_drivers(panel):
     tone = signals.weekly_tone(term[term["market"].isin(TERMINALS)]).rename("tone").reset_index()
     panel = panel.merge(sp, on=["commodity", "week"], how="left")
     panel = panel.merge(tone, on=["commodity", "market", "week"], how="left")
+    # last week's shipping-point move too (terminals often lag by about a week)
+    panel = panel.sort_values(["series_id", "week"]).reset_index(drop=True)
+    panel["sp_prev"] = panel.groupby("series_id")["sp"].shift(1)
     return panel
 
 
@@ -121,26 +127,95 @@ def add_seasonal(panel):
     return pd.concat(out, ignore_index=True)
 
 
-def design(df, h):
-    X = df[["gap", "mom1", "mom4", "sp", "tone"]].copy()
-    X.insert(0, "seasonal", df[f"seasonal{h}"])
-    X = X.fillna(0.0)  # missing driver = no information = 0 change
-    X.insert(0, "const", 1.0)
-    return X.to_numpy()
+BASE = ["seasonal", "gap", "mom1", "mom4", "sp", "tone"]
+EXTENDED = BASE + ["sp_prev"]
+# Pull toward the pooled coefficients, expressed as "worth this many rows of data": a commodity
+# with far more rows than this mostly follows its own data; a thin one stays near the pooled fit.
+PRIOR_ROWS = 1000
 
 
-def fit(df, h):
-    X, y = design(df, h), df[f"y{h}"].to_numpy()
-    coef, *_ = np.linalg.lstsq(X, y, rcond=None)
-    return coef
+def design(df, h, cols):
+    X = df[[f"seasonal{h}" if c == "seasonal" else c for c in cols]].fillna(0.0)  # missing driver = no info
+    return np.column_stack([np.ones(len(X)), X.to_numpy()])
 
 
-def predict(df, h, method, coef=None):
-    if method == "naive":
-        return np.zeros(len(df))
-    if method == "seasonal":
-        return df[f"seasonal{h}"].fillna(0.0).to_numpy()
-    return design(df, h) @ coef
+def ols(X, y):
+    return np.linalg.lstsq(X, y, rcond=None)[0]
+
+
+# Each method: fit(train, h) -> model; predict(model, rows, h) -> predicted log change.
+def _naive():
+    return (lambda train, h: None), (lambda model, rows, h: np.zeros(len(rows)))
+
+
+def _seasonal():
+    return (lambda train, h: None), (lambda model, rows, h: rows[f"seasonal{h}"].fillna(0.0).to_numpy())
+
+
+def _pooled(cols):
+    def fit(train, h):
+        return ols(design(train, h, cols), train[f"y{h}"].to_numpy())
+    return fit, (lambda coef, rows, h: design(rows, h, cols) @ coef)
+
+
+def _by_commodity(cols):
+    """Per-commodity regression, shrunk toward the pooled fit (thin commodities stay near pooled)."""
+    def fit(train, h):
+        X, y = design(train, h, cols), train[f"y{h}"].to_numpy()
+        pooled = ols(X, y)
+        per = {}
+        lam = np.diag(np.diag(X.T @ X) / len(X) * PRIOR_ROWS)  # scale-aware penalty per feature
+        for c, idx in train.groupby("commodity").indices.items():
+            Xc, yc = X[idx], y[idx]
+            per[c] = np.linalg.solve(Xc.T @ Xc + lam, Xc.T @ yc + lam @ pooled)
+        return pooled, per
+
+    def predict(model, rows, h):
+        pooled, per = model
+        X = design(rows, h, cols)
+        coefs = np.stack([per.get(c, pooled) for c in rows["commodity"]])
+        return np.einsum("ij,ij->i", X, coefs)
+    return fit, predict
+
+
+def _gbm(cols):
+    """Gradient boosting: can learn interactions (e.g. a gap matters more in some seasons/commodities)."""
+    from sklearn.ensemble import HistGradientBoostingRegressor
+
+    def frame(df, h):
+        X = df[[f"seasonal{h}" if c == "seasonal" else c for c in cols]].copy()
+        X.columns = cols
+        X["woy"] = df["woy"].to_numpy()
+        X["commodity"] = df["commodity"].astype("category")
+        X["market"] = df["market"].astype("category")
+        return X
+
+    def fit(train, h):
+        X = frame(train, h)
+        cats = {c: X[c].cat.categories for c in ("commodity", "market")}
+        m = HistGradientBoostingRegressor(max_iter=300, learning_rate=0.05, max_leaf_nodes=31,
+                                          min_samples_leaf=100, l2_regularization=1.0,
+                                          categorical_features="from_dtype", random_state=0)
+        m.fit(X, train[f"y{h}"].to_numpy())
+        return m, cats
+
+    def predict(model, rows, h):
+        m, cats = model
+        X = frame(rows, h)
+        for c, levels in cats.items():  # same category codes as in training
+            X[c] = pd.Categorical(X[c].astype(str), categories=levels)
+        return m.predict(X)
+    return fit, predict
+
+
+METHODS = {
+    "naive": _naive(),
+    "seasonal": _seasonal(),
+    "pooled": _pooled(BASE),                 # v1
+    "pooled+sp_prev": _pooled(EXTENDED),
+    "by_commodity": _by_commodity(EXTENDED),
+    "gbm": _gbm(EXTENDED),
+}
 
 
 def backtest(panel, last_year):
@@ -154,9 +229,8 @@ def backtest(panel, last_year):
             test = usable[(usable["year"] == Y)].dropna(subset=[f"y{h}"])
             if len(train) < 500 or test.empty:
                 continue
-            coef = fit(train, h)
-            for m in ("naive", "seasonal", "model"):
-                pred = predict(test, h, m, coef)
+            for m, (fit_fn, pred_fn) in METHODS.items():
+                pred = pred_fn(fit_fn(train, h), test, h)
                 err = test[f"y{h}"].to_numpy() - pred
                 rows.append({"horizon": h, "year": Y, "method": m, "n": len(test),
                              "mae_pct": float(np.mean(np.abs(np.expm1(pred + 0) - np.expm1(test[f"y{h}"].to_numpy()))) * 100),
@@ -219,8 +293,8 @@ def main():
     latest = latest[(today - latest["week"]).dt.days <= 14]  # skip series that stopped reporting
     out = {}
     for h in HORIZONS:
-        coef = fit(usable.dropna(subset=[f"y{h}"]), h)
-        pred = predict(latest, h, best[h], coef)
+        fit_fn, pred_fn = METHODS[best[h]]
+        pred = pred_fn(fit_fn(usable.dropna(subset=[f"y{h}"]), h), latest, h)
         for (_, r), p in zip(latest.iterrows(), pred):
             lo, hi = table.get((r["commodity"], h), pooled[h])
             wk = (r["week"] + pd.Timedelta(weeks=h)).date().isoformat()

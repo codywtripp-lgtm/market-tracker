@@ -11,6 +11,9 @@ Tracks daily USDA produce prices (later meat/other commodities) to show what's c
 1. Data pipeline (current): explore → shortlist → schema → storage → daily GitHub Action → backfill → flat CSV export.
 2. Later: static site (GitHub Pages / Cloudflare Pages), seasonal baselines (STL), NOAA weather by origin region, possible B2B buyer-cost comparison.
 
+## Priority (owner, 2026-09-26)
+**Primary user = food wholesale buyer.** Forecast quality comes first; the household/consumer view is nice-to-have, later.
+
 ## Hard rules
 - **No private customer data in this repo, ever.** It is public. Keep architecture ready to separate public market data from any private data (separate repo/storage).
 - Never commit the USDA API key. It lives in GitHub Actions secret `MARS_API_KEY` (and local env var of the same name).
