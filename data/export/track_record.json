@@ -1,0 +1,74 @@
+{
+ "asOf": "2026-09-27",
+ "forecasts_live": {},
+ "forecasts_backtest": {
+  "years": "2021-2026",
+  "by_horizon": {
+   "1": {
+    "miss_pct": 7.1,
+    "no_change_miss_pct": 7.7
+   },
+   "2": {
+    "miss_pct": 11.8,
+    "no_change_miss_pct": 13.0
+   },
+   "3": {
+    "miss_pct": 15.4,
+    "no_change_miss_pct": 17.0
+   },
+   "4": {
+    "miss_pct": 17.9,
+    "no_change_miss_pct": 19.9
+   }
+  },
+  "range_coverage_pct": 80.1
+ },
+ "alerts": {
+  "issued": 4,
+  "decided": 0,
+  "came_true": 0,
+  "pending": 4,
+  "recent": [
+   {
+    "first_seen": "2026-09-26",
+    "commodity": "Broccoli",
+    "market": "Chicago",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Broccoli: shipping point up 16% this week; Chicago hasn't followed yet (+2% this week).",
+    "status": "pending",
+    "moved_pct": null
+   },
+   {
+    "first_seen": "2026-09-26",
+    "commodity": "Lettuce, Iceberg",
+    "market": "Los Angeles",
+    "direction": "up",
+    "signal": "usda_tone",
+    "headline": "Lettuce, Iceberg: USDA reporters in Los Angeles call the market higher (\u201cMarket slightly higher\u201d).",
+    "status": "pending",
+    "moved_pct": null
+   },
+   {
+    "first_seen": "2026-09-26",
+    "commodity": "Tomatoes",
+    "market": "New York",
+    "direction": "down",
+    "signal": "usda_tone",
+    "headline": "Tomatoes: USDA reporters in New York call the market lower (\u201cMarket mature greens slightly lower, others about steady\u201d).",
+    "status": "pending",
+    "moved_pct": null
+   },
+   {
+    "first_seen": "2026-09-26",
+    "commodity": "Peppers, Bell Type",
+    "market": "Chicago",
+    "direction": "down",
+    "signal": "sp_lead",
+    "headline": "Peppers, Bell Type: shipping point down 24% this week; Chicago hasn't followed yet (+7% this week).",
+    "status": "pending",
+    "moved_pct": null
+   }
+  ]
+ }
+}
