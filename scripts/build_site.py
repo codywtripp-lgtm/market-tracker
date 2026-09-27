@@ -10,11 +10,13 @@ Copies site/ and writes the JSON the page loads:
 
 import csv
 import datetime as dt
+import html
 import json
 import shutil
 import statistics
 from collections import defaultdict
 from pathlib import Path
+from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parent.parent
 EXPORT = ROOT / "data" / "export"
@@ -137,7 +139,104 @@ def main():
     for sid, rows in weekly.items():
         rows.sort()
         (OUT / "data" / "s" / f"{sid}.json").write_text(json.dumps(with_usual(rows), separators=(",", ":")))
-    print(f"site: {len(latest)} items, {len(weekly)} series histories")
+    pages = landing_pages(latest, as_of)
+    print(f"site: {len(latest)} items, {len(weekly)} series histories, {pages} landing pages")
+
+
+# ---------- search landing pages ----------
+# Owner's rule: the one-page dashboard is the product; there is no per-commodity navigation.
+# These pages exist only so search engines can find "romaine prices" etc. They summarise this
+# week and send people into the dashboard with that commodity selected.
+SITE_URL = "https://codywtripp-lgtm.github.io/market-tracker/"
+PAGE_NAMES = {  # commodity -> (url slug, plain name used in titles)
+    "Avocados": ("avocado-prices", "Avocado"), "Strawberries": ("strawberry-prices", "Strawberry"),
+    "Lettuce, Iceberg": ("iceberg-lettuce-prices", "Iceberg lettuce"),
+    "Lettuce, Romaine": ("romaine-lettuce-prices", "Romaine lettuce"),
+    "Tomatoes": ("tomato-prices", "Tomato"), "Tomatoes, Plum Type": ("roma-tomato-prices", "Roma tomato"),
+    "Peppers, Bell Type": ("bell-pepper-prices", "Bell pepper"), "Onions, Dry": ("onion-prices", "Onion"),
+    "Potatoes": ("potato-prices", "Potato"), "Lemons": ("lemon-prices", "Lemon"), "Limes": ("lime-prices", "Lime"),
+    "Cucumbers": ("cucumber-prices", "Cucumber"), "Broccoli": ("broccoli-prices", "Broccoli"),
+    "Celery": ("celery-prices", "Celery"), "Carrots": ("carrot-prices", "Carrot"), "Bananas": ("banana-prices", "Banana"),
+    "Blueberries": ("blueberry-prices", "Blueberry"), "Grapes": ("grape-prices", "Grape"),
+}
+MARKET_KEYS = {"New York": "ny", "Los Angeles": "la", "Chicago": "chi"}
+
+
+def _esc(s):
+    return html.escape(str(s or ""), quote=True)
+
+
+def _money(v):
+    return "—" if v is None else (f"${v:,.0f}" if v >= 100 else f"${v:,.2f}")
+
+
+def _status(i):
+    return {"cheap": "cheap", "expensive": "expensive", "normal": "about normal"}.get(i["status"], "")
+
+
+def _line(i):
+    bits = [f"<strong>{_esc(i['market'])}</strong>: {_money(i['price'])} per case",
+            _esc(" · ".join(x for x in (i["variety"] if i["variety"] not in ("", "N/A") else "", i["pack"],
+                                           i["size"] if i["size"] not in ("", "N/A") else "") if x))]
+    if i["vsNorm"] is not None:
+        bits.append(f"{abs(round(i['vsNorm']))}% {'above' if i['vsNorm'] > 0 else 'below'} usual for this time of year"
+                    + (f" ({_status(i)})" if _status(i) else ""))
+    f2 = (i.get("forecast") or {}).get(2)
+    if f2 and not i.get("fcStable"):
+        whole = lambda v: f"${v:,.0f}" if v >= 10 else f"${v:,.2f}"  # ranges: no false precision  # noqa: E731
+        bits.append(f"next 2 weeks likely {whole(f2[0])}–{whole(f2[2])}")
+    return " — ".join(b for b in bits if b)
+
+
+def landing_pages(latest, as_of):
+    by_c = defaultdict(list)
+    for i in latest:
+        if i["type"] == "terminal" and i["commodity"] in PAGE_NAMES:
+            by_c[i["commodity"]].append(i)
+    week = dt.date.fromisoformat(as_of).strftime("%B %-d, %Y") if as_of else ""
+    urls, links = [SITE_URL], []
+    for commodity, (slug, name) in PAGE_NAMES.items():
+        items = sorted(by_c.get(commodity, []), key=lambda i: ({"New York": 0, "Los Angeles": 1, "Chicago": 2}.get(i["market"], 9),
+                                                               -(i.get("coverage") or 0)))
+        # one line per market: its best-covered series
+        seen, lines = set(), []
+        for i in items:
+            if i["market"] not in seen:
+                seen.add(i["market"])
+                lines.append(f"<li>{_line(i)}</li>")
+        dash = f"../?m=ny&c={quote(commodity)}"
+        title = f"{name} wholesale prices this week — New York, Los Angeles, Chicago"
+        desc = (f"{name} wholesale case prices from USDA terminal markets (Hunts Point NY, LA, Chicago), updated every "
+                f"evening: this week vs. usual for the season, 1–4 week forecast and early-warning alerts.")
+        page = f"""<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{_esc(title)} | Produce Price Check</title>
+<meta name="description" content="{_esc(desc)}">
+<link rel="canonical" href="{SITE_URL}{slug}/">
+<link rel="stylesheet" href="../style.css"></head>
+<body><main class="landing">
+<p class="sub"><a href="../">Produce Price Check</a></p>
+<h1>{_esc(name)} wholesale prices{(' — week of ' + week) if week else ''}</h1>
+<p>USDA terminal-market case prices, compared with what's usual for this time of year.</p>
+<ul class="landing-list">{''.join(lines) or '<li>No current quotes.</li>'}</ul>
+<p><a class="btn cta" href="{_esc(dash)}">Open {_esc(name.lower())} in the live dashboard →</a></p>
+<p class="hint">Charts, forecasts with ranges, shipping-point prices and alerts are in the dashboard.
+Data: USDA AMS Market News, updated every evening.</p>
+</main></body></html>
+"""
+        (OUT / slug).mkdir(parents=True, exist_ok=True)
+        (OUT / slug / "index.html").write_text(page, encoding="utf-8")
+        urls.append(f"{SITE_URL}{slug}/")
+        links.append(f'<a href="{slug}/">{_esc(name)} prices</a>')
+    today = dt.date.today().isoformat()
+    (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+                                     + "".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod><changefreq>daily</changefreq></url>\n" for u in urls)
+                                     + "</urlset>\n")
+    (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}sitemap.xml\n")
+    # crawlable links from the dashboard footer
+    index = OUT / "index.html"
+    index.write_text(index.read_text(encoding="utf-8").replace("<!--COMMODITY_LINKS-->", " · ".join(links)), encoding="utf-8")
+    return len(PAGE_NAMES)
 
 
 if __name__ == "__main__":
