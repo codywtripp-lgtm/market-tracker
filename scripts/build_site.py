@@ -183,7 +183,8 @@ def _line(i):
                     + (f" ({_status(i)})" if _status(i) else ""))
     f2 = (i.get("forecast") or {}).get(2)
     if f2 and not i.get("fcStable"):
-        bits.append(f"next 2 weeks likely {_money(f2[0])}–{_money(f2[2])}")
+        whole = lambda v: f"${v:,.0f}" if v >= 10 else f"${v:,.2f}"  # ranges: no false precision  # noqa: E731
+        bits.append(f"next 2 weeks likely {whole(f2[0])}–{whole(f2[2])}")
     return " — ".join(b for b in bits if b)
 
 
