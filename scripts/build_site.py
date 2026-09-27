@@ -119,6 +119,8 @@ def main():
             "fcStable": card.get((r["commodity"], r["market"]), {}).get("uses") == "no change",
             "supplyVsLastYear": supply.get(r["commodity"]) if r["market_type"] in ("terminal", "shipping point") else None,
         })
+    record = EXPORT / "track_record.json"
+    (OUT / "data" / "track_record.json").write_text(record.read_text() if record.exists() else "{}")
     alerts = EXPORT / "alerts.json"
     if alerts.exists():
         shutil.copy(alerts, OUT / "data" / "alerts.json")

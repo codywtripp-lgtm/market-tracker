@@ -148,9 +148,36 @@ function renderAlerts() {
       <span class="h">${esc(a.headline)}</span>
       <span class="e">${esc(a.expect)}</span>
       <span class="r">Track record: ${esc(a.record)}</span></button>`).join("");
+  const al = (state.record || {}).alerts || {};
+  const record = al.decided ? `<p class="hint">Past alerts: ${al.came_true} of ${al.decided} came true.</p>` : "";
   $("alerts-list").innerHTML = (body || `<p class="hint">No alerts for ${esc(here)} right now. Alerts only fire when a signal with a strong 10-year track record is on.</p>`)
-    + (elsewhere ? `<p class="hint">${elsewhere} more in other markets — switch market above.</p>` : "");
+    + (elsewhere ? `<p class="hint">${elsewhere} more in other markets — switch market above.</p>` : "") + record;
 }
+// ---------- track record ----------
+function renderRecord() {
+  const r = state.record || {};
+  const live = r.forecasts_live || {}, bt = r.forecasts_backtest || {}, al = r.alerts || {};
+  const parts = [];
+  if (live.scored) {
+    parts.push(`<p><strong>Live forecasts:</strong> ${live.in_range_pct}% of actual prices landed inside our range
+      (aim: 80%). Average miss ${live.miss_pct}% vs ${live.no_change_miss_pct}% if you'd assumed "no change".
+      <span class="hint">${live.scored} forecasts scored since the week of ${esc(live.since)}.</span></p>`);
+  } else {
+    parts.push(`<p><strong>Live forecasts:</strong> tracking started September 2026; the first results appear once those weeks are complete.</p>`);
+  }
+  if (al.issued) {
+    parts.push(`<p><strong>Alerts:</strong> ${al.decided ? `${al.came_true} of ${al.decided} came true` : "none decided yet"}${al.pending ? ` · ${al.pending} still open` : ""}.</p>`);
+  }
+  const rows = Object.entries(bt.by_horizon || {});
+  if (rows.length) {
+    parts.push(`<p class="hint">Tested on ${esc(bt.years)} (each year forecast using only earlier years): ranges held the actual price ${bt.range_coverage_pct}% of the time.</p>
+      <div class="table-wrap"><table class="mini"><thead><tr><th>Weeks ahead</th><th>Our miss</th><th>"No change" miss</th></tr></thead><tbody>
+      ${rows.map(([h, v]) => `<tr><td>${h}</td><td>${v.miss_pct}%</td><td>${v.no_change_miss_pct}%</td></tr>`).join("")}
+      </tbody></table></div>`);
+  }
+  $("record").innerHTML = parts.join("");
+}
+
 function openAlert(marketName, commodity) {
   const key = MARKET_KEY[marketName];
   if (key && key !== state.market) { state.market = key; }
@@ -409,7 +436,7 @@ function renderList() {
 
 // ---------- wiring ----------
 function update() {
-  renderFilters(); renderAlerts(); renderMoves(); renderNews(); renderList(); renderChart(); writeUrl();
+  renderFilters(); renderAlerts(); renderRecord(); renderMoves(); renderNews(); renderList(); renderChart(); writeUrl();
 }
 function setMarket(key) {
   if (key === state.market) return;
@@ -455,6 +482,11 @@ window.addEventListener("resize", () => { clearTimeout(resizeTimer); resizeTimer
     state.alerts = (await (await fetch("data/alerts.json")).json()).alerts || [];
   } catch (e) {
     state.alerts = [];
+  }
+  try {
+    state.record = await (await fetch("data/track_record.json")).json();
+  } catch (e) {
+    state.record = {};
   }
   readUrl();
   state.selected.filter((k) => !itemsInMarket().some((i) => i.key === k)).forEach(remove);
