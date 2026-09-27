@@ -89,14 +89,19 @@ def add_drivers(panel):
     # weather stress at the regions supplying each commodity this month (known by week's end)
     wx = weather.weekly_stress()
     if wx.empty:
-        for c in WEATHER_COLS:
-            panel[c] = np.nan
+        for c in WEATHER_COLS + EVENT_COLS + ["weather_event"]:
+            panel[c] = np.nan if c in WEATHER_COLS else 0.0
     else:
         panel = panel.merge(wx, on=["commodity", "week"], how="left")
         # and the week before, since damage often shows up in supply a week or two later
         panel = panel.sort_values(["series_id", "week"]).reset_index(drop=True)
         for c in ("freeze_days", "heat_days", "rain_days", "precip_anom"):
             panel[f"{c}_prev"] = panel.groupby("series_id")[c].shift(1)
+        # simple yes/no event flags over this week and last (rare, sharp events)
+        panel["freeze_evt"] = ((panel["freeze_days"].fillna(0) + panel["freeze_days_prev"].fillna(0)) > 0).astype(float)
+        panel["heat_evt"] = ((panel["heat_days"].fillna(0) + panel["heat_days_prev"].fillna(0)) >= 2).astype(float)
+        panel["rain_evt"] = ((panel["rain_days"].fillna(0) + panel["rain_days_prev"].fillna(0)) >= 2).astype(float)
+        panel["weather_event"] = panel[["freeze_evt", "heat_evt", "rain_evt"]].max(axis=1)
     supply = volumes.supply_features(volumes.weekly())
     if supply.empty:  # no movement data yet
         panel["supply_gap"] = panel["supply_chg"] = np.nan
@@ -152,6 +157,8 @@ SUPPLY = BASE + ["supply_gap", "supply_chg"]  # + shipment volumes vs usual, and
 WEATHER_COLS = ["freeze_days", "heat_days", "rain_days", "precip_anom",
                 "freeze_days_prev", "heat_days_prev", "rain_days_prev", "precip_anom_prev"]
 WEATHER = BASE + WEATHER_COLS
+EVENT_COLS = ["freeze_evt", "heat_evt", "rain_evt"]
+EVENTS = BASE + EVENT_COLS
 # Pull toward the pooled coefficients, expressed as "worth this many rows of data": a commodity
 # with far more rows than this mostly follows its own data; a thin one stays near the pooled fit.
 PRIOR_ROWS = 1000
@@ -253,7 +260,9 @@ METHODS = {
 # here and to MODEL_CANDIDATES to re-test.
 METHODS["by_commodity_market+weather"] = _by_group(WEATHER, keys=("commodity", "market"))
 METHODS["pooled+weather"] = _pooled(WEATHER)  # weather effects shared across items (more data per effect)
-MODEL_CANDIDATES = ["by_commodity_market", "by_commodity_market+weather"]  # first = base
+METHODS["by_commodity_market+events"] = _by_group(EVENTS, keys=("commodity", "market"))
+METHODS["pooled+events"] = _pooled(EVENTS)
+MODEL_CANDIDATES = ["by_commodity_market", "by_commodity_market+weather", "by_commodity_market+events"]  # first = base
 MIN_GAIN = 0.01
 # Tested 2026-09-26: weather gave 13.222% vs 13.229% avg miss (noise), so the base model stays.
 
@@ -280,6 +289,7 @@ def backtest(panel, last_year):
                 residuals.append(pd.DataFrame({
                     "horizon": h, "year": Y, "method": m, "commodity": test["commodity"].to_numpy(),
                     "market": test["market"].to_numpy(), "resid": err,
+                    "event": test["weather_event"].fillna(0).to_numpy() if "weather_event" in test else 0.0,
                     "ape": np.abs(np.expm1(pred) - np.expm1(test[f"y{h}"].to_numpy())) * 100}))
     return pd.DataFrame(rows), pd.concat(residuals, ignore_index=True) if residuals else pd.DataFrame()
 
@@ -344,6 +354,13 @@ def main():
            .groupby(["commodity", "method"])["ape"].mean().unstack("method").round(2))
     print("2-week miss by commodity (all markets):")
     print(cmp.to_string())
+    # Event weeks: after a freeze, heat wave or heavy rain in a supplying region (this week or last)
+    ev = (resid[resid["method"].isin(MODEL_CANDIDATES + ["naive", "pooled+events"])]
+          .groupby(["horizon", "event", "method"])["ape"].agg(["mean", "count"]).round(2))
+    print("miss by horizon, event week (1) vs normal week (0):")
+    print(ev.unstack("method")["mean"].to_string())
+    print("event-week rows per horizon:", resid[(resid["method"] == "naive") & (resid["event"] == 1)]
+          .groupby("horizon").size().to_dict())
 
     # Per item and market: use the model only where it has beaten "no change" (stable items such
     # as onions barely move, and a model adds noise there). Scored honestly: each test year's
