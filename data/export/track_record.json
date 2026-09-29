@@ -1,5 +1,5 @@
 {
- "asOf": "2026-09-27",
+ "asOf": "2026-09-29",
  "forecasts_live": {},
  "forecasts_backtest": {
   "years": "2021-2026",
@@ -24,11 +24,41 @@
   "range_coverage_pct": 80.1
  },
  "alerts": {
-  "issued": 4,
+  "issued": 7,
   "decided": 0,
   "came_true": 0,
-  "pending": 4,
+  "pending": 7,
   "recent": [
+   {
+    "first_seen": "2026-09-29",
+    "commodity": "Lettuce, Iceberg",
+    "market": "Chicago",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Lettuce, Iceberg: shipping point up 25% this week; Chicago hasn't followed yet (+2% this week).",
+    "status": "pending",
+    "moved_pct": null
+   },
+   {
+    "first_seen": "2026-09-29",
+    "commodity": "Lettuce, Iceberg",
+    "market": "Los Angeles",
+    "direction": "up",
+    "signal": "usda_tone",
+    "headline": "Lettuce, Iceberg: USDA reporters in Los Angeles call the market higher (\u201cMarket higher\u201d).",
+    "status": "pending",
+    "moved_pct": null
+   },
+   {
+    "first_seen": "2026-09-29",
+    "commodity": "Peppers, Bell Type",
+    "market": "Chicago",
+    "direction": "down",
+    "signal": "sp_lead",
+    "headline": "Peppers, Bell Type: shipping point down 16% this week; Chicago hasn't followed yet (+17% this week).",
+    "status": "pending",
+    "moved_pct": null
+   },
    {
     "first_seen": "2026-09-26",
     "commodity": "Broccoli",
