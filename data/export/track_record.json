@@ -1,34 +1,44 @@
 {
- "asOf": "2026-09-29",
+ "asOf": "2026-09-30",
  "forecasts_live": {},
  "forecasts_backtest": {
   "years": "2021-2026",
   "by_horizon": {
    "1": {
-    "miss_pct": 7.1,
+    "miss_pct": 7.2,
     "no_change_miss_pct": 7.7
    },
    "2": {
-    "miss_pct": 11.8,
-    "no_change_miss_pct": 13.0
+    "miss_pct": 11.9,
+    "no_change_miss_pct": 13.1
    },
    "3": {
     "miss_pct": 15.4,
     "no_change_miss_pct": 17.0
    },
    "4": {
-    "miss_pct": 17.9,
-    "no_change_miss_pct": 19.9
+    "miss_pct": 18.0,
+    "no_change_miss_pct": 20.0
    }
   },
-  "range_coverage_pct": 80.1
+  "range_coverage_pct": 80.0
  },
  "alerts": {
-  "issued": 7,
+  "issued": 8,
   "decided": 0,
   "came_true": 0,
-  "pending": 7,
+  "pending": 8,
   "recent": [
+   {
+    "first_seen": "2026-09-30",
+    "commodity": "Strawberries",
+    "market": "Chicago",
+    "direction": "down",
+    "signal": "sp_lead",
+    "headline": "Strawberries: shipping point down 16% this week; Chicago hasn't followed yet (+0% this week).",
+    "status": "pending",
+    "moved_pct": null
+   },
    {
     "first_seen": "2026-09-29",
     "commodity": "Lettuce, Iceberg",

@@ -1,25 +1,25 @@
 {
- "asOf": "2026-09-29",
+ "asOf": "2026-09-30",
  "alerts": [
   {
    "signal": "sp_lead",
-   "commodity": "Lettuce, Iceberg",
+   "commodity": "Strawberries",
    "market": "Chicago",
-   "direction": "up",
-   "headline": "Lettuce, Iceberg: shipping point up 25% this week; Chicago hasn't followed yet (+2% this week).",
-   "expect": "Expect Chicago prices to rise within ~2 weeks.",
-   "record": "Chicago followed 34 of the last 43 times (normally 38%).",
-   "hit_rate": 0.791,
-   "sp_change": 24.8,
-   "terminal_change": 1.7,
-   "id": "sp_lead|Lettuce, Iceberg|Chicago|up|2026-09-28"
+   "direction": "down",
+   "headline": "Strawberries: shipping point down 16% this week; Chicago hasn't followed yet (+0% this week).",
+   "expect": "Expect Chicago prices to fall within ~2 weeks.",
+   "record": "Chicago followed 26 of the last 35 times (normally 40%).",
+   "hit_rate": 0.743,
+   "sp_change": -15.7,
+   "terminal_change": 0.0,
+   "id": "sp_lead|Strawberries|Chicago|down|2026-09-28"
   },
   {
    "signal": "usda_tone",
    "commodity": "Lettuce, Iceberg",
    "market": "Los Angeles",
    "direction": "up",
-   "headline": "Lettuce, Iceberg: USDA reporters in Los Angeles call the market higher (\u201cMarket higher\u201d).",
+   "headline": "Lettuce, Iceberg: USDA reporters in Los Angeles call the market higher (\u201cMarket slightly higher\u201d).",
    "expect": "Expect Los Angeles prices to rise next week.",
    "record": "That happened 34 of the last 47 times (normally 28%).",
    "hit_rate": 0.723,
@@ -30,12 +30,12 @@
    "commodity": "Peppers, Bell Type",
    "market": "Chicago",
    "direction": "down",
-   "headline": "Peppers, Bell Type: shipping point down 16% this week; Chicago hasn't followed yet (+17% this week).",
+   "headline": "Peppers, Bell Type: shipping point down 18% this week; Chicago hasn't followed yet (+8% this week).",
    "expect": "Expect Chicago prices to fall within ~2 weeks.",
    "record": "Chicago followed 37 of the last 56 times (normally 35%).",
    "hit_rate": 0.661,
-   "sp_change": -15.8,
-   "terminal_change": 17.1,
+   "sp_change": -17.8,
+   "terminal_change": 8.2,
    "id": "sp_lead|Peppers, Bell Type|Chicago|down|2026-09-28"
   }
  ]
