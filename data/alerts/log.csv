@@ -7,3 +7,4 @@ usda_tone|Tomatoes|New York|down|2026-09-21,2026-09-26,usda_tone,Tomatoes,New Yo
 "usda_tone|Lettuce, Iceberg|Los Angeles|up|2026-09-28",2026-09-29,usda_tone,"Lettuce, Iceberg",Los Angeles,up,"Lettuce, Iceberg: USDA reporters in Los Angeles call the market higher (“Market higher”)."
 "sp_lead|Peppers, Bell Type|Chicago|down|2026-09-28",2026-09-29,sp_lead,"Peppers, Bell Type",Chicago,down,"Peppers, Bell Type: shipping point down 16% this week; Chicago hasn't followed yet (+17% this week)."
 sp_lead|Strawberries|Chicago|down|2026-09-28,2026-09-30,sp_lead,Strawberries,Chicago,down,Strawberries: shipping point down 16% this week; Chicago hasn't followed yet (+0% this week).
+"usda_tone|Tomatoes, Plum Type|New York|down|2026-09-28",2026-10-01,usda_tone,"Tomatoes, Plum Type",New York,down,"Tomatoes, Plum Type: USDA reporters in New York call the market lower (“Market mexico slightly lower, others about steady”)."

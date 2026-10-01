@@ -1,5 +1,5 @@
 {
- "asOf": "2026-09-30",
+ "asOf": "2026-10-01",
  "forecasts_live": {},
  "forecasts_backtest": {
   "years": "2021-2026",
@@ -24,11 +24,21 @@
   "range_coverage_pct": 80.0
  },
  "alerts": {
-  "issued": 8,
+  "issued": 9,
   "decided": 0,
   "came_true": 0,
-  "pending": 8,
+  "pending": 9,
   "recent": [
+   {
+    "first_seen": "2026-10-01",
+    "commodity": "Tomatoes, Plum Type",
+    "market": "New York",
+    "direction": "down",
+    "signal": "usda_tone",
+    "headline": "Tomatoes, Plum Type: USDA reporters in New York call the market lower (\u201cMarket mexico slightly lower, others about steady\u201d).",
+    "status": "pending",
+    "moved_pct": null
+   },
    {
     "first_seen": "2026-09-30",
     "commodity": "Strawberries",
