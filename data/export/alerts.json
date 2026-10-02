@@ -1,16 +1,83 @@
 {
- "asOf": "2026-10-01",
+ "asOf": "2026-10-02",
  "alerts": [
   {
-   "signal": "usda_tone",
-   "commodity": "Tomatoes, Plum Type",
+   "signal": "sp_lead",
+   "commodity": "Celery",
    "market": "New York",
-   "direction": "down",
-   "headline": "Tomatoes, Plum Type: USDA reporters in New York call the market lower (\u201cMarket mexico slightly lower, others about steady\u201d).",
-   "expect": "Expect New York prices to fall next week.",
-   "record": "That happened 43 of the last 60 times (normally 31%).",
-   "hit_rate": 0.717,
-   "id": "usda_tone|Tomatoes, Plum Type|New York|down|2026-09-28"
+   "direction": "up",
+   "headline": "Celery: shipping point up 10% this week; New York hasn't followed yet (-2% this week).",
+   "expect": "Expect New York prices to rise within ~2 weeks.",
+   "record": "New York followed 26 of the last 30 times (normally 32%).",
+   "hit_rate": 0.867,
+   "sp_change": 10.1,
+   "terminal_change": -2.1,
+   "id": "sp_lead|Celery|New York|up|2026-09-28"
+  },
+  {
+   "signal": "sp_lead",
+   "commodity": "Celery",
+   "market": "Chicago",
+   "direction": "up",
+   "headline": "Celery: shipping point up 10% this week; Chicago hasn't followed yet (-4% this week).",
+   "expect": "Expect Chicago prices to rise within ~2 weeks.",
+   "record": "Chicago followed 24 of the last 30 times (normally 36%).",
+   "hit_rate": 0.8,
+   "sp_change": 10.1,
+   "terminal_change": -3.6,
+   "id": "sp_lead|Celery|Chicago|up|2026-09-28"
+  },
+  {
+   "signal": "sp_lead",
+   "commodity": "Celery",
+   "market": "Los Angeles",
+   "direction": "up",
+   "headline": "Celery: shipping point up 10% this week; Los Angeles hasn't followed yet (+3% this week).",
+   "expect": "Expect Los Angeles prices to rise within ~2 weeks.",
+   "record": "Los Angeles followed 15 of the last 19 times (normally 30%).",
+   "hit_rate": 0.789,
+   "sp_change": 10.1,
+   "terminal_change": 2.7,
+   "id": "sp_lead|Celery|Los Angeles|up|2026-09-28"
+  },
+  {
+   "signal": "sp_lead",
+   "commodity": "Lettuce, Romaine",
+   "market": "New York",
+   "direction": "up",
+   "headline": "Lettuce, Romaine: shipping point up 10% this week; New York hasn't followed yet (+0% this week).",
+   "expect": "Expect New York prices to rise within ~2 weeks.",
+   "record": "New York followed 15 of the last 19 times (normally 34%).",
+   "hit_rate": 0.789,
+   "sp_change": 10.4,
+   "terminal_change": 0.0,
+   "id": "sp_lead|Lettuce, Romaine|New York|up|2026-09-28"
+  },
+  {
+   "signal": "sp_lead",
+   "commodity": "Lettuce, Romaine",
+   "market": "Chicago",
+   "direction": "up",
+   "headline": "Lettuce, Romaine: shipping point up 10% this week; Chicago hasn't followed yet (-4% this week).",
+   "expect": "Expect Chicago prices to rise within ~2 weeks.",
+   "record": "Chicago followed 22 of the last 28 times (normally 33%).",
+   "hit_rate": 0.786,
+   "sp_change": 10.4,
+   "terminal_change": -4.4,
+   "id": "sp_lead|Lettuce, Romaine|Chicago|up|2026-09-28"
+  },
+  {
+   "signal": "sp_lead",
+   "commodity": "Lettuce, Romaine",
+   "market": "Los Angeles",
+   "direction": "up",
+   "headline": "Lettuce, Romaine: shipping point up 10% this week; Los Angeles hasn't followed yet (+2% this week).",
+   "expect": "Expect Los Angeles prices to rise within ~2 weeks.",
+   "record": "Los Angeles followed 10 of the last 15 times (normally 28%).",
+   "hit_rate": 0.667,
+   "sp_change": 10.4,
+   "terminal_change": 1.6,
+   "id": "sp_lead|Lettuce, Romaine|Los Angeles|up|2026-09-28"
   }
  ]
 }

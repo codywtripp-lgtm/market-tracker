@@ -1,5 +1,5 @@
 {
- "asOf": "2026-10-01",
+ "asOf": "2026-10-02",
  "forecasts_live": {},
  "forecasts_backtest": {
   "years": "2021-2026",
@@ -24,11 +24,71 @@
   "range_coverage_pct": 80.0
  },
  "alerts": {
-  "issued": 9,
+  "issued": 15,
   "decided": 0,
   "came_true": 0,
-  "pending": 9,
+  "pending": 15,
   "recent": [
+   {
+    "first_seen": "2026-10-02",
+    "commodity": "Celery",
+    "market": "New York",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Celery: shipping point up 10% this week; New York hasn't followed yet (-2% this week).",
+    "status": "pending",
+    "moved_pct": null
+   },
+   {
+    "first_seen": "2026-10-02",
+    "commodity": "Celery",
+    "market": "Chicago",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Celery: shipping point up 10% this week; Chicago hasn't followed yet (-4% this week).",
+    "status": "pending",
+    "moved_pct": null
+   },
+   {
+    "first_seen": "2026-10-02",
+    "commodity": "Celery",
+    "market": "Los Angeles",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Celery: shipping point up 10% this week; Los Angeles hasn't followed yet (+3% this week).",
+    "status": "pending",
+    "moved_pct": null
+   },
+   {
+    "first_seen": "2026-10-02",
+    "commodity": "Lettuce, Romaine",
+    "market": "New York",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Lettuce, Romaine: shipping point up 10% this week; New York hasn't followed yet (+0% this week).",
+    "status": "pending",
+    "moved_pct": null
+   },
+   {
+    "first_seen": "2026-10-02",
+    "commodity": "Lettuce, Romaine",
+    "market": "Chicago",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Lettuce, Romaine: shipping point up 10% this week; Chicago hasn't followed yet (-4% this week).",
+    "status": "pending",
+    "moved_pct": null
+   },
+   {
+    "first_seen": "2026-10-02",
+    "commodity": "Lettuce, Romaine",
+    "market": "Los Angeles",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Lettuce, Romaine: shipping point up 10% this week; Los Angeles hasn't followed yet (+2% this week).",
+    "status": "pending",
+    "moved_pct": null
+   },
    {
     "first_seen": "2026-10-01",
     "commodity": "Tomatoes, Plum Type",
