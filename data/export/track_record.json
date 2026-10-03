@@ -1,41 +1,61 @@
 {
- "asOf": "2026-10-02",
+ "asOf": "2026-10-03",
  "forecasts_live": {},
  "forecasts_backtest": {
   "years": "2021-2026",
   "by_horizon": {
    "1": {
-    "miss_pct": 7.2,
+    "miss_pct": 7.1,
     "no_change_miss_pct": 7.7
    },
    "2": {
-    "miss_pct": 11.9,
-    "no_change_miss_pct": 13.1
+    "miss_pct": 11.8,
+    "no_change_miss_pct": 13.0
    },
    "3": {
     "miss_pct": 15.4,
     "no_change_miss_pct": 17.0
    },
    "4": {
-    "miss_pct": 18.0,
+    "miss_pct": 17.9,
     "no_change_miss_pct": 20.0
    }
   },
   "range_coverage_pct": 80.0
  },
  "alerts": {
-  "issued": 15,
+  "issued": 18,
   "decided": 0,
   "came_true": 0,
-  "pending": 15,
+  "pending": 18,
   "recent": [
    {
-    "first_seen": "2026-10-02",
-    "commodity": "Celery",
+    "first_seen": "2026-10-03",
+    "commodity": "Limes",
+    "market": "Chicago",
+    "direction": "down",
+    "signal": "sp_lead",
+    "headline": "Limes: shipping point down 11% this week; Chicago hasn't followed yet (+4% this week).",
+    "status": "pending",
+    "moved_pct": null
+   },
+   {
+    "first_seen": "2026-10-03",
+    "commodity": "Tomatoes, Plum Type",
+    "market": "Chicago",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Tomatoes, Plum Type: shipping point up 13% this week; Chicago hasn't followed yet (+2% this week).",
+    "status": "pending",
+    "moved_pct": null
+   },
+   {
+    "first_seen": "2026-10-03",
+    "commodity": "Tomatoes, Plum Type",
     "market": "New York",
     "direction": "up",
     "signal": "sp_lead",
-    "headline": "Celery: shipping point up 10% this week; New York hasn't followed yet (-2% this week).",
+    "headline": "Tomatoes, Plum Type: shipping point up 13% this week; New York hasn't followed yet (-3% this week).",
     "status": "pending",
     "moved_pct": null
    },
@@ -51,21 +71,11 @@
    },
    {
     "first_seen": "2026-10-02",
-    "commodity": "Celery",
+    "commodity": "Lettuce, Romaine",
     "market": "Los Angeles",
     "direction": "up",
     "signal": "sp_lead",
-    "headline": "Celery: shipping point up 10% this week; Los Angeles hasn't followed yet (+3% this week).",
-    "status": "pending",
-    "moved_pct": null
-   },
-   {
-    "first_seen": "2026-10-02",
-    "commodity": "Lettuce, Romaine",
-    "market": "New York",
-    "direction": "up",
-    "signal": "sp_lead",
-    "headline": "Lettuce, Romaine: shipping point up 10% this week; New York hasn't followed yet (+0% this week).",
+    "headline": "Lettuce, Romaine: shipping point up 10% this week; Los Angeles hasn't followed yet (+2% this week).",
     "status": "pending",
     "moved_pct": null
    },
@@ -82,10 +92,30 @@
    {
     "first_seen": "2026-10-02",
     "commodity": "Lettuce, Romaine",
+    "market": "New York",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Lettuce, Romaine: shipping point up 10% this week; New York hasn't followed yet (+0% this week).",
+    "status": "pending",
+    "moved_pct": null
+   },
+   {
+    "first_seen": "2026-10-02",
+    "commodity": "Celery",
     "market": "Los Angeles",
     "direction": "up",
     "signal": "sp_lead",
-    "headline": "Lettuce, Romaine: shipping point up 10% this week; Los Angeles hasn't followed yet (+2% this week).",
+    "headline": "Celery: shipping point up 10% this week; Los Angeles hasn't followed yet (+3% this week).",
+    "status": "pending",
+    "moved_pct": null
+   },
+   {
+    "first_seen": "2026-10-02",
+    "commodity": "Celery",
+    "market": "New York",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Celery: shipping point up 10% this week; New York hasn't followed yet (-2% this week).",
     "status": "pending",
     "moved_pct": null
    },
@@ -111,11 +141,11 @@
    },
    {
     "first_seen": "2026-09-29",
-    "commodity": "Lettuce, Iceberg",
+    "commodity": "Peppers, Bell Type",
     "market": "Chicago",
-    "direction": "up",
+    "direction": "down",
     "signal": "sp_lead",
-    "headline": "Lettuce, Iceberg: shipping point up 25% this week; Chicago hasn't followed yet (+2% this week).",
+    "headline": "Peppers, Bell Type: shipping point down 16% this week; Chicago hasn't followed yet (+17% this week).",
     "status": "pending",
     "moved_pct": null
    },
@@ -131,21 +161,11 @@
    },
    {
     "first_seen": "2026-09-29",
-    "commodity": "Peppers, Bell Type",
-    "market": "Chicago",
-    "direction": "down",
-    "signal": "sp_lead",
-    "headline": "Peppers, Bell Type: shipping point down 16% this week; Chicago hasn't followed yet (+17% this week).",
-    "status": "pending",
-    "moved_pct": null
-   },
-   {
-    "first_seen": "2026-09-26",
-    "commodity": "Broccoli",
+    "commodity": "Lettuce, Iceberg",
     "market": "Chicago",
     "direction": "up",
     "signal": "sp_lead",
-    "headline": "Broccoli: shipping point up 16% this week; Chicago hasn't followed yet (+2% this week).",
+    "headline": "Lettuce, Iceberg: shipping point up 25% this week; Chicago hasn't followed yet (+2% this week).",
     "status": "pending",
     "moved_pct": null
    },
@@ -161,6 +181,16 @@
    },
    {
     "first_seen": "2026-09-26",
+    "commodity": "Peppers, Bell Type",
+    "market": "Chicago",
+    "direction": "down",
+    "signal": "sp_lead",
+    "headline": "Peppers, Bell Type: shipping point down 24% this week; Chicago hasn't followed yet (+7% this week).",
+    "status": "pending",
+    "moved_pct": null
+   },
+   {
+    "first_seen": "2026-09-26",
     "commodity": "Tomatoes",
     "market": "New York",
     "direction": "down",
@@ -171,11 +201,11 @@
    },
    {
     "first_seen": "2026-09-26",
-    "commodity": "Peppers, Bell Type",
+    "commodity": "Broccoli",
     "market": "Chicago",
-    "direction": "down",
+    "direction": "up",
     "signal": "sp_lead",
-    "headline": "Peppers, Bell Type: shipping point down 24% this week; Chicago hasn't followed yet (+7% this week).",
+    "headline": "Broccoli: shipping point up 16% this week; Chicago hasn't followed yet (+2% this week).",
     "status": "pending",
     "moved_pct": null
    }

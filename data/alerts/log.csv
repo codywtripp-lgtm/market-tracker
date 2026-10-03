@@ -14,3 +14,6 @@ sp_lead|Celery|Los Angeles|up|2026-09-28,2026-10-02,sp_lead,Celery,Los Angeles,u
 "sp_lead|Lettuce, Romaine|New York|up|2026-09-28",2026-10-02,sp_lead,"Lettuce, Romaine",New York,up,"Lettuce, Romaine: shipping point up 10% this week; New York hasn't followed yet (+0% this week)."
 "sp_lead|Lettuce, Romaine|Chicago|up|2026-09-28",2026-10-02,sp_lead,"Lettuce, Romaine",Chicago,up,"Lettuce, Romaine: shipping point up 10% this week; Chicago hasn't followed yet (-4% this week)."
 "sp_lead|Lettuce, Romaine|Los Angeles|up|2026-09-28",2026-10-02,sp_lead,"Lettuce, Romaine",Los Angeles,up,"Lettuce, Romaine: shipping point up 10% this week; Los Angeles hasn't followed yet (+2% this week)."
+"sp_lead|Tomatoes, Plum Type|New York|up|2026-09-28",2026-10-03,sp_lead,"Tomatoes, Plum Type",New York,up,"Tomatoes, Plum Type: shipping point up 13% this week; New York hasn't followed yet (-3% this week)."
+"sp_lead|Tomatoes, Plum Type|Chicago|up|2026-09-28",2026-10-03,sp_lead,"Tomatoes, Plum Type",Chicago,up,"Tomatoes, Plum Type: shipping point up 13% this week; Chicago hasn't followed yet (+2% this week)."
+sp_lead|Limes|Chicago|down|2026-09-28,2026-10-03,sp_lead,Limes,Chicago,down,Limes: shipping point down 11% this week; Chicago hasn't followed yet (+4% this week).
