@@ -56,6 +56,7 @@ wholesale-national-chicken-all-items-fresh-domestic-all-sizes,Chicken,National,w
 terminal-new-york-lemons-7-10-bushel-cartons-165s-n,Lemons,New York,terminal,Lemons 7/10 bushel cartons 165s — New York,2026-09-28,35.0,$/package,37.7093,-7.2,30,normal,10,,
 wholesale-national-chicken-wog-fresh-domestic-all-sizes,Chicken,National,wholesale,Chicken WOG Fresh Domestic All Sizes — National,2026-09-28,116.44,cents/lb,125.0297,-6.9,30,normal,4,0.8,10.0
 retail-national-cucumbers-each-no,Cucumbers,National,retail,Cucumbers each — National,2026-09-28,0.76,$/each,0.8135,-6.6,26,normal,10,4.1,22.6
+retail-national-potatoes-round-red-5-lb-bag-no,Potatoes,National,retail,Potatoes ROUND RED 5 lb bag — National,2026-09-28,3.67,$/5 lb bag,3.9284,-6.6,34,normal,10,-14.1,14.3
 terminal-los-angeles-lettuce-romaine-hearts-cartons-film-lined-48s-n,"Lettuce, Romaine",Los Angeles,terminal,"Lettuce, Romaine HEARTS cartons film lined 48s — Los Angeles",2026-09-28,32.0,$/package,34.1906,-6.4,38,normal,8,0.0,0.0
 retail-national-carrots-baby-peeled-1-lb-bag-no,Carrots,National,retail,Carrots BABY PEELED 1 lb bag — National,2026-09-28,1.4,$/1 lb bag,1.4924,-6.2,28,normal,10,-8.5,11.1
 terminal-new-york-potatoes-round-red-50-lb-cartons-size-a-n,Potatoes,New York,terminal,Potatoes ROUND RED 50 lb cartons size A — New York,2026-09-28,33.5,$/package,35.7261,-6.2,21,cheap,10,-5.6,13.6
@@ -89,7 +90,6 @@ terminal-new-york-celery-cartons-2-dozen-n,Celery,New York,terminal,Celery carto
 retail-national-broccoli-crown-cut-per-lb-no,Broccoli,National,retail,Broccoli CROWN CUT per lb — National,2026-09-28,2.07,$/per lb,1.952,6.0,76,expensive,10,7.3,6.7
 retail-national-grapes-red-seedless-per-lb-no,Grapes,National,retail,Grapes RED SEEDLESS per lb — National,2026-09-28,2.49,$/per lb,2.341,6.4,80,expensive,10,12.2,0.0
 terminal-chicago-lettuce-iceberg-cartons-12s-film-wrapped-y,"Lettuce, Iceberg",Chicago,terminal,"Lettuce, Iceberg cartons 12s film wrapped organic — Chicago",2026-09-28,28.0,$/package,26.3253,6.4,53,normal,7,16.7,16.7
-retail-national-potatoes-yellow-type-5-lb-bag-no,Potatoes,National,retail,Potatoes YELLOW TYPE 5 lb bag — National,2026-09-28,4.14,$/5 lb bag,3.8752,6.8,66,normal,10,-10.0,24.3
 terminal-los-angeles-onions-dry-white-50-lb-sacks-medium-n,"Onions, Dry",Los Angeles,terminal,"Onions, Dry WHITE 50 lb sacks medium — Los Angeles",2026-09-28,28.0,$/package,26.1024,7.3,60,normal,10,-9.7,64.7
 terminal-new-york-celery-cartons-film-bags-30s-n,Celery,New York,terminal,Celery cartons film bags 30s — New York,2026-09-28,27.0,$/package,25.0163,7.9,66,normal,10,-6.9,12.5
 terminal-chicago-celery-cartons-film-bags-30s-n,Celery,Chicago,terminal,Celery cartons film bags 30s — Chicago,2026-09-28,28.0,$/package,25.8974,8.1,74,normal,10,-20.2,-21.9
