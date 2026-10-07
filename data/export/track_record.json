@@ -1,5 +1,5 @@
 {
- "asOf": "2026-10-06",
+ "asOf": "2026-10-07",
  "forecasts_live": {
   "scored": 87,
   "since": "2026-09-21",
@@ -30,11 +30,31 @@
   "range_coverage_pct": 80.0
  },
  "alerts": {
-  "issued": 24,
+  "issued": 26,
   "decided": 2,
   "came_true": 2,
-  "pending": 22,
+  "pending": 24,
   "recent": [
+   {
+    "first_seen": "2026-10-07",
+    "commodity": "Peppers, Bell Type",
+    "market": "Chicago",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Peppers, Bell Type: shipping point up 24% this week; Chicago hasn't followed yet (-8% this week).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
+   {
+    "first_seen": "2026-10-07",
+    "commodity": "Lettuce, Iceberg",
+    "market": "Chicago",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Lettuce, Iceberg: shipping point up 13% this week; Chicago hasn't followed yet (+2% this week).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
    {
     "first_seen": "2026-10-06",
     "commodity": "Tomatoes, Plum Type",
@@ -128,20 +148,20 @@
    {
     "first_seen": "2026-10-02",
     "commodity": "Lettuce, Romaine",
-    "market": "Chicago",
+    "market": "Los Angeles",
     "direction": "up",
     "signal": "sp_lead",
-    "headline": "Lettuce, Romaine: shipping point up 10% this week; Chicago hasn't followed yet (-4% this week).",
+    "headline": "Lettuce, Romaine: shipping point up 10% this week; Los Angeles hasn't followed yet (+2% this week).",
     "status": "pending",
     "moved_pct": NaN
    },
    {
     "first_seen": "2026-10-02",
     "commodity": "Lettuce, Romaine",
-    "market": "Los Angeles",
+    "market": "Chicago",
     "direction": "up",
     "signal": "sp_lead",
-    "headline": "Lettuce, Romaine: shipping point up 10% this week; Los Angeles hasn't followed yet (+2% this week).",
+    "headline": "Lettuce, Romaine: shipping point up 10% this week; Chicago hasn't followed yet (-4% this week).",
     "status": "pending",
     "moved_pct": NaN
    },
@@ -212,26 +232,6 @@
     "direction": "down",
     "signal": "sp_lead",
     "headline": "Peppers, Bell Type: shipping point down 16% this week; Chicago hasn't followed yet (+17% this week).",
-    "status": "pending",
-    "moved_pct": NaN
-   },
-   {
-    "first_seen": "2026-09-29",
-    "commodity": "Lettuce, Iceberg",
-    "market": "Los Angeles",
-    "direction": "up",
-    "signal": "usda_tone",
-    "headline": "Lettuce, Iceberg: USDA reporters in Los Angeles call the market higher (\u201cMarket higher\u201d).",
-    "status": "pending",
-    "moved_pct": NaN
-   },
-   {
-    "first_seen": "2026-09-29",
-    "commodity": "Lettuce, Iceberg",
-    "market": "Chicago",
-    "direction": "up",
-    "signal": "sp_lead",
-    "headline": "Lettuce, Iceberg: shipping point up 25% this week; Chicago hasn't followed yet (+2% this week).",
     "status": "pending",
     "moved_pct": NaN
    }
