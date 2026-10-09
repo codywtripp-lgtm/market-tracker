@@ -1,5 +1,5 @@
 {
- "asOf": "2026-10-08",
+ "asOf": "2026-10-09",
  "forecasts_live": {
   "scored": 87,
   "since": "2026-09-21",
@@ -30,11 +30,21 @@
   "range_coverage_pct": 80.0
  },
  "alerts": {
-  "issued": 26,
+  "issued": 27,
   "decided": 2,
   "came_true": 2,
-  "pending": 24,
+  "pending": 25,
   "recent": [
+   {
+    "first_seen": "2026-10-09",
+    "commodity": "Tomatoes",
+    "market": "New York",
+    "direction": "up",
+    "signal": "usda_tone",
+    "headline": "Tomatoes: USDA reporters in New York call the market higher (\u201cMarket mature greens slightly higher, others about steady\u201d).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
    {
     "first_seen": "2026-10-07",
     "commodity": "Peppers, Bell Type",
@@ -222,16 +232,6 @@
     "direction": "down",
     "signal": "sp_lead",
     "headline": "Strawberries: shipping point down 16% this week; Chicago hasn't followed yet (+0% this week).",
-    "status": "pending",
-    "moved_pct": NaN
-   },
-   {
-    "first_seen": "2026-09-29",
-    "commodity": "Peppers, Bell Type",
-    "market": "Chicago",
-    "direction": "down",
-    "signal": "sp_lead",
-    "headline": "Peppers, Bell Type: shipping point down 16% this week; Chicago hasn't followed yet (+17% this week).",
     "status": "pending",
     "moved_pct": NaN
    }

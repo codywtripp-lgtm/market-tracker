@@ -1,17 +1,17 @@
 {
- "asOf": "2026-10-08",
+ "asOf": "2026-10-09",
  "alerts": [
   {
    "signal": "sp_lead",
    "commodity": "Lettuce, Iceberg",
    "market": "Chicago",
    "direction": "up",
-   "headline": "Lettuce, Iceberg: shipping point up 15% this week; Chicago hasn't followed yet (+2% this week).",
+   "headline": "Lettuce, Iceberg: shipping point up 12% this week; Chicago hasn't followed yet (+2% this week).",
    "expect": "Expect Chicago prices to rise within ~2 weeks.",
    "record": "Chicago followed 34 of the last 43 times (normally 38%).",
    "hit_rate": 0.791,
-   "sp_change": 14.6,
-   "terminal_change": 2.3,
+   "sp_change": 12.0,
+   "terminal_change": 2.1,
    "id": "sp_lead|Lettuce, Iceberg|Chicago|up|2026-10-05"
   },
   {
@@ -19,39 +19,24 @@
    "commodity": "Lettuce, Romaine",
    "market": "New York",
    "direction": "up",
-   "headline": "Lettuce, Romaine: shipping point up 37% this week; New York hasn't followed yet (-6% this week).",
+   "headline": "Lettuce, Romaine: shipping point up 46% this week; New York hasn't followed yet (-13% this week).",
    "expect": "Expect New York prices to rise within ~2 weeks.",
    "record": "New York followed 15 of the last 19 times (normally 34%).",
    "hit_rate": 0.789,
-   "sp_change": 37.2,
-   "terminal_change": -6.3,
+   "sp_change": 46.0,
+   "terminal_change": -13.4,
    "id": "sp_lead|Lettuce, Romaine|New York|up|2026-10-05"
   },
   {
-   "signal": "sp_lead",
-   "commodity": "Lettuce, Romaine",
-   "market": "Chicago",
+   "signal": "usda_tone",
+   "commodity": "Tomatoes",
+   "market": "New York",
    "direction": "up",
-   "headline": "Lettuce, Romaine: shipping point up 37% this week; Chicago hasn't followed yet (+0% this week).",
-   "expect": "Expect Chicago prices to rise within ~2 weeks.",
-   "record": "Chicago followed 22 of the last 28 times (normally 33%).",
-   "hit_rate": 0.786,
-   "sp_change": 37.2,
-   "terminal_change": 0.0,
-   "id": "sp_lead|Lettuce, Romaine|Chicago|up|2026-10-05"
-  },
-  {
-   "signal": "sp_lead",
-   "commodity": "Peppers, Bell Type",
-   "market": "Chicago",
-   "direction": "up",
-   "headline": "Peppers, Bell Type: shipping point up 45% this week; Chicago hasn't followed yet (+1% this week).",
-   "expect": "Expect Chicago prices to rise within ~2 weeks.",
-   "record": "Chicago followed 32 of the last 43 times (normally 32%).",
-   "hit_rate": 0.744,
-   "sp_change": 45.0,
-   "terminal_change": 1.3,
-   "id": "sp_lead|Peppers, Bell Type|Chicago|up|2026-10-05"
+   "headline": "Tomatoes: USDA reporters in New York call the market higher (\u201cMarket mature greens slightly higher, others about steady\u201d).",
+   "expect": "Expect New York prices to rise next week.",
+   "record": "That happened 37 of the last 56 times (normally 30%).",
+   "hit_rate": 0.661,
+   "id": "usda_tone|Tomatoes|New York|up|2026-10-05"
   }
  ]
 }
