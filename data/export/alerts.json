@@ -1,6 +1,17 @@
 {
- "asOf": "2026-10-09",
+ "asOf": "2026-10-10",
  "alerts": [
+  {
+   "signal": "usda_tone",
+   "commodity": "Lettuce, Romaine",
+   "market": "Los Angeles",
+   "direction": "up",
+   "headline": "Lettuce, Romaine: USDA reporters in Los Angeles call the market higher (\u201cMarket higher\u201d).",
+   "expect": "Expect Los Angeles prices to rise next week.",
+   "record": "That happened 25 of the last 30 times (normally 21%).",
+   "hit_rate": 0.833,
+   "id": "usda_tone|Lettuce, Romaine|Los Angeles|up|2026-10-05"
+  },
   {
    "signal": "sp_lead",
    "commodity": "Lettuce, Iceberg",
@@ -10,7 +21,7 @@
    "expect": "Expect Chicago prices to rise within ~2 weeks.",
    "record": "Chicago followed 34 of the last 43 times (normally 38%).",
    "hit_rate": 0.791,
-   "sp_change": 12.0,
+   "sp_change": 12.2,
    "terminal_change": 2.1,
    "id": "sp_lead|Lettuce, Iceberg|Chicago|up|2026-10-05"
   },
@@ -19,11 +30,11 @@
    "commodity": "Lettuce, Romaine",
    "market": "New York",
    "direction": "up",
-   "headline": "Lettuce, Romaine: shipping point up 46% this week; New York hasn't followed yet (-13% this week).",
+   "headline": "Lettuce, Romaine: shipping point up 52% this week; New York hasn't followed yet (-13% this week).",
    "expect": "Expect New York prices to rise within ~2 weeks.",
    "record": "New York followed 15 of the last 19 times (normally 34%).",
    "hit_rate": 0.789,
-   "sp_change": 46.0,
+   "sp_change": 51.7,
    "terminal_change": -13.4,
    "id": "sp_lead|Lettuce, Romaine|New York|up|2026-10-05"
   },

@@ -1,40 +1,50 @@
 {
- "asOf": "2026-10-09",
+ "asOf": "2026-10-10",
  "forecasts_live": {
-  "scored": 87,
+  "scored": 86,
   "since": "2026-09-21",
-  "in_range_pct": 86.2,
-  "miss_pct": 6.5,
-  "no_change_miss_pct": 6.0
+  "in_range_pct": 86.0,
+  "miss_pct": 6.6,
+  "no_change_miss_pct": 6.1
  },
  "forecasts_backtest": {
   "years": "2021-2026",
   "by_horizon": {
    "1": {
-    "miss_pct": 7.1,
-    "no_change_miss_pct": 7.7
+    "miss_pct": 7.2,
+    "no_change_miss_pct": 7.8
    },
    "2": {
-    "miss_pct": 11.8,
-    "no_change_miss_pct": 13.0
+    "miss_pct": 11.9,
+    "no_change_miss_pct": 13.2
    },
    "3": {
-    "miss_pct": 15.4,
-    "no_change_miss_pct": 17.0
+    "miss_pct": 15.5,
+    "no_change_miss_pct": 17.1
    },
    "4": {
-    "miss_pct": 17.9,
-    "no_change_miss_pct": 20.0
+    "miss_pct": 18.0,
+    "no_change_miss_pct": 20.1
    }
   },
-  "range_coverage_pct": 80.0
+  "range_coverage_pct": 80.1
  },
  "alerts": {
-  "issued": 27,
+  "issued": 28,
   "decided": 2,
   "came_true": 2,
-  "pending": 25,
+  "pending": 26,
   "recent": [
+   {
+    "first_seen": "2026-10-10",
+    "commodity": "Lettuce, Romaine",
+    "market": "Los Angeles",
+    "direction": "up",
+    "signal": "usda_tone",
+    "headline": "Lettuce, Romaine: USDA reporters in Los Angeles call the market higher (\u201cMarket higher\u201d).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
    {
     "first_seen": "2026-10-09",
     "commodity": "Tomatoes",
@@ -127,6 +137,16 @@
    },
    {
     "first_seen": "2026-10-03",
+    "commodity": "Tomatoes, Plum Type",
+    "market": "New York",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Tomatoes, Plum Type: shipping point up 13% this week; New York hasn't followed yet (-3% this week).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
+   {
+    "first_seen": "2026-10-03",
     "commodity": "Limes",
     "market": "Chicago",
     "direction": "down",
@@ -142,16 +162,6 @@
     "direction": "up",
     "signal": "sp_lead",
     "headline": "Tomatoes, Plum Type: shipping point up 13% this week; Chicago hasn't followed yet (+2% this week).",
-    "status": "pending",
-    "moved_pct": NaN
-   },
-   {
-    "first_seen": "2026-10-03",
-    "commodity": "Tomatoes, Plum Type",
-    "market": "New York",
-    "direction": "up",
-    "signal": "sp_lead",
-    "headline": "Tomatoes, Plum Type: shipping point up 13% this week; New York hasn't followed yet (-3% this week).",
     "status": "pending",
     "moved_pct": NaN
    },
@@ -222,16 +232,6 @@
     "direction": "down",
     "signal": "usda_tone",
     "headline": "Tomatoes, Plum Type: USDA reporters in New York call the market lower (\u201cMarket mexico slightly lower, others about steady\u201d).",
-    "status": "pending",
-    "moved_pct": NaN
-   },
-   {
-    "first_seen": "2026-09-30",
-    "commodity": "Strawberries",
-    "market": "Chicago",
-    "direction": "down",
-    "signal": "sp_lead",
-    "headline": "Strawberries: shipping point down 16% this week; Chicago hasn't followed yet (+0% this week).",
     "status": "pending",
     "moved_pct": NaN
    }
