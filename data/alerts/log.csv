@@ -27,3 +27,6 @@ sp_lead|Strawberries|Chicago|up|2026-10-05,2026-10-06,sp_lead,Strawberries,Chica
 "sp_lead|Peppers, Bell Type|Chicago|up|2026-10-05",2026-10-07,sp_lead,"Peppers, Bell Type",Chicago,up,"Peppers, Bell Type: shipping point up 24% this week; Chicago hasn't followed yet (-8% this week)."
 usda_tone|Tomatoes|New York|up|2026-10-05,2026-10-09,usda_tone,Tomatoes,New York,up,"Tomatoes: USDA reporters in New York call the market higher (“Market mature greens slightly higher, others about steady”)."
 "usda_tone|Lettuce, Romaine|Los Angeles|up|2026-10-05",2026-10-10,usda_tone,"Lettuce, Romaine",Los Angeles,up,"Lettuce, Romaine: USDA reporters in Los Angeles call the market higher (“Market higher”)."
+"usda_tone|Lettuce, Romaine|Los Angeles|up|2026-10-12",2026-10-13,usda_tone,"Lettuce, Romaine",Los Angeles,up,"Lettuce, Romaine: USDA reporters in Los Angeles call the market higher (“Market higher”)."
+"sp_lead|Lettuce, Romaine|New York|up|2026-10-12",2026-10-13,sp_lead,"Lettuce, Romaine",New York,up,"Lettuce, Romaine: shipping point up 43% this week; New York hasn't followed yet (-5% this week)."
+usda_tone|Tomatoes|New York|up|2026-10-12,2026-10-13,usda_tone,Tomatoes,New York,up,"Tomatoes: USDA reporters in New York call the market higher (“Market mature greens slightly higher, others about steady”)."
