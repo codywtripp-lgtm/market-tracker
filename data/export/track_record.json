@@ -1,11 +1,11 @@
 {
- "asOf": "2026-10-13",
+ "asOf": "2026-10-14",
  "forecasts_live": {
-  "scored": 262,
+  "scored": 259,
   "since": "2026-09-21",
-  "in_range_pct": 86.3,
-  "miss_pct": 7.9,
-  "no_change_miss_pct": 8.2
+  "in_range_pct": 86.9,
+  "miss_pct": 7.8,
+  "no_change_miss_pct": 8.1
  },
  "forecasts_backtest": {
   "years": "2021-2026",
@@ -15,26 +15,36 @@
     "no_change_miss_pct": 7.8
    },
    "2": {
-    "miss_pct": 11.9,
+    "miss_pct": 12.0,
     "no_change_miss_pct": 13.2
    },
    "3": {
     "miss_pct": 15.5,
-    "no_change_miss_pct": 17.1
+    "no_change_miss_pct": 17.2
    },
    "4": {
-    "miss_pct": 18.0,
-    "no_change_miss_pct": 20.1
+    "miss_pct": 18.1,
+    "no_change_miss_pct": 20.2
    }
   },
-  "range_coverage_pct": 80.1
+  "range_coverage_pct": 80.3
  },
  "alerts": {
-  "issued": 31,
+  "issued": 32,
   "decided": 6,
   "came_true": 5,
-  "pending": 25,
+  "pending": 26,
   "recent": [
+   {
+    "first_seen": "2026-10-14",
+    "commodity": "Limes",
+    "market": "Chicago",
+    "direction": "down",
+    "signal": "sp_lead",
+    "headline": "Limes: shipping point down 14% this week; Chicago hasn't followed yet (-1% this week).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
    {
     "first_seen": "2026-10-13",
     "commodity": "Tomatoes",
@@ -167,21 +177,21 @@
    },
    {
     "first_seen": "2026-10-03",
-    "commodity": "Tomatoes, Plum Type",
-    "market": "Chicago",
-    "direction": "up",
-    "signal": "sp_lead",
-    "headline": "Tomatoes, Plum Type: shipping point up 13% this week; Chicago hasn't followed yet (+2% this week).",
-    "status": "pending",
-    "moved_pct": NaN
-   },
-   {
-    "first_seen": "2026-10-03",
     "commodity": "Limes",
     "market": "Chicago",
     "direction": "down",
     "signal": "sp_lead",
     "headline": "Limes: shipping point down 11% this week; Chicago hasn't followed yet (+4% this week).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
+   {
+    "first_seen": "2026-10-03",
+    "commodity": "Tomatoes, Plum Type",
+    "market": "Chicago",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Tomatoes, Plum Type: shipping point up 13% this week; Chicago hasn't followed yet (+2% this week).",
     "status": "pending",
     "moved_pct": NaN
    },
@@ -222,16 +232,6 @@
     "direction": "up",
     "signal": "sp_lead",
     "headline": "Lettuce, Romaine: shipping point up 10% this week; New York hasn't followed yet (+0% this week).",
-    "status": "pending",
-    "moved_pct": NaN
-   },
-   {
-    "first_seen": "2026-10-02",
-    "commodity": "Celery",
-    "market": "Los Angeles",
-    "direction": "up",
-    "signal": "sp_lead",
-    "headline": "Celery: shipping point up 10% this week; Los Angeles hasn't followed yet (+3% this week).",
     "status": "pending",
     "moved_pct": NaN
    }
