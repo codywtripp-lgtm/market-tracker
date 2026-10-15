@@ -38,6 +38,7 @@ from . import signals, store, volumes, weather
 
 EXPORT = store.DATA / "export"
 HORIZONS = [1, 2, 3, 4]
+FORECAST_TYPES = ["terminal", "shipping point", "wholesale"]  # wholesale = boxed beef, chicken parts
 TERMINALS = ["New York", "Los Angeles", "Chicago"]
 FIRST_TEST_YEAR = 2021
 # 80% range. Plain 10th/90th error percentiles covered only 77% out of sample (errors in a
@@ -48,9 +49,12 @@ NORM_WINDOW = 2          # weeks either side for the usual price
 
 
 def weekly_panel():
-    """One row per terminal headline series per week, on a regular weekly grid."""
+    """One row per headline series per week, on a regular weekly grid.
+
+    Terminal produce, shipping-point districts, and wholesale beef/chicken. Retail ads are left
+    out (weekly specials jump around by design)."""
     series = pd.read_csv(EXPORT / "series.csv", dtype=str)
-    series = series[series["market_type"] == "terminal"]
+    series = series[series["market_type"].isin(FORECAST_TYPES)]
     wk = pd.read_csv(EXPORT / "prices_weekly.csv", dtype={"series_id": str})
     wk = wk[wk["series_id"].isin(series["series_id"])]
     wk["week"] = pd.to_datetime(wk["week_start"])
@@ -61,7 +65,7 @@ def weekly_panel():
         g["series_id"] = sid
         frames.append(g.reset_index())
     panel = pd.concat(frames, ignore_index=True)
-    panel = panel.merge(series[["series_id", "commodity", "market"]], on="series_id")
+    panel = panel.merge(series[["series_id", "commodity", "market", "market_type"]], on="series_id")
     panel["lp"] = np.log(panel["compare_price"])
     panel["lr"] = np.log(panel["real_compare_price"].fillna(panel["compare_price"]))
     iso = panel["week"].dt.isocalendar()
@@ -279,7 +283,7 @@ def backtest(panel, last_year):
                              if m != "naive" else float("nan")})
                 residuals.append(pd.DataFrame({
                     "horizon": h, "year": Y, "method": m, "commodity": test["commodity"].to_numpy(),
-                    "market": test["market"].to_numpy(), "resid": err,
+                    "market": test["market"].to_numpy(), "market_type": test["market_type"].to_numpy(), "resid": err,
                     "ape": np.abs(np.expm1(pred) - np.expm1(test[f"y{h}"].to_numpy())) * 100}))
     return pd.DataFrame(rows), pd.concat(residuals, ignore_index=True) if residuals else pd.DataFrame()
 
@@ -400,6 +404,12 @@ def main():
     card.sort_values(["market", "forecast_miss_pct"]).to_csv(EXPORT / "forecast_report_card.csv", index=False)
     print("2-week report card, New York:")
     print(card[card["market"] == "New York"].sort_values("forecast_miss_pct").to_string(index=False))
+    by_type = (pd.concat([hybrid, resid[resid["method"] == "naive"]])
+               .groupby(["market_type", "horizon", "method"])["ape"].mean().unstack("method").round(2))
+    print("miss by market type (per_item = what we publish, naive = no change):")
+    print(by_type.to_string())
+    print("2-week report card, beef & chicken:")
+    print(card[card["commodity"].isin(["Beef", "Chicken"])].to_string(index=False))
     print(summary.round(3).to_string(index=False))
     print(f"80% range coverage (walk-forward): {cov:.1%}; methods used: {best}; series forecast: {len(out)}")
 

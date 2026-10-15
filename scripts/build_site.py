@@ -116,7 +116,9 @@ def main():
             "props": s.get("properties", ""), "organic": s.get("organic", ""),
             "coverage": num(s.get("coverage_last_year")),
             "tone": day.get("market_tone", ""), "origins": day.get("origins", ""),
-            "forecast": {p["h"]: [p["lo"], p["mid"], p["hi"]] for p in fc.get(sid, {}).get("points", [])},
+            # same unit scaling as prices (chicken cents/lb -> $/lb)
+            "forecast": {p["h"]: [price(sid, p["lo"]), price(sid, p["mid"]), price(sid, p["hi"])]
+                         for p in fc.get(sid, {}).get("points", [])},
             "fcMiss": num(card.get((r["commodity"], r["market"]), {}).get("forecast_miss_pct")),
             "fcStable": card.get((r["commodity"], r["market"]), {}).get("uses") == "no change",
             "supplyVsLastYear": supply.get(r["commodity"]) if r["market_type"] in ("terminal", "shipping point") else None,
