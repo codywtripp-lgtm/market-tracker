@@ -31,3 +31,12 @@ usda_tone|Tomatoes|New York|up|2026-10-05,2026-10-09,usda_tone,Tomatoes,New York
 "sp_lead|Lettuce, Romaine|New York|up|2026-10-12",2026-10-13,sp_lead,"Lettuce, Romaine",New York,up,"Lettuce, Romaine: shipping point up 43% this week; New York hasn't followed yet (-5% this week)."
 usda_tone|Tomatoes|New York|up|2026-10-12,2026-10-13,usda_tone,Tomatoes,New York,up,"Tomatoes: USDA reporters in New York call the market higher (“Market mature greens slightly higher, others about steady”)."
 sp_lead|Limes|Chicago|down|2026-10-12,2026-10-14,sp_lead,Limes,Chicago,down,Limes: shipping point down 14% this week; Chicago hasn't followed yet (-1% this week).
+"sp_lead|Tomatoes, Plum Type|New York|up|2026-10-12",2026-10-15,sp_lead,"Tomatoes, Plum Type",New York,up,"Tomatoes, Plum Type: shipping point up 18% this week; New York hasn't followed yet (-3% this week)."
+sp_lead|Strawberries|New York|up|2026-10-12,2026-10-15,sp_lead,Strawberries,New York,up,Strawberries: shipping point up 28% this week; New York hasn't followed yet (-9% this week).
+sp_lead|Broccoli|Chicago|down|2026-10-12,2026-10-15,sp_lead,Broccoli,Chicago,down,Broccoli: shipping point down 20% this week; Chicago hasn't followed yet (-1% this week).
+"sp_lead|Lettuce, Iceberg|Chicago|up|2026-10-12",2026-10-15,sp_lead,"Lettuce, Iceberg",Chicago,up,"Lettuce, Iceberg: shipping point up 11% this week; Chicago hasn't followed yet (+2% this week)."
+sp_lead|Strawberries|Chicago|up|2026-10-12,2026-10-15,sp_lead,Strawberries,Chicago,up,Strawberries: shipping point up 28% this week; Chicago hasn't followed yet (+0% this week).
+usda_tone|Limes|Los Angeles|down|2026-10-12,2026-10-15,usda_tone,Limes,Los Angeles,down,Limes: USDA reporters in Los Angeles call the market lower (“Market slightly lower”).
+usda_tone|Blueberries|New York|down|2026-10-12,2026-10-15,usda_tone,Blueberries,New York,down,Blueberries: USDA reporters in New York call the market lower (“Market slightly lower”).
+"sp_lead|Lettuce, Iceberg|Los Angeles|up|2026-10-12",2026-10-15,sp_lead,"Lettuce, Iceberg",Los Angeles,up,"Lettuce, Iceberg: shipping point up 11% this week; Los Angeles hasn't followed yet (+0% this week)."
+"sp_lead|Tomatoes, Plum Type|Chicago|up|2026-10-12",2026-10-15,sp_lead,"Tomatoes, Plum Type",Chicago,up,"Tomatoes, Plum Type: shipping point up 18% this week; Chicago hasn't followed yet (+3% this week)."

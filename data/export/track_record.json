@@ -1,11 +1,11 @@
 {
- "asOf": "2026-10-14",
+ "asOf": "2026-10-15",
  "forecasts_live": {
-  "scored": 259,
+  "scored": 256,
   "since": "2026-09-21",
-  "in_range_pct": 86.9,
-  "miss_pct": 7.8,
-  "no_change_miss_pct": 8.1
+  "in_range_pct": 86.7,
+  "miss_pct": 7.9,
+  "no_change_miss_pct": 8.2
  },
  "forecasts_backtest": {
   "years": "2021-2026",
@@ -15,26 +15,116 @@
     "no_change_miss_pct": 7.8
    },
    "2": {
-    "miss_pct": 12.0,
+    "miss_pct": 11.9,
     "no_change_miss_pct": 13.2
    },
    "3": {
     "miss_pct": 15.5,
-    "no_change_miss_pct": 17.2
+    "no_change_miss_pct": 17.1
    },
    "4": {
-    "miss_pct": 18.1,
-    "no_change_miss_pct": 20.2
+    "miss_pct": 18.0,
+    "no_change_miss_pct": 20.1
    }
   },
   "range_coverage_pct": 80.3
  },
  "alerts": {
-  "issued": 32,
+  "issued": 41,
   "decided": 6,
   "came_true": 5,
-  "pending": 26,
+  "pending": 35,
   "recent": [
+   {
+    "first_seen": "2026-10-15",
+    "commodity": "Tomatoes, Plum Type",
+    "market": "Chicago",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Tomatoes, Plum Type: shipping point up 18% this week; Chicago hasn't followed yet (+3% this week).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
+   {
+    "first_seen": "2026-10-15",
+    "commodity": "Tomatoes, Plum Type",
+    "market": "New York",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Tomatoes, Plum Type: shipping point up 18% this week; New York hasn't followed yet (-3% this week).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
+   {
+    "first_seen": "2026-10-15",
+    "commodity": "Lettuce, Iceberg",
+    "market": "Los Angeles",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Lettuce, Iceberg: shipping point up 11% this week; Los Angeles hasn't followed yet (+0% this week).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
+   {
+    "first_seen": "2026-10-15",
+    "commodity": "Blueberries",
+    "market": "New York",
+    "direction": "down",
+    "signal": "usda_tone",
+    "headline": "Blueberries: USDA reporters in New York call the market lower (\u201cMarket slightly lower\u201d).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
+   {
+    "first_seen": "2026-10-15",
+    "commodity": "Limes",
+    "market": "Los Angeles",
+    "direction": "down",
+    "signal": "usda_tone",
+    "headline": "Limes: USDA reporters in Los Angeles call the market lower (\u201cMarket slightly lower\u201d).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
+   {
+    "first_seen": "2026-10-15",
+    "commodity": "Strawberries",
+    "market": "Chicago",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Strawberries: shipping point up 28% this week; Chicago hasn't followed yet (+0% this week).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
+   {
+    "first_seen": "2026-10-15",
+    "commodity": "Lettuce, Iceberg",
+    "market": "Chicago",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Lettuce, Iceberg: shipping point up 11% this week; Chicago hasn't followed yet (+2% this week).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
+   {
+    "first_seen": "2026-10-15",
+    "commodity": "Broccoli",
+    "market": "Chicago",
+    "direction": "down",
+    "signal": "sp_lead",
+    "headline": "Broccoli: shipping point down 20% this week; Chicago hasn't followed yet (-1% this week).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
+   {
+    "first_seen": "2026-10-15",
+    "commodity": "Strawberries",
+    "market": "New York",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Strawberries: shipping point up 28% this week; New York hasn't followed yet (-9% this week).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
    {
     "first_seen": "2026-10-14",
     "commodity": "Limes",
@@ -117,6 +207,16 @@
    },
    {
     "first_seen": "2026-10-06",
+    "commodity": "Strawberries",
+    "market": "Chicago",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Strawberries: shipping point up 11% this week; Chicago hasn't followed yet (-12% this week).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
+   {
+    "first_seen": "2026-10-06",
     "commodity": "Tomatoes, Plum Type",
     "market": "Chicago",
     "direction": "up",
@@ -132,106 +232,6 @@
     "direction": "up",
     "signal": "sp_lead",
     "headline": "Lettuce, Iceberg: shipping point up 12% this week; New York hasn't followed yet (-3% this week).",
-    "status": "pending",
-    "moved_pct": NaN
-   },
-   {
-    "first_seen": "2026-10-06",
-    "commodity": "Strawberries",
-    "market": "Chicago",
-    "direction": "up",
-    "signal": "sp_lead",
-    "headline": "Strawberries: shipping point up 11% this week; Chicago hasn't followed yet (-12% this week).",
-    "status": "pending",
-    "moved_pct": NaN
-   },
-   {
-    "first_seen": "2026-10-06",
-    "commodity": "Lettuce, Romaine",
-    "market": "Chicago",
-    "direction": "up",
-    "signal": "sp_lead",
-    "headline": "Lettuce, Romaine: shipping point up 23% this week; Chicago hasn't followed yet (-0% this week).",
-    "status": "pending",
-    "moved_pct": NaN
-   },
-   {
-    "first_seen": "2026-10-06",
-    "commodity": "Lettuce, Romaine",
-    "market": "New York",
-    "direction": "up",
-    "signal": "sp_lead",
-    "headline": "Lettuce, Romaine: shipping point up 23% this week; New York hasn't followed yet (+0% this week).",
-    "status": "pending",
-    "moved_pct": NaN
-   },
-   {
-    "first_seen": "2026-10-06",
-    "commodity": "Strawberries",
-    "market": "New York",
-    "direction": "up",
-    "signal": "sp_lead",
-    "headline": "Strawberries: shipping point up 11% this week; New York hasn't followed yet (-12% this week).",
-    "status": "pending",
-    "moved_pct": NaN
-   },
-   {
-    "first_seen": "2026-10-03",
-    "commodity": "Limes",
-    "market": "Chicago",
-    "direction": "down",
-    "signal": "sp_lead",
-    "headline": "Limes: shipping point down 11% this week; Chicago hasn't followed yet (+4% this week).",
-    "status": "pending",
-    "moved_pct": NaN
-   },
-   {
-    "first_seen": "2026-10-03",
-    "commodity": "Tomatoes, Plum Type",
-    "market": "Chicago",
-    "direction": "up",
-    "signal": "sp_lead",
-    "headline": "Tomatoes, Plum Type: shipping point up 13% this week; Chicago hasn't followed yet (+2% this week).",
-    "status": "pending",
-    "moved_pct": NaN
-   },
-   {
-    "first_seen": "2026-10-03",
-    "commodity": "Tomatoes, Plum Type",
-    "market": "New York",
-    "direction": "up",
-    "signal": "sp_lead",
-    "headline": "Tomatoes, Plum Type: shipping point up 13% this week; New York hasn't followed yet (-3% this week).",
-    "status": "pending",
-    "moved_pct": NaN
-   },
-   {
-    "first_seen": "2026-10-02",
-    "commodity": "Lettuce, Romaine",
-    "market": "Los Angeles",
-    "direction": "up",
-    "signal": "sp_lead",
-    "headline": "Lettuce, Romaine: shipping point up 10% this week; Los Angeles hasn't followed yet (+2% this week).",
-    "status": "pending",
-    "moved_pct": NaN
-   },
-   {
-    "first_seen": "2026-10-02",
-    "commodity": "Lettuce, Romaine",
-    "market": "Chicago",
-    "direction": "up",
-    "signal": "sp_lead",
-    "headline": "Lettuce, Romaine: shipping point up 10% this week; Chicago hasn't followed yet (-4% this week).",
-    "status": "pending",
-    "moved_pct": NaN
-   },
-   {
-    "first_seen": "2026-10-02",
-    "commodity": "Lettuce, Romaine",
-    "market": "New York",
-    "direction": "up",
-    "signal": "sp_lead",
-    "headline": "Lettuce, Romaine: shipping point up 10% this week; New York hasn't followed yet (+0% this week).",
     "status": "pending",
     "moved_pct": NaN
    }

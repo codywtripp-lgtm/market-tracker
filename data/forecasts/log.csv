@@ -835,10 +835,10 @@ made_on,series_id,commodity,market,from_week,from_price,h,target_week,lo,mid,hi
 2026-10-13,terminal-chicago-potatoes-yellow-type-50-lb-cartons-size-a-y,Potatoes,Chicago,2026-10-05,58.0,2,2026-10-19,51.68,58.0,65.11
 2026-10-13,terminal-chicago-potatoes-yellow-type-50-lb-cartons-size-a-y,Potatoes,Chicago,2026-10-05,58.0,3,2026-10-26,50.6,58.0,67.06
 2026-10-13,terminal-chicago-potatoes-yellow-type-50-lb-cartons-size-a-y,Potatoes,Chicago,2026-10-05,58.0,4,2026-11-02,48.96,58.0,68.17
-2026-10-14,terminal-chicago-strawberries-flats-8-1-lb-containers-with-lids-medium-n,Strawberries,Chicago,2026-10-05,22.5,1,2026-10-12,17.01,22.05,27.24
-2026-10-14,terminal-chicago-strawberries-flats-8-1-lb-containers-with-lids-medium-n,Strawberries,Chicago,2026-10-05,22.5,2,2026-10-19,14.86,22.58,30.71
-2026-10-14,terminal-chicago-strawberries-flats-8-1-lb-containers-with-lids-medium-n,Strawberries,Chicago,2026-10-05,22.5,3,2026-10-26,14.02,23.38,34.12
-2026-10-14,terminal-chicago-strawberries-flats-8-1-lb-containers-with-lids-medium-n,Strawberries,Chicago,2026-10-05,22.5,4,2026-11-02,14.37,24.92,38.21
+2026-10-15,terminal-chicago-strawberries-flats-8-1-lb-containers-with-lids-medium-n,Strawberries,Chicago,2026-10-05,22.5,1,2026-10-12,17.02,22.06,27.27
+2026-10-15,terminal-chicago-strawberries-flats-8-1-lb-containers-with-lids-medium-n,Strawberries,Chicago,2026-10-05,22.5,2,2026-10-19,14.86,22.59,30.8
+2026-10-15,terminal-chicago-strawberries-flats-8-1-lb-containers-with-lids-medium-n,Strawberries,Chicago,2026-10-05,22.5,3,2026-10-26,14.03,23.38,34.03
+2026-10-15,terminal-chicago-strawberries-flats-8-1-lb-containers-with-lids-medium-n,Strawberries,Chicago,2026-10-05,22.5,4,2026-11-02,14.39,24.92,38.23
 2026-10-13,terminal-chicago-strawberries-flats-8-1-lb-containers-with-lids-medium-y,Strawberries,Chicago,2026-10-05,24.8,1,2026-10-12,19.48,25.25,31.21
 2026-10-13,terminal-chicago-strawberries-flats-8-1-lb-containers-with-lids-medium-y,Strawberries,Chicago,2026-10-05,24.8,2,2026-10-19,18.25,27.74,37.81
 2026-10-13,terminal-chicago-strawberries-flats-8-1-lb-containers-with-lids-medium-y,Strawberries,Chicago,2026-10-05,24.8,3,2026-10-26,17.54,29.3,42.79
@@ -855,10 +855,10 @@ made_on,series_id,commodity,market,from_week,from_price,h,target_week,lo,mid,hi
 2026-10-13,terminal-chicago-tomatoes-vine-ripes-5-kg-11-lb-flats-medium-large-light-red-red-on-the-vine-n,Tomatoes,Chicago,2026-10-05,17.1,2,2026-10-19,13.16,18.9,27.27
 2026-10-13,terminal-chicago-tomatoes-vine-ripes-5-kg-11-lb-flats-medium-large-light-red-red-on-the-vine-n,Tomatoes,Chicago,2026-10-05,17.1,3,2026-10-26,12.8,19.44,30.3
 2026-10-13,terminal-chicago-tomatoes-vine-ripes-5-kg-11-lb-flats-medium-large-light-red-red-on-the-vine-n,Tomatoes,Chicago,2026-10-05,17.1,4,2026-11-02,11.97,19.0,31.06
-2026-10-14,terminal-chicago-tomatoes-vine-ripes-cartons-2-layer-4x5s-light-red-red-n,Tomatoes,Chicago,2026-10-05,25.5,1,2026-10-12,21.82,27.3,34.56
-2026-10-14,terminal-chicago-tomatoes-vine-ripes-cartons-2-layer-4x5s-light-red-red-n,Tomatoes,Chicago,2026-10-05,25.5,2,2026-10-19,19.82,28.39,41.07
-2026-10-14,terminal-chicago-tomatoes-vine-ripes-cartons-2-layer-4x5s-light-red-red-n,Tomatoes,Chicago,2026-10-05,25.5,3,2026-10-26,19.33,29.35,45.83
-2026-10-14,terminal-chicago-tomatoes-vine-ripes-cartons-2-layer-4x5s-light-red-red-n,Tomatoes,Chicago,2026-10-05,25.5,4,2026-11-02,18.92,30.01,49.24
+2026-10-15,terminal-chicago-tomatoes-vine-ripes-cartons-2-layer-4x5s-light-red-red-n,Tomatoes,Chicago,2026-10-05,25.5,1,2026-10-12,21.82,27.3,34.58
+2026-10-15,terminal-chicago-tomatoes-vine-ripes-cartons-2-layer-4x5s-light-red-red-n,Tomatoes,Chicago,2026-10-05,25.5,2,2026-10-19,19.81,28.38,41.14
+2026-10-15,terminal-chicago-tomatoes-vine-ripes-cartons-2-layer-4x5s-light-red-red-n,Tomatoes,Chicago,2026-10-05,25.5,3,2026-10-26,19.32,29.32,45.81
+2026-10-15,terminal-chicago-tomatoes-vine-ripes-cartons-2-layer-4x5s-light-red-red-n,Tomatoes,Chicago,2026-10-05,25.5,4,2026-11-02,18.96,29.98,49.18
 2026-10-13,terminal-los-angeles-avocados-hass-cartons-2-layer-48s-n,Avocados,Los Angeles,2026-10-05,34.0,1,2026-10-12,30.9,34.0,37.36
 2026-10-13,terminal-los-angeles-avocados-hass-cartons-2-layer-48s-n,Avocados,Los Angeles,2026-10-05,34.0,2,2026-10-19,28.85,34.0,39.75
 2026-10-13,terminal-los-angeles-avocados-hass-cartons-2-layer-48s-n,Avocados,Los Angeles,2026-10-05,34.0,3,2026-10-26,27.34,34.0,42.68
@@ -923,10 +923,10 @@ made_on,series_id,commodity,market,from_week,from_price,h,target_week,lo,mid,hi
 2026-10-13,terminal-los-angeles-lettuce-romaine-cartons-film-lined-24s-n,"Lettuce, Romaine",Los Angeles,2026-10-05,32.5,2,2026-10-19,35.85,43.57,56.02
 2026-10-13,terminal-los-angeles-lettuce-romaine-cartons-film-lined-24s-n,"Lettuce, Romaine",Los Angeles,2026-10-05,32.5,3,2026-10-26,34.79,44.87,64.14
 2026-10-13,terminal-los-angeles-lettuce-romaine-cartons-film-lined-24s-n,"Lettuce, Romaine",Los Angeles,2026-10-05,32.5,4,2026-11-02,33.3,45.16,69.29
-2026-10-14,terminal-los-angeles-lettuce-romaine-hearts-cartons-film-lined-48s-n,"Lettuce, Romaine",Los Angeles,2026-10-05,36.6,1,2026-10-12,40.32,46.15,53.22
-2026-10-14,terminal-los-angeles-lettuce-romaine-hearts-cartons-film-lined-48s-n,"Lettuce, Romaine",Los Angeles,2026-10-05,36.6,2,2026-10-19,42.43,51.57,66.4
-2026-10-14,terminal-los-angeles-lettuce-romaine-hearts-cartons-film-lined-48s-n,"Lettuce, Romaine",Los Angeles,2026-10-05,36.6,3,2026-10-26,41.63,53.73,76.99
-2026-10-14,terminal-los-angeles-lettuce-romaine-hearts-cartons-film-lined-48s-n,"Lettuce, Romaine",Los Angeles,2026-10-05,36.6,4,2026-11-02,40.23,54.59,83.91
+2026-10-15,terminal-los-angeles-lettuce-romaine-hearts-cartons-film-lined-48s-n,"Lettuce, Romaine",Los Angeles,2026-10-05,36.6,1,2026-10-12,40.28,46.08,52.89
+2026-10-15,terminal-los-angeles-lettuce-romaine-hearts-cartons-film-lined-48s-n,"Lettuce, Romaine",Los Angeles,2026-10-05,36.6,2,2026-10-19,42.23,51.48,65.16
+2026-10-15,terminal-los-angeles-lettuce-romaine-hearts-cartons-film-lined-48s-n,"Lettuce, Romaine",Los Angeles,2026-10-05,36.6,3,2026-10-26,41.52,53.64,74.55
+2026-10-15,terminal-los-angeles-lettuce-romaine-hearts-cartons-film-lined-48s-n,"Lettuce, Romaine",Los Angeles,2026-10-05,36.6,4,2026-11-02,40.09,54.52,80.33
 2026-10-13,terminal-los-angeles-limes-seedless-type-40-lb-cartons-200s-n,Limes,Los Angeles,2026-10-05,38.5,1,2026-10-12,31.49,35.67,41.18
 2026-10-13,terminal-los-angeles-limes-seedless-type-40-lb-cartons-200s-n,Limes,Los Angeles,2026-10-05,38.5,2,2026-10-19,27.21,33.68,43.18
 2026-10-13,terminal-los-angeles-limes-seedless-type-40-lb-cartons-200s-n,Limes,Los Angeles,2026-10-05,38.5,3,2026-10-26,24.6,32.14,43.87
@@ -1071,10 +1071,10 @@ made_on,series_id,commodity,market,from_week,from_price,h,target_week,lo,mid,hi
 2026-10-13,terminal-new-york-peppers-bell-type-5-kg-11-lb-cartons-extra-large-yellow-n,"Peppers, Bell Type",New York,2026-10-05,11.0,2,2026-10-19,10.44,14.93,20.36
 2026-10-13,terminal-new-york-peppers-bell-type-5-kg-11-lb-cartons-extra-large-yellow-n,"Peppers, Bell Type",New York,2026-10-05,11.0,3,2026-10-26,9.26,14.5,21.5
 2026-10-13,terminal-new-york-peppers-bell-type-5-kg-11-lb-cartons-extra-large-yellow-n,"Peppers, Bell Type",New York,2026-10-05,11.0,4,2026-11-02,8.92,14.91,24.2
-2026-10-14,terminal-new-york-potatoes-round-red-50-lb-cartons-creamers-3-4-1-5-8-n,Potatoes,New York,2026-10-05,51.0,1,2026-10-12,47.57,51.0,54.4
-2026-10-14,terminal-new-york-potatoes-round-red-50-lb-cartons-creamers-3-4-1-5-8-n,Potatoes,New York,2026-10-05,51.0,2,2026-10-19,45.45,51.0,57.21
-2026-10-14,terminal-new-york-potatoes-round-red-50-lb-cartons-creamers-3-4-1-5-8-n,Potatoes,New York,2026-10-05,51.0,3,2026-10-26,44.49,51.0,58.96
-2026-10-14,terminal-new-york-potatoes-round-red-50-lb-cartons-creamers-3-4-1-5-8-n,Potatoes,New York,2026-10-05,51.0,4,2026-11-02,43.04,51.0,59.93
+2026-10-15,terminal-new-york-potatoes-round-red-50-lb-cartons-creamers-3-4-1-5-8-n,Potatoes,New York,2026-10-05,51.0,1,2026-10-12,47.57,51.0,54.4
+2026-10-15,terminal-new-york-potatoes-round-red-50-lb-cartons-creamers-3-4-1-5-8-n,Potatoes,New York,2026-10-05,51.0,2,2026-10-19,45.45,51.0,57.21
+2026-10-15,terminal-new-york-potatoes-round-red-50-lb-cartons-creamers-3-4-1-5-8-n,Potatoes,New York,2026-10-05,51.0,3,2026-10-26,44.49,51.0,58.99
+2026-10-15,terminal-new-york-potatoes-round-red-50-lb-cartons-creamers-3-4-1-5-8-n,Potatoes,New York,2026-10-05,51.0,4,2026-11-02,43.07,51.0,59.92
 2026-10-13,terminal-new-york-potatoes-round-red-50-lb-cartons-size-a-n,Potatoes,New York,2026-10-05,33.5,1,2026-10-12,31.24,33.5,35.73
 2026-10-13,terminal-new-york-potatoes-round-red-50-lb-cartons-size-a-n,Potatoes,New York,2026-10-05,33.5,2,2026-10-19,29.85,33.5,37.6
 2026-10-13,terminal-new-york-potatoes-round-red-50-lb-cartons-size-a-n,Potatoes,New York,2026-10-05,33.5,3,2026-10-26,29.23,33.5,38.73
@@ -1083,10 +1083,10 @@ made_on,series_id,commodity,market,from_week,from_price,h,target_week,lo,mid,hi
 2026-10-13,terminal-new-york-strawberries-flats-8-1-lb-containers-with-lids-extra-large-n,Strawberries,New York,2026-10-05,13.1,2,2026-10-19,10.86,16.5,22.5
 2026-10-13,terminal-new-york-strawberries-flats-8-1-lb-containers-with-lids-extra-large-n,Strawberries,New York,2026-10-05,13.1,3,2026-10-26,10.51,17.55,25.63
 2026-10-13,terminal-new-york-strawberries-flats-8-1-lb-containers-with-lids-extra-large-n,Strawberries,New York,2026-10-05,13.1,4,2026-11-02,10.47,18.19,27.89
-2026-10-14,terminal-new-york-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",New York,2026-10-05,32.2,1,2026-10-12,28.41,33.18,38.8
-2026-10-14,terminal-new-york-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",New York,2026-10-05,32.2,2,2026-10-19,24.4,32.2,43.3
-2026-10-14,terminal-new-york-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",New York,2026-10-05,32.2,3,2026-10-26,22.77,32.2,46.27
-2026-10-14,terminal-new-york-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",New York,2026-10-05,32.2,4,2026-11-02,20.72,32.2,46.93
+2026-10-15,terminal-new-york-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",New York,2026-10-05,32.2,1,2026-10-12,28.48,33.26,38.92
+2026-10-15,terminal-new-york-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",New York,2026-10-05,32.2,2,2026-10-19,24.38,32.2,43.26
+2026-10-15,terminal-new-york-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",New York,2026-10-05,32.2,3,2026-10-26,22.81,32.2,46.25
+2026-10-15,terminal-new-york-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",New York,2026-10-05,32.2,4,2026-11-02,20.76,32.2,46.97
 2026-10-13,terminal-new-york-tomatoes-vine-ripes-flats-18s-light-red-red-n,Tomatoes,New York,2026-10-05,28.0,1,2026-10-12,22.27,28.0,35.51
 2026-10-13,terminal-new-york-tomatoes-vine-ripes-flats-18s-light-red-red-n,Tomatoes,New York,2026-10-05,28.0,2,2026-10-19,20.74,29.79,42.98
 2026-10-13,terminal-new-york-tomatoes-vine-ripes-flats-18s-light-red-red-n,Tomatoes,New York,2026-10-05,28.0,3,2026-10-26,21.04,31.96,49.81
@@ -1095,347 +1095,351 @@ made_on,series_id,commodity,market,from_week,from_price,h,target_week,lo,mid,hi
 2026-10-13,terminal-new-york-tomatoes-vine-ripes-flats-20s-light-red-red-n,Tomatoes,New York,2026-10-05,27.0,2,2026-10-19,18.98,27.26,39.33
 2026-10-13,terminal-new-york-tomatoes-vine-ripes-flats-20s-light-red-red-n,Tomatoes,New York,2026-10-05,27.0,3,2026-10-26,18.04,27.39,42.69
 2026-10-13,terminal-new-york-tomatoes-vine-ripes-flats-20s-light-red-red-n,Tomatoes,New York,2026-10-05,27.0,4,2026-11-02,17.57,27.89,45.6
-2026-10-14,terminal-chicago-avocados-hass-cartons-2-layer-36s-n,Avocados,Chicago,2026-10-12,35.0,1,2026-10-19,32.78,36.07,39.63
-2026-10-14,terminal-chicago-avocados-hass-cartons-2-layer-36s-n,Avocados,Chicago,2026-10-12,35.0,2,2026-10-26,31.68,37.32,43.62
-2026-10-14,terminal-chicago-avocados-hass-cartons-2-layer-36s-n,Avocados,Chicago,2026-10-12,35.0,3,2026-11-02,28.16,35.0,43.91
-2026-10-14,terminal-chicago-avocados-hass-cartons-2-layer-36s-n,Avocados,Chicago,2026-10-12,35.0,4,2026-11-09,27.0,35.0,45.3
-2026-10-14,terminal-chicago-avocados-hass-cartons-2-layer-60s-n,Avocados,Chicago,2026-10-12,30.5,1,2026-10-19,28.17,31.0,34.06
-2026-10-14,terminal-chicago-avocados-hass-cartons-2-layer-60s-n,Avocados,Chicago,2026-10-12,30.5,2,2026-10-26,26.5,31.22,36.49
-2026-10-14,terminal-chicago-avocados-hass-cartons-2-layer-60s-n,Avocados,Chicago,2026-10-12,30.5,3,2026-11-02,24.54,30.5,38.26
-2026-10-14,terminal-chicago-avocados-hass-cartons-2-layer-60s-n,Avocados,Chicago,2026-10-12,30.5,4,2026-11-09,23.53,30.5,39.48
-2026-10-14,terminal-chicago-bananas-40-lb-cartons-n,Bananas,Chicago,2026-10-12,21.0,1,2026-10-19,20.67,21.0,21.36
-2026-10-14,terminal-chicago-bananas-40-lb-cartons-n,Bananas,Chicago,2026-10-12,21.0,2,2026-10-26,20.37,21.0,21.78
-2026-10-14,terminal-chicago-bananas-40-lb-cartons-n,Bananas,Chicago,2026-10-12,21.0,3,2026-11-02,20.02,21.0,22.1
-2026-10-14,terminal-chicago-bananas-40-lb-cartons-n,Bananas,Chicago,2026-10-12,21.0,4,2026-11-09,19.73,21.0,22.37
-2026-10-14,terminal-chicago-bananas-40-lb-cartons-y,Bananas,Chicago,2026-10-12,28.5,1,2026-10-19,28.05,28.5,28.98
-2026-10-14,terminal-chicago-bananas-40-lb-cartons-y,Bananas,Chicago,2026-10-12,28.5,2,2026-10-26,27.64,28.5,29.56
-2026-10-14,terminal-chicago-bananas-40-lb-cartons-y,Bananas,Chicago,2026-10-12,28.5,3,2026-11-02,27.17,28.5,30.0
-2026-10-14,terminal-chicago-bananas-40-lb-cartons-y,Bananas,Chicago,2026-10-12,28.5,4,2026-11-09,26.77,28.5,30.36
-2026-10-14,terminal-chicago-blueberries-flats-12-1-pint-cups-with-lids-large-n,Blueberries,Chicago,2026-10-12,46.5,1,2026-10-19,37.46,46.5,58.21
-2026-10-14,terminal-chicago-blueberries-flats-12-1-pint-cups-with-lids-large-n,Blueberries,Chicago,2026-10-12,46.5,2,2026-10-26,31.78,43.37,60.25
-2026-10-14,terminal-chicago-blueberries-flats-12-1-pint-cups-with-lids-large-n,Blueberries,Chicago,2026-10-12,46.5,3,2026-11-02,27.65,40.79,59.96
-2026-10-14,terminal-chicago-blueberries-flats-12-1-pint-cups-with-lids-large-n,Blueberries,Chicago,2026-10-12,46.5,4,2026-11-09,25.28,39.3,59.85
-2026-10-14,terminal-chicago-broccoli-baby-hybrid-type-cartons-bunched-18s-y,Broccoli,Chicago,2026-10-12,36.0,1,2026-10-19,31.59,36.0,42.0
-2026-10-14,terminal-chicago-broccoli-baby-hybrid-type-cartons-bunched-18s-y,Broccoli,Chicago,2026-10-12,36.0,2,2026-10-26,29.26,36.0,47.08
-2026-10-14,terminal-chicago-broccoli-baby-hybrid-type-cartons-bunched-18s-y,Broccoli,Chicago,2026-10-12,36.0,3,2026-11-02,25.62,33.49,48.42
-2026-10-14,terminal-chicago-broccoli-baby-hybrid-type-cartons-bunched-18s-y,Broccoli,Chicago,2026-10-12,36.0,4,2026-11-09,24.75,33.75,50.63
-2026-10-14,terminal-chicago-broccoli-cartons-bunched-14s-y,Broccoli,Chicago,2026-10-12,48.0,1,2026-10-19,42.12,48.0,56.0
-2026-10-14,terminal-chicago-broccoli-cartons-bunched-14s-y,Broccoli,Chicago,2026-10-12,48.0,2,2026-10-26,39.02,48.0,62.77
-2026-10-14,terminal-chicago-broccoli-cartons-bunched-14s-y,Broccoli,Chicago,2026-10-12,48.0,3,2026-11-02,32.1,41.96,60.66
-2026-10-14,terminal-chicago-broccoli-cartons-bunched-14s-y,Broccoli,Chicago,2026-10-12,48.0,4,2026-11-09,30.66,41.8,62.7
-2026-10-14,terminal-chicago-carrots-50-lb-sacks-loose-jumbo-n,Carrots,Chicago,2026-10-12,26.5,1,2026-10-19,25.24,26.5,27.85
-2026-10-14,terminal-chicago-carrots-50-lb-sacks-loose-jumbo-n,Carrots,Chicago,2026-10-12,26.5,2,2026-10-26,24.48,26.5,28.91
-2026-10-14,terminal-chicago-carrots-50-lb-sacks-loose-jumbo-n,Carrots,Chicago,2026-10-12,26.5,3,2026-11-02,23.76,26.5,29.79
-2026-10-14,terminal-chicago-carrots-50-lb-sacks-loose-jumbo-n,Carrots,Chicago,2026-10-12,26.5,4,2026-11-09,23.27,26.5,30.49
-2026-10-14,terminal-chicago-carrots-sacks-10-5-lb-film-bags-medium-large-n,Carrots,Chicago,2026-10-12,33.0,1,2026-10-19,31.43,33.0,34.68
-2026-10-14,terminal-chicago-carrots-sacks-10-5-lb-film-bags-medium-large-n,Carrots,Chicago,2026-10-12,33.0,2,2026-10-26,30.48,33.0,36.0
-2026-10-14,terminal-chicago-carrots-sacks-10-5-lb-film-bags-medium-large-n,Carrots,Chicago,2026-10-12,33.0,3,2026-11-02,29.59,33.0,37.09
-2026-10-14,terminal-chicago-carrots-sacks-10-5-lb-film-bags-medium-large-n,Carrots,Chicago,2026-10-12,33.0,4,2026-11-09,28.98,33.0,37.97
-2026-10-14,terminal-chicago-celery-cartons-2-1-2-dozen-n,Celery,Chicago,2026-10-12,30.5,1,2026-10-19,27.24,30.86,34.85
-2026-10-14,terminal-chicago-celery-cartons-2-1-2-dozen-n,Celery,Chicago,2026-10-12,30.5,2,2026-10-26,25.8,31.61,38.08
-2026-10-14,terminal-chicago-celery-cartons-2-1-2-dozen-n,Celery,Chicago,2026-10-12,30.5,3,2026-11-02,25.14,32.9,42.7
-2026-10-14,terminal-chicago-celery-cartons-2-1-2-dozen-n,Celery,Chicago,2026-10-12,30.5,4,2026-11-09,25.06,34.33,48.04
-2026-10-14,terminal-chicago-celery-cartons-film-bags-30s-n,Celery,Chicago,2026-10-12,34.5,1,2026-10-19,30.49,34.54,39.01
-2026-10-14,terminal-chicago-celery-cartons-film-bags-30s-n,Celery,Chicago,2026-10-12,34.5,2,2026-10-26,28.5,34.91,42.06
-2026-10-14,terminal-chicago-celery-cartons-film-bags-30s-n,Celery,Chicago,2026-10-12,34.5,3,2026-11-02,27.62,36.14,46.91
-2026-10-14,terminal-chicago-celery-cartons-film-bags-30s-n,Celery,Chicago,2026-10-12,34.5,4,2026-11-09,27.33,37.44,52.38
-2026-10-14,terminal-chicago-cucumbers-cartons-24s-y,Cucumbers,Chicago,2026-10-12,32.0,1,2026-10-19,25.8,32.0,39.46
-2026-10-14,terminal-chicago-cucumbers-cartons-24s-y,Cucumbers,Chicago,2026-10-12,32.0,2,2026-10-26,23.34,32.0,44.76
-2026-10-14,terminal-chicago-cucumbers-cartons-24s-y,Cucumbers,Chicago,2026-10-12,32.0,3,2026-11-02,22.91,32.95,47.25
-2026-10-14,terminal-chicago-cucumbers-cartons-24s-y,Cucumbers,Chicago,2026-10-12,32.0,4,2026-11-09,21.68,31.6,46.22
-2026-10-14,terminal-chicago-cucumbers-persian-20-lb-cartons-small-medium-n,Cucumbers,Chicago,2026-10-12,33.0,1,2026-10-19,26.61,33.0,40.69
-2026-10-14,terminal-chicago-cucumbers-persian-20-lb-cartons-small-medium-n,Cucumbers,Chicago,2026-10-12,33.0,2,2026-10-26,24.07,33.0,46.16
-2026-10-14,terminal-chicago-cucumbers-persian-20-lb-cartons-small-medium-n,Cucumbers,Chicago,2026-10-12,33.0,3,2026-11-02,20.75,29.85,42.8
-2026-10-14,terminal-chicago-cucumbers-persian-20-lb-cartons-small-medium-n,Cucumbers,Chicago,2026-10-12,33.0,4,2026-11-09,19.4,28.27,41.35
-2026-10-14,terminal-chicago-lemons-7-10-bushel-cartons-115s-n,Lemons,Chicago,2026-10-12,38.75,1,2026-10-19,35.65,38.75,42.06
-2026-10-14,terminal-chicago-lemons-7-10-bushel-cartons-115s-n,Lemons,Chicago,2026-10-12,38.75,2,2026-10-26,33.59,38.75,43.64
-2026-10-14,terminal-chicago-lemons-7-10-bushel-cartons-115s-n,Lemons,Chicago,2026-10-12,38.75,3,2026-11-02,33.45,40.19,46.68
-2026-10-14,terminal-chicago-lemons-7-10-bushel-cartons-115s-n,Lemons,Chicago,2026-10-12,38.75,4,2026-11-09,32.27,40.2,47.45
-2026-10-14,terminal-chicago-lemons-7-10-bushel-cartons-95s-n,Lemons,Chicago,2026-10-12,32.12,1,2026-10-19,29.56,32.12,34.87
-2026-10-14,terminal-chicago-lemons-7-10-bushel-cartons-95s-n,Lemons,Chicago,2026-10-12,32.12,2,2026-10-26,27.85,32.12,36.18
-2026-10-14,terminal-chicago-lemons-7-10-bushel-cartons-95s-n,Lemons,Chicago,2026-10-12,32.12,3,2026-11-02,29.58,35.54,41.28
-2026-10-14,terminal-chicago-lemons-7-10-bushel-cartons-95s-n,Lemons,Chicago,2026-10-12,32.12,4,2026-11-09,28.95,36.06,42.56
-2026-10-14,terminal-chicago-lettuce-iceberg-cartons-12s-film-wrapped-y,"Lettuce, Iceberg",Chicago,2026-10-12,28.0,1,2026-10-19,24.86,29.46,35.63
-2026-10-14,terminal-chicago-lettuce-iceberg-cartons-12s-film-wrapped-y,"Lettuce, Iceberg",Chicago,2026-10-12,28.0,2,2026-10-26,23.14,30.22,43.25
-2026-10-14,terminal-chicago-lettuce-iceberg-cartons-12s-film-wrapped-y,"Lettuce, Iceberg",Chicago,2026-10-12,28.0,3,2026-11-02,22.06,30.92,49.41
-2026-10-14,terminal-chicago-lettuce-iceberg-cartons-12s-film-wrapped-y,"Lettuce, Iceberg",Chicago,2026-10-12,28.0,4,2026-11-09,20.99,31.28,53.85
-2026-10-14,terminal-chicago-lettuce-iceberg-cartons-24s-film-wrapped-n,"Lettuce, Iceberg",Chicago,2026-10-12,69.5,1,2026-10-19,56.49,66.96,80.98
-2026-10-14,terminal-chicago-lettuce-iceberg-cartons-24s-film-wrapped-n,"Lettuce, Iceberg",Chicago,2026-10-12,69.5,2,2026-10-26,47.23,61.68,88.27
-2026-10-14,terminal-chicago-lettuce-iceberg-cartons-24s-film-wrapped-n,"Lettuce, Iceberg",Chicago,2026-10-12,69.5,3,2026-11-02,41.29,57.88,92.5
-2026-10-14,terminal-chicago-lettuce-iceberg-cartons-24s-film-wrapped-n,"Lettuce, Iceberg",Chicago,2026-10-12,69.5,4,2026-11-09,37.27,55.52,95.61
-2026-10-14,terminal-chicago-lettuce-romaine-cartons-24s-n,"Lettuce, Romaine",Chicago,2026-10-12,32.0,1,2026-10-19,34.45,39.43,45.46
-2026-10-14,terminal-chicago-lettuce-romaine-cartons-24s-n,"Lettuce, Romaine",Chicago,2026-10-12,32.0,2,2026-10-26,36.46,44.31,57.05
-2026-10-14,terminal-chicago-lettuce-romaine-cartons-24s-n,"Lettuce, Romaine",Chicago,2026-10-12,32.0,3,2026-11-02,36.58,47.21,67.64
-2026-10-14,terminal-chicago-lettuce-romaine-cartons-24s-n,"Lettuce, Romaine",Chicago,2026-10-12,32.0,4,2026-11-09,36.21,49.14,75.53
+2026-10-15,terminal-chicago-avocados-hass-cartons-2-layer-36s-n,Avocados,Chicago,2026-10-12,35.0,1,2026-10-19,32.76,36.05,39.6
+2026-10-15,terminal-chicago-avocados-hass-cartons-2-layer-36s-n,Avocados,Chicago,2026-10-12,35.0,2,2026-10-26,31.66,37.31,43.62
+2026-10-15,terminal-chicago-avocados-hass-cartons-2-layer-36s-n,Avocados,Chicago,2026-10-12,35.0,3,2026-11-02,28.16,35.0,43.91
+2026-10-15,terminal-chicago-avocados-hass-cartons-2-layer-36s-n,Avocados,Chicago,2026-10-12,35.0,4,2026-11-09,26.99,35.0,45.3
+2026-10-15,terminal-chicago-avocados-hass-cartons-2-layer-60s-n,Avocados,Chicago,2026-10-12,30.5,1,2026-10-19,28.16,30.99,34.04
+2026-10-15,terminal-chicago-avocados-hass-cartons-2-layer-60s-n,Avocados,Chicago,2026-10-12,30.5,2,2026-10-26,26.49,31.21,36.49
+2026-10-15,terminal-chicago-avocados-hass-cartons-2-layer-60s-n,Avocados,Chicago,2026-10-12,30.5,3,2026-11-02,24.54,30.5,38.26
+2026-10-15,terminal-chicago-avocados-hass-cartons-2-layer-60s-n,Avocados,Chicago,2026-10-12,30.5,4,2026-11-09,23.52,30.5,39.47
+2026-10-15,terminal-chicago-bananas-40-lb-cartons-n,Bananas,Chicago,2026-10-12,21.0,1,2026-10-19,20.67,21.0,21.36
+2026-10-15,terminal-chicago-bananas-40-lb-cartons-n,Bananas,Chicago,2026-10-12,21.0,2,2026-10-26,20.37,21.0,21.78
+2026-10-15,terminal-chicago-bananas-40-lb-cartons-n,Bananas,Chicago,2026-10-12,21.0,3,2026-11-02,20.02,21.0,22.11
+2026-10-15,terminal-chicago-bananas-40-lb-cartons-n,Bananas,Chicago,2026-10-12,21.0,4,2026-11-09,19.73,21.0,22.38
+2026-10-15,terminal-chicago-bananas-40-lb-cartons-y,Bananas,Chicago,2026-10-12,28.5,1,2026-10-19,28.05,28.5,28.98
+2026-10-15,terminal-chicago-bananas-40-lb-cartons-y,Bananas,Chicago,2026-10-12,28.5,2,2026-10-26,27.65,28.5,29.56
+2026-10-15,terminal-chicago-bananas-40-lb-cartons-y,Bananas,Chicago,2026-10-12,28.5,3,2026-11-02,27.17,28.5,30.01
+2026-10-15,terminal-chicago-bananas-40-lb-cartons-y,Bananas,Chicago,2026-10-12,28.5,4,2026-11-09,26.78,28.5,30.37
+2026-10-15,terminal-chicago-blueberries-flats-12-1-pint-cups-with-lids-large-n,Blueberries,Chicago,2026-10-12,46.5,1,2026-10-19,37.5,46.5,58.14
+2026-10-15,terminal-chicago-blueberries-flats-12-1-pint-cups-with-lids-large-n,Blueberries,Chicago,2026-10-12,46.5,2,2026-10-26,31.87,43.39,60.41
+2026-10-15,terminal-chicago-blueberries-flats-12-1-pint-cups-with-lids-large-n,Blueberries,Chicago,2026-10-12,46.5,3,2026-11-02,27.67,40.81,59.99
+2026-10-15,terminal-chicago-blueberries-flats-12-1-pint-cups-with-lids-large-n,Blueberries,Chicago,2026-10-12,46.5,4,2026-11-09,25.26,39.31,59.95
+2026-10-15,terminal-chicago-broccoli-baby-hybrid-type-cartons-bunched-18s-y,Broccoli,Chicago,2026-10-12,44.0,1,2026-10-19,38.59,44.0,51.36
+2026-10-15,terminal-chicago-broccoli-baby-hybrid-type-cartons-bunched-18s-y,Broccoli,Chicago,2026-10-12,44.0,2,2026-10-26,35.76,44.0,57.54
+2026-10-15,terminal-chicago-broccoli-baby-hybrid-type-cartons-bunched-18s-y,Broccoli,Chicago,2026-10-12,44.0,3,2026-11-02,26.71,34.9,50.44
+2026-10-15,terminal-chicago-broccoli-baby-hybrid-type-cartons-bunched-18s-y,Broccoli,Chicago,2026-10-12,44.0,4,2026-11-09,25.29,34.49,51.74
+2026-10-15,terminal-chicago-broccoli-cartons-bunched-14s-y,Broccoli,Chicago,2026-10-12,46.0,1,2026-10-19,40.35,46.0,53.69
+2026-10-15,terminal-chicago-broccoli-cartons-bunched-14s-y,Broccoli,Chicago,2026-10-12,46.0,2,2026-10-26,37.39,46.0,60.16
+2026-10-15,terminal-chicago-broccoli-cartons-bunched-14s-y,Broccoli,Chicago,2026-10-12,46.0,3,2026-11-02,28.28,36.96,53.41
+2026-10-15,terminal-chicago-broccoli-cartons-bunched-14s-y,Broccoli,Chicago,2026-10-12,46.0,4,2026-11-09,27.51,37.51,56.27
+2026-10-15,terminal-chicago-carrots-50-lb-sacks-loose-jumbo-n,Carrots,Chicago,2026-10-12,26.5,1,2026-10-19,25.24,26.5,27.85
+2026-10-15,terminal-chicago-carrots-50-lb-sacks-loose-jumbo-n,Carrots,Chicago,2026-10-12,26.5,2,2026-10-26,24.48,26.5,28.91
+2026-10-15,terminal-chicago-carrots-50-lb-sacks-loose-jumbo-n,Carrots,Chicago,2026-10-12,26.5,3,2026-11-02,23.76,26.5,29.8
+2026-10-15,terminal-chicago-carrots-50-lb-sacks-loose-jumbo-n,Carrots,Chicago,2026-10-12,26.5,4,2026-11-09,23.27,26.5,30.49
+2026-10-15,terminal-chicago-carrots-sacks-10-5-lb-film-bags-medium-large-n,Carrots,Chicago,2026-10-12,33.0,1,2026-10-19,31.43,33.0,34.68
+2026-10-15,terminal-chicago-carrots-sacks-10-5-lb-film-bags-medium-large-n,Carrots,Chicago,2026-10-12,33.0,2,2026-10-26,30.48,33.0,36.01
+2026-10-15,terminal-chicago-carrots-sacks-10-5-lb-film-bags-medium-large-n,Carrots,Chicago,2026-10-12,33.0,3,2026-11-02,29.59,33.0,37.1
+2026-10-15,terminal-chicago-carrots-sacks-10-5-lb-film-bags-medium-large-n,Carrots,Chicago,2026-10-12,33.0,4,2026-11-09,28.97,33.0,37.97
+2026-10-15,terminal-chicago-celery-cartons-2-1-2-dozen-n,Celery,Chicago,2026-10-12,30.5,1,2026-10-19,27.44,31.09,35.11
+2026-10-15,terminal-chicago-celery-cartons-2-1-2-dozen-n,Celery,Chicago,2026-10-12,30.5,2,2026-10-26,26.07,31.95,38.51
+2026-10-15,terminal-chicago-celery-cartons-2-1-2-dozen-n,Celery,Chicago,2026-10-12,30.5,3,2026-11-02,25.43,33.27,43.2
+2026-10-15,terminal-chicago-celery-cartons-2-1-2-dozen-n,Celery,Chicago,2026-10-12,30.5,4,2026-11-09,25.34,34.72,48.61
+2026-10-15,terminal-chicago-celery-cartons-film-bags-30s-n,Celery,Chicago,2026-10-12,34.5,1,2026-10-19,30.72,34.81,39.31
+2026-10-15,terminal-chicago-celery-cartons-film-bags-30s-n,Celery,Chicago,2026-10-12,34.5,2,2026-10-26,28.8,35.29,42.54
+2026-10-15,terminal-chicago-celery-cartons-film-bags-30s-n,Celery,Chicago,2026-10-12,34.5,3,2026-11-02,27.94,36.56,47.46
+2026-10-15,terminal-chicago-celery-cartons-film-bags-30s-n,Celery,Chicago,2026-10-12,34.5,4,2026-11-09,27.64,37.86,53.0
+2026-10-15,terminal-chicago-cucumbers-cartons-24s-y,Cucumbers,Chicago,2026-10-12,32.0,1,2026-10-19,25.8,32.0,39.43
+2026-10-15,terminal-chicago-cucumbers-cartons-24s-y,Cucumbers,Chicago,2026-10-12,32.0,2,2026-10-26,23.33,32.0,44.78
+2026-10-15,terminal-chicago-cucumbers-cartons-24s-y,Cucumbers,Chicago,2026-10-12,32.0,3,2026-11-02,21.26,30.56,43.83
+2026-10-15,terminal-chicago-cucumbers-cartons-24s-y,Cucumbers,Chicago,2026-10-12,32.0,4,2026-11-09,20.26,29.53,43.27
+2026-10-15,terminal-chicago-cucumbers-persian-20-lb-cartons-small-medium-n,Cucumbers,Chicago,2026-10-12,33.0,1,2026-10-19,26.6,33.0,40.66
+2026-10-15,terminal-chicago-cucumbers-persian-20-lb-cartons-small-medium-n,Cucumbers,Chicago,2026-10-12,33.0,2,2026-10-26,24.06,33.0,46.18
+2026-10-15,terminal-chicago-cucumbers-persian-20-lb-cartons-small-medium-n,Cucumbers,Chicago,2026-10-12,33.0,3,2026-11-02,19.26,27.68,39.7
+2026-10-15,terminal-chicago-cucumbers-persian-20-lb-cartons-small-medium-n,Cucumbers,Chicago,2026-10-12,33.0,4,2026-11-09,18.12,26.41,38.7
+2026-10-15,terminal-chicago-lemons-7-10-bushel-cartons-115s-n,Lemons,Chicago,2026-10-12,38.75,1,2026-10-19,35.65,38.75,42.06
+2026-10-15,terminal-chicago-lemons-7-10-bushel-cartons-115s-n,Lemons,Chicago,2026-10-12,38.75,2,2026-10-26,33.59,38.75,43.62
+2026-10-15,terminal-chicago-lemons-7-10-bushel-cartons-115s-n,Lemons,Chicago,2026-10-12,38.75,3,2026-11-02,33.45,40.17,46.66
+2026-10-15,terminal-chicago-lemons-7-10-bushel-cartons-115s-n,Lemons,Chicago,2026-10-12,38.75,4,2026-11-09,32.3,40.18,47.44
+2026-10-15,terminal-chicago-lemons-7-10-bushel-cartons-95s-n,Lemons,Chicago,2026-10-12,32.12,1,2026-10-19,29.56,32.12,34.87
+2026-10-15,terminal-chicago-lemons-7-10-bushel-cartons-95s-n,Lemons,Chicago,2026-10-12,32.12,2,2026-10-26,27.85,32.12,36.16
+2026-10-15,terminal-chicago-lemons-7-10-bushel-cartons-95s-n,Lemons,Chicago,2026-10-12,32.12,3,2026-11-02,29.56,35.51,41.25
+2026-10-15,terminal-chicago-lemons-7-10-bushel-cartons-95s-n,Lemons,Chicago,2026-10-12,32.12,4,2026-11-09,28.96,36.03,42.54
+2026-10-15,terminal-chicago-lettuce-iceberg-cartons-12s-film-wrapped-y,"Lettuce, Iceberg",Chicago,2026-10-12,28.0,1,2026-10-19,24.95,29.55,35.73
+2026-10-15,terminal-chicago-lettuce-iceberg-cartons-12s-film-wrapped-y,"Lettuce, Iceberg",Chicago,2026-10-12,28.0,2,2026-10-26,23.24,30.35,43.44
+2026-10-15,terminal-chicago-lettuce-iceberg-cartons-12s-film-wrapped-y,"Lettuce, Iceberg",Chicago,2026-10-12,28.0,3,2026-11-02,22.13,31.03,49.57
+2026-10-15,terminal-chicago-lettuce-iceberg-cartons-12s-film-wrapped-y,"Lettuce, Iceberg",Chicago,2026-10-12,28.0,4,2026-11-09,21.08,31.38,54.03
+2026-10-15,terminal-chicago-lettuce-iceberg-cartons-24s-film-wrapped-n,"Lettuce, Iceberg",Chicago,2026-10-12,69.5,1,2026-10-19,56.7,67.16,81.2
+2026-10-15,terminal-chicago-lettuce-iceberg-cartons-24s-film-wrapped-n,"Lettuce, Iceberg",Chicago,2026-10-12,69.5,2,2026-10-26,47.42,61.94,88.65
+2026-10-15,terminal-chicago-lettuce-iceberg-cartons-24s-film-wrapped-n,"Lettuce, Iceberg",Chicago,2026-10-12,69.5,3,2026-11-02,41.45,58.11,92.82
+2026-10-15,terminal-chicago-lettuce-iceberg-cartons-24s-film-wrapped-n,"Lettuce, Iceberg",Chicago,2026-10-12,69.5,4,2026-11-09,37.45,55.75,95.98
+2026-10-15,terminal-chicago-lettuce-romaine-cartons-24s-n,"Lettuce, Romaine",Chicago,2026-10-12,33.0,1,2026-10-19,36.11,41.32,47.42
+2026-10-15,terminal-chicago-lettuce-romaine-cartons-24s-n,"Lettuce, Romaine",Chicago,2026-10-12,33.0,2,2026-10-26,38.25,46.63,59.02
+2026-10-15,terminal-chicago-lettuce-romaine-cartons-24s-n,"Lettuce, Romaine",Chicago,2026-10-12,33.0,3,2026-11-02,39.05,50.45,70.12
+2026-10-15,terminal-chicago-lettuce-romaine-cartons-24s-n,"Lettuce, Romaine",Chicago,2026-10-12,33.0,4,2026-11-09,38.39,52.2,76.91
 2026-10-14,terminal-chicago-lettuce-romaine-hearts-cartons-12-3-count-packages-n,"Lettuce, Romaine",Chicago,2026-10-12,29.5,1,2026-10-19,32.41,37.09,42.77
 2026-10-14,terminal-chicago-lettuce-romaine-hearts-cartons-12-3-count-packages-n,"Lettuce, Romaine",Chicago,2026-10-12,29.5,2,2026-10-26,34.77,42.26,54.41
 2026-10-14,terminal-chicago-lettuce-romaine-hearts-cartons-12-3-count-packages-n,"Lettuce, Romaine",Chicago,2026-10-12,29.5,3,2026-11-02,35.25,45.49,65.19
 2026-10-14,terminal-chicago-lettuce-romaine-hearts-cartons-12-3-count-packages-n,"Lettuce, Romaine",Chicago,2026-10-12,29.5,4,2026-11-09,35.24,47.82,73.51
-2026-10-14,terminal-chicago-limes-seedless-type-40-lb-cartons-175s-n,Limes,Chicago,2026-10-12,38.0,1,2026-10-19,30.15,34.14,39.44
-2026-10-14,terminal-chicago-limes-seedless-type-40-lb-cartons-175s-n,Limes,Chicago,2026-10-12,38.0,2,2026-10-26,25.53,31.6,40.51
-2026-10-14,terminal-chicago-limes-seedless-type-40-lb-cartons-175s-n,Limes,Chicago,2026-10-12,38.0,3,2026-11-02,23.24,30.34,41.39
-2026-10-14,terminal-chicago-limes-seedless-type-40-lb-cartons-175s-n,Limes,Chicago,2026-10-12,38.0,4,2026-11-09,22.09,30.16,43.08
-2026-10-14,terminal-chicago-limes-seedless-type-40-lb-cartons-200s-n,Limes,Chicago,2026-10-12,38.0,1,2026-10-19,30.11,34.09,39.38
-2026-10-14,terminal-chicago-limes-seedless-type-40-lb-cartons-200s-n,Limes,Chicago,2026-10-12,38.0,2,2026-10-26,25.51,31.58,40.48
-2026-10-14,terminal-chicago-limes-seedless-type-40-lb-cartons-200s-n,Limes,Chicago,2026-10-12,38.0,3,2026-11-02,23.67,30.9,42.16
-2026-10-14,terminal-chicago-limes-seedless-type-40-lb-cartons-200s-n,Limes,Chicago,2026-10-12,38.0,4,2026-11-09,22.88,31.25,44.63
-2026-10-14,terminal-chicago-onions-dry-red-25-lb-sacks-jumbo-globe-type-n,"Onions, Dry",Chicago,2026-10-12,18.5,1,2026-10-19,17.54,18.5,19.59
-2026-10-14,terminal-chicago-onions-dry-red-25-lb-sacks-jumbo-globe-type-n,"Onions, Dry",Chicago,2026-10-12,18.5,2,2026-10-26,16.74,18.5,20.56
-2026-10-14,terminal-chicago-onions-dry-red-25-lb-sacks-jumbo-globe-type-n,"Onions, Dry",Chicago,2026-10-12,18.5,3,2026-11-02,16.26,18.5,21.58
-2026-10-14,terminal-chicago-onions-dry-red-25-lb-sacks-jumbo-globe-type-n,"Onions, Dry",Chicago,2026-10-12,18.5,4,2026-11-09,15.86,18.5,22.31
-2026-10-14,terminal-chicago-onions-dry-white-50-lb-sacks-jumbo-n,"Onions, Dry",Chicago,2026-10-12,45.0,1,2026-10-19,42.66,45.0,47.65
-2026-10-14,terminal-chicago-onions-dry-white-50-lb-sacks-jumbo-n,"Onions, Dry",Chicago,2026-10-12,45.0,2,2026-10-26,40.73,45.0,50.01
-2026-10-14,terminal-chicago-onions-dry-white-50-lb-sacks-jumbo-n,"Onions, Dry",Chicago,2026-10-12,45.0,3,2026-11-02,39.55,45.0,52.5
-2026-10-14,terminal-chicago-onions-dry-white-50-lb-sacks-jumbo-n,"Onions, Dry",Chicago,2026-10-12,45.0,4,2026-11-09,38.57,45.0,54.26
-2026-10-14,terminal-chicago-peppers-bell-type-1-1-9-bushel-cartons-jumbo-green-n,"Peppers, Bell Type",Chicago,2026-10-12,19.5,1,2026-10-19,17.93,22.24,27.64
-2026-10-14,terminal-chicago-peppers-bell-type-1-1-9-bushel-cartons-jumbo-green-n,"Peppers, Bell Type",Chicago,2026-10-12,19.5,2,2026-10-26,16.99,24.25,33.06
-2026-10-14,terminal-chicago-peppers-bell-type-1-1-9-bushel-cartons-jumbo-green-n,"Peppers, Bell Type",Chicago,2026-10-12,19.5,3,2026-11-02,16.16,25.26,37.45
-2026-10-14,terminal-chicago-peppers-bell-type-1-1-9-bushel-cartons-jumbo-green-n,"Peppers, Bell Type",Chicago,2026-10-12,19.5,4,2026-11-09,15.27,25.5,41.37
-2026-10-14,terminal-chicago-peppers-bell-type-5-kg-11-lb-cartons-extra-large-orange-n,"Peppers, Bell Type",Chicago,2026-10-12,10.5,1,2026-10-19,9.87,12.24,15.21
-2026-10-14,terminal-chicago-peppers-bell-type-5-kg-11-lb-cartons-extra-large-orange-n,"Peppers, Bell Type",Chicago,2026-10-12,10.5,2,2026-10-26,9.8,13.99,19.08
-2026-10-14,terminal-chicago-peppers-bell-type-5-kg-11-lb-cartons-extra-large-orange-n,"Peppers, Bell Type",Chicago,2026-10-12,10.5,3,2026-11-02,9.73,15.21,22.55
-2026-10-14,terminal-chicago-peppers-bell-type-5-kg-11-lb-cartons-extra-large-orange-n,"Peppers, Bell Type",Chicago,2026-10-12,10.5,4,2026-11-09,9.73,16.25,26.37
-2026-10-14,terminal-chicago-potatoes-round-red-50-lb-cartons-size-a-n,Potatoes,Chicago,2026-10-12,38.25,1,2026-10-19,35.68,38.25,40.8
-2026-10-14,terminal-chicago-potatoes-round-red-50-lb-cartons-size-a-n,Potatoes,Chicago,2026-10-12,38.25,2,2026-10-26,34.09,38.25,42.9
-2026-10-14,terminal-chicago-potatoes-round-red-50-lb-cartons-size-a-n,Potatoes,Chicago,2026-10-12,38.25,3,2026-11-02,33.37,38.25,44.22
-2026-10-14,terminal-chicago-potatoes-round-red-50-lb-cartons-size-a-n,Potatoes,Chicago,2026-10-12,38.25,4,2026-11-09,32.28,38.25,44.95
-2026-10-14,terminal-chicago-potatoes-yellow-type-50-lb-cartons-size-a-y,Potatoes,Chicago,2026-10-12,58.0,1,2026-10-19,54.1,58.0,61.86
-2026-10-14,terminal-chicago-potatoes-yellow-type-50-lb-cartons-size-a-y,Potatoes,Chicago,2026-10-12,58.0,2,2026-10-26,51.68,58.0,65.06
-2026-10-14,terminal-chicago-potatoes-yellow-type-50-lb-cartons-size-a-y,Potatoes,Chicago,2026-10-12,58.0,3,2026-11-02,50.59,58.0,67.05
-2026-10-14,terminal-chicago-potatoes-yellow-type-50-lb-cartons-size-a-y,Potatoes,Chicago,2026-10-12,58.0,4,2026-11-09,48.95,58.0,68.16
-2026-10-14,terminal-chicago-strawberries-flats-8-1-lb-containers-with-lids-medium-y,Strawberries,Chicago,2026-10-12,24.0,1,2026-10-19,21.64,28.04,34.65
-2026-10-14,terminal-chicago-strawberries-flats-8-1-lb-containers-with-lids-medium-y,Strawberries,Chicago,2026-10-12,24.0,2,2026-10-26,21.53,32.72,44.5
-2026-10-14,terminal-chicago-strawberries-flats-8-1-lb-containers-with-lids-medium-y,Strawberries,Chicago,2026-10-12,24.0,3,2026-11-02,21.2,35.34,51.59
-2026-10-14,terminal-chicago-strawberries-flats-8-1-lb-containers-with-lids-medium-y,Strawberries,Chicago,2026-10-12,24.0,4,2026-11-09,22.28,38.64,59.25
-2026-10-14,terminal-chicago-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",Chicago,2026-10-12,27.0,1,2026-10-19,24.73,28.88,33.77
-2026-10-14,terminal-chicago-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",Chicago,2026-10-12,27.0,2,2026-10-26,21.92,28.92,38.88
-2026-10-14,terminal-chicago-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",Chicago,2026-10-12,27.0,3,2026-11-02,19.09,27.0,38.8
-2026-10-14,terminal-chicago-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",Chicago,2026-10-12,27.0,4,2026-11-09,17.38,27.0,39.35
-2026-10-14,terminal-chicago-tomatoes-plum-type-roma-25-lb-cartons-loose-xxlge-light-red-red-n,"Tomatoes, Plum Type",Chicago,2026-10-12,27.5,1,2026-10-19,25.11,29.32,34.29
-2026-10-14,terminal-chicago-tomatoes-plum-type-roma-25-lb-cartons-loose-xxlge-light-red-red-n,"Tomatoes, Plum Type",Chicago,2026-10-12,27.5,2,2026-10-26,22.26,29.38,39.5
-2026-10-14,terminal-chicago-tomatoes-plum-type-roma-25-lb-cartons-loose-xxlge-light-red-red-n,"Tomatoes, Plum Type",Chicago,2026-10-12,27.5,3,2026-11-02,19.45,27.5,39.52
-2026-10-14,terminal-chicago-tomatoes-plum-type-roma-25-lb-cartons-loose-xxlge-light-red-red-n,"Tomatoes, Plum Type",Chicago,2026-10-12,27.5,4,2026-11-09,17.7,27.5,40.08
-2026-10-14,terminal-chicago-tomatoes-vine-ripes-5-kg-11-lb-flats-medium-large-light-red-red-on-the-vine-n,Tomatoes,Chicago,2026-10-12,18.0,1,2026-10-19,16.62,20.8,26.33
-2026-10-14,terminal-chicago-tomatoes-vine-ripes-5-kg-11-lb-flats-medium-large-light-red-red-on-the-vine-n,Tomatoes,Chicago,2026-10-12,18.0,2,2026-10-26,15.45,22.14,32.02
-2026-10-14,terminal-chicago-tomatoes-vine-ripes-5-kg-11-lb-flats-medium-large-light-red-red-on-the-vine-n,Tomatoes,Chicago,2026-10-12,18.0,3,2026-11-02,14.36,21.8,34.05
-2026-10-14,terminal-chicago-tomatoes-vine-ripes-5-kg-11-lb-flats-medium-large-light-red-red-on-the-vine-n,Tomatoes,Chicago,2026-10-12,18.0,4,2026-11-09,13.31,21.11,34.65
-2026-10-14,terminal-los-angeles-avocados-hass-cartons-2-layer-48s-n,Avocados,Los Angeles,2026-10-12,34.0,1,2026-10-19,30.9,34.0,37.36
-2026-10-14,terminal-los-angeles-avocados-hass-cartons-2-layer-48s-n,Avocados,Los Angeles,2026-10-12,34.0,2,2026-10-26,28.86,34.0,39.74
-2026-10-14,terminal-los-angeles-avocados-hass-cartons-2-layer-48s-n,Avocados,Los Angeles,2026-10-12,34.0,3,2026-11-02,27.36,34.0,42.65
-2026-10-14,terminal-los-angeles-avocados-hass-cartons-2-layer-48s-n,Avocados,Los Angeles,2026-10-12,34.0,4,2026-11-09,26.23,34.0,44.01
-2026-10-14,terminal-los-angeles-avocados-hass-cartons-2-layer-60s-n,Avocados,Los Angeles,2026-10-12,31.0,1,2026-10-19,28.17,31.0,34.06
-2026-10-14,terminal-los-angeles-avocados-hass-cartons-2-layer-60s-n,Avocados,Los Angeles,2026-10-12,31.0,2,2026-10-26,26.31,31.0,36.23
-2026-10-14,terminal-los-angeles-avocados-hass-cartons-2-layer-60s-n,Avocados,Los Angeles,2026-10-12,31.0,3,2026-11-02,24.94,31.0,38.89
-2026-10-14,terminal-los-angeles-avocados-hass-cartons-2-layer-60s-n,Avocados,Los Angeles,2026-10-12,31.0,4,2026-11-09,23.91,31.0,40.12
-2026-10-14,terminal-los-angeles-bananas-baby-15-lb-cartons-n,Bananas,Los Angeles,2026-10-12,15.0,1,2026-10-19,14.76,15.0,15.25
-2026-10-14,terminal-los-angeles-bananas-baby-15-lb-cartons-n,Bananas,Los Angeles,2026-10-12,15.0,2,2026-10-26,14.55,15.0,15.56
-2026-10-14,terminal-los-angeles-bananas-baby-15-lb-cartons-n,Bananas,Los Angeles,2026-10-12,15.0,3,2026-11-02,14.3,15.0,15.79
-2026-10-14,terminal-los-angeles-bananas-baby-15-lb-cartons-n,Bananas,Los Angeles,2026-10-12,15.0,4,2026-11-09,14.09,15.0,15.98
-2026-10-14,terminal-los-angeles-broccoli-cartons-bunched-14s-n,Broccoli,Los Angeles,2026-10-12,34.5,1,2026-10-19,26.14,29.79,34.76
-2026-10-14,terminal-los-angeles-broccoli-cartons-bunched-14s-n,Broccoli,Los Angeles,2026-10-12,34.5,2,2026-10-26,22.29,27.42,35.85
-2026-10-14,terminal-los-angeles-broccoli-cartons-bunched-14s-n,Broccoli,Los Angeles,2026-10-12,34.5,3,2026-11-02,20.47,26.75,38.67
-2026-10-14,terminal-los-angeles-broccoli-cartons-bunched-14s-n,Broccoli,Los Angeles,2026-10-12,34.5,4,2026-11-09,19.4,26.45,39.68
-2026-10-14,terminal-los-angeles-broccoli-crown-cut-20-lb-cartons-loose-n,Broccoli,Los Angeles,2026-10-12,35.5,1,2026-10-19,27.31,31.13,36.31
-2026-10-14,terminal-los-angeles-broccoli-crown-cut-20-lb-cartons-loose-n,Broccoli,Los Angeles,2026-10-12,35.5,2,2026-10-26,23.77,29.24,38.24
-2026-10-14,terminal-los-angeles-broccoli-crown-cut-20-lb-cartons-loose-n,Broccoli,Los Angeles,2026-10-12,35.5,3,2026-11-02,22.13,28.92,41.82
-2026-10-14,terminal-los-angeles-broccoli-crown-cut-20-lb-cartons-loose-n,Broccoli,Los Angeles,2026-10-12,35.5,4,2026-11-09,21.33,29.09,43.63
-2026-10-14,terminal-los-angeles-carrots-25-lb-sacks-loose-jumbo-n,Carrots,Los Angeles,2026-10-12,12.25,1,2026-10-19,11.67,12.25,12.87
-2026-10-14,terminal-los-angeles-carrots-25-lb-sacks-loose-jumbo-n,Carrots,Los Angeles,2026-10-12,12.25,2,2026-10-26,11.31,12.25,13.36
-2026-10-14,terminal-los-angeles-carrots-25-lb-sacks-loose-jumbo-n,Carrots,Los Angeles,2026-10-12,12.25,3,2026-11-02,10.98,12.25,13.77
-2026-10-14,terminal-los-angeles-carrots-25-lb-sacks-loose-jumbo-n,Carrots,Los Angeles,2026-10-12,12.25,4,2026-11-09,10.76,12.25,14.09
-2026-10-14,terminal-los-angeles-carrots-sacks-10-5-lb-film-bags-n,Carrots,Los Angeles,2026-10-12,23.75,1,2026-10-19,22.62,23.75,24.96
-2026-10-14,terminal-los-angeles-carrots-sacks-10-5-lb-film-bags-n,Carrots,Los Angeles,2026-10-12,23.75,2,2026-10-26,21.94,23.75,25.91
-2026-10-14,terminal-los-angeles-carrots-sacks-10-5-lb-film-bags-n,Carrots,Los Angeles,2026-10-12,23.75,3,2026-11-02,21.3,23.75,26.7
-2026-10-14,terminal-los-angeles-carrots-sacks-10-5-lb-film-bags-n,Carrots,Los Angeles,2026-10-12,23.75,4,2026-11-09,20.85,23.75,27.32
-2026-10-14,terminal-los-angeles-celery-cartons-2-1-2-dozen-n,Celery,Los Angeles,2026-10-12,18.5,1,2026-10-19,16.82,19.05,21.52
-2026-10-14,terminal-los-angeles-celery-cartons-2-1-2-dozen-n,Celery,Los Angeles,2026-10-12,18.5,2,2026-10-26,16.32,20.0,24.09
-2026-10-14,terminal-los-angeles-celery-cartons-2-1-2-dozen-n,Celery,Los Angeles,2026-10-12,18.5,3,2026-11-02,16.24,21.26,27.59
-2026-10-14,terminal-los-angeles-celery-cartons-2-1-2-dozen-n,Celery,Los Angeles,2026-10-12,18.5,4,2026-11-09,16.15,22.13,30.97
-2026-10-14,terminal-los-angeles-celery-cartons-2-dozen-n,Celery,Los Angeles,2026-10-12,19.5,1,2026-10-19,17.65,19.99,22.58
-2026-10-14,terminal-los-angeles-celery-cartons-2-dozen-n,Celery,Los Angeles,2026-10-12,19.5,2,2026-10-26,17.04,20.87,25.15
-2026-10-14,terminal-los-angeles-celery-cartons-2-dozen-n,Celery,Los Angeles,2026-10-12,19.5,3,2026-11-02,16.87,22.07,28.64
-2026-10-14,terminal-los-angeles-celery-cartons-2-dozen-n,Celery,Los Angeles,2026-10-12,19.5,4,2026-11-09,16.69,22.87,32.0
-2026-10-14,terminal-los-angeles-cucumbers-1-1-9-bushel-cartons-large-n,Cucumbers,Los Angeles,2026-10-12,26.0,1,2026-10-19,20.96,26.0,32.06
-2026-10-14,terminal-los-angeles-cucumbers-1-1-9-bushel-cartons-large-n,Cucumbers,Los Angeles,2026-10-12,26.0,2,2026-10-26,18.86,25.86,36.17
-2026-10-14,terminal-los-angeles-cucumbers-1-1-9-bushel-cartons-large-n,Cucumbers,Los Angeles,2026-10-12,26.0,3,2026-11-02,17.65,25.38,36.4
-2026-10-14,terminal-los-angeles-cucumbers-1-1-9-bushel-cartons-large-n,Cucumbers,Los Angeles,2026-10-12,26.0,4,2026-11-09,17.16,25.02,36.59
-2026-10-14,terminal-los-angeles-cucumbers-persian-22-lb-cartons-small-n,Cucumbers,Los Angeles,2026-10-12,20.5,1,2026-10-19,16.53,20.5,25.28
-2026-10-14,terminal-los-angeles-cucumbers-persian-22-lb-cartons-small-n,Cucumbers,Los Angeles,2026-10-12,20.5,2,2026-10-26,15.3,20.98,29.34
-2026-10-14,terminal-los-angeles-cucumbers-persian-22-lb-cartons-small-n,Cucumbers,Los Angeles,2026-10-12,20.5,3,2026-11-02,14.58,20.97,30.08
-2026-10-14,terminal-los-angeles-cucumbers-persian-22-lb-cartons-small-n,Cucumbers,Los Angeles,2026-10-12,20.5,4,2026-11-09,14.19,20.68,30.24
-2026-10-14,terminal-los-angeles-lemons-7-10-bushel-cartons-115s-n,Lemons,Los Angeles,2026-10-12,21.5,1,2026-10-19,19.78,21.5,23.33
-2026-10-14,terminal-los-angeles-lemons-7-10-bushel-cartons-115s-n,Lemons,Los Angeles,2026-10-12,21.5,2,2026-10-26,18.64,21.5,24.21
-2026-10-14,terminal-los-angeles-lemons-7-10-bushel-cartons-115s-n,Lemons,Los Angeles,2026-10-12,21.5,3,2026-11-02,17.9,21.5,24.97
-2026-10-14,terminal-los-angeles-lemons-7-10-bushel-cartons-115s-n,Lemons,Los Angeles,2026-10-12,21.5,4,2026-11-09,17.26,21.5,25.38
-2026-10-14,terminal-los-angeles-lemons-7-10-bushel-cartons-140s-n,Lemons,Los Angeles,2026-10-12,22.5,1,2026-10-19,20.7,22.5,24.42
-2026-10-14,terminal-los-angeles-lemons-7-10-bushel-cartons-140s-n,Lemons,Los Angeles,2026-10-12,22.5,2,2026-10-26,19.5,22.5,25.34
-2026-10-14,terminal-los-angeles-lemons-7-10-bushel-cartons-140s-n,Lemons,Los Angeles,2026-10-12,22.5,3,2026-11-02,18.73,22.5,26.13
-2026-10-14,terminal-los-angeles-lemons-7-10-bushel-cartons-140s-n,Lemons,Los Angeles,2026-10-12,22.5,4,2026-11-09,18.06,22.5,26.56
-2026-10-14,terminal-los-angeles-lettuce-iceberg-cartons-film-lined-24s-n,"Lettuce, Iceberg",Los Angeles,2026-10-12,55.5,1,2026-10-19,45.91,54.41,65.81
-2026-10-14,terminal-los-angeles-lettuce-iceberg-cartons-film-lined-24s-n,"Lettuce, Iceberg",Los Angeles,2026-10-12,55.5,2,2026-10-26,40.58,53.0,75.84
-2026-10-14,terminal-los-angeles-lettuce-iceberg-cartons-film-lined-24s-n,"Lettuce, Iceberg",Los Angeles,2026-10-12,55.5,3,2026-11-02,37.32,52.31,83.59
-2026-10-14,terminal-los-angeles-lettuce-iceberg-cartons-film-lined-24s-n,"Lettuce, Iceberg",Los Angeles,2026-10-12,55.5,4,2026-11-09,34.69,51.67,88.98
-2026-10-14,terminal-los-angeles-lettuce-romaine-cartons-film-lined-24s-n,"Lettuce, Romaine",Los Angeles,2026-10-12,44.5,1,2026-10-19,43.73,50.05,57.71
-2026-10-14,terminal-los-angeles-lettuce-romaine-cartons-film-lined-24s-n,"Lettuce, Romaine",Los Angeles,2026-10-12,44.5,2,2026-10-26,41.77,50.76,65.35
-2026-10-14,terminal-los-angeles-lettuce-romaine-cartons-film-lined-24s-n,"Lettuce, Romaine",Los Angeles,2026-10-12,44.5,3,2026-11-02,38.9,50.2,71.93
-2026-10-14,terminal-los-angeles-lettuce-romaine-cartons-film-lined-24s-n,"Lettuce, Romaine",Los Angeles,2026-10-12,44.5,4,2026-11-09,35.68,48.42,74.43
-2026-10-14,terminal-los-angeles-limes-seedless-type-40-lb-cartons-200s-n,Limes,Los Angeles,2026-10-12,34.0,1,2026-10-19,27.69,31.35,36.21
-2026-10-14,terminal-los-angeles-limes-seedless-type-40-lb-cartons-200s-n,Limes,Los Angeles,2026-10-12,34.0,2,2026-10-26,23.95,29.65,38.01
-2026-10-14,terminal-los-angeles-limes-seedless-type-40-lb-cartons-200s-n,Limes,Los Angeles,2026-10-12,34.0,3,2026-11-02,21.57,28.17,38.43
-2026-10-14,terminal-los-angeles-limes-seedless-type-40-lb-cartons-200s-n,Limes,Los Angeles,2026-10-12,34.0,4,2026-11-09,19.89,27.16,38.79
-2026-10-14,terminal-los-angeles-limes-seedless-type-40-lb-cartons-230s-n,Limes,Los Angeles,2026-10-12,34.5,1,2026-10-19,27.94,31.64,36.55
-2026-10-14,terminal-los-angeles-limes-seedless-type-40-lb-cartons-230s-n,Limes,Los Angeles,2026-10-12,34.5,2,2026-10-26,24.0,29.71,38.08
-2026-10-14,terminal-los-angeles-limes-seedless-type-40-lb-cartons-230s-n,Limes,Los Angeles,2026-10-12,34.5,3,2026-11-02,21.57,28.16,38.42
-2026-10-14,terminal-los-angeles-limes-seedless-type-40-lb-cartons-230s-n,Limes,Los Angeles,2026-10-12,34.5,4,2026-11-09,19.56,26.71,38.15
-2026-10-14,terminal-los-angeles-onions-dry-red-25-lb-sacks-jumbo-globe-type-n,"Onions, Dry",Los Angeles,2026-10-12,12.5,1,2026-10-19,11.85,12.5,13.24
-2026-10-14,terminal-los-angeles-onions-dry-red-25-lb-sacks-jumbo-globe-type-n,"Onions, Dry",Los Angeles,2026-10-12,12.5,2,2026-10-26,11.31,12.5,13.89
-2026-10-14,terminal-los-angeles-onions-dry-red-25-lb-sacks-jumbo-globe-type-n,"Onions, Dry",Los Angeles,2026-10-12,12.5,3,2026-11-02,10.99,12.5,14.58
-2026-10-14,terminal-los-angeles-onions-dry-red-25-lb-sacks-jumbo-globe-type-n,"Onions, Dry",Los Angeles,2026-10-12,12.5,4,2026-11-09,10.71,12.5,15.07
-2026-10-14,terminal-los-angeles-onions-dry-white-50-lb-sacks-medium-n,"Onions, Dry",Los Angeles,2026-10-12,28.0,1,2026-10-19,26.54,28.0,29.65
-2026-10-14,terminal-los-angeles-onions-dry-white-50-lb-sacks-medium-n,"Onions, Dry",Los Angeles,2026-10-12,28.0,2,2026-10-26,25.34,28.0,31.12
-2026-10-14,terminal-los-angeles-onions-dry-white-50-lb-sacks-medium-n,"Onions, Dry",Los Angeles,2026-10-12,28.0,3,2026-11-02,24.61,28.0,32.67
-2026-10-14,terminal-los-angeles-onions-dry-white-50-lb-sacks-medium-n,"Onions, Dry",Los Angeles,2026-10-12,28.0,4,2026-11-09,24.0,28.0,33.76
-2026-10-14,terminal-los-angeles-peppers-bell-type-1-1-9-bushel-cartons-extra-large-green-n,"Peppers, Bell Type",Los Angeles,2026-10-12,19.5,1,2026-10-19,15.72,19.5,24.23
-2026-10-14,terminal-los-angeles-peppers-bell-type-1-1-9-bushel-cartons-extra-large-green-n,"Peppers, Bell Type",Los Angeles,2026-10-12,19.5,2,2026-10-26,13.66,19.5,26.59
-2026-10-14,terminal-los-angeles-peppers-bell-type-1-1-9-bushel-cartons-extra-large-green-n,"Peppers, Bell Type",Los Angeles,2026-10-12,19.5,3,2026-11-02,12.48,19.5,28.91
-2026-10-14,terminal-los-angeles-peppers-bell-type-1-1-9-bushel-cartons-extra-large-green-n,"Peppers, Bell Type",Los Angeles,2026-10-12,19.5,4,2026-11-09,11.68,19.5,31.64
-2026-10-14,terminal-los-angeles-peppers-bell-type-1-1-9-bushel-cartons-large-green-n,"Peppers, Bell Type",Los Angeles,2026-10-12,17.5,1,2026-10-19,14.11,17.5,21.75
-2026-10-14,terminal-los-angeles-peppers-bell-type-1-1-9-bushel-cartons-large-green-n,"Peppers, Bell Type",Los Angeles,2026-10-12,17.5,2,2026-10-26,12.26,17.5,23.86
-2026-10-14,terminal-los-angeles-peppers-bell-type-1-1-9-bushel-cartons-large-green-n,"Peppers, Bell Type",Los Angeles,2026-10-12,17.5,3,2026-11-02,11.2,17.5,25.95
-2026-10-14,terminal-los-angeles-peppers-bell-type-1-1-9-bushel-cartons-large-green-n,"Peppers, Bell Type",Los Angeles,2026-10-12,17.5,4,2026-11-09,10.48,17.5,28.4
-2026-10-14,terminal-los-angeles-potatoes-long-white-50-lb-cartons-size-a-n,Potatoes,Los Angeles,2026-10-12,38.25,1,2026-10-19,35.68,38.25,40.8
-2026-10-14,terminal-los-angeles-potatoes-long-white-50-lb-cartons-size-a-n,Potatoes,Los Angeles,2026-10-12,38.25,2,2026-10-26,34.09,38.25,42.9
-2026-10-14,terminal-los-angeles-potatoes-long-white-50-lb-cartons-size-a-n,Potatoes,Los Angeles,2026-10-12,38.25,3,2026-11-02,33.37,38.25,44.22
-2026-10-14,terminal-los-angeles-potatoes-long-white-50-lb-cartons-size-a-n,Potatoes,Los Angeles,2026-10-12,38.25,4,2026-11-09,32.28,38.25,44.95
-2026-10-14,terminal-los-angeles-potatoes-long-white-50-lb-cartons-size-b-n,Potatoes,Los Angeles,2026-10-12,29.75,1,2026-10-19,27.75,29.75,31.73
-2026-10-14,terminal-los-angeles-potatoes-long-white-50-lb-cartons-size-b-n,Potatoes,Los Angeles,2026-10-12,29.75,2,2026-10-26,26.51,29.75,33.37
-2026-10-14,terminal-los-angeles-potatoes-long-white-50-lb-cartons-size-b-n,Potatoes,Los Angeles,2026-10-12,29.75,3,2026-11-02,25.95,29.75,34.39
-2026-10-14,terminal-los-angeles-potatoes-long-white-50-lb-cartons-size-b-n,Potatoes,Los Angeles,2026-10-12,29.75,4,2026-11-09,25.11,29.75,34.96
-2026-10-14,terminal-los-angeles-strawberries-flats-8-1-lb-containers-with-lids-medium-large-n,Strawberries,Los Angeles,2026-10-12,17.0,1,2026-10-19,15.3,19.83,24.5
-2026-10-14,terminal-los-angeles-strawberries-flats-8-1-lb-containers-with-lids-medium-large-n,Strawberries,Los Angeles,2026-10-12,17.0,2,2026-10-26,14.49,22.01,29.94
-2026-10-14,terminal-los-angeles-strawberries-flats-8-1-lb-containers-with-lids-medium-large-n,Strawberries,Los Angeles,2026-10-12,17.0,3,2026-11-02,14.22,23.71,34.61
-2026-10-14,terminal-los-angeles-strawberries-flats-8-1-lb-containers-with-lids-medium-large-n,Strawberries,Los Angeles,2026-10-12,17.0,4,2026-11-09,14.34,24.87,38.14
-2026-10-14,terminal-los-angeles-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",Los Angeles,2026-10-12,29.0,1,2026-10-19,26.42,30.85,36.08
-2026-10-14,terminal-los-angeles-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",Los Angeles,2026-10-12,29.0,2,2026-10-26,23.55,31.07,41.78
-2026-10-14,terminal-los-angeles-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",Los Angeles,2026-10-12,29.0,3,2026-11-02,21.25,30.05,43.18
-2026-10-14,terminal-los-angeles-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",Los Angeles,2026-10-12,29.0,4,2026-11-09,18.66,29.0,42.27
-2026-10-14,terminal-los-angeles-tomatoes-plum-type-roma-25-lb-cartons-loose-large-light-red-red-n,"Tomatoes, Plum Type",Los Angeles,2026-10-12,29.0,1,2026-10-19,26.5,30.94,36.19
-2026-10-14,terminal-los-angeles-tomatoes-plum-type-roma-25-lb-cartons-loose-large-light-red-red-n,"Tomatoes, Plum Type",Los Angeles,2026-10-12,29.0,2,2026-10-26,23.85,31.47,42.31
-2026-10-14,terminal-los-angeles-tomatoes-plum-type-roma-25-lb-cartons-loose-large-light-red-red-n,"Tomatoes, Plum Type",Los Angeles,2026-10-12,29.0,3,2026-11-02,21.81,30.84,44.31
-2026-10-14,terminal-los-angeles-tomatoes-plum-type-roma-25-lb-cartons-loose-large-light-red-red-n,"Tomatoes, Plum Type",Los Angeles,2026-10-12,29.0,4,2026-11-09,18.66,29.0,42.27
-2026-10-14,terminal-los-angeles-tomatoes-vine-ripe-on-the-vine-5-kg-11-lb-flats-4-5-count-red-n,Tomatoes,Los Angeles,2026-10-12,19.0,1,2026-10-19,15.18,19.0,24.05
-2026-10-14,terminal-los-angeles-tomatoes-vine-ripe-on-the-vine-5-kg-11-lb-flats-4-5-count-red-n,Tomatoes,Los Angeles,2026-10-12,19.0,2,2026-10-26,13.26,19.0,27.48
-2026-10-14,terminal-los-angeles-tomatoes-vine-ripe-on-the-vine-5-kg-11-lb-flats-4-5-count-red-n,Tomatoes,Los Angeles,2026-10-12,19.0,3,2026-11-02,12.52,19.0,29.67
-2026-10-14,terminal-los-angeles-tomatoes-vine-ripe-on-the-vine-5-kg-11-lb-flats-4-5-count-red-n,Tomatoes,Los Angeles,2026-10-12,19.0,4,2026-11-09,14.05,22.29,36.57
-2026-10-14,terminal-los-angeles-tomatoes-vine-ripes-cartons-2-layer-5x5s-light-red-red-n,Tomatoes,Los Angeles,2026-10-12,27.5,1,2026-10-19,21.98,27.5,34.81
-2026-10-14,terminal-los-angeles-tomatoes-vine-ripes-cartons-2-layer-5x5s-light-red-red-n,Tomatoes,Los Angeles,2026-10-12,27.5,2,2026-10-26,19.2,27.5,39.78
-2026-10-14,terminal-los-angeles-tomatoes-vine-ripes-cartons-2-layer-5x5s-light-red-red-n,Tomatoes,Los Angeles,2026-10-12,27.5,3,2026-11-02,18.12,27.5,42.95
-2026-10-14,terminal-los-angeles-tomatoes-vine-ripes-cartons-2-layer-5x5s-light-red-red-n,Tomatoes,Los Angeles,2026-10-12,27.5,4,2026-11-09,19.3,30.6,50.22
-2026-10-14,terminal-new-york-avocados-hass-cartons-2-layer-48s-n,Avocados,New York,2026-10-12,30.0,1,2026-10-19,28.08,30.89,33.94
-2026-10-14,terminal-new-york-avocados-hass-cartons-2-layer-48s-n,Avocados,New York,2026-10-12,30.0,2,2026-10-26,27.09,31.91,37.3
-2026-10-14,terminal-new-york-avocados-hass-cartons-2-layer-48s-n,Avocados,New York,2026-10-12,30.0,3,2026-11-02,26.46,32.88,41.25
-2026-10-14,terminal-new-york-avocados-hass-cartons-2-layer-48s-n,Avocados,New York,2026-10-12,30.0,4,2026-11-09,25.92,33.61,43.5
-2026-10-14,terminal-new-york-avocados-hass-cartons-2-layer-60s-n,Avocados,New York,2026-10-12,29.0,1,2026-10-19,26.87,29.57,32.49
-2026-10-14,terminal-new-york-avocados-hass-cartons-2-layer-60s-n,Avocados,New York,2026-10-12,29.0,2,2026-10-26,25.68,30.25,35.36
-2026-10-14,terminal-new-york-avocados-hass-cartons-2-layer-60s-n,Avocados,New York,2026-10-12,29.0,3,2026-11-02,24.49,30.43,38.18
-2026-10-14,terminal-new-york-avocados-hass-cartons-2-layer-60s-n,Avocados,New York,2026-10-12,29.0,4,2026-11-09,23.82,30.89,39.98
-2026-10-14,terminal-new-york-bananas-40-lb-cartons-bagged-yellow-n,Bananas,New York,2026-10-12,22.0,1,2026-10-19,21.65,22.0,22.37
-2026-10-14,terminal-new-york-bananas-40-lb-cartons-bagged-yellow-n,Bananas,New York,2026-10-12,22.0,2,2026-10-26,21.34,22.0,22.81
-2026-10-14,terminal-new-york-bananas-40-lb-cartons-bagged-yellow-n,Bananas,New York,2026-10-12,22.0,3,2026-11-02,20.97,22.0,23.16
-2026-10-14,terminal-new-york-bananas-40-lb-cartons-bagged-yellow-n,Bananas,New York,2026-10-12,22.0,4,2026-11-09,20.67,22.0,23.44
-2026-10-14,terminal-new-york-bananas-40-lb-cartons-bagged-yellow-y,Bananas,New York,2026-10-12,31.0,1,2026-10-19,30.51,31.0,31.52
-2026-10-14,terminal-new-york-bananas-40-lb-cartons-bagged-yellow-y,Bananas,New York,2026-10-12,31.0,2,2026-10-26,30.07,31.0,32.15
-2026-10-14,terminal-new-york-bananas-40-lb-cartons-bagged-yellow-y,Bananas,New York,2026-10-12,31.0,3,2026-11-02,29.55,31.0,32.63
-2026-10-14,terminal-new-york-bananas-40-lb-cartons-bagged-yellow-y,Bananas,New York,2026-10-12,31.0,4,2026-11-09,29.12,31.0,33.03
-2026-10-14,terminal-new-york-blueberries-flats-12-1-pint-cups-with-lids-large-n,Blueberries,New York,2026-10-12,46.0,1,2026-10-19,35.88,44.55,55.77
-2026-10-14,terminal-new-york-blueberries-flats-12-1-pint-cups-with-lids-large-n,Blueberries,New York,2026-10-12,46.0,2,2026-10-26,30.57,41.72,57.95
-2026-10-14,terminal-new-york-blueberries-flats-12-1-pint-cups-with-lids-large-n,Blueberries,New York,2026-10-12,46.0,3,2026-11-02,26.23,38.7,56.89
-2026-10-14,terminal-new-york-blueberries-flats-12-1-pint-cups-with-lids-large-n,Blueberries,New York,2026-10-12,46.0,4,2026-11-09,22.67,35.24,53.68
-2026-10-14,terminal-new-york-broccoli-cartons-bunched-14s-n,Broccoli,New York,2026-10-12,33.0,1,2026-10-19,25.84,29.45,34.36
-2026-10-14,terminal-new-york-broccoli-cartons-bunched-14s-n,Broccoli,New York,2026-10-12,33.0,2,2026-10-26,22.26,27.38,35.81
-2026-10-14,terminal-new-york-broccoli-cartons-bunched-14s-n,Broccoli,New York,2026-10-12,33.0,3,2026-11-02,20.68,27.02,39.07
-2026-10-14,terminal-new-york-broccoli-cartons-bunched-14s-n,Broccoli,New York,2026-10-12,33.0,4,2026-11-09,20.36,27.77,41.66
-2026-10-14,terminal-new-york-broccoli-crown-cut-cartons-short-trim-n,Broccoli,New York,2026-10-12,29.0,1,2026-10-19,23.01,26.22,30.59
-2026-10-14,terminal-new-york-broccoli-crown-cut-cartons-short-trim-n,Broccoli,New York,2026-10-12,29.0,2,2026-10-26,21.22,26.1,34.13
-2026-10-14,terminal-new-york-broccoli-crown-cut-cartons-short-trim-n,Broccoli,New York,2026-10-12,29.0,3,2026-11-02,20.52,26.82,38.77
-2026-10-14,terminal-new-york-broccoli-crown-cut-cartons-short-trim-n,Broccoli,New York,2026-10-12,29.0,4,2026-11-09,20.0,27.27,40.9
-2026-10-14,terminal-new-york-carrots-baby-peeled-cartons-30-1-lb-film-bags-n,Carrots,New York,2026-10-12,29.0,1,2026-10-19,27.62,29.0,30.48
-2026-10-14,terminal-new-york-carrots-baby-peeled-cartons-30-1-lb-film-bags-n,Carrots,New York,2026-10-12,29.0,2,2026-10-26,26.79,29.0,31.64
-2026-10-14,terminal-new-york-carrots-baby-peeled-cartons-30-1-lb-film-bags-n,Carrots,New York,2026-10-12,29.0,3,2026-11-02,26.0,29.0,32.6
-2026-10-14,terminal-new-york-carrots-baby-peeled-cartons-30-1-lb-film-bags-n,Carrots,New York,2026-10-12,29.0,4,2026-11-09,25.46,29.0,33.36
-2026-10-14,terminal-new-york-carrots-topped-50-lb-sacks-loose-jumbo-n,Carrots,New York,2026-10-12,20.0,1,2026-10-19,19.05,20.0,21.02
-2026-10-14,terminal-new-york-carrots-topped-50-lb-sacks-loose-jumbo-n,Carrots,New York,2026-10-12,20.0,2,2026-10-26,18.47,20.0,21.82
-2026-10-14,terminal-new-york-carrots-topped-50-lb-sacks-loose-jumbo-n,Carrots,New York,2026-10-12,20.0,3,2026-11-02,17.93,20.0,22.48
-2026-10-14,terminal-new-york-carrots-topped-50-lb-sacks-loose-jumbo-n,Carrots,New York,2026-10-12,20.0,4,2026-11-09,17.56,20.0,23.01
-2026-10-14,terminal-new-york-celery-cartons-2-dozen-n,Celery,New York,2026-10-12,21.0,1,2026-10-19,19.24,21.79,24.61
-2026-10-14,terminal-new-york-celery-cartons-2-dozen-n,Celery,New York,2026-10-12,21.0,2,2026-10-26,18.77,23.0,27.7
-2026-10-14,terminal-new-york-celery-cartons-2-dozen-n,Celery,New York,2026-10-12,21.0,3,2026-11-02,18.79,24.59,31.92
-2026-10-14,terminal-new-york-celery-cartons-2-dozen-n,Celery,New York,2026-10-12,21.0,4,2026-11-09,19.09,26.15,36.59
-2026-10-14,terminal-new-york-celery-cartons-film-bags-30s-n,Celery,New York,2026-10-12,28.0,1,2026-10-19,25.23,28.58,32.28
-2026-10-14,terminal-new-york-celery-cartons-film-bags-30s-n,Celery,New York,2026-10-12,28.0,2,2026-10-26,24.25,29.71,35.79
-2026-10-14,terminal-new-york-celery-cartons-film-bags-30s-n,Celery,New York,2026-10-12,28.0,3,2026-11-02,23.76,31.1,40.36
-2026-10-14,terminal-new-york-celery-cartons-film-bags-30s-n,Celery,New York,2026-10-12,28.0,4,2026-11-09,23.78,32.58,45.59
-2026-10-14,terminal-new-york-cucumbers-1-1-9-bushel-cartons-large-n,Cucumbers,New York,2026-10-12,31.0,1,2026-10-19,24.96,30.96,38.17
-2026-10-14,terminal-new-york-cucumbers-1-1-9-bushel-cartons-large-n,Cucumbers,New York,2026-10-12,31.0,2,2026-10-26,22.26,30.51,42.68
-2026-10-14,terminal-new-york-cucumbers-1-1-9-bushel-cartons-large-n,Cucumbers,New York,2026-10-12,31.0,3,2026-11-02,20.23,29.1,41.74
-2026-10-14,terminal-new-york-cucumbers-1-1-9-bushel-cartons-large-n,Cucumbers,New York,2026-10-12,31.0,4,2026-11-09,19.38,28.24,41.31
-2026-10-14,terminal-new-york-lemons-7-10-bushel-cartons-140s-n,Lemons,New York,2026-10-12,36.5,1,2026-10-19,33.58,36.5,39.61
-2026-10-14,terminal-new-york-lemons-7-10-bushel-cartons-140s-n,Lemons,New York,2026-10-12,36.5,2,2026-10-26,31.64,36.5,41.1
-2026-10-14,terminal-new-york-lemons-7-10-bushel-cartons-140s-n,Lemons,New York,2026-10-12,36.5,3,2026-11-02,30.38,36.5,42.4
-2026-10-14,terminal-new-york-lemons-7-10-bushel-cartons-140s-n,Lemons,New York,2026-10-12,36.5,4,2026-11-09,31.38,39.08,46.14
-2026-10-14,terminal-new-york-lemons-7-10-bushel-cartons-165s-n,Lemons,New York,2026-10-12,36.0,1,2026-10-19,33.12,36.0,39.07
-2026-10-14,terminal-new-york-lemons-7-10-bushel-cartons-165s-n,Lemons,New York,2026-10-12,36.0,2,2026-10-26,31.2,36.0,40.54
-2026-10-14,terminal-new-york-lemons-7-10-bushel-cartons-165s-n,Lemons,New York,2026-10-12,36.0,3,2026-11-02,29.97,36.0,41.82
-2026-10-14,terminal-new-york-lemons-7-10-bushel-cartons-165s-n,Lemons,New York,2026-10-12,36.0,4,2026-11-09,30.74,38.3,45.21
-2026-10-14,terminal-new-york-lettuce-iceberg-cartons-24s-film-wrapped-n,"Lettuce, Iceberg",New York,2026-10-12,66.0,1,2026-10-19,52.69,62.45,75.53
-2026-10-14,terminal-new-york-lettuce-iceberg-cartons-24s-film-wrapped-n,"Lettuce, Iceberg",New York,2026-10-12,66.0,2,2026-10-26,43.05,56.23,80.47
-2026-10-14,terminal-new-york-lettuce-iceberg-cartons-24s-film-wrapped-n,"Lettuce, Iceberg",New York,2026-10-12,66.0,3,2026-11-02,37.4,52.42,83.77
-2026-10-14,terminal-new-york-lettuce-iceberg-cartons-24s-film-wrapped-n,"Lettuce, Iceberg",New York,2026-10-12,66.0,4,2026-11-09,33.9,50.5,86.96
-2026-10-14,terminal-new-york-lettuce-romaine-cartons-24s-n,"Lettuce, Romaine",New York,2026-10-12,21.0,1,2026-10-19,22.82,26.12,30.12
-2026-10-14,terminal-new-york-lettuce-romaine-cartons-24s-n,"Lettuce, Romaine",New York,2026-10-12,21.0,2,2026-10-26,24.84,30.19,38.87
-2026-10-14,terminal-new-york-lettuce-romaine-cartons-24s-n,"Lettuce, Romaine",New York,2026-10-12,21.0,3,2026-11-02,25.46,32.86,47.08
-2026-10-14,terminal-new-york-lettuce-romaine-cartons-24s-n,"Lettuce, Romaine",New York,2026-10-12,21.0,4,2026-11-09,26.01,35.3,54.25
-2026-10-14,terminal-new-york-lettuce-romaine-hearts-cartons-12-3-count-packages-n,"Lettuce, Romaine",New York,2026-10-12,48.0,1,2026-10-19,46.64,53.39,61.56
-2026-10-14,terminal-new-york-lettuce-romaine-hearts-cartons-12-3-count-packages-n,"Lettuce, Romaine",New York,2026-10-12,48.0,2,2026-10-26,45.64,55.47,71.42
-2026-10-14,terminal-new-york-lettuce-romaine-hearts-cartons-12-3-count-packages-n,"Lettuce, Romaine",New York,2026-10-12,48.0,3,2026-11-02,43.66,56.35,80.74
-2026-10-14,terminal-new-york-lettuce-romaine-hearts-cartons-12-3-count-packages-n,"Lettuce, Romaine",New York,2026-10-12,48.0,4,2026-11-09,41.41,56.2,86.38
-2026-10-14,terminal-new-york-limes-seedless-type-40-lb-cartons-175s-n,Limes,New York,2026-10-12,37.0,1,2026-10-19,29.55,33.46,38.65
-2026-10-14,terminal-new-york-limes-seedless-type-40-lb-cartons-175s-n,Limes,New York,2026-10-12,37.0,2,2026-10-26,25.19,31.19,39.98
-2026-10-14,terminal-new-york-limes-seedless-type-40-lb-cartons-175s-n,Limes,New York,2026-10-12,37.0,3,2026-11-02,23.57,30.77,41.98
-2026-10-14,terminal-new-york-limes-seedless-type-40-lb-cartons-175s-n,Limes,New York,2026-10-12,37.0,4,2026-11-09,22.81,31.15,44.49
-2026-10-14,terminal-new-york-limes-seedless-type-40-lb-cartons-200s-n,Limes,New York,2026-10-12,37.0,1,2026-10-19,29.4,33.29,38.46
-2026-10-14,terminal-new-york-limes-seedless-type-40-lb-cartons-200s-n,Limes,New York,2026-10-12,37.0,2,2026-10-26,24.97,30.91,39.62
-2026-10-14,terminal-new-york-limes-seedless-type-40-lb-cartons-200s-n,Limes,New York,2026-10-12,37.0,3,2026-11-02,23.35,30.49,41.59
-2026-10-14,terminal-new-york-limes-seedless-type-40-lb-cartons-200s-n,Limes,New York,2026-10-12,37.0,4,2026-11-09,22.61,30.87,44.09
-2026-10-14,terminal-new-york-onions-dry-pearl-type-cartons-12-10-oz-packages-small-red-n,"Onions, Dry",New York,2026-10-12,22.5,1,2026-10-19,21.33,22.5,23.82
-2026-10-14,terminal-new-york-onions-dry-pearl-type-cartons-12-10-oz-packages-small-red-n,"Onions, Dry",New York,2026-10-12,22.5,2,2026-10-26,20.36,22.5,25.01
-2026-10-14,terminal-new-york-onions-dry-pearl-type-cartons-12-10-oz-packages-small-red-n,"Onions, Dry",New York,2026-10-12,22.5,3,2026-11-02,19.77,22.5,26.25
-2026-10-14,terminal-new-york-onions-dry-pearl-type-cartons-12-10-oz-packages-small-red-n,"Onions, Dry",New York,2026-10-12,22.5,4,2026-11-09,19.29,22.5,27.13
-2026-10-14,terminal-new-york-onions-dry-pearl-type-cartons-12-10-oz-packages-small-yellow-n,"Onions, Dry",New York,2026-10-12,21.0,1,2026-10-19,19.91,21.0,22.24
-2026-10-14,terminal-new-york-onions-dry-pearl-type-cartons-12-10-oz-packages-small-yellow-n,"Onions, Dry",New York,2026-10-12,21.0,2,2026-10-26,19.01,21.0,23.34
-2026-10-14,terminal-new-york-onions-dry-pearl-type-cartons-12-10-oz-packages-small-yellow-n,"Onions, Dry",New York,2026-10-12,21.0,3,2026-11-02,18.45,21.0,24.5
-2026-10-14,terminal-new-york-onions-dry-pearl-type-cartons-12-10-oz-packages-small-yellow-n,"Onions, Dry",New York,2026-10-12,21.0,4,2026-11-09,18.0,21.0,25.32
-2026-10-14,terminal-new-york-peppers-bell-type-5-kg-11-lb-cartons-extra-large-orange-n,"Peppers, Bell Type",New York,2026-10-12,11.0,1,2026-10-19,10.25,12.71,15.8
-2026-10-14,terminal-new-york-peppers-bell-type-5-kg-11-lb-cartons-extra-large-orange-n,"Peppers, Bell Type",New York,2026-10-12,11.0,2,2026-10-26,9.66,13.79,18.8
-2026-10-14,terminal-new-york-peppers-bell-type-5-kg-11-lb-cartons-extra-large-orange-n,"Peppers, Bell Type",New York,2026-10-12,11.0,3,2026-11-02,9.21,14.39,21.34
-2026-10-14,terminal-new-york-peppers-bell-type-5-kg-11-lb-cartons-extra-large-orange-n,"Peppers, Bell Type",New York,2026-10-12,11.0,4,2026-11-09,8.77,14.64,23.76
-2026-10-14,terminal-new-york-peppers-bell-type-5-kg-11-lb-cartons-extra-large-yellow-n,"Peppers, Bell Type",New York,2026-10-12,11.0,1,2026-10-19,10.34,12.83,15.94
-2026-10-14,terminal-new-york-peppers-bell-type-5-kg-11-lb-cartons-extra-large-yellow-n,"Peppers, Bell Type",New York,2026-10-12,11.0,2,2026-10-26,9.59,13.69,18.67
-2026-10-14,terminal-new-york-peppers-bell-type-5-kg-11-lb-cartons-extra-large-yellow-n,"Peppers, Bell Type",New York,2026-10-12,11.0,3,2026-11-02,9.06,14.16,21.0
-2026-10-14,terminal-new-york-peppers-bell-type-5-kg-11-lb-cartons-extra-large-yellow-n,"Peppers, Bell Type",New York,2026-10-12,11.0,4,2026-11-09,8.55,14.28,23.17
-2026-10-14,terminal-new-york-potatoes-round-red-50-lb-cartons-size-a-n,Potatoes,New York,2026-10-12,34.5,1,2026-10-19,32.18,34.5,36.8
-2026-10-14,terminal-new-york-potatoes-round-red-50-lb-cartons-size-a-n,Potatoes,New York,2026-10-12,34.5,2,2026-10-26,30.74,34.5,38.7
-2026-10-14,terminal-new-york-potatoes-round-red-50-lb-cartons-size-a-n,Potatoes,New York,2026-10-12,34.5,3,2026-11-02,30.09,34.5,39.88
-2026-10-14,terminal-new-york-potatoes-round-red-50-lb-cartons-size-a-n,Potatoes,New York,2026-10-12,34.5,4,2026-11-09,29.12,34.5,40.54
-2026-10-14,terminal-new-york-strawberries-flats-8-1-lb-containers-with-lids-extra-large-n,Strawberries,New York,2026-10-12,16.0,1,2026-10-19,15.16,19.65,24.28
-2026-10-14,terminal-new-york-strawberries-flats-8-1-lb-containers-with-lids-extra-large-n,Strawberries,New York,2026-10-12,16.0,2,2026-10-26,13.98,21.24,28.88
-2026-10-14,terminal-new-york-strawberries-flats-8-1-lb-containers-with-lids-extra-large-n,Strawberries,New York,2026-10-12,16.0,3,2026-11-02,13.19,21.99,32.1
-2026-10-14,terminal-new-york-strawberries-flats-8-1-lb-containers-with-lids-extra-large-n,Strawberries,New York,2026-10-12,16.0,4,2026-11-09,13.1,22.73,34.84
-2026-10-14,terminal-new-york-tomatoes-vine-ripes-flats-18s-light-red-red-n,Tomatoes,New York,2026-10-12,31.0,1,2026-10-19,24.77,31.0,39.24
-2026-10-14,terminal-new-york-tomatoes-vine-ripes-flats-18s-light-red-red-n,Tomatoes,New York,2026-10-12,31.0,2,2026-10-26,29.16,41.77,60.41
-2026-10-14,terminal-new-york-tomatoes-vine-ripes-flats-18s-light-red-red-n,Tomatoes,New York,2026-10-12,31.0,3,2026-11-02,27.78,42.16,65.84
-2026-10-14,terminal-new-york-tomatoes-vine-ripes-flats-18s-light-red-red-n,Tomatoes,New York,2026-10-12,31.0,4,2026-11-09,24.73,39.21,64.35
-2026-10-14,terminal-new-york-tomatoes-vine-ripes-flats-20s-light-red-red-n,Tomatoes,New York,2026-10-12,33.0,1,2026-10-19,26.37,33.0,41.77
-2026-10-14,terminal-new-york-tomatoes-vine-ripes-flats-20s-light-red-red-n,Tomatoes,New York,2026-10-12,33.0,2,2026-10-26,26.08,37.36,54.03
-2026-10-14,terminal-new-york-tomatoes-vine-ripes-flats-20s-light-red-red-n,Tomatoes,New York,2026-10-12,33.0,3,2026-11-02,23.87,36.23,56.57
-2026-10-14,terminal-new-york-tomatoes-vine-ripes-flats-20s-light-red-red-n,Tomatoes,New York,2026-10-12,33.0,4,2026-11-09,21.5,34.1,55.96
+2026-10-15,terminal-chicago-lettuce-romaine-hearts-cartons-12-3-count-packages-y,"Lettuce, Romaine",Chicago,2026-10-12,42.0,1,2026-10-19,45.53,52.08,59.78
+2026-10-15,terminal-chicago-lettuce-romaine-hearts-cartons-12-3-count-packages-y,"Lettuce, Romaine",Chicago,2026-10-12,42.0,2,2026-10-26,47.78,58.25,73.73
+2026-10-15,terminal-chicago-lettuce-romaine-hearts-cartons-12-3-count-packages-y,"Lettuce, Romaine",Chicago,2026-10-12,42.0,3,2026-11-02,47.31,61.13,84.96
+2026-10-15,terminal-chicago-lettuce-romaine-hearts-cartons-12-3-count-packages-y,"Lettuce, Romaine",Chicago,2026-10-12,42.0,4,2026-11-09,44.52,60.54,89.2
+2026-10-15,terminal-chicago-limes-seedless-type-40-lb-cartons-175s-n,Limes,Chicago,2026-10-12,38.0,1,2026-10-19,30.08,33.94,39.18
+2026-10-15,terminal-chicago-limes-seedless-type-40-lb-cartons-175s-n,Limes,Chicago,2026-10-12,38.0,2,2026-10-26,25.33,31.34,40.17
+2026-10-15,terminal-chicago-limes-seedless-type-40-lb-cartons-175s-n,Limes,Chicago,2026-10-12,38.0,3,2026-11-02,23.08,30.09,41.06
+2026-10-15,terminal-chicago-limes-seedless-type-40-lb-cartons-175s-n,Limes,Chicago,2026-10-12,38.0,4,2026-11-09,21.91,29.92,42.75
+2026-10-15,terminal-chicago-limes-seedless-type-40-lb-cartons-200s-n,Limes,Chicago,2026-10-12,38.0,1,2026-10-19,30.05,33.89,39.13
+2026-10-15,terminal-chicago-limes-seedless-type-40-lb-cartons-200s-n,Limes,Chicago,2026-10-12,38.0,2,2026-10-26,25.31,31.32,40.14
+2026-10-15,terminal-chicago-limes-seedless-type-40-lb-cartons-200s-n,Limes,Chicago,2026-10-12,38.0,3,2026-11-02,23.5,30.64,41.82
+2026-10-15,terminal-chicago-limes-seedless-type-40-lb-cartons-200s-n,Limes,Chicago,2026-10-12,38.0,4,2026-11-09,22.7,31.0,44.29
+2026-10-15,terminal-chicago-onions-dry-red-25-lb-sacks-jumbo-globe-type-n,"Onions, Dry",Chicago,2026-10-12,19.62,1,2026-10-19,18.61,19.62,20.78
+2026-10-15,terminal-chicago-onions-dry-red-25-lb-sacks-jumbo-globe-type-n,"Onions, Dry",Chicago,2026-10-12,19.62,2,2026-10-26,17.76,19.62,21.81
+2026-10-15,terminal-chicago-onions-dry-red-25-lb-sacks-jumbo-globe-type-n,"Onions, Dry",Chicago,2026-10-12,19.62,3,2026-11-02,17.25,19.62,22.9
+2026-10-15,terminal-chicago-onions-dry-red-25-lb-sacks-jumbo-globe-type-n,"Onions, Dry",Chicago,2026-10-12,19.62,4,2026-11-09,16.82,19.62,23.68
+2026-10-15,terminal-chicago-onions-dry-white-50-lb-sacks-jumbo-n,"Onions, Dry",Chicago,2026-10-12,45.0,1,2026-10-19,42.67,45.0,47.65
+2026-10-15,terminal-chicago-onions-dry-white-50-lb-sacks-jumbo-n,"Onions, Dry",Chicago,2026-10-12,45.0,2,2026-10-26,40.73,45.0,50.01
+2026-10-15,terminal-chicago-onions-dry-white-50-lb-sacks-jumbo-n,"Onions, Dry",Chicago,2026-10-12,45.0,3,2026-11-02,39.55,45.0,52.5
+2026-10-15,terminal-chicago-onions-dry-white-50-lb-sacks-jumbo-n,"Onions, Dry",Chicago,2026-10-12,45.0,4,2026-11-09,38.57,45.0,54.3
+2026-10-15,terminal-chicago-peppers-bell-type-1-1-9-bushel-cartons-jumbo-green-n,"Peppers, Bell Type",Chicago,2026-10-12,24.25,1,2026-10-19,22.06,27.35,34.01
+2026-10-15,terminal-chicago-peppers-bell-type-1-1-9-bushel-cartons-jumbo-green-n,"Peppers, Bell Type",Chicago,2026-10-12,24.25,2,2026-10-26,20.01,28.53,39.0
+2026-10-15,terminal-chicago-peppers-bell-type-1-1-9-bushel-cartons-jumbo-green-n,"Peppers, Bell Type",Chicago,2026-10-12,24.25,3,2026-11-02,18.3,28.56,42.44
+2026-10-15,terminal-chicago-peppers-bell-type-1-1-9-bushel-cartons-jumbo-green-n,"Peppers, Bell Type",Chicago,2026-10-12,24.25,4,2026-11-09,16.89,28.24,45.83
+2026-10-15,terminal-chicago-peppers-bell-type-5-kg-11-lb-cartons-extra-large-orange-n,"Peppers, Bell Type",Chicago,2026-10-12,10.5,1,2026-10-19,9.86,12.22,15.19
+2026-10-15,terminal-chicago-peppers-bell-type-5-kg-11-lb-cartons-extra-large-orange-n,"Peppers, Bell Type",Chicago,2026-10-12,10.5,2,2026-10-26,9.78,13.95,19.06
+2026-10-15,terminal-chicago-peppers-bell-type-5-kg-11-lb-cartons-extra-large-orange-n,"Peppers, Bell Type",Chicago,2026-10-12,10.5,3,2026-11-02,9.7,15.15,22.51
+2026-10-15,terminal-chicago-peppers-bell-type-5-kg-11-lb-cartons-extra-large-orange-n,"Peppers, Bell Type",Chicago,2026-10-12,10.5,4,2026-11-09,9.7,16.22,26.32
+2026-10-15,terminal-chicago-potatoes-round-red-50-lb-cartons-size-a-n,Potatoes,Chicago,2026-10-12,37.38,1,2026-10-19,34.86,37.38,39.87
+2026-10-15,terminal-chicago-potatoes-round-red-50-lb-cartons-size-a-n,Potatoes,Chicago,2026-10-12,37.38,2,2026-10-26,33.31,37.38,41.92
+2026-10-15,terminal-chicago-potatoes-round-red-50-lb-cartons-size-a-n,Potatoes,Chicago,2026-10-12,37.38,3,2026-11-02,32.6,37.38,43.23
+2026-10-15,terminal-chicago-potatoes-round-red-50-lb-cartons-size-a-n,Potatoes,Chicago,2026-10-12,37.38,4,2026-11-09,31.57,37.38,43.91
+2026-10-15,terminal-chicago-potatoes-yellow-type-50-lb-cartons-size-a-y,Potatoes,Chicago,2026-10-12,58.0,1,2026-10-19,54.1,58.0,61.87
+2026-10-15,terminal-chicago-potatoes-yellow-type-50-lb-cartons-size-a-y,Potatoes,Chicago,2026-10-12,58.0,2,2026-10-26,51.68,58.0,65.06
+2026-10-15,terminal-chicago-potatoes-yellow-type-50-lb-cartons-size-a-y,Potatoes,Chicago,2026-10-12,58.0,3,2026-11-02,50.6,58.0,67.08
+2026-10-15,terminal-chicago-potatoes-yellow-type-50-lb-cartons-size-a-y,Potatoes,Chicago,2026-10-12,58.0,4,2026-11-09,48.98,58.0,68.15
+2026-10-15,terminal-chicago-strawberries-flats-8-1-lb-containers-with-lids-medium-y,Strawberries,Chicago,2026-10-12,24.0,1,2026-10-19,21.6,28.0,34.61
+2026-10-15,terminal-chicago-strawberries-flats-8-1-lb-containers-with-lids-medium-y,Strawberries,Chicago,2026-10-12,24.0,2,2026-10-26,21.49,32.67,44.55
+2026-10-15,terminal-chicago-strawberries-flats-8-1-lb-containers-with-lids-medium-y,Strawberries,Chicago,2026-10-12,24.0,3,2026-11-02,21.17,35.28,51.36
+2026-10-15,terminal-chicago-strawberries-flats-8-1-lb-containers-with-lids-medium-y,Strawberries,Chicago,2026-10-12,24.0,4,2026-11-09,22.27,38.57,59.16
+2026-10-15,terminal-chicago-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",Chicago,2026-10-12,27.0,1,2026-10-19,24.88,29.06,34.0
+2026-10-15,terminal-chicago-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",Chicago,2026-10-12,27.0,2,2026-10-26,22.06,29.14,39.15
+2026-10-15,terminal-chicago-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",Chicago,2026-10-12,27.0,3,2026-11-02,19.12,27.0,38.78
+2026-10-15,terminal-chicago-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",Chicago,2026-10-12,27.0,4,2026-11-09,17.41,27.0,39.38
+2026-10-15,terminal-chicago-tomatoes-plum-type-roma-25-lb-cartons-loose-xxlge-light-red-red-n,"Tomatoes, Plum Type",Chicago,2026-10-12,27.75,1,2026-10-19,25.46,29.73,34.79
+2026-10-15,terminal-chicago-tomatoes-plum-type-roma-25-lb-cartons-loose-xxlge-light-red-red-n,"Tomatoes, Plum Type",Chicago,2026-10-12,27.75,2,2026-10-26,22.54,29.77,40.0
+2026-10-15,terminal-chicago-tomatoes-plum-type-roma-25-lb-cartons-loose-xxlge-light-red-red-n,"Tomatoes, Plum Type",Chicago,2026-10-12,27.75,3,2026-11-02,19.65,27.75,39.86
+2026-10-15,terminal-chicago-tomatoes-plum-type-roma-25-lb-cartons-loose-xxlge-light-red-red-n,"Tomatoes, Plum Type",Chicago,2026-10-12,27.75,4,2026-11-09,17.89,27.75,40.48
+2026-10-15,terminal-chicago-tomatoes-vine-ripes-5-kg-11-lb-flats-medium-large-light-red-red-on-the-vine-n,Tomatoes,Chicago,2026-10-12,20.25,1,2026-10-19,20.03,25.06,31.75
+2026-10-15,terminal-chicago-tomatoes-vine-ripes-5-kg-11-lb-flats-medium-large-light-red-red-on-the-vine-n,Tomatoes,Chicago,2026-10-12,20.25,2,2026-10-26,18.55,26.58,38.53
+2026-10-15,terminal-chicago-tomatoes-vine-ripes-5-kg-11-lb-flats-medium-large-light-red-red-on-the-vine-n,Tomatoes,Chicago,2026-10-12,20.25,3,2026-11-02,17.15,26.04,40.68
+2026-10-15,terminal-chicago-tomatoes-vine-ripes-5-kg-11-lb-flats-medium-large-light-red-red-on-the-vine-n,Tomatoes,Chicago,2026-10-12,20.25,4,2026-11-09,15.68,24.81,40.69
+2026-10-15,terminal-los-angeles-avocados-hass-cartons-2-layer-48s-n,Avocados,Los Angeles,2026-10-12,34.0,1,2026-10-19,30.9,34.0,37.34
+2026-10-15,terminal-los-angeles-avocados-hass-cartons-2-layer-48s-n,Avocados,Los Angeles,2026-10-12,34.0,2,2026-10-26,28.85,34.0,39.75
+2026-10-15,terminal-los-angeles-avocados-hass-cartons-2-layer-48s-n,Avocados,Los Angeles,2026-10-12,34.0,3,2026-11-02,27.36,34.0,42.66
+2026-10-15,terminal-los-angeles-avocados-hass-cartons-2-layer-48s-n,Avocados,Los Angeles,2026-10-12,34.0,4,2026-11-09,26.22,34.0,44.0
+2026-10-15,terminal-los-angeles-avocados-hass-cartons-2-layer-60s-n,Avocados,Los Angeles,2026-10-12,31.0,1,2026-10-19,28.17,31.0,34.05
+2026-10-15,terminal-los-angeles-avocados-hass-cartons-2-layer-60s-n,Avocados,Los Angeles,2026-10-12,31.0,2,2026-10-26,26.31,31.0,36.24
+2026-10-15,terminal-los-angeles-avocados-hass-cartons-2-layer-60s-n,Avocados,Los Angeles,2026-10-12,31.0,3,2026-11-02,24.94,31.0,38.89
+2026-10-15,terminal-los-angeles-avocados-hass-cartons-2-layer-60s-n,Avocados,Los Angeles,2026-10-12,31.0,4,2026-11-09,23.91,31.0,40.12
+2026-10-15,terminal-los-angeles-bananas-baby-15-lb-cartons-n,Bananas,Los Angeles,2026-10-12,15.0,1,2026-10-19,14.76,15.0,15.25
+2026-10-15,terminal-los-angeles-bananas-baby-15-lb-cartons-n,Bananas,Los Angeles,2026-10-12,15.0,2,2026-10-26,14.55,15.0,15.56
+2026-10-15,terminal-los-angeles-bananas-baby-15-lb-cartons-n,Bananas,Los Angeles,2026-10-12,15.0,3,2026-11-02,14.3,15.0,15.79
+2026-10-15,terminal-los-angeles-bananas-baby-15-lb-cartons-n,Bananas,Los Angeles,2026-10-12,15.0,4,2026-11-09,14.1,15.0,15.98
+2026-10-15,terminal-los-angeles-broccoli-cartons-bunched-14s-n,Broccoli,Los Angeles,2026-10-12,34.5,1,2026-10-19,25.27,28.81,33.63
+2026-10-15,terminal-los-angeles-broccoli-cartons-bunched-14s-n,Broccoli,Los Angeles,2026-10-12,34.5,2,2026-10-26,21.37,26.3,34.39
+2026-10-15,terminal-los-angeles-broccoli-cartons-bunched-14s-n,Broccoli,Los Angeles,2026-10-12,34.5,3,2026-11-02,19.72,25.77,37.24
+2026-10-15,terminal-los-angeles-broccoli-cartons-bunched-14s-n,Broccoli,Los Angeles,2026-10-12,34.5,4,2026-11-09,18.79,25.62,38.43
+2026-10-15,terminal-los-angeles-broccoli-crown-cut-20-lb-cartons-loose-n,Broccoli,Los Angeles,2026-10-12,35.5,1,2026-10-19,26.4,30.1,35.13
+2026-10-15,terminal-los-angeles-broccoli-crown-cut-20-lb-cartons-loose-n,Broccoli,Los Angeles,2026-10-12,35.5,2,2026-10-26,22.79,28.04,36.68
+2026-10-15,terminal-los-angeles-broccoli-crown-cut-20-lb-cartons-loose-n,Broccoli,Los Angeles,2026-10-12,35.5,3,2026-11-02,21.32,27.87,40.27
+2026-10-15,terminal-los-angeles-broccoli-crown-cut-20-lb-cartons-loose-n,Broccoli,Los Angeles,2026-10-12,35.5,4,2026-11-09,20.66,28.17,42.26
+2026-10-15,terminal-los-angeles-carrots-25-lb-sacks-loose-jumbo-n,Carrots,Los Angeles,2026-10-12,12.25,1,2026-10-19,11.67,12.25,12.87
+2026-10-15,terminal-los-angeles-carrots-25-lb-sacks-loose-jumbo-n,Carrots,Los Angeles,2026-10-12,12.25,2,2026-10-26,11.32,12.25,13.37
+2026-10-15,terminal-los-angeles-carrots-25-lb-sacks-loose-jumbo-n,Carrots,Los Angeles,2026-10-12,12.25,3,2026-11-02,10.98,12.25,13.77
+2026-10-15,terminal-los-angeles-carrots-25-lb-sacks-loose-jumbo-n,Carrots,Los Angeles,2026-10-12,12.25,4,2026-11-09,10.75,12.25,14.09
+2026-10-15,terminal-los-angeles-carrots-sacks-10-5-lb-film-bags-n,Carrots,Los Angeles,2026-10-12,23.75,1,2026-10-19,22.62,23.75,24.96
+2026-10-15,terminal-los-angeles-carrots-sacks-10-5-lb-film-bags-n,Carrots,Los Angeles,2026-10-12,23.75,2,2026-10-26,21.94,23.75,25.91
+2026-10-15,terminal-los-angeles-carrots-sacks-10-5-lb-film-bags-n,Carrots,Los Angeles,2026-10-12,23.75,3,2026-11-02,21.3,23.75,26.7
+2026-10-15,terminal-los-angeles-carrots-sacks-10-5-lb-film-bags-n,Carrots,Los Angeles,2026-10-12,23.75,4,2026-11-09,20.85,23.75,27.32
+2026-10-15,terminal-los-angeles-celery-cartons-2-1-2-dozen-n,Celery,Los Angeles,2026-10-12,18.5,1,2026-10-19,16.92,19.17,21.65
+2026-10-15,terminal-los-angeles-celery-cartons-2-1-2-dozen-n,Celery,Los Angeles,2026-10-12,18.5,2,2026-10-26,16.46,20.17,24.32
+2026-10-15,terminal-los-angeles-celery-cartons-2-1-2-dozen-n,Celery,Los Angeles,2026-10-12,18.5,3,2026-11-02,16.39,21.44,27.83
+2026-10-15,terminal-los-angeles-celery-cartons-2-1-2-dozen-n,Celery,Los Angeles,2026-10-12,18.5,4,2026-11-09,16.28,22.31,31.23
+2026-10-15,terminal-los-angeles-celery-cartons-2-dozen-n,Celery,Los Angeles,2026-10-12,19.5,1,2026-10-19,17.76,20.12,22.72
+2026-10-15,terminal-los-angeles-celery-cartons-2-dozen-n,Celery,Los Angeles,2026-10-12,19.5,2,2026-10-26,17.18,21.06,25.38
+2026-10-15,terminal-los-angeles-celery-cartons-2-dozen-n,Celery,Los Angeles,2026-10-12,19.5,3,2026-11-02,17.01,22.26,28.9
+2026-10-15,terminal-los-angeles-celery-cartons-2-dozen-n,Celery,Los Angeles,2026-10-12,19.5,4,2026-11-09,16.83,23.06,32.28
+2026-10-15,terminal-los-angeles-cucumbers-1-1-9-bushel-cartons-large-n,Cucumbers,Los Angeles,2026-10-12,26.0,1,2026-10-19,20.96,26.0,32.04
+2026-10-15,terminal-los-angeles-cucumbers-1-1-9-bushel-cartons-large-n,Cucumbers,Los Angeles,2026-10-12,26.0,2,2026-10-26,18.85,25.85,36.18
+2026-10-15,terminal-los-angeles-cucumbers-1-1-9-bushel-cartons-large-n,Cucumbers,Los Angeles,2026-10-12,26.0,3,2026-11-02,17.66,25.38,36.4
+2026-10-15,terminal-los-angeles-cucumbers-1-1-9-bushel-cartons-large-n,Cucumbers,Los Angeles,2026-10-12,26.0,4,2026-11-09,17.17,25.02,36.66
+2026-10-15,terminal-los-angeles-cucumbers-persian-22-lb-cartons-small-n,Cucumbers,Los Angeles,2026-10-12,20.5,1,2026-10-19,16.53,20.5,25.26
+2026-10-15,terminal-los-angeles-cucumbers-persian-22-lb-cartons-small-n,Cucumbers,Los Angeles,2026-10-12,20.5,2,2026-10-26,15.29,20.97,29.34
+2026-10-15,terminal-los-angeles-cucumbers-persian-22-lb-cartons-small-n,Cucumbers,Los Angeles,2026-10-12,20.5,3,2026-11-02,14.58,20.97,30.07
+2026-10-15,terminal-los-angeles-cucumbers-persian-22-lb-cartons-small-n,Cucumbers,Los Angeles,2026-10-12,20.5,4,2026-11-09,14.18,20.68,30.3
+2026-10-15,terminal-los-angeles-lemons-7-10-bushel-cartons-115s-n,Lemons,Los Angeles,2026-10-12,21.5,1,2026-10-19,19.78,21.5,23.33
+2026-10-15,terminal-los-angeles-lemons-7-10-bushel-cartons-115s-n,Lemons,Los Angeles,2026-10-12,21.5,2,2026-10-26,18.64,21.5,24.2
+2026-10-15,terminal-los-angeles-lemons-7-10-bushel-cartons-115s-n,Lemons,Los Angeles,2026-10-12,21.5,3,2026-11-02,17.9,21.5,24.98
+2026-10-15,terminal-los-angeles-lemons-7-10-bushel-cartons-115s-n,Lemons,Los Angeles,2026-10-12,21.5,4,2026-11-09,17.28,21.5,25.38
+2026-10-15,terminal-los-angeles-lemons-7-10-bushel-cartons-140s-n,Lemons,Los Angeles,2026-10-12,22.5,1,2026-10-19,20.7,22.5,24.42
+2026-10-15,terminal-los-angeles-lemons-7-10-bushel-cartons-140s-n,Lemons,Los Angeles,2026-10-12,22.5,2,2026-10-26,19.5,22.5,25.33
+2026-10-15,terminal-los-angeles-lemons-7-10-bushel-cartons-140s-n,Lemons,Los Angeles,2026-10-12,22.5,3,2026-11-02,18.73,22.5,26.14
+2026-10-15,terminal-los-angeles-lemons-7-10-bushel-cartons-140s-n,Lemons,Los Angeles,2026-10-12,22.5,4,2026-11-09,18.09,22.5,26.56
+2026-10-15,terminal-los-angeles-lettuce-iceberg-cartons-film-lined-24s-n,"Lettuce, Iceberg",Los Angeles,2026-10-12,55.5,1,2026-10-19,46.07,54.57,65.97
+2026-10-15,terminal-los-angeles-lettuce-iceberg-cartons-film-lined-24s-n,"Lettuce, Iceberg",Los Angeles,2026-10-12,55.5,2,2026-10-26,40.76,53.23,76.19
+2026-10-15,terminal-los-angeles-lettuce-iceberg-cartons-film-lined-24s-n,"Lettuce, Iceberg",Los Angeles,2026-10-12,55.5,3,2026-11-02,37.48,52.54,83.92
+2026-10-15,terminal-los-angeles-lettuce-iceberg-cartons-film-lined-24s-n,"Lettuce, Iceberg",Los Angeles,2026-10-12,55.5,4,2026-11-09,34.86,51.9,89.35
+2026-10-15,terminal-los-angeles-lettuce-romaine-cartons-film-lined-24s-n,"Lettuce, Romaine",Los Angeles,2026-10-12,46.5,1,2026-10-19,49.28,56.37,64.7
+2026-10-15,terminal-los-angeles-lettuce-romaine-cartons-film-lined-24s-n,"Lettuce, Romaine",Los Angeles,2026-10-12,46.5,2,2026-10-26,48.26,58.83,74.46
+2026-10-15,terminal-los-angeles-lettuce-romaine-cartons-film-lined-24s-n,"Lettuce, Romaine",Los Angeles,2026-10-12,46.5,3,2026-11-02,45.12,58.29,81.01
+2026-10-15,terminal-los-angeles-lettuce-romaine-cartons-film-lined-24s-n,"Lettuce, Romaine",Los Angeles,2026-10-12,46.5,4,2026-11-09,40.85,55.54,81.85
+2026-10-15,terminal-los-angeles-limes-seedless-type-40-lb-cartons-200s-n,Limes,Los Angeles,2026-10-12,34.0,1,2026-10-19,27.63,31.17,35.98
+2026-10-15,terminal-los-angeles-limes-seedless-type-40-lb-cartons-200s-n,Limes,Los Angeles,2026-10-12,34.0,2,2026-10-26,23.77,29.42,37.7
+2026-10-15,terminal-los-angeles-limes-seedless-type-40-lb-cartons-200s-n,Limes,Los Angeles,2026-10-12,34.0,3,2026-11-02,21.43,27.95,38.14
+2026-10-15,terminal-los-angeles-limes-seedless-type-40-lb-cartons-200s-n,Limes,Los Angeles,2026-10-12,34.0,4,2026-11-09,19.73,26.95,38.5
+2026-10-15,terminal-los-angeles-limes-seedless-type-40-lb-cartons-230s-n,Limes,Los Angeles,2026-10-12,34.5,1,2026-10-19,27.88,31.45,36.31
+2026-10-15,terminal-los-angeles-limes-seedless-type-40-lb-cartons-230s-n,Limes,Los Angeles,2026-10-12,34.5,2,2026-10-26,23.82,29.47,37.77
+2026-10-15,terminal-los-angeles-limes-seedless-type-40-lb-cartons-230s-n,Limes,Los Angeles,2026-10-12,34.5,3,2026-11-02,21.43,27.94,38.13
+2026-10-15,terminal-los-angeles-limes-seedless-type-40-lb-cartons-230s-n,Limes,Los Angeles,2026-10-12,34.5,4,2026-11-09,19.41,26.51,37.88
+2026-10-15,terminal-los-angeles-onions-dry-red-25-lb-sacks-jumbo-globe-type-n,"Onions, Dry",Los Angeles,2026-10-12,12.5,1,2026-10-19,11.85,12.5,13.24
+2026-10-15,terminal-los-angeles-onions-dry-red-25-lb-sacks-jumbo-globe-type-n,"Onions, Dry",Los Angeles,2026-10-12,12.5,2,2026-10-26,11.31,12.5,13.89
+2026-10-15,terminal-los-angeles-onions-dry-red-25-lb-sacks-jumbo-globe-type-n,"Onions, Dry",Los Angeles,2026-10-12,12.5,3,2026-11-02,10.99,12.5,14.58
+2026-10-15,terminal-los-angeles-onions-dry-red-25-lb-sacks-jumbo-globe-type-n,"Onions, Dry",Los Angeles,2026-10-12,12.5,4,2026-11-09,10.71,12.5,15.08
+2026-10-15,terminal-los-angeles-onions-dry-white-50-lb-sacks-medium-n,"Onions, Dry",Los Angeles,2026-10-12,28.0,1,2026-10-19,26.55,28.0,29.65
+2026-10-15,terminal-los-angeles-onions-dry-white-50-lb-sacks-medium-n,"Onions, Dry",Los Angeles,2026-10-12,28.0,2,2026-10-26,25.34,28.0,31.12
+2026-10-15,terminal-los-angeles-onions-dry-white-50-lb-sacks-medium-n,"Onions, Dry",Los Angeles,2026-10-12,28.0,3,2026-11-02,24.61,28.0,32.67
+2026-10-15,terminal-los-angeles-onions-dry-white-50-lb-sacks-medium-n,"Onions, Dry",Los Angeles,2026-10-12,28.0,4,2026-11-09,24.0,28.0,33.79
+2026-10-15,terminal-los-angeles-peppers-bell-type-1-1-9-bushel-cartons-extra-large-green-n,"Peppers, Bell Type",Los Angeles,2026-10-12,25.5,1,2026-10-19,20.57,25.5,31.71
+2026-10-15,terminal-los-angeles-peppers-bell-type-1-1-9-bushel-cartons-extra-large-green-n,"Peppers, Bell Type",Los Angeles,2026-10-12,25.5,2,2026-10-26,17.88,25.5,34.85
+2026-10-15,terminal-los-angeles-peppers-bell-type-1-1-9-bushel-cartons-extra-large-green-n,"Peppers, Bell Type",Los Angeles,2026-10-12,25.5,3,2026-11-02,16.34,25.5,37.89
+2026-10-15,terminal-los-angeles-peppers-bell-type-1-1-9-bushel-cartons-extra-large-green-n,"Peppers, Bell Type",Los Angeles,2026-10-12,25.5,4,2026-11-09,15.25,25.5,41.38
+2026-10-15,terminal-los-angeles-peppers-bell-type-1-1-9-bushel-cartons-large-green-n,"Peppers, Bell Type",Los Angeles,2026-10-12,24.5,1,2026-10-19,19.76,24.5,30.46
+2026-10-15,terminal-los-angeles-peppers-bell-type-1-1-9-bushel-cartons-large-green-n,"Peppers, Bell Type",Los Angeles,2026-10-12,24.5,2,2026-10-26,17.18,24.5,33.49
+2026-10-15,terminal-los-angeles-peppers-bell-type-1-1-9-bushel-cartons-large-green-n,"Peppers, Bell Type",Los Angeles,2026-10-12,24.5,3,2026-11-02,15.7,24.5,36.41
+2026-10-15,terminal-los-angeles-peppers-bell-type-1-1-9-bushel-cartons-large-green-n,"Peppers, Bell Type",Los Angeles,2026-10-12,24.5,4,2026-11-09,14.65,24.5,39.76
+2026-10-15,terminal-los-angeles-potatoes-long-white-50-lb-cartons-size-a-n,Potatoes,Los Angeles,2026-10-12,38.25,1,2026-10-19,35.68,38.25,40.8
+2026-10-15,terminal-los-angeles-potatoes-long-white-50-lb-cartons-size-a-n,Potatoes,Los Angeles,2026-10-12,38.25,2,2026-10-26,34.09,38.25,42.9
+2026-10-15,terminal-los-angeles-potatoes-long-white-50-lb-cartons-size-a-n,Potatoes,Los Angeles,2026-10-12,38.25,3,2026-11-02,33.37,38.25,44.24
+2026-10-15,terminal-los-angeles-potatoes-long-white-50-lb-cartons-size-a-n,Potatoes,Los Angeles,2026-10-12,38.25,4,2026-11-09,32.3,38.25,44.94
+2026-10-15,terminal-los-angeles-potatoes-long-white-50-lb-cartons-size-b-n,Potatoes,Los Angeles,2026-10-12,29.75,1,2026-10-19,27.75,29.75,31.73
+2026-10-15,terminal-los-angeles-potatoes-long-white-50-lb-cartons-size-b-n,Potatoes,Los Angeles,2026-10-12,29.75,2,2026-10-26,26.51,29.75,33.37
+2026-10-15,terminal-los-angeles-potatoes-long-white-50-lb-cartons-size-b-n,Potatoes,Los Angeles,2026-10-12,29.75,3,2026-11-02,25.95,29.75,34.41
+2026-10-15,terminal-los-angeles-potatoes-long-white-50-lb-cartons-size-b-n,Potatoes,Los Angeles,2026-10-12,29.75,4,2026-11-09,25.13,29.75,34.96
+2026-10-15,terminal-los-angeles-strawberries-flats-8-1-lb-containers-with-lids-medium-large-n,Strawberries,Los Angeles,2026-10-12,17.0,1,2026-10-19,15.29,19.81,24.49
+2026-10-15,terminal-los-angeles-strawberries-flats-8-1-lb-containers-with-lids-medium-large-n,Strawberries,Los Angeles,2026-10-12,17.0,2,2026-10-26,14.47,21.98,29.98
+2026-10-15,terminal-los-angeles-strawberries-flats-8-1-lb-containers-with-lids-medium-large-n,Strawberries,Los Angeles,2026-10-12,17.0,3,2026-11-02,14.21,23.68,34.47
+2026-10-15,terminal-los-angeles-strawberries-flats-8-1-lb-containers-with-lids-medium-large-n,Strawberries,Los Angeles,2026-10-12,17.0,4,2026-11-09,14.35,24.84,38.1
+2026-10-15,terminal-los-angeles-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",Los Angeles,2026-10-12,29.25,1,2026-10-19,26.79,31.28,36.6
+2026-10-15,terminal-los-angeles-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",Los Angeles,2026-10-12,29.25,2,2026-10-26,23.84,31.49,42.31
+2026-10-15,terminal-los-angeles-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",Los Angeles,2026-10-12,29.25,3,2026-11-02,21.54,30.41,43.68
+2026-10-15,terminal-los-angeles-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",Los Angeles,2026-10-12,29.25,4,2026-11-09,18.86,29.25,42.66
+2026-10-15,terminal-los-angeles-tomatoes-plum-type-roma-25-lb-cartons-loose-large-light-red-red-n,"Tomatoes, Plum Type",Los Angeles,2026-10-12,28.25,1,2026-10-19,26.06,30.43,35.61
+2026-10-15,terminal-los-angeles-tomatoes-plum-type-roma-25-lb-cartons-loose-large-light-red-red-n,"Tomatoes, Plum Type",Los Angeles,2026-10-12,28.25,2,2026-10-26,23.61,31.19,41.9
+2026-10-15,terminal-los-angeles-tomatoes-plum-type-roma-25-lb-cartons-loose-large-light-red-red-n,"Tomatoes, Plum Type",Los Angeles,2026-10-12,28.25,3,2026-11-02,21.7,30.64,44.02
+2026-10-15,terminal-los-angeles-tomatoes-plum-type-roma-25-lb-cartons-loose-large-light-red-red-n,"Tomatoes, Plum Type",Los Angeles,2026-10-12,28.25,4,2026-11-09,18.22,28.25,41.2
+2026-10-15,terminal-los-angeles-tomatoes-vine-ripe-on-the-vine-5-kg-11-lb-flats-4-5-count-red-n,Tomatoes,Los Angeles,2026-10-12,18.62,1,2026-10-19,14.88,18.62,23.59
+2026-10-15,terminal-los-angeles-tomatoes-vine-ripe-on-the-vine-5-kg-11-lb-flats-4-5-count-red-n,Tomatoes,Los Angeles,2026-10-12,18.62,2,2026-10-26,13.0,18.62,27.0
+2026-10-15,terminal-los-angeles-tomatoes-vine-ripe-on-the-vine-5-kg-11-lb-flats-4-5-count-red-n,Tomatoes,Los Angeles,2026-10-12,18.62,3,2026-11-02,12.27,18.62,29.1
+2026-10-15,terminal-los-angeles-tomatoes-vine-ripe-on-the-vine-5-kg-11-lb-flats-4-5-count-red-n,Tomatoes,Los Angeles,2026-10-12,18.62,4,2026-11-09,15.09,23.87,39.16
+2026-10-15,terminal-los-angeles-tomatoes-vine-ripes-cartons-2-layer-5x5s-light-red-red-n,Tomatoes,Los Angeles,2026-10-12,31.5,1,2026-10-19,25.17,31.5,39.91
+2026-10-15,terminal-los-angeles-tomatoes-vine-ripes-cartons-2-layer-5x5s-light-red-red-n,Tomatoes,Los Angeles,2026-10-12,31.5,2,2026-10-26,21.99,31.5,45.66
+2026-10-15,terminal-los-angeles-tomatoes-vine-ripes-cartons-2-layer-5x5s-light-red-red-n,Tomatoes,Los Angeles,2026-10-12,31.5,3,2026-11-02,20.75,31.5,49.21
+2026-10-15,terminal-los-angeles-tomatoes-vine-ripes-cartons-2-layer-5x5s-light-red-red-n,Tomatoes,Los Angeles,2026-10-12,31.5,4,2026-11-09,22.42,35.47,58.17
+2026-10-15,terminal-new-york-avocados-hass-cartons-2-layer-48s-n,Avocados,New York,2026-10-12,31.0,1,2026-10-19,31.41,34.56,37.96
+2026-10-15,terminal-new-york-avocados-hass-cartons-2-layer-48s-n,Avocados,New York,2026-10-12,31.0,2,2026-10-26,31.06,36.6,42.79
+2026-10-15,terminal-new-york-avocados-hass-cartons-2-layer-48s-n,Avocados,New York,2026-10-12,31.0,3,2026-11-02,29.49,36.65,45.98
+2026-10-15,terminal-new-york-avocados-hass-cartons-2-layer-48s-n,Avocados,New York,2026-10-12,31.0,4,2026-11-09,27.82,36.07,46.68
+2026-10-15,terminal-new-york-avocados-hass-cartons-2-layer-60s-n,Avocados,New York,2026-10-12,30.5,1,2026-10-19,30.53,33.59,36.89
+2026-10-15,terminal-new-york-avocados-hass-cartons-2-layer-60s-n,Avocados,New York,2026-10-12,30.5,2,2026-10-26,29.82,35.14,41.09
+2026-10-15,terminal-new-york-avocados-hass-cartons-2-layer-60s-n,Avocados,New York,2026-10-12,30.5,3,2026-11-02,27.6,34.3,43.03
+2026-10-15,terminal-new-york-avocados-hass-cartons-2-layer-60s-n,Avocados,New York,2026-10-12,30.5,4,2026-11-09,25.82,33.48,43.33
+2026-10-15,terminal-new-york-bananas-40-lb-cartons-bagged-yellow-n,Bananas,New York,2026-10-12,22.0,1,2026-10-19,21.65,22.0,22.37
+2026-10-15,terminal-new-york-bananas-40-lb-cartons-bagged-yellow-n,Bananas,New York,2026-10-12,22.0,2,2026-10-26,21.34,22.0,22.81
+2026-10-15,terminal-new-york-bananas-40-lb-cartons-bagged-yellow-n,Bananas,New York,2026-10-12,22.0,3,2026-11-02,20.97,22.0,23.17
+2026-10-15,terminal-new-york-bananas-40-lb-cartons-bagged-yellow-n,Bananas,New York,2026-10-12,22.0,4,2026-11-09,20.67,22.0,23.44
+2026-10-15,terminal-new-york-bananas-40-lb-cartons-bagged-yellow-y,Bananas,New York,2026-10-12,31.0,1,2026-10-19,30.51,31.0,31.52
+2026-10-15,terminal-new-york-bananas-40-lb-cartons-bagged-yellow-y,Bananas,New York,2026-10-12,31.0,2,2026-10-26,30.07,31.0,32.15
+2026-10-15,terminal-new-york-bananas-40-lb-cartons-bagged-yellow-y,Bananas,New York,2026-10-12,31.0,3,2026-11-02,29.55,31.0,32.64
+2026-10-15,terminal-new-york-bananas-40-lb-cartons-bagged-yellow-y,Bananas,New York,2026-10-12,31.0,4,2026-11-09,29.13,31.0,33.04
+2026-10-15,terminal-new-york-blueberries-flats-12-1-pint-cups-with-lids-large-n,Blueberries,New York,2026-10-12,44.0,1,2026-10-19,31.35,38.87,48.61
+2026-10-15,terminal-new-york-blueberries-flats-12-1-pint-cups-with-lids-large-n,Blueberries,New York,2026-10-12,44.0,2,2026-10-26,26.43,35.98,50.09
+2026-10-15,terminal-new-york-blueberries-flats-12-1-pint-cups-with-lids-large-n,Blueberries,New York,2026-10-12,44.0,3,2026-11-02,23.14,34.13,50.17
+2026-10-15,terminal-new-york-blueberries-flats-12-1-pint-cups-with-lids-large-n,Blueberries,New York,2026-10-12,44.0,4,2026-11-09,20.51,31.91,48.67
+2026-10-15,terminal-new-york-broccoli-cartons-bunched-14s-n,Broccoli,New York,2026-10-12,33.0,1,2026-10-19,25.08,28.6,33.38
+2026-10-15,terminal-new-york-broccoli-cartons-bunched-14s-n,Broccoli,New York,2026-10-12,33.0,2,2026-10-26,21.37,26.3,34.39
+2026-10-15,terminal-new-york-broccoli-cartons-bunched-14s-n,Broccoli,New York,2026-10-12,33.0,3,2026-11-02,19.93,26.05,37.64
+2026-10-15,terminal-new-york-broccoli-cartons-bunched-14s-n,Broccoli,New York,2026-10-12,33.0,4,2026-11-09,19.7,26.87,40.31
+2026-10-15,terminal-new-york-broccoli-crown-cut-cartons-short-trim-n,Broccoli,New York,2026-10-12,29.0,1,2026-10-19,22.28,25.4,29.65
+2026-10-15,terminal-new-york-broccoli-crown-cut-cartons-short-trim-n,Broccoli,New York,2026-10-12,29.0,2,2026-10-26,20.35,25.04,32.75
+2026-10-15,terminal-new-york-broccoli-crown-cut-cartons-short-trim-n,Broccoli,New York,2026-10-12,29.0,3,2026-11-02,19.77,25.84,37.34
+2026-10-15,terminal-new-york-broccoli-crown-cut-cartons-short-trim-n,Broccoli,New York,2026-10-12,29.0,4,2026-11-09,19.35,26.39,39.58
+2026-10-15,terminal-new-york-carrots-baby-peeled-cartons-30-1-lb-film-bags-n,Carrots,New York,2026-10-12,29.0,1,2026-10-19,27.62,29.0,30.48
+2026-10-15,terminal-new-york-carrots-baby-peeled-cartons-30-1-lb-film-bags-n,Carrots,New York,2026-10-12,29.0,2,2026-10-26,26.79,29.0,31.64
+2026-10-15,terminal-new-york-carrots-baby-peeled-cartons-30-1-lb-film-bags-n,Carrots,New York,2026-10-12,29.0,3,2026-11-02,26.0,29.0,32.61
+2026-10-15,terminal-new-york-carrots-baby-peeled-cartons-30-1-lb-film-bags-n,Carrots,New York,2026-10-12,29.0,4,2026-11-09,25.46,29.0,33.36
+2026-10-15,terminal-new-york-carrots-topped-50-lb-sacks-loose-jumbo-n,Carrots,New York,2026-10-12,20.0,1,2026-10-19,19.05,20.0,21.02
+2026-10-15,terminal-new-york-carrots-topped-50-lb-sacks-loose-jumbo-n,Carrots,New York,2026-10-12,20.0,2,2026-10-26,18.47,20.0,21.82
+2026-10-15,terminal-new-york-carrots-topped-50-lb-sacks-loose-jumbo-n,Carrots,New York,2026-10-12,20.0,3,2026-11-02,17.93,20.0,22.49
+2026-10-15,terminal-new-york-carrots-topped-50-lb-sacks-loose-jumbo-n,Carrots,New York,2026-10-12,20.0,4,2026-11-09,17.56,20.0,23.01
+2026-10-15,terminal-new-york-celery-cartons-2-dozen-n,Celery,New York,2026-10-12,21.0,1,2026-10-19,19.36,21.94,24.78
+2026-10-15,terminal-new-york-celery-cartons-2-dozen-n,Celery,New York,2026-10-12,21.0,2,2026-10-26,18.95,23.22,27.99
+2026-10-15,terminal-new-york-celery-cartons-2-dozen-n,Celery,New York,2026-10-12,21.0,3,2026-11-02,18.98,24.83,32.24
+2026-10-15,terminal-new-york-celery-cartons-2-dozen-n,Celery,New York,2026-10-12,21.0,4,2026-11-09,19.27,26.4,36.96
+2026-10-15,terminal-new-york-celery-cartons-film-bags-30s-n,Celery,New York,2026-10-12,28.0,1,2026-10-19,25.4,28.77,32.49
+2026-10-15,terminal-new-york-celery-cartons-film-bags-30s-n,Celery,New York,2026-10-12,28.0,2,2026-10-26,24.48,30.0,36.16
+2026-10-15,terminal-new-york-celery-cartons-film-bags-30s-n,Celery,New York,2026-10-12,28.0,3,2026-11-02,24.0,31.4,40.77
+2026-10-15,terminal-new-york-celery-cartons-film-bags-30s-n,Celery,New York,2026-10-12,28.0,4,2026-11-09,24.01,32.9,46.06
+2026-10-15,terminal-new-york-cucumbers-1-1-9-bushel-cartons-large-n,Cucumbers,New York,2026-10-12,31.0,1,2026-10-19,24.96,30.96,38.14
+2026-10-15,terminal-new-york-cucumbers-1-1-9-bushel-cartons-large-n,Cucumbers,New York,2026-10-12,31.0,2,2026-10-26,22.25,30.51,42.7
+2026-10-15,terminal-new-york-cucumbers-1-1-9-bushel-cartons-large-n,Cucumbers,New York,2026-10-12,31.0,3,2026-11-02,20.25,29.1,41.74
+2026-10-15,terminal-new-york-cucumbers-1-1-9-bushel-cartons-large-n,Cucumbers,New York,2026-10-12,31.0,4,2026-11-09,19.38,28.24,41.38
+2026-10-15,terminal-new-york-lemons-7-10-bushel-cartons-140s-n,Lemons,New York,2026-10-12,36.5,1,2026-10-19,33.58,36.5,39.62
+2026-10-15,terminal-new-york-lemons-7-10-bushel-cartons-140s-n,Lemons,New York,2026-10-12,36.5,2,2026-10-26,31.64,36.5,41.09
+2026-10-15,terminal-new-york-lemons-7-10-bushel-cartons-140s-n,Lemons,New York,2026-10-12,36.5,3,2026-11-02,30.39,36.5,42.4
+2026-10-15,terminal-new-york-lemons-7-10-bushel-cartons-140s-n,Lemons,New York,2026-10-12,36.5,4,2026-11-09,31.4,39.07,46.12
+2026-10-15,terminal-new-york-lemons-7-10-bushel-cartons-165s-n,Lemons,New York,2026-10-12,36.0,1,2026-10-19,33.12,36.0,39.07
+2026-10-15,terminal-new-york-lemons-7-10-bushel-cartons-165s-n,Lemons,New York,2026-10-12,36.0,2,2026-10-26,31.2,36.0,40.52
+2026-10-15,terminal-new-york-lemons-7-10-bushel-cartons-165s-n,Lemons,New York,2026-10-12,36.0,3,2026-11-02,29.97,36.0,41.82
+2026-10-15,terminal-new-york-lemons-7-10-bushel-cartons-165s-n,Lemons,New York,2026-10-12,36.0,4,2026-11-09,30.77,38.28,45.19
+2026-10-15,terminal-new-york-lettuce-iceberg-cartons-24s-film-wrapped-n,"Lettuce, Iceberg",New York,2026-10-12,65.5,1,2026-10-19,48.7,57.69,69.75
+2026-10-15,terminal-new-york-lettuce-iceberg-cartons-24s-film-wrapped-n,"Lettuce, Iceberg",New York,2026-10-12,65.5,2,2026-10-26,40.03,52.28,74.82
+2026-10-15,terminal-new-york-lettuce-iceberg-cartons-24s-film-wrapped-n,"Lettuce, Iceberg",New York,2026-10-12,65.5,3,2026-11-02,35.42,49.66,79.32
+2026-10-15,terminal-new-york-lettuce-iceberg-cartons-24s-film-wrapped-n,"Lettuce, Iceberg",New York,2026-10-12,65.5,4,2026-11-09,32.47,48.34,83.22
+2026-10-15,terminal-new-york-lettuce-romaine-cartons-24s-n,"Lettuce, Romaine",New York,2026-10-12,21.0,1,2026-10-19,22.93,26.23,30.11
+2026-10-15,terminal-new-york-lettuce-romaine-cartons-24s-n,"Lettuce, Romaine",New York,2026-10-12,21.0,2,2026-10-26,24.94,30.41,38.49
+2026-10-15,terminal-new-york-lettuce-romaine-cartons-24s-n,"Lettuce, Romaine",New York,2026-10-12,21.0,3,2026-11-02,25.64,33.12,46.04
+2026-10-15,terminal-new-york-lettuce-romaine-cartons-24s-n,"Lettuce, Romaine",New York,2026-10-12,21.0,4,2026-11-09,26.17,35.59,52.45
+2026-10-15,terminal-new-york-lettuce-romaine-hearts-cartons-12-3-count-packages-n,"Lettuce, Romaine",New York,2026-10-12,48.0,1,2026-10-19,47.01,53.79,61.73
+2026-10-15,terminal-new-york-lettuce-romaine-hearts-cartons-12-3-count-packages-n,"Lettuce, Romaine",New York,2026-10-12,48.0,2,2026-10-26,45.9,55.96,70.83
+2026-10-15,terminal-new-york-lettuce-romaine-hearts-cartons-12-3-count-packages-n,"Lettuce, Romaine",New York,2026-10-12,48.0,3,2026-11-02,44.01,56.86,79.03
+2026-10-15,terminal-new-york-lettuce-romaine-hearts-cartons-12-3-count-packages-n,"Lettuce, Romaine",New York,2026-10-12,48.0,4,2026-11-09,41.71,56.72,83.57
+2026-10-15,terminal-new-york-limes-seedless-type-40-lb-cartons-175s-n,Limes,New York,2026-10-12,37.5,1,2026-10-19,31.71,35.77,41.29
+2026-10-15,terminal-new-york-limes-seedless-type-40-lb-cartons-175s-n,Limes,New York,2026-10-12,37.5,2,2026-10-26,27.23,33.69,43.18
+2026-10-15,terminal-new-york-limes-seedless-type-40-lb-cartons-175s-n,Limes,New York,2026-10-12,37.5,3,2026-11-02,25.29,32.97,45.0
+2026-10-15,terminal-new-york-limes-seedless-type-40-lb-cartons-175s-n,Limes,New York,2026-10-12,37.5,4,2026-11-09,23.66,32.31,46.17
+2026-10-15,terminal-new-york-limes-seedless-type-40-lb-cartons-200s-n,Limes,New York,2026-10-12,36.5,1,2026-10-19,30.89,34.85,40.23
+2026-10-15,terminal-new-york-limes-seedless-type-40-lb-cartons-200s-n,Limes,New York,2026-10-12,36.5,2,2026-10-26,26.57,32.87,42.13
+2026-10-15,terminal-new-york-limes-seedless-type-40-lb-cartons-200s-n,Limes,New York,2026-10-12,36.5,3,2026-11-02,24.75,32.27,44.04
+2026-10-15,terminal-new-york-limes-seedless-type-40-lb-cartons-200s-n,Limes,New York,2026-10-12,36.5,4,2026-11-09,23.2,31.68,45.27
+2026-10-15,terminal-new-york-onions-dry-pearl-type-cartons-12-10-oz-packages-small-red-n,"Onions, Dry",New York,2026-10-12,22.5,1,2026-10-19,21.34,22.5,23.82
+2026-10-15,terminal-new-york-onions-dry-pearl-type-cartons-12-10-oz-packages-small-red-n,"Onions, Dry",New York,2026-10-12,22.5,2,2026-10-26,20.36,22.5,25.01
+2026-10-15,terminal-new-york-onions-dry-pearl-type-cartons-12-10-oz-packages-small-red-n,"Onions, Dry",New York,2026-10-12,22.5,3,2026-11-02,19.77,22.5,26.25
+2026-10-15,terminal-new-york-onions-dry-pearl-type-cartons-12-10-oz-packages-small-red-n,"Onions, Dry",New York,2026-10-12,22.5,4,2026-11-09,19.29,22.5,27.15
+2026-10-15,terminal-new-york-onions-dry-pearl-type-cartons-12-10-oz-packages-small-yellow-n,"Onions, Dry",New York,2026-10-12,21.0,1,2026-10-19,19.91,21.0,22.24
+2026-10-15,terminal-new-york-onions-dry-pearl-type-cartons-12-10-oz-packages-small-yellow-n,"Onions, Dry",New York,2026-10-12,21.0,2,2026-10-26,19.01,21.0,23.34
+2026-10-15,terminal-new-york-onions-dry-pearl-type-cartons-12-10-oz-packages-small-yellow-n,"Onions, Dry",New York,2026-10-12,21.0,3,2026-11-02,18.46,21.0,24.5
+2026-10-15,terminal-new-york-onions-dry-pearl-type-cartons-12-10-oz-packages-small-yellow-n,"Onions, Dry",New York,2026-10-12,21.0,4,2026-11-09,18.0,21.0,25.34
+2026-10-15,terminal-new-york-peppers-bell-type-5-kg-11-lb-cartons-extra-large-orange-n,"Peppers, Bell Type",New York,2026-10-12,11.0,1,2026-10-19,9.79,12.14,15.09
+2026-10-15,terminal-new-york-peppers-bell-type-5-kg-11-lb-cartons-extra-large-orange-n,"Peppers, Bell Type",New York,2026-10-12,11.0,2,2026-10-26,9.11,12.99,17.76
+2026-10-15,terminal-new-york-peppers-bell-type-5-kg-11-lb-cartons-extra-large-orange-n,"Peppers, Bell Type",New York,2026-10-12,11.0,3,2026-11-02,8.68,13.55,20.13
+2026-10-15,terminal-new-york-peppers-bell-type-5-kg-11-lb-cartons-extra-large-orange-n,"Peppers, Bell Type",New York,2026-10-12,11.0,4,2026-11-09,8.26,13.81,22.41
+2026-10-15,terminal-new-york-peppers-bell-type-5-kg-11-lb-cartons-extra-large-yellow-n,"Peppers, Bell Type",New York,2026-10-12,11.0,1,2026-10-19,9.88,12.25,15.23
+2026-10-15,terminal-new-york-peppers-bell-type-5-kg-11-lb-cartons-extra-large-yellow-n,"Peppers, Bell Type",New York,2026-10-12,11.0,2,2026-10-26,9.05,12.9,17.64
+2026-10-15,terminal-new-york-peppers-bell-type-5-kg-11-lb-cartons-extra-large-yellow-n,"Peppers, Bell Type",New York,2026-10-12,11.0,3,2026-11-02,8.54,13.33,19.81
+2026-10-15,terminal-new-york-peppers-bell-type-5-kg-11-lb-cartons-extra-large-yellow-n,"Peppers, Bell Type",New York,2026-10-12,11.0,4,2026-11-09,8.05,13.46,21.85
+2026-10-15,terminal-new-york-potatoes-round-red-50-lb-cartons-size-a-n,Potatoes,New York,2026-10-12,34.5,1,2026-10-19,32.18,34.5,36.8
+2026-10-15,terminal-new-york-potatoes-round-red-50-lb-cartons-size-a-n,Potatoes,New York,2026-10-12,34.5,2,2026-10-26,30.74,34.5,38.7
+2026-10-15,terminal-new-york-potatoes-round-red-50-lb-cartons-size-a-n,Potatoes,New York,2026-10-12,34.5,3,2026-11-02,30.1,34.5,39.9
+2026-10-15,terminal-new-york-potatoes-round-red-50-lb-cartons-size-a-n,Potatoes,New York,2026-10-12,34.5,4,2026-11-09,29.14,34.5,40.54
+2026-10-15,terminal-new-york-strawberries-flats-8-1-lb-containers-with-lids-extra-large-n,Strawberries,New York,2026-10-12,16.0,1,2026-10-19,15.15,19.64,24.28
+2026-10-15,terminal-new-york-strawberries-flats-8-1-lb-containers-with-lids-extra-large-n,Strawberries,New York,2026-10-12,16.0,2,2026-10-26,13.96,21.21,28.93
+2026-10-15,terminal-new-york-strawberries-flats-8-1-lb-containers-with-lids-extra-large-n,Strawberries,New York,2026-10-12,16.0,3,2026-11-02,13.17,21.95,31.96
+2026-10-15,terminal-new-york-strawberries-flats-8-1-lb-containers-with-lids-extra-large-n,Strawberries,New York,2026-10-12,16.0,4,2026-11-09,13.1,22.68,34.79
+2026-10-15,terminal-new-york-tomatoes-vine-ripes-flats-18s-light-red-red-n,Tomatoes,New York,2026-10-12,31.0,1,2026-10-19,24.77,31.0,39.27
+2026-10-15,terminal-new-york-tomatoes-vine-ripes-flats-18s-light-red-red-n,Tomatoes,New York,2026-10-12,31.0,2,2026-10-26,31.43,45.03,65.28
+2026-10-15,terminal-new-york-tomatoes-vine-ripes-flats-18s-light-red-red-n,Tomatoes,New York,2026-10-12,31.0,3,2026-11-02,30.15,45.77,71.51
+2026-10-15,terminal-new-york-tomatoes-vine-ripes-flats-18s-light-red-red-n,Tomatoes,New York,2026-10-12,31.0,4,2026-11-09,27.67,43.77,71.79
+2026-10-15,terminal-new-york-tomatoes-vine-ripes-flats-20s-light-red-red-n,Tomatoes,New York,2026-10-12,33.0,1,2026-10-19,26.37,33.0,41.81
+2026-10-15,terminal-new-york-tomatoes-vine-ripes-flats-20s-light-red-red-n,Tomatoes,New York,2026-10-12,33.0,2,2026-10-26,28.11,40.28,58.39
+2026-10-15,terminal-new-york-tomatoes-vine-ripes-flats-20s-light-red-red-n,Tomatoes,New York,2026-10-12,33.0,3,2026-11-02,25.92,39.34,61.47
+2026-10-15,terminal-new-york-tomatoes-vine-ripes-flats-20s-light-red-red-n,Tomatoes,New York,2026-10-12,33.0,4,2026-11-09,24.08,38.08,62.46
