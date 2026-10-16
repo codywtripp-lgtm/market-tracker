@@ -15,7 +15,7 @@ Broccoli,Chicago,14.5,14.9,no change,-3.0
 "Tomatoes, Plum Type",Chicago,18.1,16.8,model,7.0
 "Peppers, Bell Type",Chicago,19.7,17.7,model,10.0
 Blueberries,Chicago,19.3,18.5,model,4.0
-Tomatoes,Chicago,21.3,20.4,model,4.0
+Tomatoes,Chicago,21.3,20.5,model,4.0
 Strawberries,Chicago,23.7,20.6,model,13.0
 Bananas,Los Angeles,1.0,1.1,no change,-10.0
 Carrots,Los Angeles,3.0,3.2,no change,-7.0
@@ -32,13 +32,13 @@ Cucumbers,Los Angeles,16.6,17.0,model,-2.0
 Blueberries,Los Angeles,19.0,17.1,model,10.0
 Tomatoes,Los Angeles,18.0,18.2,no change,-1.0
 "Tomatoes, Plum Type",Los Angeles,19.2,18.4,model,4.0
-"Peppers, Bell Type",Los Angeles,18.8,19.4,no change,-3.0
-"Lettuce, Iceberg",Los Angeles,26.2,22.8,model,13.0
+"Peppers, Bell Type",Los Angeles,18.9,19.5,no change,-3.0
+"Lettuce, Iceberg",Los Angeles,26.2,22.9,model,13.0
 "Onions, Dry",New York,0.2,0.4,no change,-100.0
 Bananas,New York,1.3,1.5,no change,-15.0
 Carrots,New York,4.8,4.8,no change,0.0
-Potatoes,New York,5.6,5.7,no change,-2.0
 Lemons,New York,6.4,6.5,no change,-2.0
+Potatoes,New York,7.0,7.0,no change,0.0
 Celery,New York,12.9,10.0,model,22.0
 Avocados,New York,11.2,10.8,model,4.0
 Grapes,New York,11.3,11.6,no change,-3.0
@@ -46,9 +46,9 @@ Broccoli,New York,15.4,12.1,model,21.0
 "Lettuce, Romaine",New York,16.3,13.8,model,15.0
 Limes,New York,18.8,14.0,model,26.0
 "Lettuce, Iceberg",New York,21.5,18.1,model,16.0
-"Tomatoes, Plum Type",New York,19.1,19.3,no change,-1.0
+"Tomatoes, Plum Type",New York,19.1,19.4,no change,-2.0
 "Peppers, Bell Type",New York,23.4,22.0,model,6.0
-Blueberries,New York,26.7,22.6,model,15.0
+Blueberries,New York,26.7,22.7,model,15.0
 Cucumbers,New York,29.0,26.2,model,10.0
 Tomatoes,New York,28.9,26.7,model,8.0
 Strawberries,New York,40.6,34.3,model,16.0
