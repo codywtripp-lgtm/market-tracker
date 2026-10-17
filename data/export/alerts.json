@@ -1,16 +1,27 @@
 {
- "asOf": "2026-10-16",
+ "asOf": "2026-10-17",
  "alerts": [
+  {
+   "signal": "usda_tone",
+   "commodity": "Lettuce, Romaine",
+   "market": "Los Angeles",
+   "direction": "up",
+   "headline": "Lettuce, Romaine: USDA reporters in Los Angeles call the market higher (\u201cMarket higher\u201d).",
+   "expect": "Expect Los Angeles prices to rise next week.",
+   "record": "That happened 25 of the last 30 times (normally 21%).",
+   "hit_rate": 0.833,
+   "id": "usda_tone|Lettuce, Romaine|Los Angeles|up|2026-10-12"
+  },
   {
    "signal": "sp_lead",
    "commodity": "Strawberries",
    "market": "New York",
    "direction": "up",
-   "headline": "Strawberries: shipping point up 28% this week; New York hasn't followed yet (-2% this week).",
+   "headline": "Strawberries: shipping point up 35% this week; New York hasn't followed yet (-2% this week).",
    "expect": "Expect New York prices to rise within ~2 weeks.",
    "record": "New York followed 22 of the last 27 times (normally 44%).",
    "hit_rate": 0.815,
-   "sp_change": 28.1,
+   "sp_change": 35.0,
    "terminal_change": -2.4,
    "id": "sp_lead|Strawberries|New York|up|2026-10-12"
   },
@@ -23,8 +34,8 @@
    "expect": "Expect Chicago prices to rise within ~2 weeks.",
    "record": "Chicago followed 34 of the last 43 times (normally 38%).",
    "hit_rate": 0.791,
-   "sp_change": 12.3,
-   "terminal_change": 0.5,
+   "sp_change": 12.4,
+   "terminal_change": 0.9,
    "id": "sp_lead|Lettuce, Iceberg|Chicago|up|2026-10-12"
   },
   {
@@ -32,39 +43,48 @@
    "commodity": "Strawberries",
    "market": "Chicago",
    "direction": "up",
-   "headline": "Strawberries: shipping point up 28% this week; Chicago hasn't followed yet (+0% this week).",
+   "headline": "Strawberries: shipping point up 35% this week; Chicago hasn't followed yet (+0% this week).",
    "expect": "Expect Chicago prices to rise within ~2 weeks.",
    "record": "Chicago followed 29 of the last 37 times (normally 43%).",
    "hit_rate": 0.784,
-   "sp_change": 28.1,
+   "sp_change": 35.0,
    "terminal_change": 0.0,
    "id": "sp_lead|Strawberries|Chicago|up|2026-10-12"
+  },
+  {
+   "signal": "usda_tone",
+   "commodity": "Tomatoes",
+   "market": "Los Angeles",
+   "direction": "up",
+   "headline": "Tomatoes: USDA reporters in Los Angeles call the market higher (\u201cMarket higher\u201d).",
+   "expect": "Expect Los Angeles prices to rise next week.",
+   "record": "That happened 19 of the last 25 times (normally 20%).",
+   "hit_rate": 0.76,
+   "id": "usda_tone|Tomatoes|Los Angeles|up|2026-10-12"
+  },
+  {
+   "signal": "usda_tone",
+   "commodity": "Lettuce, Iceberg",
+   "market": "Los Angeles",
+   "direction": "up",
+   "headline": "Lettuce, Iceberg: USDA reporters in Los Angeles call the market higher (\u201cMarket higher\u201d).",
+   "expect": "Expect Los Angeles prices to rise next week.",
+   "record": "That happened 34 of the last 47 times (normally 28%).",
+   "hit_rate": 0.723,
+   "id": "usda_tone|Lettuce, Iceberg|Los Angeles|up|2026-10-12"
   },
   {
    "signal": "sp_lead",
    "commodity": "Lettuce, Iceberg",
    "market": "Los Angeles",
    "direction": "up",
-   "headline": "Lettuce, Iceberg: shipping point up 12% this week; Los Angeles hasn't followed yet (+0% this week).",
+   "headline": "Lettuce, Iceberg: shipping point up 12% this week; Los Angeles hasn't followed yet (+2% this week).",
    "expect": "Expect Los Angeles prices to rise within ~2 weeks.",
    "record": "Los Angeles followed 14 of the last 20 times (normally 36%).",
    "hit_rate": 0.7,
-   "sp_change": 12.3,
-   "terminal_change": 0.0,
+   "sp_change": 12.4,
+   "terminal_change": 1.8,
    "id": "sp_lead|Lettuce, Iceberg|Los Angeles|up|2026-10-12"
-  },
-  {
-   "signal": "sp_lead",
-   "commodity": "Tomatoes, Plum Type",
-   "market": "Chicago",
-   "direction": "up",
-   "headline": "Tomatoes, Plum Type: shipping point up 21% this week; Chicago hasn't followed yet (+1% this week).",
-   "expect": "Expect Chicago prices to rise within ~2 weeks.",
-   "record": "Chicago followed 29 of the last 43 times (normally 36%).",
-   "hit_rate": 0.674,
-   "sp_change": 21.2,
-   "terminal_change": 0.9,
-   "id": "sp_lead|Tomatoes, Plum Type|Chicago|up|2026-10-12"
   },
   {
    "signal": "usda_tone",
