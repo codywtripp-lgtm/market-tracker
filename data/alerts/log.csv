@@ -42,3 +42,9 @@ usda_tone|Blueberries|New York|down|2026-10-12,2026-10-15,usda_tone,Blueberries,
 "sp_lead|Tomatoes, Plum Type|Chicago|up|2026-10-12",2026-10-15,sp_lead,"Tomatoes, Plum Type",Chicago,up,"Tomatoes, Plum Type: shipping point up 18% this week; Chicago hasn't followed yet (+3% this week)."
 usda_tone|Tomatoes|Los Angeles|up|2026-10-12,2026-10-17,usda_tone,Tomatoes,Los Angeles,up,Tomatoes: USDA reporters in Los Angeles call the market higher (“Market higher”).
 "usda_tone|Lettuce, Iceberg|Los Angeles|up|2026-10-12",2026-10-17,usda_tone,"Lettuce, Iceberg",Los Angeles,up,"Lettuce, Iceberg: USDA reporters in Los Angeles call the market higher (“Market higher”)."
+sp_lead|Strawberries|New York|up|2026-10-19,2026-10-20,sp_lead,Strawberries,New York,up,Strawberries: shipping point up 42% this week; New York hasn't followed yet (+3% this week).
+sp_lead|Strawberries|Chicago|up|2026-10-19,2026-10-20,sp_lead,Strawberries,Chicago,up,Strawberries: shipping point up 42% this week; Chicago hasn't followed yet (+0% this week).
+usda_tone|Tomatoes|Los Angeles|up|2026-10-19,2026-10-20,usda_tone,Tomatoes,Los Angeles,up,Tomatoes: USDA reporters in Los Angeles call the market higher (“Market higher”).
+sp_lead|Limes|New York|down|2026-10-19,2026-10-20,sp_lead,Limes,New York,down,Limes: shipping point down 11% this week; New York hasn't followed yet (+3% this week).
+usda_tone|Tomatoes|New York|up|2026-10-19,2026-10-20,usda_tone,Tomatoes,New York,up,"Tomatoes: USDA reporters in New York call the market higher (“Market mature greens slightly higher, others about steady”)."
+"usda_tone|Lettuce, Iceberg|Chicago|up|2026-10-19",2026-10-20,usda_tone,"Lettuce, Iceberg",Chicago,up,"Lettuce, Iceberg: USDA reporters in Chicago call the market higher (“Market higher”)."
