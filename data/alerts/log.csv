@@ -52,3 +52,4 @@ usda_tone|Tomatoes|New York|up|2026-10-19,2026-10-20,usda_tone,Tomatoes,New York
 "sp_lead|Lettuce, Romaine|New York|up|2026-10-19",2026-10-21,sp_lead,"Lettuce, Romaine",New York,up,"Lettuce, Romaine: shipping point up 15% this week; New York hasn't followed yet (+0% this week)."
 "usda_tone|Tomatoes, Plum Type|New York|up|2026-10-19",2026-10-21,usda_tone,"Tomatoes, Plum Type",New York,up,"Tomatoes, Plum Type: USDA reporters in New York call the market higher (“Market slightly higher”)."
 "usda_tone|Lettuce, Iceberg|New York|down|2026-10-19",2026-10-21,usda_tone,"Lettuce, Iceberg",New York,down,"Lettuce, Iceberg: USDA reporters in New York call the market lower (“Market slightly lower”)."
+usda_tone|Limes|New York|up|2026-10-19,2026-10-22,usda_tone,Limes,New York,up,"Limes: USDA reporters in New York call the market higher (“Market mexico slightly higher, others about steady”)."
