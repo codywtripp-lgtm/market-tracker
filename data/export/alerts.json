@@ -1,6 +1,17 @@
 {
- "asOf": "2026-10-22",
+ "asOf": "2026-10-23",
  "alerts": [
+  {
+   "signal": "usda_tone",
+   "commodity": "Broccoli",
+   "market": "New York",
+   "direction": "down",
+   "headline": "Broccoli: USDA reporters in New York call the market lower (\u201cMarket slightly lower\u201d).",
+   "expect": "Expect New York prices to fall next week.",
+   "record": "That happened 28 of the last 32 times (normally 30%).",
+   "hit_rate": 0.875,
+   "id": "usda_tone|Broccoli|New York|down|2026-10-19"
+  },
   {
    "signal": "usda_tone",
    "commodity": "Tomatoes, Plum Type",
@@ -13,26 +24,17 @@
    "id": "usda_tone|Tomatoes, Plum Type|New York|up|2026-10-19"
   },
   {
-   "signal": "usda_tone",
-   "commodity": "Tomatoes",
-   "market": "Los Angeles",
-   "direction": "up",
-   "headline": "Tomatoes: USDA reporters in Los Angeles call the market higher (\u201cMarket higher\u201d).",
-   "expect": "Expect Los Angeles prices to rise next week.",
-   "record": "That happened 19 of the last 25 times (normally 20%).",
-   "hit_rate": 0.76,
-   "id": "usda_tone|Tomatoes|Los Angeles|up|2026-10-19"
-  },
-  {
-   "signal": "usda_tone",
+   "signal": "sp_lead",
    "commodity": "Limes",
    "market": "New York",
-   "direction": "up",
-   "headline": "Limes: USDA reporters in New York call the market higher (\u201cMarket mexico slightly higher, others about steady\u201d).",
-   "expect": "Expect New York prices to rise next week.",
-   "record": "That happened 40 of the last 56 times (normally 28%).",
-   "hit_rate": 0.714,
-   "id": "usda_tone|Limes|New York|up|2026-10-19"
+   "direction": "down",
+   "headline": "Limes: shipping point down 10% this week; New York hasn't followed yet (+1% this week).",
+   "expect": "Expect New York prices to fall within ~2 weeks.",
+   "record": "New York followed 17 of the last 24 times (normally 41%).",
+   "hit_rate": 0.708,
+   "sp_change": -10.1,
+   "terminal_change": 1.0,
+   "id": "sp_lead|Limes|New York|down|2026-10-19"
   },
   {
    "signal": "usda_tone",
@@ -44,17 +46,6 @@
    "record": "That happened 37 of the last 56 times (normally 30%).",
    "hit_rate": 0.661,
    "id": "usda_tone|Tomatoes|New York|up|2026-10-19"
-  },
-  {
-   "signal": "usda_tone",
-   "commodity": "Lettuce, Iceberg",
-   "market": "Chicago",
-   "direction": "up",
-   "headline": "Lettuce, Iceberg: USDA reporters in Chicago call the market higher (\u201cMarket higher\u201d).",
-   "expect": "Expect Chicago prices to rise next week.",
-   "record": "That happened 17 of the last 26 times (normally 34%).",
-   "hit_rate": 0.654,
-   "id": "usda_tone|Lettuce, Iceberg|Chicago|up|2026-10-19"
   }
  ]
 }
