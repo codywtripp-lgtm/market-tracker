@@ -1,5 +1,5 @@
 {
- "asOf": "2026-10-23",
+ "asOf": "2026-10-24",
  "alerts": [
   {
    "signal": "usda_tone",
@@ -22,19 +22,6 @@
    "record": "That happened 35 of the last 46 times (normally 31%).",
    "hit_rate": 0.761,
    "id": "usda_tone|Tomatoes, Plum Type|New York|up|2026-10-19"
-  },
-  {
-   "signal": "sp_lead",
-   "commodity": "Limes",
-   "market": "New York",
-   "direction": "down",
-   "headline": "Limes: shipping point down 10% this week; New York hasn't followed yet (+1% this week).",
-   "expect": "Expect New York prices to fall within ~2 weeks.",
-   "record": "New York followed 17 of the last 24 times (normally 41%).",
-   "hit_rate": 0.708,
-   "sp_change": -10.1,
-   "terminal_change": 1.0,
-   "id": "sp_lead|Limes|New York|down|2026-10-19"
   },
   {
    "signal": "usda_tone",
