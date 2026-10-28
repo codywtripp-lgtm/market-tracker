@@ -18,7 +18,10 @@ import re
 import statistics
 from collections import defaultdict
 
-from . import cpi, store
+import csv
+
+from . import conditions, cpi, store
+from .quality import LEVELS, quality
 from .usual import with_usual
 
 WINDOW_DAYS = 15     # same weeks in earlier years: +/- 2 weeks
@@ -148,7 +151,8 @@ def load(rows):
     return out
 
 
-def build(rows, deflator=None):
+def build(rows, deflator=None, live=None):
+    """live: this week's conditions per commodity (pipeline/conditions.py); computed from the reports when None."""
     deflator = deflator or cpi.Deflator({})
     data = load(rows)
     if not data:
@@ -205,6 +209,7 @@ def build(rows, deflator=None):
                 "low": None, "high": None, "featured": None,
                 "chart": [(d, round(p, 2), band.get(d, (None, None)))
                           for d, (p, _) in sorted(week.items()) if d >= (today - dt.timedelta(days=371)).isoformat()]}
+        item["quality"] = quality(commodity, today.month, item["in_season"] if item["seasons"] else None)
         if len(years) >= MIN_YEARS and this_week:
             pool.sort()
             now = real[latest]
@@ -217,22 +222,44 @@ def build(rows, deflator=None):
             expected = statistics.mean(past_stores[y] for y in years) / 5  # stores per week, same weeks before
             item["featured"] = round(stores / expected, 2) if expected else None
         items.append(item)
+    if live is None:
+        path = store.DATA / "export" / "supply.csv"
+        ship = {}
+        if path.exists():
+            with open(path, newline="", encoding="utf-8") as f:
+                ship = {r["commodity"]: _num(r["vs_last_year_pct"]) for r in csv.DictReader(f)}
+        live = conditions.build(today, ship)
+    for i in items:  # real conditions this week, on top of the calendar
+        c = live.get(i["commodity"])
+        if not c or not c["notes"]:
+            continue
+        level, reason = i["quality"] or ("Good", "")
+        if c["down"]:
+            level = LEVELS[max(0, LEVELS.index(level) - 1)]
+        i["quality"] = (level, f"{reason} {' '.join(c['notes'])}".strip())
+        i["conditions"] = c["notes"]
     by_c = {i["commodity"]: i for i in items if i["this_week"]}
     for i in items:
         if i["status"] == "high":
             fam = next((f for f in FAMILIES if i["commodity"] in f), [])
             alts = [by_c[c] for c in fam if c in by_c and c != i["commodity"] and by_c[c]["status"] == "low"
-                    and by_c[c]["in_season"] and by_c[c]["stores"] >= MIN_STORES]  # never suggest out-of-season fruit as the better buy
+                    and by_c[c]["in_season"] and by_c[c]["stores"] >= MIN_STORES and q_rank(by_c[c]) >= 2]  # never suggest out-of-season fruit as the better buy
             i["swap"] = min(alts, key=lambda a: a["vs_usual"])["short"] if alts else None
     return today, sorted(items, key=lambda i: i["name"])
 
 
+def q_rank(i):
+    """0 Poor, 1 Fair, 2 Good, 3 Excellent; unknown counts as Good."""
+    return LEVELS.index(i["quality"][0]) if i.get("quality") else 2
+
+
 def best_buys(items, n=8):
-    """Low for the time of year, in-season and widely featured first."""
-    items = [i for i in items if i["this_week"] and i["stores"] >= MIN_STORES]
+    """Low for the time of year, good quality, in season and widely featured first. A cheap price on poor
+    produce (August apples, winter peaches) is not a best buy."""
+    items = [i for i in items if i["this_week"] and i["stores"] >= MIN_STORES and q_rank(i) >= 1]
     good = [i for i in items if i["status"] == "low" or (i["status"] == "typical" and i["in_season"]
                                                            and (i["featured"] or 0) >= 1.3 and (i["vs_usual"] or 0) <= 0)]
-    return sorted(good, key=lambda i: (i["status"] != "low", -(i["in_season"]), i["vs_usual"] or 0))[:n]
+    return sorted(good, key=lambda i: (i["status"] != "low", q_rank(i) < 2, -(i["in_season"]), i["vs_usual"] or 0))[:n]
 
 
 def main():

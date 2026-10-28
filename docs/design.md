@@ -40,6 +40,7 @@ not read as AI-generated. Check new work against the "Never" list before it ship
   - Good: #12733b
   - Pricey: #b42318
   - Tag yellow: #ffd84d
+  - Fair quality: #8a5a00 (quality ratings only)
 - **Shape:** 6px radius on controls and tags only. No drop shadows except the active switch segment.
 
 ## Components
@@ -49,6 +50,8 @@ not read as AI-generated. Check new work against the "Never" list before it ship
 - **Price check bar:** low / typical / high zones for the same weeks in past years, with a marker for this week and
   plain labels under it.
 - **Rows:** hairline-separated rows (watchlists, lists). No outer box.
+- **Quality rating:** one word (Excellent / Good / Fair / Poor quality), dotted underline; the reason shows on hover
+  (desktop) or tap (phone, opens in place). Never colour alone.
 - **Callout:** one tinted band per page for the single most important instruction (wholesale "What to do").
 
 ## Never
