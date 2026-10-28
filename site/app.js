@@ -50,7 +50,8 @@ function itemsInMarket() {
   for (const i of state.items.filter(market().match)) {
     const k = itemKey(i);
     const cur = best.get(k);
-    if (!cur || (i.coverage ?? 0) > (cur.coverage ?? 0)) best.set(k, i);
+    // the main trade pack (export's headline) wins, then the best-covered series
+    if (!cur || (i.main && !cur.main) || (i.main === cur.main && (i.coverage ?? 0) > (cur.coverage ?? 0))) best.set(k, i);
   }
   return [...best.entries()].map(([key, i]) => ({ key, ...i })).sort((a, b) => a.key.localeCompare(b.key));
 }

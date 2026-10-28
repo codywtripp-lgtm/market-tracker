@@ -45,5 +45,5 @@ No newsletter (owner decision 2026-10-28): the website and search are the channe
 ## Pitch page (/why/)
 `scripts/value_stats.py` replays the brief's 2-week calls walk-forward on 2021–2026 (same model and per-item
 model-vs-no-change choice as the live forecast) and writes `data/export/value.json`; `build_site.py` turns it into
-/why/. Re-run it by hand after model changes (about a minute). Result 2026-10-28: 71% of 7,917 calls right on
-direction, 85% when the move was 10%+, $4.23/case average move in the called direction; alerts 75% vs. 33% base.
+/why/. Re-run it by hand after model changes (about a minute). Result 2026-10-28 (main trade packs): 73% of 8,698 calls right on
+direction, 86% when the move was 10%+, $4.47/case average move in the called direction; alerts 75% vs. 33% base.
