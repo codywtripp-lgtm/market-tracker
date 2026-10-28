@@ -115,6 +115,10 @@ def page(today, items):
     parts = [f'<section class="intro"><h1>This week’s best buys in the produce aisle</h1>'
              f'<p class="date">Week of {today:%B} {today.day}, {today.year} · from supermarket flyers across the U.S., '
              f'reported by USDA</p><p class="lede">{esc(lede(items, buys, pricey))}</p></section>']
+    from .holiday import thanksgiving
+    if 0 <= (thanksgiving(today.year) - today).days <= 40:
+        parts.append('<p class="promo"><a href="@/thanksgiving-produce-prices/">Thanksgiving produce prices: what to buy now '
+                     'and what to wait for</a></p>')
     if buys:
         tiles = "".join(
             f'<li class="buy">{tag(i)}<div class="buy-body"><h3>{link(i)}</h3>{qual(i)}'
@@ -354,3 +358,89 @@ def item_page(i, today, all_items):
                      for o in sorted(all_items, key=lambda o: o["short"]) if o["slug"] != i["slug"])
     parts.append(f'<section><h2>Other produce</h2><nav class="others">{others}</nav></section>')
     return "\n".join(parts) + "\n"
+
+
+
+# ---------- Thanksgiving guide ----------
+def thanksgiving_page(today, items):
+    from . import holiday
+    by_c = {i["commodity"]: i for i in items}
+    rows = []
+    for c in holiday.ITEMS:
+        i = by_c.get(c)
+        if not i or not i["this_week"]:
+            continue
+        o = holiday.item_outlook(i, today)
+        if o["change"] is None:
+            continue
+        rows.append((i, o))
+    if not rows:
+        return None, None
+    target = rows[0][1]["target"]
+    days = (target - dt.date.today()).days  # the page is rebuilt every evening
+    wait = [i for i, o in rows if o["change"] <= -0.10]
+    rise = [i for i, o in rows if o["change"] >= 0.05]
+
+    def names(xs):
+        n = [x["short"] if x["short"].split()[0] in grocery.KEEP_CAPS else x["short"][:1].lower() + x["short"][1:]
+             for x in xs]
+        s = n[0] if len(n) == 1 else ", ".join(n[:-1]) + " and " + n[-1]
+        return s
+
+    def cap(s):
+        return s[:1].upper() + s[1:]
+
+    lede = f"Thanksgiving is {target:%B} {target.day}, {days} days away."
+    if wait:
+        lede += (f" {cap(names(wait))} usually get much cheaper the week before, when supermarkets run their holiday "
+                 "sales, so it pays to wait.")
+    if rise:
+        lede += f" {cap(names(rise))} usually cost a bit more by then."
+
+    def todo(i, o):
+        if o["change"] <= -0.10:
+            return "Wait for the sale", "good"
+        if o["change"] >= 0.05:
+            return ("Buy ahead" if i["commodity"] in holiday.KEEPS else "Buy on a good sale"), "bad"
+        return "No rush", ""
+
+    body = ""
+    for i, o in sorted(rows, key=lambda r: r[1]["change"]):
+        word, tone = todo(i, o)
+        last = money(o["last_tg"]) if o["last_tg"] else "–"
+        body += (f'<tr><th scope="row">{link(i)}{qual(i)}</th>'
+                 f'<td class="num" data-label="On sale now">{money(i["price"])}<small>{esc(i["unit"].strip())}</small></td>'
+                 f'<td class="num" data-label="Last Thanksgiving week">{last}</td>'
+                 f'<td data-label="What to do"><b class="{tone}">{word}</b><small>{esc(holiday.advice(i, o))}</small></td></tr>')
+    cheaper = [i for i, _ in rows if i["status"] == "low"]
+    pricier = [i for i, _ in rows if i["status"] == "high"]
+    now_text = ""
+    if cheaper:
+        now_text += f"Right now, {names(cheaper)} {'are' if len(cheaper) > 1 or plural(cheaper[0]) else 'is'} cheaper than usual for this time of year. "
+    if pricier:
+        now_text += f"{cap(names(pricier))} {'are' if len(pricier) > 1 or plural(pricier[0]) else 'is'} pricier than usual."
+    now_text = now_text.strip()
+    qa = [("When is the best time to buy produce for Thanksgiving?",
+           "For sweet potatoes, cranberries, celery and Brussels sprouts, the week before Thanksgiving: supermarkets "
+           "put them on sale then, and prices usually drop well below late-October levels. Green beans and mushrooms "
+           "usually go the other way, so buy them when you see a good sale."),
+          ("Are Thanksgiving vegetables more expensive this year?",
+           now_text or "Most are close to their usual price for this time of year."),
+          ("Why are sweet potatoes and cranberries so cheap at Thanksgiving?",
+           "Stores use them as holiday specials to bring shoppers in, so many more stores put them on sale that week; "
+           "in past years six to eight times as many stores ran sales on them as in late October.")]
+    faq_ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+        {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in qa]})
+    parts = [f'<section class="intro"><h1>Thanksgiving produce prices {target.year}</h1>'
+             f'<p class="date">Updated with supermarket flyers for the week of {today:%B} {today.day}, {today.year}, from USDA</p>'
+             f'<p class="lede">{esc(lede)}</p></section>',
+             '<section><h2>Buy now or wait?</h2>' + (f"<p>{esc(now_text)}</p>" if now_text else "")
+             + '<table class="data stack tg"><thead><tr><th>Item</th><th class="num">On sale now</th>'
+             f'<th class="num">Last Thanksgiving week</th><th>What to do</th></tr></thead><tbody>{body}</tbody></table>'
+             '<p class="fine">“Usually” is the median change in the average flyer sale price from this point in the fall '
+             'to Thanksgiving week, 2016 to 2025 (five years for items added in 2021). Sale prices, not everyday shelf '
+             'prices.</p></section>',
+             '<section class="faq"><h2>Questions shoppers ask</h2>'
+             + "".join(f"<h3>{esc(q)}</h3><p>{esc(a)}</p>" for q, a in qa) + "</section>",
+             f'<script type="application/ld+json">{faq_ld}</script>']
+    return target, "\n".join(parts) + "\n"
