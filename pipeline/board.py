@@ -41,6 +41,13 @@ PAGES = {
     "Celery": ("celery-prices", "Celery"), "Carrots": ("carrot-prices", "Carrot"), "Bananas": ("banana-prices", "Banana"),
     "Blueberries": ("blueberry-prices", "Blueberry"), "Grapes": ("grape-prices", "Grape"),
 }
+GROCERY = {  # the grocery page for the same item (pipeline/grocery.py slugs)
+    "Avocados": "avocados", "Strawberries": "strawberries", "Tomatoes": "tomatoes", "Tomatoes, Plum Type": "tomatoes",
+    "Peppers, Bell Type": "bell-peppers", "Onions, Dry": "onions", "Potatoes": "potatoes", "Lemons": "lemons",
+    "Limes": "limes", "Cucumbers": "cucumbers", "Broccoli": "broccoli", "Celery": "celery", "Carrots": "carrots",
+    "Bananas": "bananas", "Blueberries": "blueberries", "Grapes": "grapes", "Lettuce, Iceberg": "lettuce",
+    "Lettuce, Romaine": "lettuce",
+}
 DISPLAY = {  # full names for rows and headings
     "Lettuce, Iceberg": "Iceberg lettuce", "Lettuce, Romaine": "Romaine lettuce", "Tomatoes": "Tomatoes",
     "Tomatoes, Plum Type": "Roma tomatoes", "Peppers, Bell Type": "Bell peppers", "Onions, Dry": "Onions",
@@ -600,6 +607,9 @@ def item_page(commodity, rows, hist, today, sizes, alerts, as_of, notes, only=No
     parts.append('<h2>Questions buyers ask</h2><div class="faq">'
                  + "".join(f"<h3>{esc(q)}</h3><p>{esc(a)}</p>" for q, a in qa) + "</div>")
     parts.append(f'<script type="application/ld+json">{json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in qa]})}</script>')
+    if commodity in GROCERY:
+        parts.append(f'<p class="fine">Shopping for home? <a href="@/grocery/{GROCERY[commodity]}/">See what supermarkets are '
+                     f'charging for {esc(in_sentence(commodity))} this week</a>.</p>')
     others = "".join(f'<a href="@/{slug}/">{esc(name(c))}</a>' for c, (slug, _) in PAGES.items() if c != commodity)
     parts.append(f'<h2>Other items</h2><nav class="others">{others}</nav>')
     return "\n".join(parts) + "\n"
@@ -693,6 +703,10 @@ def main():
     for key, body in pages.items():
         (OUT / (f"{key}.json" if key == "og" else f"{key}.html")).write_text(body, encoding="utf-8")
     (OUT / "as_of.txt").write_text(as_of.isoformat())
+    if "grocery" in pages:
+        g_day = re.search(r"Week of (\w+ \d+, \d{4})", pages["grocery"])
+        if g_day:
+            (OUT / "grocery_as_of.txt").write_text(dt.datetime.strptime(g_day.group(1), "%B %d, %Y").date().isoformat())
     print(f"board: {len(pages)} fragments for {as_of}")
 
 
