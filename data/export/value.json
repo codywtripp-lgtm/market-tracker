@@ -1,126 +1,117 @@
 {
  "years": "2021-2026",
- "weeks_scored": 22161,
- "calls": 7917,
- "calls_right_pct": 71.0,
- "big_moves": 4886,
- "big_moves_right_pct": 85.4,
- "avg_dollars_per_case": 4.23,
- "avg_dollars_when_right": 7.07,
+ "weeks_scored": 22600,
+ "calls": 8698,
+ "calls_right_pct": 72.8,
+ "big_moves": 5415,
+ "big_moves_right_pct": 86.3,
+ "avg_dollars_per_case": 4.47,
+ "avg_dollars_when_right": 7.2,
  "by_commodity": [
   {
    "commodity": "Limes",
-   "calls": 922,
+   "calls": 946,
    "right_pct": 82.2,
-   "avg_dollars": 6.47
+   "avg_dollars": 6.45
   },
   {
    "commodity": "Strawberries",
-   "calls": 429,
-   "right_pct": 77.6,
-   "avg_dollars": 4.59
+   "calls": 434,
+   "right_pct": 76.5,
+   "avg_dollars": 4.44
   },
   {
    "commodity": "Celery",
-   "calls": 1045,
-   "right_pct": 76.1,
-   "avg_dollars": 5.05
+   "calls": 1085,
+   "right_pct": 75.8,
+   "avg_dollars": 4.99
   },
   {
    "commodity": "Lettuce, Romaine",
-   "calls": 984,
-   "right_pct": 71.7,
-   "avg_dollars": 4.54
-  },
-  {
-   "commodity": "Broccoli",
-   "calls": 706,
-   "right_pct": 70.8,
-   "avg_dollars": 3.41
+   "calls": 1039,
+   "right_pct": 73.7,
+   "avg_dollars": 4.91
   },
   {
    "commodity": "Lettuce, Iceberg",
-   "calls": 719,
-   "right_pct": 70.0,
-   "avg_dollars": 5.2
-  },
-  {
-   "commodity": "Tomatoes, Plum Type",
-   "calls": 240,
-   "right_pct": 69.6,
-   "avg_dollars": 2.65
-  },
-  {
-   "commodity": "Blueberries",
-   "calls": 404,
-   "right_pct": 69.3,
-   "avg_dollars": 4.65
-  },
-  {
-   "commodity": "Peppers, Bell Type",
-   "calls": 603,
-   "right_pct": 66.5,
-   "avg_dollars": 2.9
+   "calls": 844,
+   "right_pct": 73.7,
+   "avg_dollars": 5.82
   },
   {
    "commodity": "Cucumbers",
-   "calls": 651,
-   "right_pct": 65.9,
-   "avg_dollars": 3.34
+   "calls": 966,
+   "right_pct": 73.4,
+   "avg_dollars": 3.99
+  },
+  {
+   "commodity": "Broccoli",
+   "calls": 943,
+   "right_pct": 72.7,
+   "avg_dollars": 3.84
+  },
+  {
+   "commodity": "Blueberries",
+   "calls": 486,
+   "right_pct": 72.2,
+   "avg_dollars": 4.37
+  },
+  {
+   "commodity": "Tomatoes, Plum Type",
+   "calls": 246,
+   "right_pct": 71.5,
+   "avg_dollars": 2.94
   },
   {
    "commodity": "Tomatoes",
-   "calls": 341,
-   "right_pct": 64.5,
-   "avg_dollars": 2.55
-  },
-  {
-   "commodity": "Avocados",
-   "calls": 646,
-   "right_pct": 63.6,
-   "avg_dollars": 3.25
-  },
-  {
-   "commodity": "Lemons",
-   "calls": 100,
-   "right_pct": 60.0,
-   "avg_dollars": 1.35
+   "calls": 340,
+   "right_pct": 71.2,
+   "avg_dollars": 3.72
   },
   {
    "commodity": "Potatoes",
-   "calls": 32,
-   "right_pct": 53.1,
-   "avg_dollars": 1.03
+   "calls": 70,
+   "right_pct": 65.7,
+   "avg_dollars": 1.02
+  },
+  {
+   "commodity": "Avocados",
+   "calls": 617,
+   "right_pct": 64.3,
+   "avg_dollars": 3.37
+  },
+  {
+   "commodity": "Peppers, Bell Type",
+   "calls": 439,
+   "right_pct": 64.2,
+   "avg_dollars": 3.24
+  },
+  {
+   "commodity": "Lemons",
+   "calls": 121,
+   "right_pct": 57.9,
+   "avg_dollars": 1.25
   },
   {
    "commodity": "Grapes",
-   "calls": 34,
-   "right_pct": 52.9,
-   "avg_dollars": 2.63
+   "calls": 36,
+   "right_pct": 55.6,
+   "avg_dollars": 2.6
   },
   {
    "commodity": "Onions, Dry",
-   "calls": 50,
-   "right_pct": 36.0,
-   "avg_dollars": 0.18
+   "calls": 67,
+   "right_pct": 37.3,
+   "avg_dollars": 0.17
   }
  ],
  "alert_rules": 67,
  "alert_cases": 2327,
  "alert_hit_pct": 74.8,
  "alert_base_pct": 33.3,
- "big_moves_called_ahead_pct": 45.3,
+ "big_moves_called_ahead_pct": 48.7,
  "big_moves_called_wrong_way_pct": 7.7,
  "examples": [
-  {
-   "week": "2025-11-17",
-   "commodity": "Peppers, Bell Type",
-   "market": "New York",
-   "price": 9.0,
-   "price_after": 25.0,
-   "move_pct": 177.8,
-   "call": "firming"
-  },
   {
    "week": "2026-07-27",
    "commodity": "Strawberries",
@@ -131,12 +122,21 @@
    "call": "firming"
   },
   {
-   "week": "2026-02-23",
+   "week": "2026-02-09",
+   "commodity": "Peppers, Bell Type",
+   "market": "New York",
+   "price": 18.0,
+   "price_after": 47.17,
+   "move_pct": 162.0,
+   "call": "firming"
+  },
+  {
+   "week": "2026-10-05",
    "commodity": "Tomatoes",
    "market": "New York",
-   "price": 16.67,
-   "price_after": 39.0,
-   "move_pct": 134.0,
+   "price": 26.0,
+   "price_after": 63.8,
+   "move_pct": 145.4,
    "call": "firming"
   },
   {

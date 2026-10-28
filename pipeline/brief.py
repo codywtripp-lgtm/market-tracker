@@ -131,14 +131,14 @@ def call(status, change, stable, commodity=""):
 
 
 def headline_items(latest, series, forecasts, card):
-    """One row per commodity x terminal market: the best-covered series."""
+    """One row per commodity x terminal market: the headline (main trade pack) series, else best-covered."""
     best = {}
     for r in latest:
         if r["market_type"] != "terminal" or r["market"] not in MARKETS or r["commodity"] not in PRODUCE_NAMES:
             continue
         s = series.get(r["series_id"], {})
         key = (r["commodity"], r["market"])
-        cov = _num(s.get("coverage_last_year")) or 0
+        cov = (s.get("headline") == "Y", _num(s.get("coverage_last_year")) or 0)
         if key not in best or cov > best[key][0]:
             best[key] = (cov, r, s)
     items = []

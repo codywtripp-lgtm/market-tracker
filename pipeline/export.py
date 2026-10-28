@@ -37,6 +37,29 @@ MIN_COVERAGE_SHIPPING = 0.3  # shipping-point districts are seasonal (e.g. Salin
 NORM_WEEK_WINDOW = 2   # seasonal norm uses the same ISO week +/- this many weeks
 MIN_NORM_YEARS = 3     # need this many prior years for a seasonal norm
 
+# The pack the trade actually prices each item by (owner, a former Hunts Point buyer: "use the stuff with
+# the big volume"). Field -> regex on the terminal row; the best-covered matching series in each market is
+# the headline. Without a spec, or if no matching series is reported enough, the best-covered
+# conventional series is used. Owner can correct any of these.
+MAIN_PACK = {
+    "Onions, Dry": {"variety": r"^YELLOW$", "pack_size": r"^50 lb sacks$", "item_size": r"^jumbo$"},
+    "Potatoes": {"variety": r"^RUSSET$", "pack_size": r"^50 lb cartons$", "item_size": r"^(70|80)s$"},
+    "Peppers, Bell Type": {"pack_size": r"^1 1/9 bushel cartons$", "item_size": r"^(jumbo|extra large)$",
+                           "properties": r"^Green$"},
+    "Tomatoes": {"variety": r"^MATURE GREENS$", "pack_size": r"^25 lb cartons loose$",
+                 "item_size": r"^(5x6 size|extra large)$"},
+    "Bananas": {"variety": r"^$", "pack_size": r"^40 lb cartons", "properties": r"^(|Yellow)$"},
+    "Cucumbers": {"variety": r"^$", "pack_size": r"^1 1/9 bushel cartons$"},
+    "Broccoli": {"variety": r"^$", "pack_size": r"^cartons$", "item_size": r"^bunched 14s$"},
+    "Lettuce, Iceberg": {"item_size": r"24s"},
+    "Carrots": {"variety": r"^(|TOPPED)$", "pack_size": r"^(25|50) lb sacks loose$", "item_size": r"^jumbo$"},
+    "Blueberries": {"pack_size": r"1-pint"},
+}
+# USDA splits these by type as growing areas rotate through the season (yellow onions: Hybrid / Spanish /
+# Grano / Globe; russets: Norkotah / Burbank; mature greens: Light Red / Light Red-red). The trade quotes
+# them as one item, so the type is dropped from the series and same-day quotes are combined (median).
+MERGE_TYPES = {"Onions, Dry": r"^YELLOW$", "Potatoes": r"^RUSSET$", "Tomatoes": r"^MATURE GREENS$"}
+
 # Rows describing off-grade or premium product are excluded from headline prices.
 NON_STANDARD = re.compile(r"fair|poor|ordinary|holdover|decay|damage|scar|fine|mixed condition", re.I)
 
@@ -45,8 +68,9 @@ def series_key(r):
     """Identity of a price series. Origin is deliberately NOT part of it (it rotates by season)."""
     mt = r["market_type"]
     if mt in ("terminal", "shipping point"):
+        merge = mt == "terminal" and re.search(MERGE_TYPES.get(r["commodity"], "(?!)"), r["variety"] or "")
         return (mt, r["market"], r["commodity"], r["variety"], r["pack_size"], r["item_size"],
-                r["properties"], r["organic"])
+                "" if merge else r["properties"], r["organic"])
     if mt == "retail":
         return (mt, r["market"], r["commodity"], r["variety"], r["pack_size"], "", r["other_attributes"], r["organic"])
     # beef / chicken
@@ -62,6 +86,16 @@ def label(key):
     mt, market, commodity, variety, pack, size, prop, organic = key
     bits = [commodity, variety, prop, pack, size, "organic" if organic in ("Y", "Yes") else ""]
     return f"{' '.join(b for b in bits if b)} — {market}"
+
+
+def is_main_pack(key):
+    """Terminal series that is the trade's main pack for its commodity (conventional only)."""
+    _, _, commodity, variety, pack, size, prop, organic = key
+    if organic in ("Y", "Yes"):
+        return False
+    spec = MAIN_PACK.get(commodity, {})
+    fields = {"variety": variety, "pack_size": pack, "item_size": size, "properties": prop}
+    return all(re.search(rx, fields[f] or "") for f, rx in spec.items())
 
 
 def is_standard(r):
@@ -116,7 +150,7 @@ def select(grouped, today):
     def weight(key, field):
         return sum(fnum(r[field]) or 0 for d, rs in grouped[key].items() if d >= year_ago for r in rs)
 
-    chosen = {}
+    chosen = {}  # insertion order: the first pick per bucket is its headline
     buckets = defaultdict(list)
     for key in grouped:
         mt, market, commodity = key[0], key[1], key[2]
@@ -132,7 +166,10 @@ def select(grouped, today):
         if mt in ("terminal", "shipping point"):
             top = TOP_TERMINAL if mt == "terminal" else TOP_SHIPPING
             floor = MIN_COVERAGE if mt == "terminal" else MIN_COVERAGE_SHIPPING
-            ranked = sorted(keys, key=lambda k: -coverage(k))
+            if mt == "terminal":  # main pack first, then conventional, then coverage
+                ranked = sorted(keys, key=lambda k: (not is_main_pack(k), k[7] in ("Y", "Yes"), -coverage(k)))
+            else:
+                ranked = sorted(keys, key=lambda k: -coverage(k))
             picks = [k for k in ranked if coverage(k) >= floor][:top]
         elif mt == "retail":
             ranked = sorted(keys, key=lambda k: -weight(k, "store_count"))
@@ -210,6 +247,11 @@ def build(rows, today=None, deflator=None):
 
     series_rows, daily_rows, weekly_rows, latest_rows = [], [], [], []
     cutoff = (today - dt.timedelta(days=365)).isoformat()
+    headline, seen = set(), set()
+    for key in chosen:  # first pick per commodity x market (terminal) is what the site and brief show
+        if key[0] == "terminal" and key[1:3] not in seen:
+            seen.add(key[1:3])
+            headline.add(key)
     for key, cov in sorted(chosen.items()):
         sid = series_id(key)
         mt, market, commodity, variety, pack, size, prop, organic = key
@@ -224,7 +266,8 @@ def build(rows, today=None, deflator=None):
         series_rows.append({**base, "label": label(key), "variety": variety, "pack_size": pack,
                             "item_size": size, "properties": prop, "organic": organic,
                             "price_unit": any_row["price_unit"], "compare_unit": unit,
-                            "coverage_last_year": cov, "first_date": min(by_day), "last_date": max(by_day)})
+                            "coverage_last_year": cov, "headline": "Y" if key in headline else "",
+                            "first_date": min(by_day), "last_date": max(by_day)})
 
         weekly = defaultdict(list)
         for d, v in by_day.items():
@@ -258,7 +301,8 @@ def build(rows, today=None, deflator=None):
 
     base_f = ["series_id", "commodity", "market", "market_type"]
     write_csv(EXPORT / "series.csv", base_f + ["label", "variety", "pack_size", "item_size", "properties",
-              "organic", "price_unit", "compare_unit", "coverage_last_year", "first_date", "last_date"], series_rows)
+              "organic", "price_unit", "compare_unit", "coverage_last_year", "headline", "first_date", "last_date"],
+              series_rows)
     write_csv(EXPORT / "prices_daily_365.csv", base_f + ["date", "price", "price_unit", "compare_price",
               "compare_unit", "low", "high", "normalized_price", "normalized_unit", "origins", "quotes", "market_tone"],
               daily_rows)

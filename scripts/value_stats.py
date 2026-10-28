@@ -90,10 +90,10 @@ def main():
     value["big_moves_called_wrong_way_pct"] = round(100 * ((np.abs(np.expm1(moved["final"])) >= CALL)
                                                             & ~called).mean(), 1)
     # Examples: the biggest New York moves of the last 12 months, one per item, hits AND misses,
-    # on the headline packs the brief shows (best-covered series per item and market).
+    # on the headline packs the brief shows (main trade pack per item and market).
     series = pd.read_csv(fc.EXPORT / "series.csv")
     series = series[series["market_type"] == "terminal"]
-    headline = set(series.sort_values("coverage_last_year").groupby(["commodity", "market"]).tail(1)["series_id"])
+    headline = set(series.loc[series["headline"] == "Y", "series_id"])
     recent = r[(r["market"] == "New York") & r["series_id"].isin(headline)
                & (r["week"] >= r["week"].max() - pd.Timedelta(weeks=52))].copy()
     recent = recent.loc[recent.groupby("commodity")["move"].apply(lambda m: m.abs().idxmax())]

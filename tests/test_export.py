@@ -67,3 +67,25 @@ def test_rarely_reported_series_dropped(tmp_path, monkeypatch):
     rows = history(40) + [avocado(TODAY - dt.timedelta(days=3), 50, size="84s")]
     export.build(rows, today=TODAY)
     assert [r["item_size"] for r in read(tmp_path / "series.csv")] == ["48s"]
+
+
+def test_main_trade_pack_beats_better_covered_specialty():
+    """Yellow jumbo 50 lb onions are the headline even though pearl onions are quoted more often,
+    and the onion types USDA splits them into are merged into one series."""
+    pearl = ("terminal", "New York", "Onions, Dry", "PEARL TYPE", "cartons 12 10-oz packages", "small", "YELLOW", "N")
+    assert not export.is_main_pack(pearl)
+    row = {"market_type": "terminal", "market": "New York", "commodity": "Onions, Dry", "variety": "YELLOW",
+           "pack_size": "50 lb sacks", "item_size": "jumbo", "organic": "N"}
+    keys = {export.series_key({**row, "properties": p}) for p in ("HYBRID", "SPANISH HYBRID", "GRANO")}
+    [key] = keys
+    assert export.is_main_pack(key)
+    dates = [f"2026-09-{d:02d}" for d in range(1, 26)]
+    grouped = {pearl: {d: [{}] for d in dates}, key: {d: [{}] for d in dates[::2]}}
+    chosen = export.select(grouped, TODAY)
+    assert next(iter(chosen)) == key
+
+
+def test_organic_is_not_the_headline():
+    org = ("terminal", "Chicago", "Lettuce, Iceberg", "", "cartons", "24s film wrapped", "", "Y")
+    conv = org[:7] + ("N",)
+    assert export.is_main_pack(conv) and not export.is_main_pack(org)
