@@ -115,7 +115,7 @@ def main():
             "vs4w": num(r["pct_vs_4_weeks_ago"]), "vsYear": num(r["pct_vs_last_year"]),
             "variety": s.get("variety", ""), "pack": s.get("pack_size", ""), "size": s.get("item_size", ""),
             "props": s.get("properties", ""), "organic": s.get("organic", ""),
-            "coverage": num(s.get("coverage_last_year")),
+            "coverage": num(s.get("coverage_last_year")), "main": s.get("headline") == "Y",
             "tone": day.get("market_tone", ""), "origins": day.get("origins", ""),
             "forecast": {p["h"]: [p["lo"], p["mid"], p["hi"]] for p in fc.get(sid, {}).get("points", [])},
             "fcMiss": num(card.get((r["commodity"], r["market"]), {}).get("forecast_miss_pct")),
