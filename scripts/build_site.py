@@ -135,7 +135,8 @@ VIEWS = (("", "Grocery store"), ("wholesale/", "Wholesale market"))
 LINKS = (("charts/", "Price history"), ("why/", "Track record"), ("about/", "About"))
 # grocery aisles, the way a shopper walks the store (pages written by pipeline/board.py)
 AISLES = (("", "Produce"), ("meat-prices/", "Meat & poultry"), ("dairy-and-egg-prices/", "Dairy & eggs"))
-SEARCH = []  # (name, url, kind, price text, also-known-as) for /search.json and the A to Z page
+SEARCH = []  # dicts for /search.json and the A to Z page (see emit)
+AISLE_NAME = {"": "Produce", "meat-prices/": "Meat & poultry", "dairy-and-egg-prices/": "Dairy & eggs"}
 
 
 def _esc(s):
@@ -149,7 +150,8 @@ def topbar(up, active=None, view="wholesale", aisle=None):
     on = ' aria-current="true"'
     switch = "".join(f'<a href="{up}{href}"{on if (href == "") == (view == "grocery") else ""}>{label}</a>'
                      for href, label in VIEWS)
-    search = (f'<form class="search" role="search" action="{up}search/" data-root="{up}">'
+    search = (f'<form class="search" role="search" action="{up}search/" data-root="{up}" '
+              f'data-view="{"g" if view == "grocery" else "w"}">'
               '<label class="vh" for="q">Search prices</label>'
               '<input id="q" name="q" type="search" placeholder="Search items" autocomplete="off" '
               'role="combobox" aria-expanded="false" aria-controls="q-list" aria-autocomplete="list">'
@@ -277,9 +279,10 @@ def board_pages():
                                              active=active, og=og_key if og_key in og else None, head=head,
                                              view=view, aisle=aisle))
         urls.append((SITE_URL + rel, day or as_of.isoformat()))
-        if find:
-            kind = {"Grocery": "Grocery store", "Wholesale": "Wholesale market"}.get(find[1], find[1])
-            SEARCH.append((find[0], rel, kind, "", find[3] if len(find) > 3 else ""))
+        if find:  # search entry: name, which side of the site, and what to show under it
+            SEARCH.append({"n": find["name"], "u": rel, "v": "g" if view == "grocery" else "w",
+                           "p": find.get("price", ""), "s": find.get("status", ""), "t": find.get("tone", ""),
+                           "a": find.get("where", ""), "k": find.get("aka", "")})
 
     dataset = json.dumps({
         "@context": "https://schema.org", "@type": "Dataset", "name": "Wholesale produce terminal market prices",
@@ -295,18 +298,19 @@ def board_pages():
                             "logo": f"{SITE_URL}apple-touch-icon.png"}])
         emit("", "grocery", "Produce Prices This Week: Best Buys at the Grocery Store", 0,
              og_key="home", view="grocery", day=g_day, head=f'<script type="application/ld+json">{site}</script>',
-             find=("Produce: best buys this week", "Grocery", "", "fruit vegetables"), aisle="")
+             find={"name": "Produce", "status": "This week’s best buys", "aka": "fruit vegetables"}, aisle="")
     for key, rel, title, find in (
             ("aisle-meat", "meat-prices/", "Meat Prices This Week: Chicken, Beef, Pork and Turkey Sales",
              ("Meat and poultry: best buys", "Grocery", "", "chicken beef pork turkey bacon steak")),
             ("aisle-dairy", "dairy-and-egg-prices/", "Egg, Milk and Dairy Prices This Week",
              ("Dairy and eggs: best buys", "Grocery", "", "eggs milk butter cheese yogurt"))):
         if (BOARD / f"{key}.html").exists():
-            emit(rel, key, title, 1, view="grocery", day=g_day, find=find, aisle=rel,
-                 head=crumbs_ld(("Grocery prices", SITE_URL), (find[0].split(":")[0], f"{SITE_URL}{rel}")))
+            emit(rel, key, title, 1, view="grocery", day=g_day, aisle=rel,
+                 find={"name": AISLE_NAME[rel], "status": "This week’s best buys", "aka": find[3]},
+                 head=crumbs_ld(("Grocery prices", SITE_URL), (AISLE_NAME[rel], f"{SITE_URL}{rel}")))
     emit("wholesale/", "home", "Wholesale Produce Prices Today: Hunts Point, LA, Chicago", 1,
          og_key="wholesale", head=f'<script type="application/ld+json">{dataset}</script>',
-         find=("Wholesale produce prices today", "Wholesale", "", "terminal market"))
+         find={"name": "All wholesale prices", "status": "New York, Los Angeles, Chicago", "aka": "terminal market"})
     for m, slug in board.MARKET_PAGES.items():
         place = "Hunts Point (New York)" if m == "New York" else m
         emit(f"{slug}/", f"market-{board.MKEY[m]}", f"{place} Wholesale Produce Prices Today", 1,
@@ -315,7 +319,8 @@ def board_pages():
         year = re.search(r"Thanksgiving turkey and produce prices (\d{4})", (BOARD / "thanksgiving.html").read_text(encoding="utf-8"))
         emit("thanksgiving-produce-prices/", "thanksgiving",
              f"Thanksgiving Turkey and Produce Prices {year.group(1) if year else ''}: Buy Now or Wait?", 1,
-             og_key="thanksgiving", view="grocery", day=g_day, find=("Thanksgiving prices", "Guide", "", "holiday turkey"),
+             og_key="thanksgiving", view="grocery", day=g_day,
+             find={"name": "Thanksgiving prices", "status": "What to buy now, what to wait for", "aka": "holiday turkey"},
              head=crumbs_ld(("Grocery prices", SITE_URL), ("Thanksgiving prices", f"{SITE_URL}thanksgiving-produce-prices/")))
     for f in sorted((BOARD / "grocery").glob("*.html")) if (BOARD / "grocery").exists() else []:
         key = f"g-{f.stem}"
@@ -324,8 +329,10 @@ def board_pages():
         card = og.get(key, {})
         emit(f"grocery/{f.stem}/", f"grocery/{f.stem}", f"{singular(short).title()} Prices This Week at the Grocery Store",
              2, og_key=key, view="grocery", day=g_day, aisle=card.get("aisle", ""),
-             find=(short, "Grocery", (card.get("price", "") + ("" if card.get("unit", "").startswith("/") else " ")
-                                      + card.get("unit", "")).strip()),
+             find={"name": short, "price": (card.get("price", "") + ("" if card.get("unit", "").startswith("/") else " ")
+                                            + card.get("unit", "")).strip(),
+                   "status": card.get("out", ""), "tone": card.get("tone", ""),
+                   "where": AISLE_NAME.get(card.get("aisle", ""), "Produce")},
              head=crumbs_ld(("Grocery prices", SITE_URL), (short, f"{SITE_URL}grocery/{f.stem}/")))
     for c, (slug, _) in board.PAGES.items():
         if not (BOARD / "items" / f"{slug}.html").exists():
@@ -333,7 +340,9 @@ def board_pages():
         n = board.PAGES[c][1].title()
         trail = [("Wholesale prices", f"{SITE_URL}wholesale/"), (f"{n} prices", f"{SITE_URL}{slug}/")]
         emit(f"{slug}/", f"items/{slug}", f"{n} Prices Today, Wholesale per Case", 1, og_key=slug, head=crumbs_ld(*trail),
-             find=(f"{board.name(c)}", "Wholesale", f"{og.get(slug, {}).get('price', '')} a case" if og.get(slug) else "", c))
+             find={"name": board.name(c), "price": f"{og[slug]['price']} a case" if og.get(slug) else "",
+                   "status": og.get(slug, {}).get("out", "").split(",")[0], "tone": og.get(slug, {}).get("tone", ""),
+                   "where": "Hunts Point", "aka": c})
         for m, ms in board.MARKET_SLUG.items():
             if (BOARD / "items" / f"{slug}--{ms}.html").exists():
                 place = "Hunts Point" if m == "New York" else m
@@ -401,17 +410,21 @@ def seo_files(urls):
           + "</urlset>\n")
     write(OUT / "robots.txt", f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}sitemap.xml\n")
     seen, entries = set(), []
-    for n, u, k, p_, aka in sorted(SEARCH, key=lambda e: (e[2] != "Grocery store", e[0].lower())):
-        if u not in seen:
-            seen.add(u)
-            entries.append({"n": n, "u": u, "k": k, "p": p_, "a": aka})
+    for e in sorted(SEARCH, key=lambda e: e["n"].lower()):
+        if e["u"] not in seen:
+            seen.add(e["u"])
+            entries.append(e)
     write(OUT / "search.json", json.dumps(entries, separators=(",", ":"), ensure_ascii=False))
-    rows = "".join(f'<li data-k="{_esc(" ".join((e["n"] + " " + e["a"]).lower().split()))}"><a href="../{e["u"]}">{_esc(e["n"])}</a>'
-                   f'<span>{_esc(e["k"])}</span></li>' for e in entries)
+
+    def az(view):
+        return "".join(f'<li data-k="{_esc(" ".join((e["n"] + " " + e["k"]).lower().split()))}"><a href="../{e["u"]}">'
+                       f'{_esc(e["n"])}</a><span>{_esc(e["p"] or e["s"])}</span></li>' for e in entries if e["v"] == view)
+    body = ('<section class="intro"><h1>All prices, A to Z</h1></section>'
+            f'<section><h2>Grocery store</h2><ul class="az" id="az">{az("g")}</ul></section>'
+            f'<section><h2>Wholesale market</h2><ul class="az">{az("w")}</ul></section>')
     write(OUT / "search" / "index.html", page(
         "All Prices A to Z", "Every grocery and wholesale price page on Produce Price Tracker, from apples to yogurt.",
-        f"{SITE_URL}search/", "../", f'<section class="intro"><h1>All prices, A to Z</h1></section><ul class="az" id="az">{rows}</ul>',
-        view="grocery"))
+        f"{SITE_URL}search/", "../", body, view="grocery"))
     write(OUT / f"{INDEXNOW_KEY}.txt", INDEXNOW_KEY)
     write(OUT / "404.html", page("Page not found", "That page doesn’t exist.", SITE_URL, "/",
                                  '<section class="intro"><h1>That page isn’t here</h1><p class="lede">It may have moved. '

@@ -5,6 +5,9 @@
   const list = document.getElementById("q-list");
   if (!input || !list) return;
   const root = input.form.getAttribute("data-root") || "/";
+  const view = input.form.getAttribute("data-view") || "g";  // grocery pages search grocery items, wholesale pages wholesale
+  const esc = (s) => String(s || "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const tone = { down: "good", up: "bad" };
   let index = null;
   let active = -1;
   // "strawberries" ~ "strawberry", "apples" ~ "apple", "eggs" ~ "egg"
@@ -26,13 +29,17 @@
     const items = await load();
     const words = q.split(" ");
     const hits = items
-      .map((it) => ({ it, key: norm(it.n + " " + (it.a || "")) }))
+      .filter((it) => it.v === view)
+      .map((it) => ({ it, key: norm(it.n + " " + (it.k || "")) }))
       .filter(({ key }) => words.every((w) => key.split(" ").some((k) => k.startsWith(w)) || key.includes(w)))
-      .sort((a, b) => (b.key.startsWith(q) - a.key.startsWith(q)) || a.it.n.localeCompare(b.it.n))
+      // items with a price first, then names that start with what was typed, then A to Z
+      .sort((a, b) => (!!b.it.p - !!a.it.p) || (b.key.startsWith(q) - a.key.startsWith(q)) || a.it.n.localeCompare(b.it.n))
       .slice(0, 8);
     list.innerHTML = hits.length ? hits.map(({ it }, n) =>
-      `<li role="option" id="q-${n}" data-url="${root}${it.u}"><span class="q-name">${it.n}</span>` +
-      `<span class="q-meta">${it.k}</span></li>`).join("")
+      `<li role="option" id="q-${n}" data-url="${root}${esc(it.u)}">` +
+      `<span class="q-top"><span class="q-name">${esc(it.n)}</span>${it.p ? `<span class="qs-price">${esc(it.p)}</span>` : ""}</span>` +
+      `<span class="q-meta">${it.s ? `<span class="${tone[it.t] || ""}">${esc(it.s)}</span>` : ""}` +
+      `${it.s && it.a ? " · " : ""}<span class="q-where">${esc(it.a)}</span></span></li>`).join("")
       : `<li class="q-none" role="option" aria-disabled="true">No match. Try “eggs”, “chicken” or “apples”.</li>`;
     list.hidden = false;
     input.setAttribute("aria-expanded", "true");
