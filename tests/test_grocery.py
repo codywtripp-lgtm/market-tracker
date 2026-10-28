@@ -83,3 +83,12 @@ def test_staples_match_shopper_items_across_usda_renames():
     assert staples.match(row("Turkey", "Whole Turkey < 16 Lbs", cond="Frozen")) == "Whole turkey"
     assert staples.match(row("Chicken", "Self-Service Deli Chicken Tub/Pouch", cond="Prepared")) is None
     assert staples.match({"commodity": "Milk", "variety": "All Fat Tests", "pack_size": "Gallon"}) == "Milk"
+
+
+def test_meat_and_dairy_pages_dont_talk_about_seasons():
+    from pipeline import grocery_view
+    assert grocery_view.as_modifier("Eggs") == "Egg" and grocery_view.as_modifier("Pork chops") == "Pork chop"
+    assert grocery_view.as_modifier("Pork shoulder") == "Pork shoulder" and grocery_view.as_modifier("Asparagus") == "Asparagus"
+    i = {"short": "Pork shoulder", "commodity": "Pork shoulder", "aisle": "meat", "seasons": [], "in_season": False,
+         "cheapest_months": [2, 3, 4]}
+    assert grocery_view.season_sentence(i, None) == "Pork shoulder prices are usually lowest in February, March and April."

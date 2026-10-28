@@ -289,6 +289,18 @@ def price_sentence(i, today):
     return s
 
 
+def as_modifier(name):
+    """'Eggs' -> 'Egg', 'Pork chops' -> 'Pork chop', for 'egg prices'; mass nouns stay ('Pork shoulder')."""
+    *head, last = name.split(" ")
+    if last.endswith("ies"):
+        last = last[:-3] + "y"
+    elif last.endswith(("oes", "ches", "shes")):
+        last = last[:-2]
+    elif last.endswith("s") and not last.endswith(("ss", "us")):
+        last = last[:-1]
+    return " ".join(head + [last])
+
+
 def season_sentence(i, today):
     when_in = ", ".join(i["seasons"][:-1]) + (" and " if len(i["seasons"]) > 1 else "") + i["seasons"][-1] if i["seasons"] else ""
     if i["in_season"]:
@@ -301,8 +313,10 @@ def season_sentence(i, today):
     if i["cheapest_months"] and best and not set(i["cheapest_months"]) & set(best):
         s += (f" Prices are lowest in {grocery.month_list(i['cheapest_months'])}, but that’s out-of-season produce; "
               f"for the best quality, buy in {grocery.month_list(best)}.")
-    elif i["cheapest_months"]:
+    elif i["cheapest_months"] and s:
         s += f" {'They’re' if plural(i) else 'It’s'} usually cheapest in {grocery.month_list(i['cheapest_months'])}."
+    elif i["cheapest_months"]:  # no season to speak of (meat, dairy, some produce): say it on its own
+        s = f"{as_modifier(i['short'])} prices are usually lowest in {grocery.month_list(i['cheapest_months'])}."
     return s.strip()
 
 
@@ -310,9 +324,10 @@ def faq(i, today):
     name = i["short"].lower()
     qa = [(f"How much {'do' if plural(i) else 'does'} {name} cost at the grocery store?",
            html.unescape(re.sub(r"<[^>]+>", "", price_sentence(i, today))))]
-    qa.append((f"{'Are' if plural(i) else 'Is'} {name} in season right now?",
-               season_sentence(i, today).split(" They’re usually")[0].split(" It’s usually")[0] or
-               "USDA’s seasonal guide doesn’t list it; stores carry it most of the year."))
+    if i["aisle"] == "produce":  # "in season" only means something for fruit and vegetables
+        ans = "" if not i["seasons"] else season_sentence(i, today).split(" They’re usually")[0].split(" It’s usually")[0]
+        qa.append((f"{'Are' if plural(i) else 'Is'} {name} in season right now?",
+                   ans or "USDA’s seasonal guide doesn’t list it; stores carry it most of the year."))
     if i["cheapest_months"]:
         qa.append((f"When {verb(i)} {name} cheapest?",
                    f"In past years, supermarket prices for {name} were lowest in "
