@@ -38,3 +38,9 @@ def test_usda_place_and_tone_in_plain_words():
     assert board._simple_tone("Conventional slightly higher, organic higher") == "higher"
     assert board._simple_tone("Crown cuts slightly higher, others about steady") == "higher on some packs"
     assert board._simple_tone("Hearts slightly higher, 24s lower") == "mixed"
+
+
+def test_new_packs_compare_with_last_year_not_a_dead_end():
+    i = {"status": "not enough history", "vs_year": 12.0, "vs_norm": None}
+    assert "12% above last year" in board.season(i)
+    assert "Not enough history" not in board.season(i)

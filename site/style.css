@@ -180,6 +180,10 @@ small { font-size: 14px; }
 .q-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0; }
 .q-facts dt { font-size: 13px; color: var(--muted); font-weight: 600; margin-bottom: 2px; }
 .q-facts dd { margin: 0; }
+.q-facts .path { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 12px; }
+.q-facts .path dd { color: var(--ink-2); }
+.q-facts .path b { color: var(--ink); }
+.act .turn { display: block; color: var(--muted); font-weight: 400; font-size: 14px; }
 .q-facts .chg { font-size: 17px; }
 .q-facts .season b, .q-facts .out b { font-size: 17px; }
 .todo { margin-top: 14px; background: var(--tone-bg); border: 1px solid var(--tone-line); border-radius: 12px; padding: 16px 20px; }
