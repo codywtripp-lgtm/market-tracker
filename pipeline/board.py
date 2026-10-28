@@ -664,7 +664,7 @@ def build():
         word = grocery_view.STATUS[gi["status"]][0]
         og[f"g-{gi['slug']}"] = {"title": f"{gi['short']} prices this week", "price": f"${gi['price']:.2f}",
                                  "aisle": {"meat": "meat-prices/", "dairy": "dairy-and-egg-prices/"}.get(gi["aisle"], ""),
-                                 "sub": f"Supermarket sale prices · week of {g_day:%B} {g_day.day}, {g_day.year}",
+                                 "sub": f"Supermarket flyer prices · week of {g_day:%B} {g_day.day}, {g_day.year}",
                                  "out": word + (f", {abs(gi['vs_usual'])}% {'below' if gi['vs_usual'] < 0 else 'above'} usual"
                                                 if gi.get("vs_usual") else ""),
                                  "tone": {"low": "down", "high": "up"}.get(gi["status"], "flat"), "unit": gi["unit"].strip()}
@@ -678,7 +678,7 @@ def build():
                 rows.append({"name": gi["short"], "word": f"{abs(round(100 * o['change']))}% cheaper by then",
                              "tone": "down", "price": f"${gi['price']:.2f}"})
         og["thanksgiving"] = {"title": f"Thanksgiving produce prices {holiday.thanksgiving(g_day.year).year}",
-                              "sub": "Wait for the holiday sales on these", "rows": rows}
+                              "sub": "Wait for the holiday specials on these", "rows": rows}
     if g_items:
         og["home"] = {"title": "This week’s best buys in the produce aisle",
                       "sub": f"Supermarket prices · week of {g_day:%B} {g_day.day}, {g_day.year}",

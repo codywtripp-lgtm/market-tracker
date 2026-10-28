@@ -130,6 +130,8 @@ def unit(pack):
         return " each"
     if p.startswith("per "):
         return " a " + p[4:]
+    if p == "12 count":
+        return " a dozen"
     m = re.match(r"(\d+) count", p)
     if m:
         return f" for {m.group(1)}"

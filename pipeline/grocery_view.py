@@ -21,7 +21,7 @@ def money(v):
 
 
 STATUS = {"low": ("Great price", "good"), "typical": ("Typical price", "flat"), "high": ("Pricey", "bad"),
-          "new": ("Newly on sale", "flat"), "absent": ("Not on sale this week", "flat")}
+          "new": ("New in the flyers", "flat"), "absent": ("Not in this week’s flyers", "flat")}
 # wholesale pages for the same item, when there is one
 WHOLESALE = {"Avocados": "avocado-prices", "Strawberries": "strawberry-prices", "Tomatoes": "tomato-prices",
              "Peppers, Bell Type": "bell-pepper-prices", "Onions, Dry": "onion-prices", "Potatoes": "potato-prices",
@@ -81,7 +81,7 @@ def why_line(i, today):
     if i["in_season"]:
         bits.append("In season.")
     if i["featured"] and i["featured"] >= 1.3:
-        bits.append(f"On sale in {i['stores']:,} stores, more than usual.")
+        bits.append(f"In {i['stores']:,} stores’ flyers, more than usual.")
     return " ".join(bits)
 
 
@@ -156,24 +156,24 @@ def page(today, items, aisle="produce"):
         + (f'<small>{abs(i["vs_usual"])}% {"below" if i["vs_usual"] < 0 else "above"} usual</small>'
            if i["vs_usual"] is not None and abs(i["vs_usual"]) >= 3 else "") + f"</td><td>{qual(i)}</td></tr>"
         for i in items)
-    parts.append('<section><h2>Everything on sale this week</h2>'
+    parts.append('<section><h2>Everything in this week’s flyers</h2>'
                  '<label class="find"><span>Find an item</span><input type="search" id="find" '
                  f'placeholder="{AISLE_FIND[aisle]}" autocomplete="off"></label>'
-                 '<table class="all"><thead><tr><th scope="col">Item</th><th scope="col" class="n">Sale price</th>'
+                 '<table class="all"><thead><tr><th scope="col">Item</th><th scope="col" class="n">Flyer price</th>'
                  f'<th scope="col">For the time of year</th><th scope="col">Quality now</th></tr></thead>'
                  f'<tbody>{rows}</tbody></table></section>')
     parts.append(f'<section class="how"><h2>How this works</h2><p>Quality is what to expect this time of year: new '
                  'crop and peak harvest rate excellent; storage, imports, end-of-season and growing-area changeovers rate '
                  'fair or poor. Tap or hover over a rating for the reason. A low price on poor-quality produce is never '
                  'listed as a best buy.</p><p>Every week USDA records the produce prices '
-                 f'supermarkets put on sale in their weekly flyers, from about {stores:,} stores for the most common items. We compare this '
-                 'week’s average sale price with the same weeks in the last five to ten years, adjusted for inflation: '
+                 f'supermarkets list in their weekly flyers, from about {stores:,} stores for the most common items. We compare this '
+                 'week’s average flyer price with the same weeks in the last five to ten years, adjusted for inflation: '
                  'the cheapest quarter of those weeks is a great price, the highest quarter is pricey. “In season” is '
-                 'from USDA’s seasonal produce guide. These are flyer sale prices; your store’s everyday shelf price may '
+                 'from USDA’s seasonal produce guide. These are flyer prices; your store’s everyday shelf price may '
                  'differ.</p><p>Buy for a restaurant, store or distributor? <a href="@/wholesale/">See wholesale '
                  'market prices and two-week forecasts</a>.</p></section>')
-    data = {"@context": "https://schema.org", "@type": "Dataset", "name": "Supermarket produce sale prices this week",
-            "description": "Average supermarket flyer sale prices for produce in the U.S., compared with the same "
+    data = {"@context": "https://schema.org", "@type": "Dataset", "name": "Supermarket flyer prices for produce this week",
+            "description": "Average supermarket flyer prices for produce in the U.S., compared with the same "
                            "weeks in past years.", "isBasedOn": "https://www.ams.usda.gov/market-news/retail"}
     parts.append(f'<script type="application/ld+json">{json.dumps(data)}</script>')
     return "\n".join(parts) + "\n"
@@ -219,9 +219,9 @@ def chart(i, today):
     g.append(f'<path class="price" d="{"".join(seg)}"/>')
     d, p = pts[-1][0], pts[-1][1]
     g.append(f'<circle class="now" cx="{x(d):.1f}" cy="{y(p):.1f}" r="4.5"/>')
-    label = f"{i['short']}, average supermarket sale price over the past year"
+    label = f"{i['short']}, average supermarket flyer price over the past year"
     return (f'<figure class="chart"><svg viewBox="0 0 {W} {H}" role="img" aria-label="{esc(label)}"><title>{esc(label)}</title>'
-            f'{"".join(g)}</svg><div class="legend"><span><i class="k-price"></i>Average sale price{esc(i["unit"])}</span>'
+            f'{"".join(g)}</svg><div class="legend"><span><i class="k-price"></i>Average flyer price{esc(i["unit"])}</span>'
             '<span><i class="k-usual"></i>Usual range for the time of year</span></div></figure>')
 
 
@@ -257,15 +257,15 @@ def calendar(i, today):
                           f'{money(prices[m])}{esc(i["unit"])}"><span class="bar{" cheap" if m in cheap else ""}" '
                           f'style="height:{h:.0f}%"></span><span class="vh">{money(prices[m])}</span></td>')
             else:
-                cells += f'<td class="cp{" now" if m == now else ""}"><span class="vh">Rarely on sale</span></td>'
+                cells += f'<td class="cp{" now" if m == now else ""}"><span class="vh">Rarely in flyers</span></td>'
         rows += f'<tr><th scope="row">Price</th>{cells}</tr>'
     legend = ""
     if any(q.values()):
         legend += ("".join(f'<span><i class="sw q-{lv.lower()}"></i>{lv}</span>' for lv in reversed(quality.LEVELS)
                            if any(v and v[0] == lv for v in q.values())))
     if show_price:
-        legend += '<span><i class="sw bar-key"></i>Taller bar: higher typical sale price</span><span><i class="sw bar-key cheap"></i>Cheapest months</span>'
-    return (f'<figure class="cal"><table><caption class="vh">{esc(i["short"])}: quality and typical supermarket sale price '
+        legend += '<span><i class="sw bar-key"></i>Taller bar: higher typical flyer price</span><span><i class="sw bar-key cheap"></i>Cheapest months</span>'
+    return (f'<figure class="cal"><table><caption class="vh">{esc(i["short"])}: quality and typical supermarket flyer price '
             f'by month</caption><thead><tr><td></td>{head}</tr></thead><tbody>{rows}</tbody></table>'
             f'<figcaption class="legend">{legend}<span class="nowkey">Outlined: this month</span></figcaption></figure>')
 
@@ -277,15 +277,15 @@ def answer(i, today):
 def price_sentence(i, today):
     name = i["short"].lower()
     if i["this_week"]:
-        s = (f"In this week’s supermarket flyers across the U.S., {name} {verb(i)} on sale for <strong>{money(i['price'])}{esc(i['unit'])}"
-             "</strong> on average")
+        s = (f"In this week’s supermarket flyers across the U.S., {name} {'average' if plural(i) else 'averages'} <strong>{money(i['price'])}{esc(i['unit'])}"
+             "</strong>")
         if i["vs_usual"] is not None:
             s += (", about the usual price" if abs(i["vs_usual"]) < 3 else
                   f", {abs(i['vs_usual'])}% {'below' if i['vs_usual'] < 0 else 'above'} usual") + f" for {when(today)}"
         s += "."
     else:
         last = dt.date.fromisoformat(i["last_date"])
-        s = (f"{i['short']} {verb(i)} not on sale in this week’s supermarket flyers. Stores last put {'them' if plural(i) else 'it'} on sale "
+        s = (f"{i['short']} {verb(i)} not in this week’s supermarket flyers. {'They were' if plural(i) else 'It was'} last listed "
              f"the week of {last:%B} {last.day} at <strong>{money(i['price'])}{esc(i['unit'])}</strong>.")
     return s
 
@@ -300,7 +300,7 @@ def season_sentence(i, today):
         s = ""
     best = quality.best_months(i["commodity"])
     if i["cheapest_months"] and best and not set(i["cheapest_months"]) & set(best):
-        s += (f" Sale prices are lowest in {grocery.month_list(i['cheapest_months'])}, but that’s out-of-season produce; "
+        s += (f" Flyer prices are lowest in {grocery.month_list(i['cheapest_months'])}, but that’s out-of-season produce; "
               f"for the best quality, buy in {grocery.month_list(best)}.")
     elif i["cheapest_months"]:
         s += f" {'They’re' if plural(i) else 'It’s'} usually cheapest in {grocery.month_list(i['cheapest_months'])}."
@@ -316,9 +316,9 @@ def faq(i, today):
                "USDA’s seasonal guide doesn’t list it; stores carry it most of the year."))
     if i["cheapest_months"]:
         qa.append((f"When {verb(i)} {name} cheapest?",
-                   f"In past years, supermarket sale prices for {name} were lowest in "
+                   f"In past years, flyer prices for {name} were lowest in "
                    f"{grocery.month_list(i['cheapest_months'])}"
-                   + (f", and {'they were' if plural(i) else 'it was'} most often on sale in {grocery.month_list(i['peak_months'])}."
+                   + (f", and {'they were' if plural(i) else 'it was'} in the most flyers in {grocery.month_list(i['peak_months'])}."
                       if i["peak_months"] else ".")))
     return qa
 
@@ -338,7 +338,7 @@ def item_page(i, today, all_items):
         if i.get("swap"):
             parts.append(f'<p class="swap big">Pricey this week. Try {esc(i["swap"].lower())} instead.</p>')
         if i["stores"] < grocery.MIN_STORES:
-            parts.append(f'<p class="fine">Only {i["stores"]:,} stores put {"them" if plural(i) else "it"} on sale this '
+            parts.append(f'<p class="fine">Only {i["stores"]:,} stores listed {"them" if plural(i) else "it"} this '
                          "week, often a single chain, so treat the comparison loosely.</p>")
     when_bits = []
     if i.get("quality"):
@@ -352,7 +352,7 @@ def item_page(i, today, all_items):
     if i["cheapest_months"]:
         when_bits.append(f"<li><b>Usually cheapest</b><span>{grocery.month_list(i['cheapest_months'])}</span></li>")
     if i["peak_months"]:
-        when_bits.append(f"<li><b>Most often on sale</b><span>{grocery.month_list(i['peak_months'])}</span></li>")
+        when_bits.append(f"<li><b>In the most flyers</b><span>{grocery.month_list(i['peak_months'])}</span></li>")
     cal = calendar(i, today)
     if when_bits or cal:
         parts.append(f'<section><h2>When to buy</h2>{cal}<ul class="facts">{"".join(when_bits)}</ul></section>')
@@ -411,7 +411,7 @@ def thanksgiving_page(today, items):
 
     def todo(i, o):
         if o["change"] <= -0.10:
-            return "Wait for the sale", "good"
+            return "Wait for Thanksgiving week", "good"
         if o["change"] >= 0.05:
             return ("Buy ahead" if i["commodity"] in holiday.KEEPS else "Buy on a good sale"), "bad"
         return "No rush", ""
@@ -421,7 +421,7 @@ def thanksgiving_page(today, items):
         word, tone = todo(i, o)
         last = money(o["last_tg"]) if o["last_tg"] else "–"
         body += (f'<tr><th scope="row">{link(i)}{qual(i)}</th>'
-                 f'<td class="num" data-label="On sale now">{money(i["price"])}<small>{esc(i["unit"].strip())}</small></td>'
+                 f'<td class="num" data-label="Flyer price now">{money(i["price"])}<small>{esc(i["unit"].strip())}</small></td>'
                  f'<td class="num" data-label="Last Thanksgiving week">{last}</td>'
                  f'<td data-label="What to do"><b class="{tone}">{word}</b><small>{esc(holiday.advice(i, o))}</small></td></tr>')
     cheaper = [i for i, _ in rows if i["status"] == "low"]
@@ -434,12 +434,12 @@ def thanksgiving_page(today, items):
     now_text = now_text.strip()
     qa = [("When is the best time to buy produce for Thanksgiving?",
            "For sweet potatoes, cranberries, celery and Brussels sprouts, the week before Thanksgiving: supermarkets "
-           "put them on sale then, and prices usually drop well below late-October levels. Green beans and mushrooms "
+           "run holiday specials on them then, and prices usually drop well below late-October levels. Green beans and mushrooms "
            "usually go the other way, so buy them when you see a good sale."),
           ("Are Thanksgiving vegetables more expensive this year?",
            now_text or "Most are close to their usual price for this time of year."),
           ("Why are sweet potatoes and cranberries so cheap at Thanksgiving?",
-           "Stores use them as holiday specials to bring shoppers in, so many more stores put them on sale that week; "
+           "Stores use them as holiday specials to bring shoppers in, so many more stores feature them that week; "
            "in past years six to eight times as many stores ran sales on them as in late October.")]
     faq_ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
         {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in qa]})
@@ -447,10 +447,10 @@ def thanksgiving_page(today, items):
              f'<p class="date">Updated with supermarket flyers for the week of {today:%B} {today.day}, {today.year}, from USDA</p>'
              f'<p class="lede">{esc(lede)}</p></section>',
              '<section><h2>Buy now or wait?</h2>' + (f"<p>{esc(now_text)}</p>" if now_text else "")
-             + '<table class="data stack tg"><thead><tr><th>Item</th><th class="num">On sale now</th>'
+             + '<table class="data stack tg"><thead><tr><th>Item</th><th class="num">Flyer price now</th>'
              f'<th class="num">Last Thanksgiving week</th><th>What to do</th></tr></thead><tbody>{body}</tbody></table>'
-             '<p class="fine">“Usually” is the median change in the average flyer sale price from this point in the fall '
-             'to Thanksgiving week, 2016 to 2025 (five years for items added in 2021). Sale prices, not everyday shelf '
+             '<p class="fine">“Usually” is the median change in the average flyer price from this point in the fall '
+             'to Thanksgiving week, 2016 to 2025 (five years for items added in 2021). Flyer prices, not everyday shelf '
              'prices.</p></section>',
              '<section class="faq"><h2>Questions shoppers ask</h2>'
              + "".join(f"<h3>{esc(q)}</h3><p>{esc(a)}</p>" for q, a in qa) + "</section>",
