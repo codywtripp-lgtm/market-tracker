@@ -15,7 +15,7 @@ import datetime as dt
 import json
 import re
 
-from . import brief, cpi, grocery, grocery_view, store
+from . import brief, store
 from .brief import esc, money, whole
 from .usual import with_usual
 
@@ -625,6 +625,8 @@ def build():
 
     notes = supply_notes(as_of)
     out = {"home": home(items, hist, today, alerts, as_of, record, notes)}
+    # imported here: the site deploy imports this module for page names only, without the fetch libraries
+    from . import cpi, grocery, grocery_view
     g_day, g_items = grocery.build(store.iter_all("retail"), cpi.Deflator(cpi.load()))
     if g_items:
         out["grocery"] = grocery_view.page(g_day, g_items)
