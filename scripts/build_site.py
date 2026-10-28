@@ -547,7 +547,6 @@ What they don't tell you is what it means for your next order.</p>
 one price in five lands outside it, and about half of big swings come with no call at all. Every number on this
 page comes from a walk-forward test. Each year was predicted only with data from before it, the same way it runs live.</p>
 {live_line}
-<p>Put together by a former New York produce buyer.</p>
 <p><a class="cta" href="../">See today's prices</a></p>"""
     desc = ("How often the wholesale produce price forecasts were right: direction calls, big swings flagged two weeks "
             "ahead and early warnings, tested on USDA terminal market data 2021 to 2026, misses included.")
@@ -560,14 +559,10 @@ page comes from a walk-forward test. Each year was predicted only with data from
 
 
 def about_page():
-    """Who runs the site, where the numbers come from, how the pages are made (Google's "who, how, why")."""
+    """Where the numbers come from and how the pages are made (owner asked to keep themself off the site)."""
     body = """<section class="intro"><h1>How this site works</h1>
 <p class="lede">Produce Price Tracker shows what fruit and vegetables cost this week, whether that’s cheap or pricey
 for the time of year, and where wholesale prices are likely to go next. It’s free, has no ads and needs no sign-up.</p></section>
-<section><h2>Who runs it</h2>
-<p>It was built and is run by a former produce buyer for a large New York distributor, who bought daily at the
-Hunts Point market and knows the packs, counts and seasons behind these numbers. The calls on the wholesale pages
-(firming, softening, what to do about it) use the trade’s own language and buying practice.</p></section>
 <section><h2>Where the numbers come from</h2>
 <ul>
 <li><b>Grocery prices:</b> USDA’s National Retail Report, the prices supermarkets advertise each week and how many
@@ -590,7 +585,7 @@ code; no AI writes the daily prices or calls.</p></section>
 <p>Grocery prices are advertised prices, which can differ from your store’s shelf price. Wholesale prices are
 market reports, not a supplier’s quote. Forecasts are ranges, not promises.</p></section>"""
     write(OUT / "about" / "index.html", page("How Produce Price Tracker Works: Sources and Methods",
-                                             "Where the prices come from (USDA), how the pages are made, and who runs the site.",
+                                             "Where the prices come from (USDA) and how the pages are made.",
                                              f"{SITE_URL}about/", "../", body, active="about/", main_class="wrap landing",
                                              view="grocery"))
     return [(f"{SITE_URL}about/", dt.date.today().isoformat())]
