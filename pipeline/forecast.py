@@ -253,7 +253,9 @@ METHODS = {
 # here and to MODEL_CANDIDATES to re-test.
 METHODS["by_commodity_market+weather"] = _by_group(WEATHER, keys=("commodity", "market"))
 METHODS["pooled+weather"] = _pooled(WEATHER)  # weather effects shared across items (more data per effect)
-MODEL_CANDIDATES = ["by_commodity_market", "by_commodity_market+weather"]  # first = base
+# Weather variant dropped from the candidates 2026-10-28: it never won, and the Open-Meteo feed
+# is non-commercial only, so it is no longer fetched nightly.
+MODEL_CANDIDATES = ["by_commodity_market"]  # first = base
 MIN_GAIN = 0.01
 # Tested 2026-09-26: weather gave 13.222% vs 13.229% avg miss (noise), so the base model stays.
 

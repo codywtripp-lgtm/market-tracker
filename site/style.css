@@ -196,3 +196,22 @@ table.mini th:first-child, table.mini td:first-child { text-align: left; }
   .scrim { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 10; }
 }
 @media (prefers-reduced-motion: reduce) { .filters { transition: none; } }
+
+/* weekly buyer's brief */
+.brief h2 { font-size: 18px; margin: 28px 0 8px; }
+.brief .lede { color: var(--muted); }
+.brief .fine { color: var(--muted); font-size: 13px; margin-top: 28px; }
+.brief ul { padding-left: 18px; line-height: 1.6; }
+.brief li { margin-bottom: 6px; }
+.brief-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.brief-table th { text-align: left; font-weight: 600; color: var(--muted); border-bottom: 1px solid var(--border); padding: 6px 8px 6px 0; }
+.brief-table td { border-bottom: 1px solid var(--border); padding: 8px 8px 8px 0; vertical-align: top; }
+.brief-table small { color: var(--muted); }
+@media (max-width: 640px) {
+  .brief-table thead { display: none; }
+  .brief-table tr { display: block; border-bottom: 1px solid var(--border); padding: 10px 0; }
+  .brief-table td { display: inline-block; border: 0; padding: 2px 12px 2px 0; }
+  .brief-table td:first-child, .brief-table td.call { display: block; }
+  .brief-table td[data-label]::before { content: attr(data-label) ": "; color: var(--muted); }
+}
+.brief-table td.call { font-weight: 600; }
