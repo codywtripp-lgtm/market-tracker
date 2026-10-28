@@ -29,13 +29,14 @@ Direction = forecast midpoint for 2 weeks after the last full week vs. last week
 
 | | What the brief says to do |
 |---|---|
-| Firming, hard item (onions, potatoes, carrots, lemons, limes) | It stores: buy a few days deeper; lock price; update quotes |
+| Firming, item that stores (onions, potatoes, carrots, celery, lemons, limes) | It stores: buy a few days deeper; lock price; update quotes |
 | Firming, perishable | Buy to need, but lock price with the supplier and update quotes |
 | Softening | Keep inventory tight, stay on the open market, don't lock at today's level |
 | Steady, high for season | No relief in sight: check other sizes/packs, price quotes to cover it |
 | Steady, low for season | Good value: feature on specials and promotions |
 
-The hard-item list (`HARD_ITEMS` in `pipeline/brief.py`) is an assumption for the owner to confirm.
+"Stores" = the low end of USDA Agriculture Handbook 66 storage life is 4+ weeks (`STORAGE_LIFE` in `pipeline/brief.py`).
+Grapes (2–8 weeks), avocados (2–4), lettuce and peppers (2–3) fall short, so they stay "buy to need".
 Each card also shows the case price for every count the market quotes in the same pack (e.g. 48s / 60s avocados).
 
 ## Not yet

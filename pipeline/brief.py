@@ -85,8 +85,24 @@ def pack(s):
 # Produce is bought for daily need, so "wait" is not an option. What a buyer can change is how
 # deep to buy (only for items that hold in the cooler), whether to lock price with a supplier or
 # stay on the open market, customer quotes, specials, and size / pack specs.
-# Hard items hold for weeks; everything else is bought to need. (Owner to confirm the list.)
-HARD_ITEMS = {"Onions, Dry", "Potatoes", "Carrots", "Lemons", "Limes"}
+#
+# Approximate storage life at the recommended temperature, from USDA Agriculture Handbook 66
+# (Commercial Storage of Fruits, Vegetables...) as tabulated by the Engineering ToolBox storage
+# table. Carrots = mature topped (the pack the terminals quote). An item "stores" only if even the
+# LOW end is 4+ weeks, so buying a few days deeper is safe after time already spent in transit.
+STORAGE_LIFE = {  # commodity -> (low end in weeks, as printed)
+    "Avocados": (2, "2–4 weeks"), "Bananas": (1, "1–4 weeks green"), "Blueberries": (2, "about 2 weeks"),
+    "Broccoli": (1.5, "10–14 days"), "Carrots": (30, "7–9 months"), "Celery": (8, "2–3 months"),
+    "Cucumbers": (1.5, "10–14 days"), "Grapes": (2, "2–8 weeks"), "Lemons": (4, "1–6 months"),
+    "Limes": (6, "6–8 weeks"), "Lettuce, Iceberg": (2, "2–3 weeks"), "Lettuce, Romaine": (2, "2–3 weeks"),
+    "Onions, Dry": (4, "1–8 months"), "Peppers, Bell Type": (2, "2–3 weeks"), "Potatoes": (20, "5–10 months"),
+    "Strawberries": (0.5, "3–7 days"), "Tomatoes": (0.5, "4–7 days ripe"), "Tomatoes, Plum Type": (0.5, "4–7 days ripe"),
+}
+STORES_WEEKS = 4
+
+
+def stores(commodity):
+    return STORAGE_LIFE.get(commodity, (0, ""))[0] >= STORES_WEEKS
 
 
 def direction(change, stable):
@@ -99,7 +115,7 @@ def call(status, change, stable, commodity=""):
     """(market direction, what to do about it) in trade terms."""
     d = direction(change, stable)
     if d == "firming":
-        first = ("It stores: buy a few days deeper now." if commodity in HARD_ITEMS
+        first = (f"It stores ({STORAGE_LIFE[commodity][1]} cold): buy a few days deeper now," if stores(commodity)
                  else "Buy to need (it won't hold), but")
         return d, (f"{first} lock price with your supplier where you can, and update customer quotes "
                    "before it moves.")

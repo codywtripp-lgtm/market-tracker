@@ -255,7 +255,7 @@ what that means for your next order.</p>
 <h2>How buyers use it</h2>
 <ul>
 <li><strong>Lock price or stay open.</strong> On a firming market, lock price with your supplier before it moves; on a softening one, stay on the open market.</li>
-<li><strong>Set how deep to buy.</strong> Hard items (onions, potatoes, carrots, citrus) can go a few days deeper ahead of a rise; perishables stay bought to need.</li>
+<li><strong>Set how deep to buy.</strong> Items that store for a month or more (onions, potatoes, carrots, celery, lemons, limes) can go a few days deeper ahead of a rise; perishables stay bought to need.</li>
 <li><strong>Get quotes out right.</strong> Update customer pricing before the market moves, not after your margin is gone.</li>
 <li><strong>Check your specs.</strong> See case prices across counts (48s vs. 60s, 175s vs. 200s) and what's good value to feature on specials.</li>
 <li><strong>Check the supplier's story.</strong> Know whether "the market's up" matches what the terminals and shipping points show.</li>

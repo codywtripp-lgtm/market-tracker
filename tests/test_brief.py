@@ -3,7 +3,12 @@ from pipeline import brief
 
 def test_firming_hard_item_says_buy_deeper():
     d, action = brief.call("normal", 0.12, False, "Onions, Dry")
-    assert d == "firming" and action.startswith("It stores")
+    assert d == "firming" and action.startswith("It stores (1–8 months cold)")
+
+
+def test_storage_rule_uses_low_end_of_storage_life():
+    assert brief.stores("Celery") and brief.stores("Limes")
+    assert not brief.stores("Grapes") and not brief.stores("Avocados") and not brief.stores("Lettuce, Romaine")
 
 
 def test_firming_perishable_never_says_buy_ahead():
