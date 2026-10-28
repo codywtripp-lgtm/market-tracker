@@ -128,6 +128,30 @@ main.wrap > section:first-child { margin-top: 0; }
 .pricey .ql { display: block; margin: 0; }
 .buy .ql { display: block; }
 
+/* season calendar: 12 months, quality and typical ad price */
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.cal { margin: 0 0 32px; max-width: 760px; }
+.cal table { width: 100%; border-collapse: separate; border-spacing: 3px 0; table-layout: fixed; }
+.cal th { font-size: 14px; font-weight: 700; color: var(--ink-2); padding: 0 0 6px; text-align: center; }
+.cal th[scope="row"] { width: 84px; text-align: left; padding: 0 8px 0 0; font-size: 15px; color: var(--ink); vertical-align: middle; }
+.cal thead th.now { color: var(--ink); }
+.cal .mone { display: none; }
+.cal td { padding: 0; }
+.cal .cq { height: 30px; border-radius: 3px; background: var(--line); }
+.cal .cp { height: 64px; vertical-align: bottom; padding-top: 10px; }
+.cal .now { box-shadow: 0 0 0 2px var(--ink); border-radius: 3px; }
+.cal .cp.now { box-shadow: inset 0 0 0 2px var(--ink); }
+.cq.q-excellent, .sw.q-excellent { background: var(--good); }
+.cq.q-good, .sw.q-good { background: #9fd3ae; }
+.cq.q-fair, .sw.q-fair { background: #efd28f; }
+.cq.q-poor, .sw.q-poor { background: #eba59d; }
+.cal .bar { display: block; width: 70%; margin: 0 auto; border-radius: 2px 2px 0 0; background: var(--line-2); }
+.cal .bar.cheap, .sw.bar-key.cheap { background: var(--good); }
+.sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: -2px; }
+.sw.bar-key { background: var(--line-2); }
+.cal .legend { margin-top: 12px; }
+.cal .nowkey { color: var(--ink-2); }
+
 /* grocery item page */
 .gquote { display: grid; grid-template-columns: 132px 1fr; gap: 24px; align-items: start; margin-top: 40px; max-width: 640px; }
 .gword { font-size: 24px; line-height: 30px; font-weight: 800; margin: 0 0 4px; }
@@ -422,6 +446,10 @@ main.dash { min-width: 0; }
   .ql-btn:hover + .ql-tip { display: none; }
   .ql-btn[aria-expanded="true"] + .ql-tip { display: block; }
   .facts li { grid-template-columns: 1fr; }
+  .cal table { border-spacing: 2px 0; }
+  .cal th[scope="row"] { width: 58px; font-size: 13px; }
+  .cal .mfull { display: none; } .cal .mone { display: inline; }
+  .cal .cq { height: 26px; }
   .gquote { grid-template-columns: 112px 1fr; gap: 16px; }
   .quote { grid-template-columns: 1fr; gap: 24px; }
   .q-price { font-size: 52px; line-height: 52px; }

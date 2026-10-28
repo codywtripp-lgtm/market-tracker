@@ -205,6 +205,8 @@ def build(rows, deflator=None, live=None):
                 "stores": int(stores), "this_week": this_week, "last_date": last,
                 "in_season": commodity in SEASONS[season], "seasons": [k for k in SEASONS if commodity in SEASONS[k]],
                 "cheapest_months": cheapest, "peak_months": peak,
+                # typical ad price by month (median, today's dollars) and how many ad weeks back it up
+                "month_price": {m: round(v, 2) for m, v in med.items()},
                 "status": "new" if this_week else "absent", "vs_usual": None, "pctile": None,
                 "low": None, "high": None, "featured": None,
                 "chart": [(d, round(p, 2), band.get(d, (None, None)))
