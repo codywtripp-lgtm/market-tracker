@@ -664,7 +664,7 @@ def build():
         word = grocery_view.STATUS[gi["status"]][0]
         og[f"g-{gi['slug']}"] = {"title": f"{gi['short']} prices this week", "price": f"${gi['price']:.2f}",
                                  "aisle": {"meat": "meat-prices/", "dairy": "dairy-and-egg-prices/"}.get(gi["aisle"], ""),
-                                 "sub": f"Supermarket flyer prices · week of {g_day:%B} {g_day.day}, {g_day.year}",
+                                 "sub": f"U.S. supermarket prices · week of {g_day:%B} {g_day.day}, {g_day.year}",
                                  "out": word + (f", {abs(gi['vs_usual'])}% {'below' if gi['vs_usual'] < 0 else 'above'} usual"
                                                 if gi.get("vs_usual") else ""),
                                  "tone": {"low": "down", "high": "up"}.get(gi["status"], "flat"), "unit": gi["unit"].strip()}
