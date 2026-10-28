@@ -51,8 +51,8 @@ def advice(i, o):
     if c is None:
         return "Not enough past years to say how it moves into Thanksgiving week."
     if c <= -0.10:
-        more = f", when {o['stores_x']:.0f} times as many stores put it on sale" if (o["stores_x"] or 0) >= 2 else ""
-        return f"Wait for the holiday sale: usually {abs(round(100 * c))}% cheaper Thanksgiving week{more}."
+        more = f", when {o['stores_x']:.0f} times as many stores feature it in their flyers" if (o["stores_x"] or 0) >= 2 else ""
+        return f"Wait for the holiday specials: usually {abs(round(100 * c))}% cheaper Thanksgiving week{more}."
     if c >= 0.05:
         if i["commodity"] in KEEPS:
             return f"Buy ahead if you see a good price: it usually costs {round(100 * c)}% more by Thanksgiving week, and it keeps."

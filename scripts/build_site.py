@@ -167,7 +167,7 @@ def footer(up):
     items = "".join(f'<a href="{up}{slug}/">{_esc(board.name(c))} prices</a>' for c, (slug, _) in board.PAGES.items())
     markets = "".join(f'<a href="{up}{slug}/">{"Hunts Point" if m == "New York" else m} produce prices</a>'
                       for m, slug in board.MARKET_PAGES.items())
-    return ('<footer class="foot"><div class="wrap"><p>Grocery prices are average sale prices in supermarket flyers, from USDA’s '
+    return ('<footer class="foot"><div class="wrap"><p>Grocery prices are average prices in supermarket flyers, from USDA’s '
             "National Retail Report. Wholesale prices are the USDA “mostly” price per case at the terminal markets, from "
             "USDA AMS Market News. “Usual” means the same weeks of the year in past years, adjusted for food inflation. "
             f'<a href="{up}about/">How this site works</a>.</p>'
@@ -557,7 +557,7 @@ Hunts Point market and knows the packs, counts and seasons behind these numbers.
 (firming, softening, what to do about it) use the trade’s own language and buying practice.</p></section>
 <section><h2>Where the numbers come from</h2>
 <ul>
-<li><b>Grocery prices:</b> USDA’s National Retail Report, the produce sale prices in supermarket flyers each week and how many
+<li><b>Grocery prices:</b> USDA’s National Retail Report, the prices in supermarket flyers each week and how many
 stores ran each sale, nationwide.</li>
 <li><b>Wholesale prices:</b> USDA AMS Market News terminal market reports for New York (Hunts Point), Los Angeles and
 Chicago, plus shipping-point reports and shipment volumes.</li>
@@ -574,7 +574,7 @@ data from before it. The results, misses included, are on the <a href="../why/">
 <p>The site’s code was written with the help of AI coding tools. The pages themselves are generated from USDA data by that
 code; no AI writes the daily prices or calls.</p></section>
 <section><h2>What it isn’t</h2>
-<p>Grocery prices are flyer sale prices, which can differ from your store’s shelf price. Wholesale prices are
+<p>Grocery prices are flyer prices, which can differ from your store’s shelf price. Wholesale prices are
 market reports, not a supplier’s quote. Forecasts are ranges, not promises.</p></section>"""
     write(OUT / "about" / "index.html", page("How Produce Price Tracker Works: Sources and Methods",
                                              "Where the prices come from (USDA), how the pages are made, and who runs the site.",
