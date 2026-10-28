@@ -12,6 +12,7 @@ import csv
 import datetime as dt
 import html
 import json
+import re
 import shutil
 import statistics
 from collections import defaultdict
@@ -139,8 +140,71 @@ def main():
     for sid, rows in weekly.items():
         rows.sort()
         (OUT / "data" / "s" / f"{sid}.json").write_text(json.dumps(with_usual(rows), separators=(",", ":")))
-    pages = landing_pages(latest, as_of)
-    print(f"site: {len(latest)} items, {len(weekly)} series histories, {pages} landing pages")
+    brief_urls = briefs()
+    pages = landing_pages(latest, as_of, brief_urls)
+    print(f"site: {len(latest)} items, {len(weekly)} series histories, {pages} landing pages, {len(brief_urls)} briefs")
+
+
+# ---------- weekly buyer's brief ----------
+# pipeline/brief.py writes one HTML fragment per week to data/briefs/; here each becomes a page,
+# /brief/ shows the latest, and feed.xml carries full issues (an email service can send from it).
+BRIEFS = ROOT / "data" / "briefs"
+BRIEF_TITLE = "Produce Buyer's Brief"
+
+
+def _brief_page(body, depth, canonical, extra=""):
+    up = "../" * depth
+    title = re.search(r"<h1>(.*?)</h1>", body)
+    title = html.unescape(title.group(1)) if title else BRIEF_TITLE
+    desc = re.search(r'<p class="lede">(.*?)</p>', body)
+    return f"""<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{_esc(title)} | Produce Price Check</title>
+<meta name="description" content="{_esc(html.unescape(desc.group(1)) if desc else '')}">
+<link rel="canonical" href="{canonical}">
+<link rel="alternate" type="application/rss+xml" title="{BRIEF_TITLE}" href="{SITE_URL}brief/feed.xml">
+<link rel="stylesheet" href="{up}style.css"></head>
+<body><main class="landing brief">
+<p class="sub"><a href="{up}">Produce Price Check</a> · <a href="{up}brief/">Buyer's brief</a></p>
+<!--SIGNUP-->
+<article>
+{body}</article>
+<p class="hint">Free every Monday. Follow by RSS: <a href="{SITE_URL}brief/feed.xml">{SITE_URL}brief/feed.xml</a>.
+Charts and daily updates are in the <a href="{up}">live dashboard</a>.</p>
+{extra}
+</main></body></html>
+"""
+
+
+def briefs():
+    files = sorted(BRIEFS.glob("*.html"), reverse=True) if BRIEFS.exists() else []
+    if not files:
+        return []
+    urls, items = [], []
+    for f in files:
+        week, body = f.stem, f.read_text(encoding="utf-8")
+        url = f"{SITE_URL}brief/{week}/"
+        (OUT / "brief" / week).mkdir(parents=True, exist_ok=True)
+        (OUT / "brief" / week / "index.html").write_text(_brief_page(body, 2, url), encoding="utf-8")
+        urls.append(url)
+        title = re.search(r"<h1>(.*?)</h1>", body)
+        title = html.unescape(title.group(1)) if title else f"{BRIEF_TITLE}: {week}"
+        pub = dt.datetime.combine(dt.date.fromisoformat(week), dt.time(6), dt.timezone.utc)
+        items.append(f"<item><title>{_esc(title)}</title><link>{url}</link><guid>{url}</guid>"
+                     f"<pubDate>{pub.strftime('%a, %d %b %Y %H:%M:%S +0000')}</pubDate>"
+                     f"<description>{_esc(re.sub(r'<h1>.*?</h1>', '', body))}</description></item>")
+    past = "".join(f'<li><a href="{f.stem}/">Week of {dt.date.fromisoformat(f.stem).strftime("%B %d, %Y")}</a></li>'
+                   for f in files[1:])
+    latest = files[0].read_text(encoding="utf-8")
+    extra = f"<h2>Past issues</h2><ul>{past}</ul>" if past else ""
+    (OUT / "brief" / "index.html").write_text(_brief_page(latest, 1, f"{SITE_URL}brief/", extra), encoding="utf-8")
+    (OUT / "brief" / "feed.xml").write_text(
+        '<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel>'
+        f"<title>{BRIEF_TITLE}</title><link>{SITE_URL}brief/</link>"
+        "<description>Weekly wholesale produce prices vs. usual, 2-week outlook and buy-ahead calls for "
+        "New York, Los Angeles and Chicago. From USDA Market News data.</description><language>en-us</language>"
+        + "".join(items[:20]) + "</channel></rss>\n", encoding="utf-8")
+    return [f"{SITE_URL}brief/"] + urls
 
 
 # ---------- search landing pages ----------
@@ -188,12 +252,13 @@ def _line(i):
     return " — ".join(b for b in bits if b)
 
 
-def landing_pages(latest, as_of):
+def landing_pages(latest, as_of, extra_urls=()):
     by_c = defaultdict(list)
     for i in latest:
         if i["type"] == "terminal" and i["commodity"] in PAGE_NAMES:
             by_c[i["commodity"]].append(i)
-    week = dt.date.fromisoformat(as_of).strftime("%B %-d, %Y") if as_of else ""
+    d = dt.date.fromisoformat(as_of) if as_of else None
+    week = f"{d:%B} {d.day}, {d.year}" if d else ""
     urls, links = [SITE_URL], []
     for commodity, (slug, name) in PAGE_NAMES.items():
         items = sorted(by_c.get(commodity, []), key=lambda i: ({"New York": 0, "Los Angeles": 1, "Chicago": 2}.get(i["market"], 9),
@@ -228,6 +293,7 @@ Data: USDA AMS Market News, updated every evening.</p>
         (OUT / slug / "index.html").write_text(page, encoding="utf-8")
         urls.append(f"{SITE_URL}{slug}/")
         links.append(f'<a href="{slug}/">{_esc(name)} prices</a>')
+    urls += list(extra_urls)
     today = dt.date.today().isoformat()
     (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                                      + "".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod><changefreq>daily</changefreq></url>\n" for u in urls)

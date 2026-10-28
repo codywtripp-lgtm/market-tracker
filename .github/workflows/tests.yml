@@ -32,11 +32,11 @@ jobs:
           MARS_API_KEY: ${{ secrets.MARS_API_KEY }}
       - run: python -m pipeline.cpi
       - run: python -m pipeline.export
-      - run: python -m pipeline.weather
       - run: python -m pipeline.volumes
       - run: python -m pipeline.alerts
       - run: python -m pipeline.forecast
       - run: python -m pipeline.track_record
+      - run: python -m pipeline.brief
       - run: python scripts/build_site.py
       - uses: actions/upload-artifact@v4
         if: always()
@@ -44,7 +44,7 @@ jobs:
           name: smoke-data
           path: |
             data/export/
-            data/raw/weather/
+            data/briefs/
       - uses: actions/upload-artifact@v4
         with:
           name: site-preview
