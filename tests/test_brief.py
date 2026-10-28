@@ -21,7 +21,9 @@ def test_vs_usual_wording():
 
 
 def test_build_from_current_export():
-    week, body = brief.build()
-    assert week.weekday() == 0  # dated by a Monday
+    as_of, body = brief.build()
+    assert as_of.weekday() < 6  # a market day
+    assert "<h2>What moved today</h2>" in body
     assert body.startswith("<h1>Produce Buyer's Brief")
-    assert "<h2>New York</h2>" in body
+    assert "At a glance: New York" in body
+    assert "<svg class=\"spark\"" in body

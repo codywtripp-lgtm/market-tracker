@@ -140,13 +140,13 @@ def main():
     for sid, rows in weekly.items():
         rows.sort()
         (OUT / "data" / "s" / f"{sid}.json").write_text(json.dumps(with_usual(rows), separators=(",", ":")))
-    brief_urls = briefs()
+    brief_urls = briefs() + why_page()
     pages = landing_pages(latest, as_of, brief_urls)
     print(f"site: {len(latest)} items, {len(weekly)} series histories, {pages} landing pages, {len(brief_urls)} briefs")
 
 
-# ---------- weekly buyer's brief ----------
-# pipeline/brief.py writes one HTML fragment per week to data/briefs/; here each becomes a page,
+# ---------- daily buyer's brief ----------
+# pipeline/brief.py writes one HTML fragment per market day to data/briefs/; here each becomes a page,
 # /brief/ shows the latest, and feed.xml carries full issues (an email service can send from it).
 BRIEFS = ROOT / "data" / "briefs"
 BRIEF_TITLE = "Produce Buyer's Brief"
@@ -165,11 +165,11 @@ def _brief_page(body, depth, canonical, extra=""):
 <link rel="alternate" type="application/rss+xml" title="{BRIEF_TITLE}" href="{SITE_URL}brief/feed.xml">
 <link rel="stylesheet" href="{up}style.css"></head>
 <body><main class="landing brief">
-<p class="sub"><a href="{up}">Produce Price Check</a> · <a href="{up}brief/">Buyer's brief</a></p>
+<p class="sub"><a href="{up}">Produce Price Check</a> · <a href="{up}brief/">Buyer's brief</a> · <a href="{up}why/">Why buyers read it</a></p>
 <!--SIGNUP-->
 <article>
 {body}</article>
-<p class="hint">Free every Monday. Follow by RSS: <a href="{SITE_URL}brief/feed.xml">{SITE_URL}brief/feed.xml</a>.
+<p class="hint">Free, every market evening (Monday–Saturday). Follow by RSS: <a href="{SITE_URL}brief/feed.xml">{SITE_URL}brief/feed.xml</a>.
 Charts and daily updates are in the <a href="{up}">live dashboard</a>.</p>
 {extra}
 </main></body></html>
@@ -193,18 +193,105 @@ def briefs():
         items.append(f"<item><title>{_esc(title)}</title><link>{url}</link><guid>{url}</guid>"
                      f"<pubDate>{pub.strftime('%a, %d %b %Y %H:%M:%S +0000')}</pubDate>"
                      f"<description>{_esc(re.sub(r'<h1>.*?</h1>', '', body))}</description></item>")
-    past = "".join(f'<li><a href="{f.stem}/">Week of {dt.date.fromisoformat(f.stem).strftime("%B %d, %Y")}</a></li>'
-                   for f in files[1:])
+    past = "".join(f'<li><a href="{f.stem}/">{dt.date.fromisoformat(f.stem):%A, %B} {dt.date.fromisoformat(f.stem).day}</a></li>'
+                   for f in files[1:60])
     latest = files[0].read_text(encoding="utf-8")
     extra = f"<h2>Past issues</h2><ul>{past}</ul>" if past else ""
     (OUT / "brief" / "index.html").write_text(_brief_page(latest, 1, f"{SITE_URL}brief/", extra), encoding="utf-8")
     (OUT / "brief" / "feed.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel>'
         f"<title>{BRIEF_TITLE}</title><link>{SITE_URL}brief/</link>"
-        "<description>Weekly wholesale produce prices vs. usual, 2-week outlook and buy-ahead calls for "
+        "<description>Daily wholesale produce prices vs. usual, 2-week outlook and buy-ahead calls for "
         "New York, Los Angeles and Chicago. From USDA Market News data.</description><language>en-us</language>"
         + "".join(items[:20]) + "</channel></rss>\n", encoding="utf-8")
     return [f"{SITE_URL}brief/"] + urls
+
+
+# ---------- "why buyers read it" (the pitch) ----------
+# Every number comes from data/export/value.json (scripts/value_stats.py: the brief's calls replayed
+# walk-forward on 2021-2026 data, plus the alert rules) and track_record.json (live results).
+NICE = {"Lettuce, Romaine": "Romaine", "Lettuce, Iceberg": "Iceberg", "Tomatoes, Plum Type": "Roma tomatoes",
+        "Peppers, Bell Type": "Bell peppers", "Onions, Dry": "Onions"}
+
+
+def why_page():
+    path = EXPORT / "value.json"
+    if not path.exists():
+        return []
+    v = json.loads(path.read_text(encoding="utf-8"))
+    rec = json.loads((EXPORT / "track_record.json").read_text()) if (EXPORT / "track_record.json").exists() else {}
+    live = rec.get("forecasts_live", {})
+    best = [c for c in v["by_commodity"] if c["right_pct"] >= 65][:8]
+    rows = "".join(f"<tr><td>{_esc(NICE.get(c['commodity'], c['commodity']))}</td><td>{c['right_pct']:.0f}%</td>"
+                   f"<td>{c['calls']:,}</td><td>${c['avg_dollars']:.2f}</td></tr>" for c in best)
+    live_line = (f"<p>Since going live on {_esc(live['since'])}, {live['in_range_pct']:.0f}% of {live['scored']:,} scored "
+                 f"forecasts landed inside their range. The running score is on the "
+                 f"<a href=\"../\">dashboard</a>, misses included.</p>") if live.get("scored") else ""
+    body = f"""<p class="eyebrow">For wholesale produce buyers</p>
+<h1>Know where produce prices are heading before your supplier calls.</h1>
+<p class="lede">A free daily brief on the New York (Hunts Point), Los Angeles and Chicago terminal markets: today's
+moves, whether each price is high or low for the season, where it is likely to be in two weeks, and a plain
+call on each item. Three minutes to read, before the next buy.</p>
+<p><a class="btn cta" href="../brief/">Read today's brief →</a></p>
+
+<div class="stats">
+  <div><strong>{v['calls_right_pct']:.0f}%</strong><span>of calls on direction were right ({v['calls']:,} calls, {_esc(v['years'])})</span></div>
+  <div><strong>{v['big_moves_right_pct']:.0f}%</strong><span>right when the price then moved 10% or more</span></div>
+  <div><strong>${v['avg_dollars_per_case']:.2f}</strong><span>average move per case in the direction called, within 2 weeks</span></div>
+  <div><strong>{v['alert_hit_pct']:.0f}%</strong><span>early warnings that came true, vs. {v['alert_base_pct']:.0f}% by chance ({v['alert_cases']:,} past cases)</span></div>
+</div>
+
+<h2>Why not just read the USDA reports?</h2>
+<p>The reports are where the numbers come from, and they are good at saying what traded today. They don't tell you
+what that means for your next order.</p>
+<table class="brief-table vs"><thead><tr><th></th><th>USDA market reports</th><th>The brief</th></tr></thead><tbody>
+<tr><td>Coverage</td><td>One report per market, per day, often hundreds of lines</td><td>Three terminals and the shipping points on one page</td></tr>
+<tr><td>Is this price high?</td><td>Today's price only</td><td>Compared with the same weeks of the last 10 years, adjusted for inflation</td></tr>
+<tr><td>Where is it going?</td><td>Not covered</td><td>A 2-week price range per item, tested on five years of data</td></tr>
+<tr><td>Early warning</td><td>You spot shipping-point moves yourself, if you have time</td><td>Flagged when a signal has called the next move at least 65% of the time</td></tr>
+<tr><td>What to do</td><td>Up to you</td><td>One plain call per item: buy ahead, buy as needed, hold off, steady</td></tr>
+</tbody></table>
+
+<h2>How buyers use it</h2>
+<ul>
+<li><strong>Book or buy spot.</strong> When a rise is called, lock in with your supplier; when it's easing, buy hand to mouth.</li>
+<li><strong>Push back on quotes.</strong> Know whether a "market's up" call matches what the terminals and shipping points show.</li>
+<li><strong>Quote customers and menus.</strong> Price ahead with a range, not a guess.</li>
+<li><strong>Swap smart.</strong> See what's cheap for the season right now, e.g. one pepper color 40% under another.</li>
+</ul>
+
+<h2>Where it's strongest</h2>
+<p>Share of 2-week calls that got the direction right, 2021–2026, and the average move per case in the direction called.</p>
+<table class="brief-table"><thead><tr><th>Item</th><th>Right</th><th>Calls</th><th>Avg move / case</th></tr></thead>
+<tbody>{rows}</tbody></table>
+<p class="fine">Steady items such as onions and potatoes rarely move enough to call; the brief says "Steady" rather than guess.</p>
+
+<h2>Honest about the limits</h2>
+<p>These are USDA-reported terminal prices, not your supplier's quote, and a forecast is a range, not a promise: about
+one in five prices lands outside it. The test is walk-forward: each year was predicted only with data from before it.</p>
+{live_line}
+<p class="fine">Built by a former New York produce buyer. Data: USDA AMS Market News, updated every market evening.</p>
+<p><a class="btn cta" href="../brief/">Read today's brief →</a></p>"""
+    title = "Daily wholesale produce price brief for buyers"
+    desc = ("Free daily brief for produce buyers: Hunts Point, LA and Chicago terminal prices vs. usual for the "
+            "season, a tested 2-week outlook and early warnings.")
+    page = f"""<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{_esc(title)} | Produce Price Check</title>
+<meta name="description" content="{_esc(desc)}">
+<meta property="og:title" content="Know where produce prices are heading before your supplier calls">
+<meta property="og:description" content="{_esc(desc)}">
+<link rel="canonical" href="{SITE_URL}why/">
+<link rel="stylesheet" href="../style.css"></head>
+<body><main class="landing brief why">
+<p class="sub"><a href="../">Produce Price Check</a> · <a href="../brief/">Buyer's brief</a></p>
+<!--SIGNUP-->
+{body}
+</main></body></html>
+"""
+    (OUT / "why").mkdir(parents=True, exist_ok=True)
+    (OUT / "why" / "index.html").write_text(page, encoding="utf-8")
+    return [f"{SITE_URL}why/"]
 
 
 # ---------- search landing pages ----------
