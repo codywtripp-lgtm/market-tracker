@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wholesale Produce Price History, 10 Years | Produce Price Tracker</title>
+  <meta name="description" content="Wholesale produce prices at the New York, Los Angeles and Chicago terminal markets against the usual for the season, with 10 years of history and a two-week outlook. USDA data, updated every evening.">
+  <!--HEAD-->
+  <link rel="stylesheet" href="../style.css">
+  <link rel="canonical" href="https://producepricetracker.com/charts/">
+</head>
+<body>
+  <!--TOP-->
+
+  <div class="dash-intro">
+    <div>
+      <h1>Price history</h1>
+      <p class="sub">Up to 10 years of weekly prices for any item and market, against the usual for the time of year. <span id="asof"></span></p>
+    </div>
+    <button id="open-filters" class="btn filters-btn" aria-controls="filters" aria-expanded="false">Items and markets <span id="filter-count"></span></button>
+  </div>
+
+  <div class="layout">
+    <aside id="filters" class="filters" aria-label="Items and markets">
+      <div class="sheet-head">
+        <strong>Items and markets</strong>
+        <button id="close-filters" class="btn">Done</button>
+      </div>
+
+      <section class="fgroup">
+        <h2 class="fh">Market</h2>
+        <div id="f-market" class="seg" role="radiogroup"></div>
+      </section>
+
+      <section class="fgroup">
+        <div class="fh-row">
+          <h2 class="fh">Items</h2>
+          <button id="clear" class="link">Clear</button>
+        </div>
+        <ul id="f-items" class="checks"></ul>
+      </section>
+
+      <section class="fgroup">
+        <h2 class="fh">Time range</h2>
+        <div id="f-range" class="seg" role="radiogroup"></div>
+      </section>
+
+      <section class="fgroup">
+        <h2 class="fh">Chart shows</h2>
+        <div id="f-view" class="seg" role="radiogroup"></div>
+        <p class="hint" id="view-hint"></p>
+      </section>
+    </aside>
+    <div id="scrim" class="scrim" hidden></div>
+
+    <main class="dash">
+
+      <section id="moves" class="card" aria-labelledby="moves-h">
+        <h2 id="moves-h" class="sh">Biggest moves</h2>
+        <div id="moves-list"></div>
+      </section>
+
+      <section class="card" aria-labelledby="news-h">
+        <h2 id="news-h" class="sh">Selected items</h2>
+        <ul id="news" class="news"></ul>
+      </section>
+
+      <section class="card" aria-labelledby="chart-h">
+        <div class="chart-head">
+          <h2 id="chart-h" class="sh"></h2>
+          <span id="chart-sub" class="sub"></span>
+        </div>
+        <div id="legend" class="legend"></div>
+        <div id="chart" class="chart"></div>
+        <p id="chart-note" class="hint"></p>
+        <details class="table-view"><summary>Show as table</summary><div id="table"></div></details>
+      </section>
+
+
+      <section class="card" aria-labelledby="list-h">
+        <h2 id="list-h" class="sh">Low and high for the season</h2>
+        <p class="hint">Tap a row to add it to the chart or take it off.</p>
+        <ul id="list" class="list"></ul>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+
+  <!--FOOT-->
+  <script src="app.js"></script>
+</body>
+</html>

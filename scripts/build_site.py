@@ -2,31 +2,30 @@
 
     python scripts/build_site.py
 
-Copies site/ and writes the JSON the page loads:
+Copies site/, wraps the pages pipeline/board.py writes (home, market pages, item pages) and the
+track record page in the shared frame, and writes the JSON the price-history page loads:
   data/latest.json          every headline series: this week's price, status, blurb inputs
   data/s/<series_id>.json   weekly history for one series, loaded when it's shown in the chart:
                             [week_start, price, real_price, pct_vs_usual, usual_lo, usual_hi]
 """
 
 import csv
+import hashlib
 import datetime as dt
 import html
 import json
 import re
 import shutil
-import statistics
 from collections import defaultdict
 from pathlib import Path
-from urllib.parse import quote
+import sys
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+from pipeline import board  # noqa: E402
+from pipeline.usual import with_usual  # noqa: E402
 EXPORT = ROOT / "data" / "export"
 OUT = ROOT / "_site"
-
-# Same rule as pipeline/export.py: same ISO week +/-2, prior years only, at least 3 years.
-WEEK_WINDOW = 2
-MIN_YEARS = 3
-
 
 def read(name):
     path = EXPORT / name
@@ -41,39 +40,6 @@ def num(s):
         return float(s)
     except (TypeError, ValueError):
         return None
-
-
-def quantile(sorted_vals, q):
-    pos = (len(sorted_vals) - 1) * q
-    lo, hi = int(pos), min(int(pos) + 1, len(sorted_vals) - 1)
-    return sorted_vals[lo] + (sorted_vals[hi] - sorted_vals[lo]) * (pos - lo)
-
-
-def with_usual(weeks):
-    """weeks: sorted [(date, price, real)] -> rows with % vs usual and the usual (25th-75th pct) range."""
-    by_isoweek = defaultdict(list)  # iso week -> [(iso year, real)]
-    for d, _, real in weeks:
-        y, w = d.isocalendar()[:2]
-        if real is not None:
-            by_isoweek[w].append((y, real))
-    out = []
-    for d, price, real in weeks:
-        y, w = d.isocalendar()[:2]
-        pool, years = [], set()
-        for o in range(-WEEK_WINDOW, WEEK_WINDOW + 1):
-            for yy, v in by_isoweek.get((w - 1 + o) % 53 + 1, ()):
-                if yy < y:
-                    pool.append(v)
-                    years.add(yy)
-        if len(years) >= MIN_YEARS and real is not None:
-            pool.sort()
-            usual = statistics.median(pool)
-            pct = round((real / usual - 1) * 100, 1) if usual else None
-            lo, hi = round(quantile(pool, 0.25), 3), round(quantile(pool, 0.75), 3)
-        else:
-            pct = lo = hi = None
-        out.append([d.isoformat(), price, real, pct, lo, hi])
-    return out
 
 
 def main():
@@ -140,62 +106,72 @@ def main():
     for sid, rows in weekly.items():
         rows.sort()
         (OUT / "data" / "s" / f"{sid}.json").write_text(json.dumps(with_usual(rows), separators=(",", ":")))
-    brief_urls = briefs() + why_page()
-    pages = landing_pages(latest, as_of, brief_urls)
-    print(f"site: {len(latest)} items, {len(weekly)} series histories, {pages} landing pages, {len(brief_urls)} briefs")
+    urls = board_pages() + why_page() + charts_page()
+    redirect("brief", "../")
+    seo_files(urls)
+    print(f"site: {len(latest)} items, {len(weekly)} series histories, {len(urls)} pages")
 
 
-# ---------- page frame shared by every generated page ----------
+# ---------- page frame shared by every page ----------
+SITE_URL = "https://producepricetracker.com/"
 SITE_NAME = "Produce Price Tracker"
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
          '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700'
-         '&family=Source+Serif+4:opsz,wght@8..60,400;8..60,700&display=swap">')
-ICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E"
-        "%3Crect width='32' height='32' fill='%231c1b19'/%3E"
-        "%3Cpath d='M5 23l7-8 5 4 10-11' stroke='%23fbfaf6' stroke-width='3' fill='none'/%3E%3C/svg%3E")
-NAV = (("brief/", "Today's report"), ("", "Price charts"), ("why/", "Track record"))
+         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap">')
+# the mark: a price line over a crate slat, in the brand green
+MARK = ('<svg viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="7" fill="#2f8a57"/>'
+        '<path d="M6 18.5l5-5.5 4 3 7-8" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" '
+        'stroke-linejoin="round"/><path d="M6 22h16" stroke="#fff" stroke-opacity=".55" stroke-width="2" stroke-linecap="round"/></svg>')
+ICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E"
+        "%3Crect width='28' height='28' rx='7' fill='%232f8a57'/%3E%3Cpath d='M6 18.5l5-5.5 4 3 7-8' stroke='%23fff' "
+        "stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M6 22h16' "
+        "stroke='%23fff' stroke-opacity='.55' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")
+# cache-buster so a design change shows up right away instead of after the browser's cache expires
+ASSET_V = hashlib.sha1((ROOT / "site" / "style.css").read_bytes() + (ROOT / "site" / "tabs.js").read_bytes()).hexdigest()[:8]
+NAV = (("", "Today's prices"), ("charts/", "Price history"), ("why/", "Track record"))
 
 
-def masthead(up, active=None):
-    links = []
-    for href, label in NAV:
-        cur = ' aria-current="page"' if href == active else ""
-        links.append(f'<a href="{up}{href}"{cur}>{label}</a>')
-    return (f'<header class="mast"><div class="mast-in"><div class="mast-row">'
-            f'<a class="mast-name" href="{up}">{SITE_NAME}</a>'
-            f'<nav class="mast-nav" aria-label="Site">{"".join(links)}</nav></div>'
-            '<p class="mast-tag">Wholesale produce prices at the New York, Los Angeles and Chicago terminal markets, '
-            'from USDA Market News. Updated every market evening.</p></div></header>')
+def _esc(s):
+    return html.escape(str(s or ""), quote=True)
 
 
-def item_links(up):
-    return " · ".join(f'<a href="{up}{slug}/">{_esc(name)} prices</a>' for slug, name in PAGE_NAMES.values())
+def topbar(up, active=None):
+    cur = ' aria-current="page"'
+    links = "".join(f'<a href="{up}{href}"{cur if href == active else ""}>{label}</a>' for href, label in NAV)
+    return (f'<header class="top"><div class="wrap"><a class="logo" href="{up}">{MARK}{SITE_NAME}</a>'
+            f'<nav class="nav" aria-label="Site">{links}</nav></div></header>')
 
 
 def footer(up):
-    return ('<footer class="foot">Prices are the USDA “mostly” price per case at the terminal markets, from USDA AMS '
-            "Market News. “Usual” means the same weeks of the year over the past 10 years, adjusted for food "
-            "inflation. These are market prices, not a supplier's quote."
-            f'<p class="foot-links">{item_links(up)}</p></footer>')
+    items = "".join(f'<a href="{up}{slug}/">{_esc(board.name(c))} prices</a>' for c, (slug, _) in board.PAGES.items())
+    markets = "".join(f'<a href="{up}{slug}/">{"Hunts Point" if m == "New York" else m} produce prices</a>'
+                      for m, slug in board.MARKET_PAGES.items())
+    return ('<footer class="foot"><div class="wrap"><p>Prices are the USDA “mostly” price per case at the terminal '
+            "markets, from USDA AMS Market News, for the main pack the trade buys in each market. “Usual” means the "
+            "same weeks of the year over the past 10 years, adjusted for food inflation. Forecast ranges hold about "
+            "80% of the time. These are market prices, not a supplier's quote.</p>"
+            f"<nav>{markets}</nav><nav>{items}</nav></div></footer>")
 
 
-def page(title, desc, canonical, up, body, active=None, head=""):
+def page(title, desc, canonical, up, body, active=None, head="", og=None, main_class="wrap"):
+    image = (f'<meta property="og:image" content="{SITE_URL}og/{og}.png">'
+             '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">'
+             '<meta name="twitter:card" content="summary_large_image">') if og else ""
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{_esc(title)}</title>
-<meta name="description" content="{_esc(desc)}">
+<meta name="description" content="{_esc(desc[:300])}">
 <link rel="canonical" href="{canonical}">
-<meta property="og:title" content="{_esc(title)}">
-<meta property="og:description" content="{_esc(desc)}">
-<meta property="og:url" content="{canonical}">
-<meta property="og:site_name" content="{SITE_NAME}">
+<meta property="og:type" content="website"><meta property="og:site_name" content="{SITE_NAME}">
+<meta property="og:title" content="{_esc(title)}"><meta property="og:description" content="{_esc(desc[:300])}">
+<meta property="og:url" content="{canonical}">{image}
 <link rel="icon" href="{ICON}">
 {FONTS}
-<link rel="stylesheet" href="{up}style.css">{head}</head>
-<body class="page">
-{masthead(up, active)}
-<main class="landing">
+<link rel="stylesheet" href="{up}style.css?v={ASSET_V}">{head}
+<script src="{up}tabs.js?v={ASSET_V}" defer></script></head>
+<body>
+{topbar(up, active)}
+<main class="{main_class}">
 {body}
 </main>
 {footer(up)}
@@ -203,55 +179,143 @@ def page(title, desc, canonical, up, body, active=None, head=""):
 """
 
 
-# ---------- daily market report ----------
-# pipeline/brief.py writes one HTML fragment per market day to data/briefs/; here each becomes a page,
-# /brief/ shows the latest, and feed.xml carries full issues.
-BRIEFS = ROOT / "data" / "briefs"
-BRIEF_TITLE = "Produce market report"
+def write(path, text):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text, encoding="utf-8")
 
 
-def _brief_page(body, depth, canonical, extra=""):
-    up = "../" * depth
-    title = re.search(r"<h1>(.*?)</h1>", body)
-    title = html.unescape(title.group(1)) if title else BRIEF_TITLE
-    desc = re.search(r'<p class="lede">(.*?)</p>', body)
-    body = body.replace('href="../why/"', f'href="{up}why/"')
-    feed = f'\n<link rel="alternate" type="application/rss+xml" title="{SITE_NAME}" href="{SITE_URL}brief/feed.xml">'
-    return page(f"{title} | {SITE_NAME}", html.unescape(desc.group(1)) if desc else "", canonical, up,
-                f"<article>\n{body}</article>\n{extra}", active="brief/" if depth == 1 else None, head=feed)
+def redirect(path, to):
+    write(OUT / path / "index.html", f'<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url={to}">'
+                                     f'<link rel="canonical" href="{SITE_URL}"><title>{SITE_NAME}</title><a href="{to}">{SITE_NAME}</a>')
 
 
-def briefs():
-    files = sorted(BRIEFS.glob("*.html"), reverse=True) if BRIEFS.exists() else []
-    if not files:
+# ---------- home, market pages, item pages (fragments from pipeline/board.py) ----------
+BOARD = ROOT / "data" / "board"
+
+
+def _text(fragment, cls):
+    m = re.search(rf'<p class="{cls}">(.*?)</p>', fragment, re.S)
+    return html.unescape(re.sub(r"<[^>]+>", "", m.group(1))) if m else ""
+
+
+def board_pages():
+    if not (BOARD / "home.html").exists():
         return []
-    urls, items = [], []
-    for f in files:
-        week, body = f.stem, f.read_text(encoding="utf-8")
-        url = f"{SITE_URL}brief/{week}/"
-        (OUT / "brief" / week).mkdir(parents=True, exist_ok=True)
-        (OUT / "brief" / week / "index.html").write_text(_brief_page(body, 2, url), encoding="utf-8")
-        urls.append(url)
-        title = re.search(r"<h1>(.*?)</h1>", body)
-        title = html.unescape(title.group(1)) if title else f"{BRIEF_TITLE}: {week}"
-        pub = dt.datetime.combine(dt.date.fromisoformat(week), dt.time(6), dt.timezone.utc)
-        items.append(f"<item><title>{_esc(title)}</title><link>{url}</link><guid>{url}</guid>"
-                     f"<pubDate>{pub.strftime('%a, %d %b %Y %H:%M:%S +0000')}</pubDate>"
-                     f"<description>{_esc(re.sub(r'<h1>.*?</h1>', '', body))}</description></item>")
-    past = "".join(f'<li><a href="{f.stem}/">{dt.date.fromisoformat(f.stem):%A, %B} {dt.date.fromisoformat(f.stem).day}</a></li>'
-                   for f in files[1:60])
-    latest = files[0].read_text(encoding="utf-8")
-    extra = (f'<h2>Earlier reports</h2><ul class="issues">{past}</ul>' if past else "") + (
-        f'<p class="fine">Published every market evening, Monday to Saturday. '
-        f'Feed readers can follow <a href="{SITE_URL}brief/feed.xml">the RSS feed</a>.</p>')
-    (OUT / "brief" / "index.html").write_text(_brief_page(latest, 1, f"{SITE_URL}brief/", extra), encoding="utf-8")
-    (OUT / "brief" / "feed.xml").write_text(
-        '<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel>'
-        f"<title>{SITE_NAME}</title><link>{SITE_URL}brief/</link>"
-        "<description>Daily wholesale produce market report for New York, Los Angeles and Chicago: case prices "
-        "against the season and a two-week outlook. From USDA Market News data.</description><language>en-us</language>"
-        + "".join(items[:20]) + "</channel></rss>\n", encoding="utf-8")
-    return [f"{SITE_URL}brief/"] + urls
+    as_of = dt.date.fromisoformat((BOARD / "as_of.txt").read_text().strip())
+    og = json.loads((BOARD / "og.json").read_text(encoding="utf-8")) if (BOARD / "og.json").exists() else {}
+    cards = {}
+    urls = []
+
+    def emit(rel, frag_name, title, depth, active=None, og_key=None, head=""):
+        frag = (BOARD / f"{frag_name}.html").read_text(encoding="utf-8")
+        up = "../" * depth
+        desc = _text(frag, "answer") or _text(frag, "lede")
+        if og_key and og_key in og:
+            cards[og_key] = og[og_key]
+        write(OUT / rel / "index.html", page(title, desc, SITE_URL + rel, up, frag.replace('href="@/', f'href="{up}'),
+                                             active=active, og=og_key if og_key in og else None, head=head))
+        urls.append(SITE_URL + rel)
+
+    dataset = json.dumps({
+        "@context": "https://schema.org", "@type": "Dataset", "name": "Wholesale produce terminal market prices",
+        "description": "Daily wholesale case prices for 18 produce items at the New York (Hunts Point), Los Angeles "
+                       "and Chicago terminal markets, compared with the usual price for the time of year, with a "
+                       "two-week outlook.",
+        "url": SITE_URL, "creator": {"@type": "Organization", "name": SITE_NAME},
+        "isBasedOn": "https://www.ams.usda.gov/market-news", "temporalCoverage": f"2016-01-01/{as_of.isoformat()}",
+        "spatialCoverage": ["New York, NY", "Los Angeles, CA", "Chicago, IL"]})
+    emit("", "home", f"Wholesale Produce Prices Today: Hunts Point, Los Angeles, Chicago | {SITE_NAME}", 0, active="",
+         og_key="home", head=f'<script type="application/ld+json">{dataset}</script>')
+    for m, slug in board.MARKET_PAGES.items():
+        place = "Hunts Point (New York)" if m == "New York" else m
+        emit(f"{slug}/", f"market-{board.MKEY[m]}", f"{place} Wholesale Produce Prices Today | {SITE_NAME}", 1,
+             og_key=f"market-{board.MKEY[m]}")
+    for c, (slug, _) in board.PAGES.items():
+        if not (BOARD / "items" / f"{slug}.html").exists():
+            continue
+        n = board.PAGES[c][1].title()
+        emit(f"{slug}/", f"items/{slug}", f"{n} Prices Today, Wholesale per Case | {SITE_NAME}", 1, og_key=slug)
+        for m, ms in board.MARKET_SLUG.items():
+            if (BOARD / "items" / f"{slug}--{ms}.html").exists():
+                place = "Hunts Point" if m == "New York" else m
+                emit(f"{slug}/{ms}/", f"items/{slug}--{ms}", f"{n} Prices Today in {place}, Wholesale per Case | {SITE_NAME}",
+                     2, og_key=slug)
+    # link preview cards, rendered to PNG by scripts/og_images.py
+    for key, c in cards.items():
+        write(OUT / "og" / f"{key}.html", og_card(c))
+    return urls
+
+
+def og_card(c):
+    """A 1200x630 preview card: what a shared link shows in texts, LinkedIn, Slack."""
+    rows = "".join(f'<div class="og-row"><span>{_esc(r["name"])}</span><b class="{r["tone"]}">{_esc(r["word"])}</b>'
+                   f'<span class="og-n">{_esc(r["price"])}</span></div>' for r in c.get("rows", []))
+    main = (f'<div class="og-price">{_esc(c["price"])}<span>a case</span></div>'
+            f'<div class="og-out {c["tone"]}">{_esc(c["out"])}</div>{c.get("spark", "")}' if c.get("price") else rows)
+    return f"""<!doctype html><html><head><meta charset="utf-8"><meta name="robots" content="noindex">{FONTS}
+<style>
+html,body{{margin:0;width:1200px;height:630px;overflow:hidden}}
+body{{background:#f5f4f0;color:#15171c;font-family:"Source Sans 3",Arial,sans-serif;font-variant-numeric:tabular-nums}}
+.og{{box-sizing:border-box;height:630px;padding:56px 72px;display:flex;flex-direction:column}}
+.og-top{{display:flex;align-items:center;gap:14px;font-weight:700;font-size:30px}}
+.og-top svg{{width:44px;height:44px}}
+.og-title{{font-size:72px;font-weight:700;letter-spacing:-0.02em;line-height:1.05;margin-top:44px}}
+.og-sub{{font-size:28px;color:#5c626c;margin-top:10px}}
+.og-price{{font-size:96px;font-weight:700;letter-spacing:-0.02em;margin-top:22px;line-height:1}}
+.og-price span{{font-size:30px;font-weight:600;color:#5c626c;margin-left:14px;letter-spacing:0}}
+.og-out{{font-size:34px;font-weight:700;margin-top:18px}}
+.up{{color:#c0352b}}.down{{color:#17793c}}.flat{{color:#5c626c}}
+.og-row{{display:grid;grid-template-columns:1fr 260px 160px;font-size:32px;padding:12px 0;border-top:2px solid #e4e2db}}
+.og-row:first-of-type{{margin-top:30px}}
+.og-n{{text-align:right;font-weight:700}}
+.og-spark{{position:absolute;right:72px;bottom:72px;width:420px;height:150px}}
+.og-spark .ln{{fill:none;stroke:#15171c;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}}
+.og-spark .fc{{fill:rgba(21,23,28,.08)}}
+.og-spark .fc.up{{fill:#fcefed;stroke:#f1c9c4}}.og-spark .fc.down{{fill:#ecf6ef;stroke:#bfdfca}}
+.og-spark .dot{{fill:#15171c}}
+</style></head><body><div class="og"><div class="og-top">{MARK}{SITE_NAME}</div>
+<div class="og-title">{_esc(c["title"])}</div><div class="og-sub">{_esc(c["sub"])}</div>{main}</div></body></html>"""
+
+
+def charts_page():
+    """The 10-year price history explorer (site/charts/ template + app.js)."""
+    tpl = OUT / "charts" / "index.html"
+    if not tpl.exists():
+        return []
+    text = tpl.read_text(encoding="utf-8")
+    text = text.replace("<!--TOP-->", topbar("../", "charts/")).replace("<!--FOOT-->", footer("../"))
+    text = text.replace("<!--HEAD-->", f'<link rel="icon" href="{ICON}">{FONTS}')
+    text = text.replace('href="../style.css"', f'href="../style.css?v={ASSET_V}"')
+    write(tpl, text)
+    return [f"{SITE_URL}charts/"]
+
+
+def seo_files(urls):
+    today = dt.date.today().isoformat()
+    write(OUT / "sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+          + "".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod><changefreq>daily</changefreq></url>\n" for u in urls)
+          + "</urlset>\n")
+    write(OUT / "robots.txt", f"User-agent: *\nAllow: /\nDisallow: /og/\nSitemap: {SITE_URL}sitemap.xml\n")
+    # plain-text guide for AI search tools (llmstxt.org)
+    items = "\n".join(f"- [{board.name(c)} prices]({SITE_URL}{slug}/): today's wholesale case price in New York, "
+                      "Los Angeles and Chicago, against the usual for the season, with a two-week outlook"
+                      for c, (slug, _) in board.PAGES.items())
+    write(OUT / "llms.txt", f"""# {SITE_NAME}
+
+> Free daily wholesale produce prices at the New York (Hunts Point), Los Angeles and Chicago terminal markets, from
+> USDA AMS Market News. Each item shows today's case price for the main pack the trade buys, how it compares with
+> the same weeks in the last 10 years (adjusted for inflation), and a tested two-week forecast range.
+
+Updated every market evening (Monday to Saturday). Prices are USDA "mostly" prices per case, not supplier quotes.
+
+## Pages
+- [Today's prices]({SITE_URL}): every item, all three markets, and what's firming or softening
+- [Track record]({SITE_URL}why/): how accurate the forecasts have been, 2021 to 2026, misses included
+- [Price history]({SITE_URL}charts/): 10 years of weekly prices per item
+
+## Items
+{items}
+""")
 
 
 # ---------- "why buyers read it" (the pitch) ----------
@@ -273,7 +337,7 @@ def why_page():
                    f"<td class=\"num\">{c['calls']:,}</td><td class=\"num\">${c['avg_dollars']:.2f}</td></tr>" for c in best)
     live_line = (f"<p>Live since {_esc(live['since'])}: {live['in_range_pct']:.0f}% of {live['scored']:,} scored "
                  f"forecasts have landed inside their range. The running score is on the "
-                 f"<a href=\"../\">price charts</a>, misses included.</p>") if live.get("scored") else ""
+                 f"<a href=\"../charts/\">price history page</a>, misses included.</p>") if live.get("scored") else ""
 
     def hit(e):
         return e["call"] == ("firming" if e["move_pct"] > 0 else "softening")
@@ -349,123 +413,15 @@ one price in five lands outside it, and about half of big swings come with no ca
 page comes from a walk-forward test. Each year was predicted only with data from before it, the same way it runs live.</p>
 {live_line}
 <p>Put together by a former New York produce buyer.</p>
-<p><a class="cta" href="../brief/">Read today's market report</a></p>"""
+<p><a class="cta" href="../">See today's prices</a></p>"""
     desc = ("How often the wholesale produce price forecasts were right: direction calls, big swings flagged two weeks "
             "ahead and early warnings, tested on USDA terminal market data 2021 to 2026, misses included.")
     (OUT / "why").mkdir(parents=True, exist_ok=True)
     (OUT / "why" / "index.html").write_text(
-        page(f"How accurate are the forecasts? | {SITE_NAME}", desc, f"{SITE_URL}why/", "../", body, active="why/"),
+        page(f"How accurate are the forecasts? | {SITE_NAME}", desc, f"{SITE_URL}why/", "../", body, active="why/",
+             main_class="wrap landing"),
         encoding="utf-8")
     return [f"{SITE_URL}why/"]
-
-
-# ---------- search landing pages ----------
-# Owner's rule: the one-page dashboard is the product; there is no per-commodity navigation.
-# These pages exist only so search engines can find "romaine prices" etc. They summarise this
-# week and send people into the dashboard with that commodity selected.
-SITE_URL = "https://producepricetracker.com/"
-PAGE_NAMES = {  # commodity -> (url slug, plain name used in titles)
-    "Avocados": ("avocado-prices", "Avocado"), "Strawberries": ("strawberry-prices", "Strawberry"),
-    "Lettuce, Iceberg": ("iceberg-lettuce-prices", "Iceberg lettuce"),
-    "Lettuce, Romaine": ("romaine-lettuce-prices", "Romaine lettuce"),
-    "Tomatoes": ("tomato-prices", "Tomato"), "Tomatoes, Plum Type": ("roma-tomato-prices", "Roma tomato"),
-    "Peppers, Bell Type": ("bell-pepper-prices", "Bell pepper"), "Onions, Dry": ("onion-prices", "Onion"),
-    "Potatoes": ("potato-prices", "Potato"), "Lemons": ("lemon-prices", "Lemon"), "Limes": ("lime-prices", "Lime"),
-    "Cucumbers": ("cucumber-prices", "Cucumber"), "Broccoli": ("broccoli-prices", "Broccoli"),
-    "Celery": ("celery-prices", "Celery"), "Carrots": ("carrot-prices", "Carrot"), "Bananas": ("banana-prices", "Banana"),
-    "Blueberries": ("blueberry-prices", "Blueberry"), "Grapes": ("grape-prices", "Grape"),
-}
-MARKET_KEYS = {"New York": "ny", "Los Angeles": "la", "Chicago": "chi"}
-
-
-def _esc(s):
-    return html.escape(str(s or ""), quote=True)
-
-
-def _money(v):
-    return "—" if v is None else (f"${v:,.0f}" if v >= 100 else f"${v:,.2f}")
-
-
-def _status(i):
-    return {"cheap": "cheap", "expensive": "expensive", "normal": "about normal"}.get(i["status"], "")
-
-
-def _line(i):
-    bits = [f"<strong>{_esc(i['market'])}</strong> {_money(i['price'])} a case",
-            _esc(" · ".join(x for x in (i["variety"] if i["variety"] not in ("", "N/A") else "", i["pack"],
-                                           i["size"] if i["size"] not in ("", "N/A") else "") if x))]
-    if i["vsNorm"] is not None:
-        bits.append(f"{abs(round(i['vsNorm']))}% {'above' if i['vsNorm'] > 0 else 'below'} usual for this time of year"
-                    + (f" ({_status(i)})" if _status(i) else ""))
-    f2 = (i.get("forecast") or {}).get(2)
-    if f2 and not i.get("fcStable"):
-        whole = lambda v: f"${v:,.0f}" if v >= 10 else f"${v:,.2f}"  # ranges: no false precision  # noqa: E731
-        bits.append(f"next two weeks likely {whole(f2[0])} to {whole(f2[2])}")
-    return ", ".join(b for b in bits if b)
-
-
-PAGES_DIR = ROOT / "data" / "pages"  # rich fragments from pipeline/pages.py (nightly)
-
-
-def rich_page(slug, name, body, dash):
-    """Wrap a pipeline/pages.py fragment: search title and description from today's numbers, links to every item."""
-    answer = re.search(r'<p class="answer">(.*?)</p>', body, re.S)
-    desc = html.unescape(re.sub(r"<[^>]+>", "", answer.group(1))) if answer else ""
-    title = f"{name.title()} Prices Today, Wholesale per Case | {SITE_NAME}"
-    extra = (f'<p><a class="cta" href="{_esc(dash)}">See the 10-year price chart</a></p>'
-             '<p class="fine">Prices are the USDA “mostly” price per case for the main pack the trade buys in each '
-             "market, updated every market evening. Forecast ranges hold about 80% of the time.</p>")
-    return page(title, desc[:300], f"{SITE_URL}{slug}/", "../", body + extra)
-
-
-def landing_pages(latest, as_of, extra_urls=()):
-    by_c = defaultdict(list)
-    for i in latest:
-        if i["type"] == "terminal" and i["commodity"] in PAGE_NAMES:
-            by_c[i["commodity"]].append(i)
-    d = dt.date.fromisoformat(as_of) if as_of else None
-    week = f"{d:%B} {d.day}, {d.year}" if d else ""
-    urls, links = [SITE_URL], []
-    for commodity, (slug, name) in PAGE_NAMES.items():
-        items = sorted(by_c.get(commodity, []), key=lambda i: ({"New York": 0, "Los Angeles": 1, "Chicago": 2}.get(i["market"], 9),
-                                                               -(i.get("coverage") or 0)))
-        # one line per market: its best-covered series
-        seen, lines = set(), []
-        for i in items:
-            if i["market"] not in seen:
-                seen.add(i["market"])
-                lines.append(f"<li>{_line(i)}</li>")
-        dash = f"../?m=ny&c={quote(commodity)}"
-        rich = PAGES_DIR / f"{slug}.html"
-        if rich.exists():
-            (OUT / slug).mkdir(parents=True, exist_ok=True)
-            (OUT / slug / "index.html").write_text(rich_page(slug, name, rich.read_text(encoding="utf-8"), dash),
-                                                   encoding="utf-8")
-            urls.append(f"{SITE_URL}{slug}/")
-            links.append(f'<a href="{slug}/">{_esc(name)} prices</a>')
-            continue
-        title = f"{name} Wholesale Prices This Week | {SITE_NAME}"
-        desc = (f"{name} wholesale case prices from USDA terminal markets (Hunts Point NY, LA, Chicago), updated every "
-                f"evening: this week against the usual for the season, and a two-week outlook.")
-        body = (f"<h1>{_esc(name)} wholesale prices{(', week of ' + week) if week else ''}</h1>"
-                "<p>USDA terminal market case prices, compared with what's usual for this time of year.</p>"
-                f"<ul>{''.join(lines) or '<li>No current quotes.</li>'}</ul>"
-                f'<p><a class="cta" href="{_esc(dash)}">Open {_esc(name.lower())} on the price charts</a></p>')
-        page_html = page(title, desc, f"{SITE_URL}{slug}/", "../", body)
-        (OUT / slug).mkdir(parents=True, exist_ok=True)
-        (OUT / slug / "index.html").write_text(page_html, encoding="utf-8")
-        urls.append(f"{SITE_URL}{slug}/")
-        links.append(f'<a href="{slug}/">{_esc(name)} prices</a>')
-    urls += list(extra_urls)
-    today = dt.date.today().isoformat()
-    (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-                                     + "".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod><changefreq>daily</changefreq></url>\n" for u in urls)
-                                     + "</urlset>\n")
-    (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}sitemap.xml\n")
-    # crawlable links from the dashboard footer
-    index = OUT / "index.html"
-    index.write_text(index.read_text(encoding="utf-8").replace("<!--COMMODITY_LINKS-->", " · ".join(links)), encoding="utf-8")
-    return len(PAGE_NAMES)
 
 
 if __name__ == "__main__":

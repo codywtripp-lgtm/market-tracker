@@ -15,6 +15,8 @@ COLUMNS = [
     "market", "market_type", "origin", "origin_detail", "other_attributes",
     "reporter_comment", "market_tone", "volume", "volume_unit", "store_count",
     "report_id", "report_title", "fetched_at",
+    # shipping-point supply and demand calls ("Light", "Moderate"); not part of the row key
+    "supply_tone", "demand_tone",
 ]
 
 # Fields that make a price row unique within a report and date.
@@ -187,6 +189,7 @@ def _produce(raw, market, market_type, fetched_at, field_map):
         # often holds pack detail ("5lb. film bag orange", "(35 Lb) (Peeled)"), so it's part of the key
         "reporter_comment": clean(raw.get("reporter_comment") or raw.get("rep_cmt")),
         "market_tone": g("market_tone_comments"),
+        "supply_tone": g("supply_tone_comments"), "demand_tone": g("demand_tone_comments"),
         "report_id": clean(raw.get("slug_id")), "report_title": g("report_title"),
     }, fetched_at)
 
