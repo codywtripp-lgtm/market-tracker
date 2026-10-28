@@ -363,7 +363,7 @@ page comes from a walk-forward test. Each year was predicted only with data from
 # Owner's rule: the one-page dashboard is the product; there is no per-commodity navigation.
 # These pages exist only so search engines can find "romaine prices" etc. They summarise this
 # week and send people into the dashboard with that commodity selected.
-SITE_URL = "https://codywtripp-lgtm.github.io/market-tracker/"
+SITE_URL = "https://producepricetracker.com/"
 PAGE_NAMES = {  # commodity -> (url slug, plain name used in titles)
     "Avocados": ("avocado-prices", "Avocado"), "Strawberries": ("strawberry-prices", "Strawberry"),
     "Lettuce, Iceberg": ("iceberg-lettuce-prices", "Iceberg lettuce"),
