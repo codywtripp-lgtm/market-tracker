@@ -49,6 +49,7 @@ MASS = {"Lettuce, Iceberg", "Lettuce, Romaine", "Broccoli", "Celery"}  # "romain
 
 DIR = {  # direction over the next two weeks: (arrow, word, tone)
     "firming": ("▲", "Firming", "up"), "softening": ("▼", "Softening", "down"), "steady": ("", "Steady", "flat"),
+    "topping": ("▲▼", "Topping out", "up"), "bottoming": ("▼▲", "Bottoming out", "down"),
 }
 SEASON = {"expensive": ("High for the season", "up"), "cheap": ("Low for the season", "down"),
           "normal": ("Normal for the season", "flat")}
@@ -146,6 +147,13 @@ def outlook(i):
 
 
 def season(i):
+    if i["status"] not in SEASON:  # pack too new to USDA for a seasonal norm: compare with a year ago
+        v = i.get("vs_year")
+        if v is None:
+            return '<span class="season flat"><b>New pack</b><small>no history to compare yet</small></span>'
+        word = "about last year's price" if abs(v) < 5 else f"{abs(round(v))}% {'above' if v > 0 else 'below'} last year"
+        tone = "flat" if abs(v) < 5 else ("up" if v > 0 else "down")
+        return f'<span class="season {tone}"><b>{cap(word)}</b><small>same week, last year</small></span>'
     word, tone = SEASON.get(i["status"], ("Not enough history", "flat"))
     vs = i["vs_norm"]
     sub = brief.vs_usual(vs) + (" usual" if vs is not None and abs(vs) >= 5 else "") if vs is not None else ""
@@ -261,6 +269,7 @@ def cap(s):
 def lede(rows, market):
     firm = sorted((i for i in rows if i["dir"] == "firming"), key=lambda i: -(i["change"] or 0))[:3]
     soft = sorted((i for i in rows if i["dir"] == "softening"), key=lambda i: i["change"] or 0)[:3]
+    top = [i for i in rows if i["dir"] == "topping"][:3]
     high = [i for i in rows if i["status"] == "expensive" and i["dir"] == "steady"][:3]
     bits = []
     if firm and soft:
@@ -270,6 +279,9 @@ def lede(rows, market):
         bits.append(f"{cap(name_list(g))} {verb(g)} {word} {AT[market]}; the rest look steady.")
     else:
         bits.append(f"Prices {AT[market]} look steady across the board for the next two weeks.")
+    if top:
+        bits.append(f"{cap(name_list(top))} {verb(top)} still firm this week but likely topping out, with relief "
+                    "in two to four weeks.")
     if high:
         bits.append(f"{cap(name_list(high))} {verb(high)} high for the season with no relief in sight.")
     return " ".join(bits)
@@ -278,8 +290,8 @@ def lede(rows, market):
 ACTIONS = [  # (key, title, what to do, tone)
     ("firming", "▲ Firming", "Lock price with your supplier and get customer quotes out before it moves. "
                              "Buy a few days deeper only on items that keep.", "up"),
-    ("softening", "▼ Softening", "Stay on the open market and keep inventory tight. Don't lock price at today's level.",
-     "down"),
+    ("softening", "▼ Softening", "Stay on the open market and keep inventory tight. Don't lock price at today's level. "
+                                 "Some are still firm this week before they ease.", "down"),
     ("high", "High for the season", "No relief in sight. Price quotes to cover it and look at other counts or packs.",
      "up"),
     ("value", "Good value", "Cheaper than most years at this time. A good item to feature on specials.", "down"),
@@ -288,8 +300,8 @@ ACTIONS = [  # (key, title, what to do, tone)
 
 def actions(rows, market):
     groups = {
-        "firming": sorted((i for i in rows if i["dir"] == "firming"), key=lambda i: -(i["change"] or 0)),
-        "softening": sorted((i for i in rows if i["dir"] == "softening"), key=lambda i: i["change"] or 0),
+        "firming": sorted((i for i in rows if i["dir"] in ("firming", "bottoming")), key=lambda i: -(i["change"] or 0)),
+        "softening": sorted((i for i in rows if i["dir"] in ("softening", "topping")), key=lambda i: i["change"] or 0),
         "high": [i for i in rows if i["status"] == "expensive" and i["dir"] == "steady"],
         "value": [i for i in rows if i["status"] == "cheap" and i["dir"] != "firming"],
     }
@@ -298,7 +310,10 @@ def actions(rows, market):
         items = groups[key]
         if items:
             lis = "".join(
-                f'<li><a href="{item_link(i["commodity"], market)}"><span>{esc(name(i["commodity"]))}</span>'
+                f'<li><a href="{item_link(i["commodity"], market)}"><span>{esc(name(i["commodity"]))}'
+                + {"topping": ' <small class="turn">firm this week first</small>',
+                   "bottoming": ' <small class="turn">easing this week first</small>'}.get(i["dir"], "")
+                + '</span>'
                 f'<span class="num">{money(i["price"])}'
                 + (f' <span class="to">→ about {whole(expected(i)[0])}</span>'
                    if key in ("firming", "softening") and expected(i)[0] is not None else "")
@@ -506,7 +521,9 @@ def answer(i, as_of):
         s += f", {esc(brief.vs_usual(i['vs_norm']))}{' the usual price' if abs(i['vs_norm']) >= 5 else ''} for this time of year"
     s += "."
     if i["range"]:
-        word = {"firming": "is <strong>firming</strong>", "softening": "is <strong>softening</strong>"}.get(
+        word = {"firming": "is <strong>firming</strong>", "softening": "is <strong>softening</strong>",
+                "topping": "is <strong>topping out</strong> (still firm this week)",
+                "bottoming": "is <strong>bottoming out</strong> (still easing this week)"}.get(
             i["dir"], "looks <strong>steady</strong>")
         s += f" The market {word}: in two weeks, expect {expect_text(i)}."
     return s
@@ -526,7 +543,10 @@ def quote(i, hist, today, opts, note=""):
             f'<div><dt>For the season</dt><dd>{season(i)}</dd></div>'
             f'<div><dt>Next 2 weeks</dt><dd><span class="out {tone}"><b>{arrow + " " if arrow else ""}{word}</b>'
             f'{f"<small>{rng}</small>" if rng else ""}</span></dd></div>'
-            "</dl></div>"
+            + (f'<div class="path"><dt>Week by week</dt><dd>' + " · ".join(
+                f'{"Next week" if h == 1 else f"In {h} weeks"} <b>about {whole(v)}</b>'
+                for h, v in sorted(i["path"].items()) if h in (1, 2, 4)) + "</dd></div>" if i.get("path") else "")
+            + "</dl></div>"
             + (f'<div class="todo {tone}"><h2>What to do</h2><p>{esc(i["action"])}</p></div>' if i["action"] else "")
             + (f'<div class="supply-note"><h2>Supply news</h2><p>{esc(note)}</p></div>' if note else "")
             + chart(hist.get(i["series_id"], []), i) + sz)
@@ -544,7 +564,8 @@ def faq(commodity, rows):
                    f"{' the usual price' if abs(ny['vs_norm']) >= 5 else ''} for this time of year, "
                    f"{SEASON.get(ny['status'], ('normal for the season',))[0].lower()}."))
     if ny["range"]:
-        word = {"firming": "go up", "softening": "come down"}.get(ny["dir"], "stay about the same")
+        word = {"firming": "go up", "softening": "come down", "topping": "hold firm this week, then come down",
+                "bottoming": "ease a little more this week, then go up"}.get(ny["dir"], "stay about the same")
         qa.append((f"Will {single} prices go up or down?",
                    f"The two-week forecast for {ny['market']} says prices should {word}: {expect_text(ny)}. "
                    "When it calls a firming or softening market, it was right about 7 times in 10 in testing (2021 to 2026)."))

@@ -71,7 +71,8 @@ def day(d):
 def pack(s):
     """'Seedless, 40 lb cartons, 175s' from USDA's 'SEEDLESS TYPE' / '40 lb cartons' / '175s'."""
     bits = [s.get("variety", ""), s.get("properties", ""), s.get("pack_size", ""), s.get("item_size", "")]
-    bits = [re.sub(r"\s+TYPE$", "", b).lower() if b.isupper() else b for b in bits if b and b not in ("N/A", "NA")]
+    bits = [re.sub(r"\s+type$", "", b, flags=re.I) for b in bits if b and b not in ("N/A", "NA")]
+    bits = [bits[0]] + [b[:1].lower() + b[1:] if b[1:2].islower() else b for b in bits[1:]] if bits else bits
     text = ", ".join(bits)
     return text[:1].upper() + text[1:]
 
@@ -99,15 +100,30 @@ def stores(commodity):
     return STORAGE_LIFE.get(commodity, (0, ""))[0] >= STORES_WEEKS
 
 
-def direction(change, stable):
+TURN = 0.02  # next week still moving 2%+ the other way = the market is turning, not just moving
+
+
+def direction(change, stable, change1=None):
+    """Two-week direction; 'topping' / 'bottoming' when next week still goes the other way first
+    (strawberries Oct 2026: $34 now, about $35 next week, about $31 in two weeks)."""
     if stable or change is None or abs(change) < MOVE:
         return "steady"
+    if change < 0 and change1 is not None and change1 >= TURN:
+        return "topping"
+    if change > 0 and change1 is not None and change1 <= -TURN:
+        return "bottoming"
     return "firming" if change > 0 else "softening"
 
 
-def call(status, change, stable, commodity=""):
+def call(status, change, stable, commodity="", change1=None):
     """(market direction, what to do about it) in trade terms."""
-    d = direction(change, stable)
+    d = direction(change, stable, change1)
+    if d == "topping":
+        return d, ("Still firm this week, then easing. Buy to need, don't lock price at the top, and expect "
+                   "relief in two to four weeks.")
+    if d == "bottoming":
+        return d, ("Still easing this week, then firming. Use the dip to lock price with your supplier for the "
+                   "next few weeks.")
     if d == "firming":
         first = (f"It stores ({STORAGE_LIFE[commodity][1]} cold): buy a few days deeper now," if stores(commodity)
                  else "Buy to need (it won't hold), but")
@@ -143,15 +159,20 @@ def headline_items(latest, series, forecasts, card):
         # "next two weeks" = the forecast for the week after the coming one (2 weeks past the last full week)
         target = (week + dt.timedelta(weeks=2)).isoformat()
         point = next((p for p in fc.get("points", []) if p["week"] == target), None)
+        nxt = next((p for p in fc.get("points", []) if p["week"] == (week + dt.timedelta(weeks=1)).isoformat()), None)
         stable = card.get((commodity, market), {}).get("uses") == "no change"
         change = (point["mid"] / price - 1) if point and price else None
+        change1 = (nxt["mid"] / price - 1) if nxt and price and not stable else None
         items.append({
             "series_id": r["series_id"], "commodity": commodity, "name": PRODUCE_NAMES[commodity], "market": market, "pack": pack(s),
             "price": price, "vs_norm": _num(r["pct_vs_norm"]), "status": r["status"],
             "pctile": _num(r["percentile"]), "week": week, "points": fc.get("points", []),
             "vs_4w": _num(r["pct_vs_4_weeks_ago"]), "range": (point["lo"], point["hi"]) if point else None,
             "change": 0.0 if stable and point else change, "stable": stable,
-            **(dict(zip(("dir", "action"), call(r["status"], change, stable, commodity)))
+            "vs_year": _num(r.get("pct_vs_last_year")),
+            # expected price by weeks ahead of the last full week (1 = the coming week)
+            "path": {} if stable else {p["h"]: p["mid"] for p in fc.get("points", [])},
+            **(dict(zip(("dir", "action"), call(r["status"], change, stable, commodity, change1)))
                if point else {"dir": "", "action": ""}),
         })
     return items

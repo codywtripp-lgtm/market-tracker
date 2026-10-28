@@ -4,6 +4,13 @@
 reports) and writes `data/briefs/<market date>.html` (owner asked for daily, 2026-10-28). `scripts/build_site.py` publishes it at `/brief/` (latest),
 `/brief/<date>/` (archive) and `/brief/feed.xml` (RSS with the full text).
 
+## Turning markets (2026-10-28)
+A two-week call can hide the near-term path. When the two-week forecast is softening but next week is still
+2%+ higher, the call is **topping out** ("still firm this week, then easing: buy to need, don't lock price at the
+top"); the mirror case is **bottoming out**. Item pages show the expected price next week, in 2 and in 4 weeks.
+Words always give the expected price, never the 80% range (too wide to be useful; it is only the chart's shading).
+The turning label is a presentation of the same tested forecast path; it has no separate backtest yet.
+
 ## Design
 Set like a trade market sheet, not an app (owner 2026-10-28: it must not look AI-made). Masthead with a double
 rule, Source Serif 4 headings, Public Sans text with tabular figures, one paper colour, ruled sections and tables.

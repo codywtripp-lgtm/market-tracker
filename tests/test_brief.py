@@ -31,3 +31,12 @@ def test_vs_usual_wording():
     assert brief.vs_usual(None) == "—"
     assert brief.vs_usual(3) == "about usual"
     assert brief.vs_usual(-42.6) == "43% below"
+
+
+def test_turning_markets_are_called_as_turns():
+    # strawberries Oct 2026: $34 now, about $35 next week, about $31 in two weeks
+    assert brief.direction(-0.09, False, 0.03) == "topping"
+    assert brief.direction(0.10, False, -0.04) == "bottoming"
+    assert brief.direction(-0.09, False, -0.02) == "softening"
+    d, action = brief.call("normal", -0.09, False, "Strawberries", 0.03)
+    assert d == "topping" and "don't lock price at the top" in action

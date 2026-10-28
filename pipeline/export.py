@@ -64,13 +64,21 @@ MERGE_TYPES = {"Onions, Dry": r"^YELLOW$", "Potatoes": r"^RUSSET$", "Tomatoes": 
 NON_STANDARD = re.compile(r"fair|poor|ordinary|holdover|decay|damage|scar|fine|mixed condition", re.I)
 
 
+def canon(v):
+    """USDA switched case on 2024-04-23 ("GREEN" -> "Green", a few weeks of "green" before that), which
+    split 10-year series in two. Variety and properties are matched as 'Green', 'Light red-red'."""
+    v = (v or "").strip()
+    return v[:1].upper() + v[1:].lower()
+
+
 def series_key(r):
     """Identity of a price series. Origin is deliberately NOT part of it (it rotates by season)."""
     mt = r["market_type"]
     if mt in ("terminal", "shipping point"):
-        merge = mt == "terminal" and re.search(MERGE_TYPES.get(r["commodity"], "(?!)"), r["variety"] or "")
-        return (mt, r["market"], r["commodity"], r["variety"], r["pack_size"], r["item_size"],
-                "" if merge else r["properties"], r["organic"])
+        variety = canon(r["variety"])
+        merge = mt == "terminal" and re.search(MERGE_TYPES.get(r["commodity"], "(?!)"), variety, re.I)
+        return (mt, r["market"], r["commodity"], variety, r["pack_size"], r["item_size"],
+                "" if merge else canon(r["properties"]), r["organic"])
     if mt == "retail":
         return (mt, r["market"], r["commodity"], r["variety"], r["pack_size"], "", r["other_attributes"], r["organic"])
     # beef / chicken
@@ -95,7 +103,7 @@ def is_main_pack(key):
         return False
     spec = MAIN_PACK.get(commodity, {})
     fields = {"variety": variety, "pack_size": pack, "item_size": size, "properties": prop}
-    return all(re.search(rx, fields[f] or "") for f, rx in spec.items())
+    return all(re.search(rx, fields[f] or "", re.I) for f, rx in spec.items())
 
 
 def is_standard(r):
