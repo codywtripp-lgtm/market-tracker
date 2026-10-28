@@ -9,9 +9,9 @@ week, how many more stores put it on sale that week, and what it cost last Thank
 import datetime as dt
 import statistics
 
-ITEMS = ["Sweet Potatoes", "Cranberries", "Celery", "Brussels Sprouts", "Beans", "Potatoes", "Onions, Dry", "Carrots",
+ITEMS = ["Whole turkey", "Sweet Potatoes", "Cranberries", "Celery", "Brussels Sprouts", "Beans", "Potatoes", "Onions, Dry", "Carrots",
          "Mushrooms", "Apples", "Pears", "Oranges", "Tangerines/Mandarins", "Pumpkins", "Garlic", "Salad (Mixed Types)"]
-KEEPS = {"Potatoes", "Onions, Dry", "Sweet Potatoes", "Garlic", "Carrots", "Apples", "Pumpkins", "Oranges"}  # fine to buy ahead
+KEEPS = {"Whole turkey", "Potatoes", "Onions, Dry", "Sweet Potatoes", "Garlic", "Carrots", "Apples", "Pumpkins", "Oranges"}  # fine to buy ahead
 WINDOW = 12  # days before Thanksgiving: the weekly report dated in this window carries the holiday sales
 
 

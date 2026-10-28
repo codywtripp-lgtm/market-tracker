@@ -104,27 +104,37 @@ def lede(items, buys, pricey):
     return s
 
 
-def page(today, items):
-    items = [i for i in items if i["this_week"]]
-    buys = grocery.best_buys(items)
+AISLE_HEAD = {
+    "produce": "This week’s best buys in the produce aisle",
+    "meat": "This week’s best buys on meat and poultry",
+    "dairy": "This week’s best buys on dairy and eggs",
+}
+AISLE_FIND = {"produce": "Apples, berries, lettuce…", "meat": "Chicken, ground beef, bacon…", "dairy": "Eggs, milk, butter…"}
+
+
+def page(today, items, aisle="produce"):
+    items = [i for i in items if i["this_week"] and i["aisle"] == aisle]
+    if not items:
+        return None
+    buys = grocery.best_buys(items, aisle=aisle)
     pricey = sorted((i for i in items if i["status"] == "high" and i["stores"] >= grocery.MIN_STORES),
                     key=lambda i: -(i["vs_usual"] or 0))
     order = {"low": 0, "typical": 1, "new": 2, "high": 3}
     season = sorted((i for i in items if i["in_season"]), key=lambda i: (order[i["status"]], i["short"]))
     stores = max(i["stores"] for i in items) if items else 0
-    parts = [f'<section class="intro"><h1>This week’s best buys in the produce aisle</h1>'
+    parts = [f'<section class="intro"><h1>{AISLE_HEAD[aisle]}</h1>'
              f'<p class="date">Week of {today:%B} {today.day}, {today.year} · from supermarket flyers across the U.S., '
              f'reported by USDA</p><p class="lede">{esc(lede(items, buys, pricey))}</p></section>']
     from .holiday import thanksgiving
-    if 0 <= (thanksgiving(today.year) - today).days <= 40:
-        parts.append('<p class="promo"><a href="@/thanksgiving-produce-prices/">Thanksgiving produce prices: what to buy now '
+    if 0 <= (thanksgiving(today.year) - today).days <= 40 and aisle in ("produce", "meat"):
+        parts.append('<p class="promo"><a href="@/thanksgiving-produce-prices/">Thanksgiving prices: what to buy now '
                      'and what to wait for</a></p>')
     if buys:
         tiles = "".join(
             f'<li class="buy">{tag(i)}<div class="buy-body"><h3>{link(i)}</h3>{qual(i)}'
             f'<p class="buy-why">{why_line(i, today)}</p>{price_bar(i, today)}</div></li>' for i in buys)
         parts.append(f'<section><h2>Best buys</h2><ul class="buys">{tiles}</ul></section>')
-    if season:
+    if season and aisle == "produce":
         chips = "".join(f'<li><span><a class="sname" href="@/grocery/{i["slug"]}/">{esc(i["short"])}</a>{qual(i)}</span>'
                         f'<span class="sword {STATUS[i["status"]][1]}">{esc(STATUS[i["status"]][0])}</span></li>'
                         for i in season)
@@ -148,7 +158,7 @@ def page(today, items):
         for i in items)
     parts.append('<section><h2>Everything on sale this week</h2>'
                  '<label class="find"><span>Find an item</span><input type="search" id="find" '
-                 'placeholder="Apples, berries, lettuce…" autocomplete="off"></label>'
+                 f'placeholder="{AISLE_FIND[aisle]}" autocomplete="off"></label>'
                  '<table class="all"><thead><tr><th scope="col">Item</th><th scope="col" class="n">Sale price</th>'
                  f'<th scope="col">For the time of year</th><th scope="col">Quality now</th></tr></thead>'
                  f'<tbody>{rows}</tbody></table></section>')
@@ -315,7 +325,9 @@ def faq(i, today):
 
 def item_page(i, today, all_items):
     h1 = f"How much {verb(i)} {i['short'].lower()} this week?"
-    parts = [f'<nav class="crumbs"><a href="@/">Grocery prices</a><span>/</span>{esc(i["short"])}</nav>',
+    up, label = {"meat": ("@/meat-prices/", "Meat & poultry"), "dairy": ("@/dairy-and-egg-prices/", "Dairy & eggs")}.get(
+        i["aisle"], ("@/", "Produce"))
+    parts = [f'<nav class="crumbs"><a href="{up}">{label}</a><span>/</span>{esc(i["short"])}</nav>',
              f'<section class="intro"><h1>{esc(h1)}</h1>'
              f'<p class="date">Supermarket flyers across the U.S., week of {today:%B} {today.day}, {today.year}, from USDA</p>'
              f'<p class="answer">{answer(i, today)}</p></section>']
@@ -431,7 +443,7 @@ def thanksgiving_page(today, items):
            "in past years six to eight times as many stores ran sales on them as in late October.")]
     faq_ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
         {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in qa]})
-    parts = [f'<section class="intro"><h1>Thanksgiving produce prices {target.year}</h1>'
+    parts = [f'<section class="intro"><h1>Thanksgiving turkey and produce prices {target.year}</h1>'
              f'<p class="date">Updated with supermarket flyers for the week of {today:%B} {today.day}, {today.year}, from USDA</p>'
              f'<p class="lede">{esc(lede)}</p></section>',
              '<section><h2>Buy now or wait?</h2>' + (f"<p>{esc(now_text)}</p>" if now_text else "")

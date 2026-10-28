@@ -637,9 +637,13 @@ def build():
     out = {"home": home(items, hist, today, alerts, as_of, record, notes)}
     # imported here: the site deploy imports this module for page names only, without the fetch libraries
     from . import cpi, grocery, grocery_view
-    g_day, g_items = grocery.build(store.iter_all("retail"), cpi.Deflator(cpi.load()))
+    g_day, g_items = grocery.build(grocery.rows(), cpi.Deflator(cpi.load()))
     if g_items:
         out["grocery"] = grocery_view.page(g_day, g_items)
+        for aisle in ("meat", "dairy"):
+            body = grocery_view.page(g_day, g_items, aisle)
+            if body:
+                out[f"aisle-{aisle}"] = body
         for gi in g_items:
             out[f"grocery/{gi['slug']}"] = grocery_view.item_page(gi, g_day, g_items)
         _, tg_page = grocery_view.thanksgiving_page(g_day, g_items)
@@ -659,6 +663,7 @@ def build():
     for gi in g_items:
         word = grocery_view.STATUS[gi["status"]][0]
         og[f"g-{gi['slug']}"] = {"title": f"{gi['short']} prices this week", "price": f"${gi['price']:.2f}",
+                                 "aisle": {"meat": "meat-prices/", "dairy": "dairy-and-egg-prices/"}.get(gi["aisle"], ""),
                                  "sub": f"Supermarket sale prices · week of {g_day:%B} {g_day.day}, {g_day.year}",
                                  "out": word + (f", {abs(gi['vs_usual'])}% {'below' if gi['vs_usual'] < 0 else 'above'} usual"
                                                 if gi.get("vs_usual") else ""),

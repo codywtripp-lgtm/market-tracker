@@ -72,3 +72,14 @@ def test_real_conditions_lower_the_rating():
     rows = history("Strawberries", 1.0, today="2026-04-10")
     _, items = grocery.build(live={"Strawberries": {"down": True, "notes": ["Rain damage reported."]}}, rows=rows)
     assert items[0]["quality"][0] == "Good" and "Rain damage" in items[0]["quality"][1]  # Excellent, one level down
+
+
+def test_staples_match_shopper_items_across_usda_renames():
+    from pipeline import staples
+    row = lambda c, v, pack="per lb", cond="Fresh": {"commodity": c, "variety": v, "pack_size": pack, "properties": cond}  # noqa: E731
+    assert staples.match(row("Chicken", "Breast, Boneless/Skinless")) == "Chicken breasts"
+    assert staples.match(row("Egg", "WHITE LARGE", "carton")) == staples.match(row("Egg", "Large White", "12 count")) == "Eggs"
+    assert staples.match(row("Pork", "BKFST SAUSAGE, LINK/PATTY")) == "Breakfast sausage"
+    assert staples.match(row("Turkey", "Whole Turkey < 16 Lbs", cond="Frozen")) == "Whole turkey"
+    assert staples.match(row("Chicken", "Self-Service Deli Chicken Tub/Pouch", cond="Prepared")) is None
+    assert staples.match({"commodity": "Milk", "variety": "All Fat Tests", "pack_size": "Gallon"}) == "Milk"

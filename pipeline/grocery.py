@@ -20,7 +20,7 @@ from collections import defaultdict
 
 import csv
 
-from . import conditions, cpi, store
+from . import conditions, config, cpi, staples, store
 from .quality import LEVELS, quality
 from .usual import with_usual
 
@@ -70,6 +70,13 @@ FAMILIES = [
     ["Squash", "Eggplant", "Cucumbers"],
     ["Mangoes", "Pineapples", "Papaya", "Kiwifruit"],
     ["Potatoes", "Sweet Potatoes"],
+    ["Chicken breasts", "Boneless chicken thighs", "Chicken thighs", "Whole chicken", "Chicken drumsticks"],
+    ["Ground beef", "Lean ground beef", "Ground turkey"],
+    ["Strip steak", "Ribeye steak", "Sirloin steak"],
+    ["Chuck roast", "Pork shoulder", "Stew beef"],
+    ["Pork chops", "Pork tenderloin", "Chicken breasts"],
+    ["Shredded cheese", "Block cheese", "Sliced cheese"],
+    ["Greek yogurt", "Yogurt"],
 ]
 
 
@@ -103,6 +110,8 @@ def sentence(n):
 
 
 def display(commodity, variety=""):
+    if commodity in staples.AISLE:
+        return commodity
     n = sentence(NAMES.get(commodity, commodity))
     v = variety.strip()
     if v and v.lower() not in n.lower() and not re.search(r"mixed|various|n/a", v, re.I):
@@ -137,12 +146,25 @@ def _num(s):
         return None
 
 
+STAPLE_IDS = set(config.STAPLE_REPORTS)
+
+
 def load(rows):
-    """commodity -> {(variety, pack): {date: [(price, stores)]}} for national, conventional ads."""
+    """item -> {(variety, pack): {date: [(price, stores)]}} for national, conventional sale prices.
+    Meat, poultry, dairy and egg rows are mapped to shopper items (pipeline/staples.py)."""
     out = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
     for r in rows:
         if r["market"] != "National" or r["organic"] not in ("No", "N") or r["commodity"] in SKIP:
             continue
+        if r.get("report_id") in STAPLE_IDS:
+            item = staples.match(r)
+            if not item:
+                continue
+            # USDA renamed products over the years ("WHITE LARGE" -> "Large White"), so staples are keyed by the
+            # shopper item and pack, keeping value packs (cheaper per lb) as their own series
+            value = "Value pack" if re.search(r"value", r["variety"] + " " + r.get("other_attributes", ""), re.I) else ""
+            pack = "12 count" if item == "Eggs" and r["pack_size"] == "carton" else r["pack_size"]  # older reports: "per carton"
+            r = dict(r, commodity=item, variety=value, pack_size=pack)
         price, stores = _num(r["unit_price"]), _num(r["store_count"])
         if price is None or not stores:
             continue
@@ -172,8 +194,9 @@ def build(rows, deflator=None, live=None):
         for d, xs in days.items():
             stores = sum(s for _, s in xs)
             week[d] = (sum(p * s for p, s in xs) / stores, stores)
-        this_week = latest in week
-        last = latest if this_week else max(week)
+        # reports close on different days (produce Friday, dairy Sunday): within the week counts as this week
+        last = max(week)
+        this_week = last >= (today - dt.timedelta(days=6)).isoformat()
         price, stores = week[last]
         real = {d: p * deflator.factor(d) for d, (p, _) in week.items()}
         pool, years, past_stores = [], set(), defaultdict(float)
@@ -201,6 +224,7 @@ def build(rows, deflator=None, live=None):
         ads = {m: statistics.median(v) for m, v in ads_month.items()}
         peak = sorted(ads, key=ads.get, reverse=True)[:3] if len(ads) >= 6 else []
         item = {"commodity": commodity, "slug": slug(commodity), "name": display(commodity, key[0]),
+                "aisle": staples.AISLE.get(commodity, "produce"),
                 "short": sentence(NAMES.get(commodity, commodity)), "unit": unit(key[1]), "price": round(price, 2),
                 "stores": int(stores), "this_week": this_week, "last_date": last,
                 "in_season": commodity in SEASONS[season], "seasons": [k for k in SEASONS if commodity in SEASONS[k]],
@@ -215,7 +239,7 @@ def build(rows, deflator=None, live=None):
         item["quality"] = quality(commodity, today.month, item["in_season"] if item["seasons"] else None)
         if len(years) >= MIN_YEARS and this_week:
             pool.sort()
-            now = real[latest]
+            now = real[last]
             usual = statistics.median(pool)
             pct = 100 * (sum(v < now for v in pool) + 0.5 * sum(v == now for v in pool)) / len(pool)
             q = lambda f: pool[min(len(pool) - 1, int(f * (len(pool) - 1) + 0.5))]  # noqa: E731
@@ -246,7 +270,8 @@ def build(rows, deflator=None, live=None):
         if i["status"] == "high":
             fam = next((f for f in FAMILIES if i["commodity"] in f), [])
             alts = [by_c[c] for c in fam if c in by_c and c != i["commodity"] and by_c[c]["status"] == "low"
-                    and by_c[c]["in_season"] and by_c[c]["stores"] >= MIN_STORES and q_rank(by_c[c]) >= 2]  # never suggest out-of-season fruit as the better buy
+                    and (by_c[c]["in_season"] or by_c[c]["aisle"] != "produce") and by_c[c]["stores"] >= MIN_STORES
+                    and q_rank(by_c[c]) >= 2]  # never suggest out-of-season fruit as the better buy
             i["swap"] = min(alts, key=lambda a: a["vs_usual"])["short"] if alts else None
     return today, sorted(items, key=lambda i: i["name"])
 
@@ -256,17 +281,23 @@ def q_rank(i):
     return LEVELS.index(i["quality"][0]) if i.get("quality") else 2
 
 
-def best_buys(items, n=8):
+def best_buys(items, n=8, aisle="produce"):
     """Low for the time of year, good quality, in season and widely featured first. A cheap price on poor
     produce (August apples, winter peaches) is not a best buy."""
-    items = [i for i in items if i["this_week"] and i["stores"] >= MIN_STORES and q_rank(i) >= 1]
+    items = [i for i in items if i["this_week"] and i["stores"] >= MIN_STORES and q_rank(i) >= 1 and i["aisle"] == aisle]
     good = [i for i in items if i["status"] == "low" or (i["status"] == "typical" and i["in_season"]
                                                            and (i["featured"] or 0) >= 1.3 and (i["vs_usual"] or 0) <= 0)]
     return sorted(good, key=lambda i: (i["status"] != "low", q_rank(i) < 2, -(i["in_season"]), i["vs_usual"] or 0))[:n]
 
 
+def rows():
+    """Every sale-price row the grocery view uses: produce (3324) and the staples reports."""
+    yield from store.iter_all("retail")
+    yield from store.iter_all("staples")
+
+
 def main():
-    today, items = build(store.iter_all("retail"), cpi.Deflator(cpi.load()))
+    today, items = build(rows(), cpi.Deflator(cpi.load()))
     print(f"grocery: {sum(i['this_week'] for i in items)} of {len(items)} items advertised the week of {today}")
     for i in best_buys(items):
         print(f"  {i['name']}: ${i['price']}{i['unit']}  {i['vs_usual']}% vs usual  in season={i['in_season']}")
