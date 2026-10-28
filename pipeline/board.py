@@ -630,6 +630,8 @@ def build():
     g_day, g_items = grocery.build(store.iter_all("retail"), cpi.Deflator(cpi.load()))
     if g_items:
         out["grocery"] = grocery_view.page(g_day, g_items)
+        for gi in g_items:
+            out[f"grocery/{gi['slug']}"] = grocery_view.item_page(gi, g_day, g_items)
     for m in MARKETS:
         out[f"market-{MKEY[m]}"] = home(items, hist, today, alerts, as_of, record, notes, only=m)
     for commodity, (slug, _) in PAGES.items():
@@ -641,6 +643,13 @@ def build():
             out[f"items/{slug}--{MARKET_SLUG[i['market']]}"] = item_page(commodity, rows, hist, today, sizes, alerts,
                                                                        as_of, notes, only=i["market"])
     og = og_data(items, hist, as_of)
+    for gi in g_items:
+        word = grocery_view.STATUS[gi["status"]][0]
+        og[f"g-{gi['slug']}"] = {"title": f"{gi['short']} prices this week", "price": f"${gi['price']:.2f}",
+                                 "sub": f"Supermarket ads across the U.S. · week of {g_day:%B} {g_day.day}, {g_day.year}",
+                                 "out": word + (f", {abs(gi['vs_usual'])}% {'below' if gi['vs_usual'] < 0 else 'above'} usual"
+                                                if gi.get("vs_usual") else ""),
+                                 "tone": {"low": "down", "high": "up"}.get(gi["status"], "flat"), "unit": gi["unit"].strip()}
     if g_items:
         og["home"] = {"title": "This week’s best buys in the produce aisle",
                       "sub": f"Supermarket prices · week of {g_day:%B} {g_day.day}, {g_day.year}",
@@ -677,9 +686,10 @@ def og_data(items, hist, as_of):
 
 def main():
     as_of, pages = build()
-    (OUT / "items").mkdir(parents=True, exist_ok=True)
-    for old in (OUT / "items").glob("*.html"):
-        old.unlink()
+    for sub in ("items", "grocery"):
+        (OUT / sub).mkdir(parents=True, exist_ok=True)
+        for old in (OUT / sub).glob("*.html"):
+            old.unlink()
     for key, body in pages.items():
         (OUT / (f"{key}.json" if key == "og" else f"{key}.html")).write_text(body, encoding="utf-8")
     (OUT / "as_of.txt").write_text(as_of.isoformat())

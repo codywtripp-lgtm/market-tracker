@@ -240,6 +240,11 @@ def board_pages():
         place = "Hunts Point (New York)" if m == "New York" else m
         emit(f"{slug}/", f"market-{board.MKEY[m]}", f"{place} Wholesale Produce Prices Today | {SITE_NAME}", 1,
              og_key=f"market-{board.MKEY[m]}")
+    for f in sorted((BOARD / "grocery").glob("*.html")) if (BOARD / "grocery").exists() else []:
+        key = f"g-{f.stem}"
+        name = og.get(key, {}).get("title", f.stem.replace("-", " ").capitalize() + " prices this week")
+        emit(f"grocery/{f.stem}/", f"grocery/{f.stem}", f"{name.replace(' prices this week', '')} Prices This Week at "
+             f"the Grocery Store | {SITE_NAME}", 2, og_key=key, view="grocery")
     for c, (slug, _) in board.PAGES.items():
         if not (BOARD / "items" / f"{slug}.html").exists():
             continue
@@ -260,7 +265,7 @@ def og_card(c):
     """A 1200x630 preview card: what a shared link shows in texts, LinkedIn, Slack."""
     rows = "".join(f'<div class="og-row"><span>{_esc(r["name"])}</span><b class="{r["tone"]}">{_esc(r["word"])}</b>'
                    f'<span class="og-n">{_esc(r["price"])}</span></div>' for r in c.get("rows", []))
-    main = (f'<div class="og-price">{_esc(c["price"])}<span>a case</span></div>'
+    main = (f'<div class="og-price">{_esc(c["price"])}<span>{_esc(c.get("unit", "a case"))}</span></div>'
             f'<div class="og-out {c["tone"]}">{_esc(c["out"])}</div>{c.get("spark", "")}' if c.get("price") else rows)
     return f"""<!doctype html><html><head><meta charset="utf-8"><meta name="robots" content="noindex">{FONTS}
 <style>

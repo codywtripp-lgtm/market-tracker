@@ -114,6 +114,18 @@ main.wrap > section:first-child { margin-top: 0; }
 .pbar-labels span:nth-child(2) { text-align: center; } .pbar-labels span:nth-child(3) { text-align: right; }
 .pbar-note { font-size: 16px; line-height: 22px; color: var(--ink-2); margin: 4px 0 0; }
 
+/* grocery item page */
+.gquote { display: grid; grid-template-columns: 132px 1fr; gap: 24px; align-items: start; margin-top: 40px; max-width: 640px; }
+.gword { font-size: 24px; line-height: 30px; font-weight: 800; margin: 0 0 4px; }
+.gword.good { color: var(--good); } .gword.bad { color: var(--bad); } .gword.flat { color: var(--ink); }
+.swap.big { font-size: 21px; margin-top: 24px; }
+.facts { list-style: none; margin: 0; padding: 0; max-width: 640px; border-top: 2px solid var(--ink); }
+.facts li { display: grid; grid-template-columns: 220px 1fr; gap: 4px 24px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.facts span { color: var(--ink-2); }
+a.sname { color: var(--ink); text-decoration: none; }
+a.sname:hover, .buy h3 a:hover, .pricey b a:hover, .all th a:hover { text-decoration: underline; }
+.buy h3 a, .pricey b a, .all th a { color: var(--ink); text-decoration: none; }
+
 /* in season: one tinted band, a simple list */
 .band { background: var(--band); margin-left: -24px; margin-right: -24px; padding: 48px 24px; border-radius: 0; }
 .season-list { list-style: none; margin: 0; padding: 0; columns: 3 220px; column-gap: 48px; }
@@ -390,6 +402,8 @@ main.dash { min-width: 0; }
   .b-season small { display: none; }
   .spark { width: 84px; height: 32px; }
   .notes li { grid-template-columns: 1fr; }
+  .facts li { grid-template-columns: 1fr; }
+  .gquote { grid-template-columns: 112px 1fr; gap: 16px; }
   .quote { grid-template-columns: 1fr; gap: 24px; }
   .q-price { font-size: 52px; line-height: 52px; }
   .q-facts { grid-template-columns: 1fr 1fr; }
