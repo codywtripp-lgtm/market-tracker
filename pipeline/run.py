@@ -65,10 +65,10 @@ def run(client, start, end, sources):
 
     if "retail" in sources:
         for slug in config.RETAIL_REPORTS:
+            # every region for the wholesale items; national ads only for everything else (grocery view)
             job("retail", slug, lambda slug=slug: [
-                normalize.retail(r, fetched_at)
-                for r in client.mars(slug, "Report Details", start, end)
-                if r.get("commodity") in config.RETAIL_COMMODITIES])
+                row for row in (normalize.retail(r, fetched_at) for r in client.mars(slug, "Report Details", start, end))
+                if row["commodity"] in config.RETAIL_COMMODITIES or row["market"] == "National"])
 
     if "movement" in sources:
         for slug in config.MOVEMENT_REPORTS:

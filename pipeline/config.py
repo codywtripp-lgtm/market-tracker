@@ -29,6 +29,8 @@ PRODUCE_COMMODITIES = {
     "Grapes",
 }
 
+# Retail report 3324 (supermarket ads, weekly): all regions for the wholesale items above, national
+# ads only for every other item (the grocery view covers the whole produce aisle).
 # Retail report 3324 uses its own commodity names (a single "Lettuce", "Peppers (Bell Type)").
 # normalize.RETAIL_NAMES maps them back to the wholesale names where they differ.
 RETAIL_COMMODITIES = PRODUCE_COMMODITIES | {"Lettuce", "Peppers (Bell Type)"}
