@@ -1,0 +1,112 @@
+{
+ "years": "2021-2026",
+ "weeks_scored": 22161,
+ "calls": 7917,
+ "calls_right_pct": 71.0,
+ "big_moves": 4886,
+ "big_moves_right_pct": 85.4,
+ "avg_dollars_per_case": 4.23,
+ "avg_dollars_when_right": 7.07,
+ "by_commodity": [
+  {
+   "commodity": "Limes",
+   "calls": 922,
+   "right_pct": 82.2,
+   "avg_dollars": 6.47
+  },
+  {
+   "commodity": "Strawberries",
+   "calls": 429,
+   "right_pct": 77.6,
+   "avg_dollars": 4.59
+  },
+  {
+   "commodity": "Celery",
+   "calls": 1045,
+   "right_pct": 76.1,
+   "avg_dollars": 5.05
+  },
+  {
+   "commodity": "Lettuce, Romaine",
+   "calls": 984,
+   "right_pct": 71.7,
+   "avg_dollars": 4.54
+  },
+  {
+   "commodity": "Broccoli",
+   "calls": 706,
+   "right_pct": 70.8,
+   "avg_dollars": 3.41
+  },
+  {
+   "commodity": "Lettuce, Iceberg",
+   "calls": 719,
+   "right_pct": 70.0,
+   "avg_dollars": 5.2
+  },
+  {
+   "commodity": "Tomatoes, Plum Type",
+   "calls": 240,
+   "right_pct": 69.6,
+   "avg_dollars": 2.65
+  },
+  {
+   "commodity": "Blueberries",
+   "calls": 404,
+   "right_pct": 69.3,
+   "avg_dollars": 4.65
+  },
+  {
+   "commodity": "Peppers, Bell Type",
+   "calls": 603,
+   "right_pct": 66.5,
+   "avg_dollars": 2.9
+  },
+  {
+   "commodity": "Cucumbers",
+   "calls": 651,
+   "right_pct": 65.9,
+   "avg_dollars": 3.34
+  },
+  {
+   "commodity": "Tomatoes",
+   "calls": 341,
+   "right_pct": 64.5,
+   "avg_dollars": 2.55
+  },
+  {
+   "commodity": "Avocados",
+   "calls": 646,
+   "right_pct": 63.6,
+   "avg_dollars": 3.25
+  },
+  {
+   "commodity": "Lemons",
+   "calls": 100,
+   "right_pct": 60.0,
+   "avg_dollars": 1.35
+  },
+  {
+   "commodity": "Potatoes",
+   "calls": 32,
+   "right_pct": 53.1,
+   "avg_dollars": 1.03
+  },
+  {
+   "commodity": "Grapes",
+   "calls": 34,
+   "right_pct": 52.9,
+   "avg_dollars": 2.63
+  },
+  {
+   "commodity": "Onions, Dry",
+   "calls": 50,
+   "right_pct": 36.0,
+   "avg_dollars": 0.18
+  }
+ ],
+ "alert_rules": 67,
+ "alert_cases": 2327,
+ "alert_hit_pct": 74.8,
+ "alert_base_pct": 33.3
+}
