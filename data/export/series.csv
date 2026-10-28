@@ -10,6 +10,8 @@ retail-national-avocados-hass-marked-large-each-no,Avocados,National,retail,Avoc
 retail-national-bananas-per-lb-no,Bananas,National,retail,Bananas per lb — National,,per lb,,,No,$/per lb,$/per lb,1.0,,2016-01-08,2026-10-23
 retail-national-beans-round-green-type-12-oz-bag-no,Beans,National,retail,Beans ROUND GREEN TYPE 12 oz bag — National,ROUND GREEN TYPE,12 oz bag,,,No,$/12 oz bag,$/12 oz bag,1.0,,2023-08-18,2026-10-23
 retail-national-beans-round-green-type-per-lb-no,Beans,National,retail,Beans ROUND GREEN TYPE per lb — National,ROUND GREEN TYPE,per lb,,,No,$/per lb,$/per lb,0.962,,2021-01-08,2026-10-23
+retail-national-beef-ground-beef-80-89-per-lb-environment-conventional-pack-2-4-lbs-no,Beef,National,retail,Beef Ground Beef 80-89% environment=Conventional; pack=2-4 Lbs per lb — National,Ground Beef 80-89%,per lb,,environment=Conventional; pack=2-4 Lbs,No,$/per lb,$/per lb,1.0,,2024-09-06,2026-10-23
+retail-national-beef-ground-beef-patties-per-lb-environment-conventional-pack-1-2-lbs-no,Beef,National,retail,Beef Ground Beef Patties environment=Conventional; pack=1-2 Lbs per lb — National,Ground Beef Patties,per lb,,environment=Conventional; pack=1-2 Lbs,No,$/per lb,$/per lb,1.0,,2024-09-06,2026-10-23
 retail-national-beets-per-lb-no,Beets,National,retail,Beets per lb — National,,per lb,,,No,$/per lb,$/per lb,0.904,,2021-01-08,2026-10-23
 retail-national-blackberries-1-pint-11-12-oz-cntr-w-lid-no,Blackberries,National,retail,Blackberries 1 pint (11-12 oz cntr w/ lid) — National,,1 pint (11-12 oz cntr w/ lid),,,No,$/1 pint (11-12 oz cntr w/ lid),$/1 pint (11-12 oz cntr w/ lid),0.885,,2023-08-18,2026-10-23
 retail-national-blackberries-5-6-6-oz-package-no,Blackberries,National,retail,Blackberries 5.6-6 oz package — National,,5.6-6 oz package,,,No,$/5.6-6 oz package,$/5.6-6 oz package,1.0,,2021-01-08,2026-10-23
@@ -19,6 +21,8 @@ retail-national-broccoli-per-bunch-no,Broccoli,National,retail,Broccoli per bunc
 retail-national-broccoli-crown-cut-per-lb-no,Broccoli,National,retail,Broccoli CROWN CUT per lb — National,CROWN CUT,per lb,,,No,$/per lb,$/per lb,1.0,,2016-01-08,2026-10-23
 retail-national-brussels-sprouts-1-lb-bag-no,Brussels Sprouts,National,retail,Brussels Sprouts 1 lb bag — National,,1 lb bag,,,No,$/1 lb bag,$/1 lb bag,0.731,,2023-09-08,2026-10-23
 retail-national-brussels-sprouts-per-lb-no,Brussels Sprouts,National,retail,Brussels Sprouts per lb — National,,per lb,,,No,$/per lb,$/per lb,0.827,,2021-01-08,2026-10-23
+retail-national-butter-1-lb-no,Butter,National,retail,Butter 1 lb — National,,1 lb,,,No,$/1 lb,$/1 lb,1.0,,2021-01-07,2026-10-23
+retail-national-butter-8-oz-no,Butter,National,retail,Butter 8 oz — National,,8 oz,,,No,$/8 oz,$/8 oz,1.0,,2023-02-03,2026-10-23
 retail-national-cabbage-round-green-type-per-lb-no,Cabbage,National,retail,Cabbage ROUND GREEN TYPE per lb — National,ROUND GREEN TYPE,per lb,,,No,$/per lb,$/per lb,1.0,,2021-01-08,2026-10-23
 retail-national-cactus-leaf-nopales-1-1-5-lb-bags-no,Cactus Leaf (Nopales),National,retail,Cactus Leaf (Nopales) 1-1.5 lb bags — National,,1-1.5 lb bags,,,No,$/1-1.5 lb bags,$/1-1.5 lb bags,0.673,,2025-08-15,2026-10-23
 retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,Cactus Leaf (Nopales) per lb — National,,per lb,,,No,$/per lb,$/per lb,0.519,,2021-01-08,2026-10-23
@@ -32,7 +36,11 @@ retail-national-celery-each-no,Celery,National,retail,Celery each — National,,
 retail-national-celery-hearts-per-package-no,Celery,National,retail,Celery HEARTS per package — National,HEARTS,per package,,,No,$/per package,$/per package,0.865,,2023-09-08,2026-10-23
 retail-national-chayote-each-no,Chayote,National,retail,Chayote each — National,,each,,,No,$/each,$/each,0.75,,2021-01-08,2026-10-09
 retail-national-chayote-per-lb-no,Chayote,National,retail,Chayote per lb — National,,per lb,,,No,$/per lb,$/per lb,0.731,,2021-01-08,2026-10-23
+retail-national-cheese-natural-varieties-6-8-oz-shred-no,Cheese,National,retail,Cheese Natural Varieties 6-8 oz Shred — National,Natural Varieties,6-8 oz Shred,,,No,$/6-8 oz Shred,$/6-8 oz Shred,1.0,,2023-02-03,2026-10-23
+retail-national-cheese-natural-varieties-6-8-oz-sliced-no,Cheese,National,retail,Cheese Natural Varieties 6-8 oz Sliced — National,Natural Varieties,6-8 oz Sliced,,,No,$/6-8 oz Sliced,$/6-8 oz Sliced,1.0,,2023-02-03,2026-10-23
 retail-national-cherries-red-varieties-per-lb-no,Cherries,National,retail,Cherries RED VARIETIES per lb — National,RED VARIETIES,per lb,,,No,$/per lb,$/per lb,0.654,,2021-01-08,2026-08-28
+retail-national-chicken-breast-boneless-skinless-per-lb-environment-conventional-pack-value-no,Chicken,National,retail,"Chicken Breast, Boneless/Skinless environment=Conventional; pack=Value per lb — National","Breast, Boneless/Skinless",per lb,,environment=Conventional; pack=Value,No,$/per lb,$/per lb,1.0,,2024-09-06,2026-10-23
+retail-national-chicken-self-service-deli-chicken-tub-pouch-per-lb-environment-conventional-pack-5-15-oz-no,Chicken,National,retail,Chicken Self-Service Deli Chicken Tub/Pouch environment=Conventional; pack=5-15 oz per lb — National,Self-Service Deli Chicken Tub/Pouch,per lb,,environment=Conventional; pack=5-15 oz,No,$/per lb,$/per lb,1.0,,2024-09-06,2026-10-23
 retail-national-cilantro-per-bunch-no,Cilantro,National,retail,Cilantro per bunch — National,,per bunch,,,No,$/per bunch,$/per bunch,1.0,,2021-01-08,2026-10-23
 retail-national-clementines-2-lb-bag-no,Clementines,National,retail,Clementines 2 lb bag — National,,2 lb bag,,,No,$/2 lb bag,$/2 lb bag,0.885,,2021-01-08,2026-10-23
 retail-national-clementines-3-lb-bag-no,Clementines,National,retail,Clementines 3 lb bag — National,,3 lb bag,,,No,$/3 lb bag,$/3 lb bag,0.962,,2021-01-08,2026-10-23
@@ -40,11 +48,18 @@ retail-national-collards-1-lb-bag-no,Collards,National,retail,Collards 1 lb bag 
 retail-national-collards-per-bunch-no,Collards,National,retail,Collards per bunch — National,,per bunch,,,No,$/per bunch,$/per bunch,0.769,,2021-01-08,2026-10-23
 retail-national-corn-sweet-each-no,Corn-Sweet,National,retail,Corn-Sweet each — National,,each,,,No,$/each,$/each,0.904,,2021-01-08,2026-10-23
 retail-national-corn-sweet-trays-4-5-ears-film-wrapped-no,Corn-Sweet,National,retail,Corn-Sweet trays 4-5 ears film wrapped — National,,trays 4-5 ears film wrapped,,,No,$/trays 4-5 ears film wrapped,$/trays 4-5 ears film wrapped,1.0,,2023-08-18,2026-10-23
+retail-national-cottage-cheese-16-oz-no,Cottage Cheese,National,retail,Cottage Cheese 16 oz — National,,16 oz,,,No,$/16 oz,$/16 oz,1.0,,2021-01-07,2026-10-23
+retail-national-cottage-cheese-24-oz-no,Cottage Cheese,National,retail,Cottage Cheese 24 oz — National,,24 oz,,,No,$/24 oz,$/24 oz,1.0,,2023-02-03,2026-10-23
+retail-national-cream-cheese-8-oz-no,Cream Cheese,National,retail,Cream Cheese 8 oz — National,,8 oz,,,No,$/8 oz,$/8 oz,1.0,,2021-01-07,2026-10-23
 retail-national-cucumbers-each-no,Cucumbers,National,retail,Cucumbers each — National,,each,,,No,$/each,$/each,1.0,,2016-01-08,2026-10-23
 retail-national-cucumbers-long-seedless-each-environment-greenhouse-no,Cucumbers,National,retail,Cucumbers LONG SEEDLESS environment=Greenhouse each — National,LONG SEEDLESS,each,,environment=Greenhouse,No,$/each,$/each,1.0,,2016-01-08,2026-10-23
 retail-national-curly-parsley-per-bunch-no,Curly Parsley,National,retail,Curly Parsley per bunch — National,,per bunch,,,No,$/per bunch,$/per bunch,0.731,,2025-08-22,2026-10-23
+retail-national-egg-large-white-12-count-environment-conventional-no,Egg,National,retail,Egg Large White environment=Conventional 12 count — National,Large White,12 count,,environment=Conventional,No,$/12 count,$/12 count,1.0,,2024-09-13,2026-10-23
+retail-national-egg-large-white-18-count-environment-conventional-no,Egg,National,retail,Egg Large White environment=Conventional 18 count — National,Large White,18 count,,environment=Conventional,No,$/18 count,$/18 count,0.885,,2024-09-27,2026-10-23
 retail-national-eggplant-each-no,Eggplant,National,retail,Eggplant each — National,,each,,,No,$/each,$/each,0.538,,2021-01-08,2026-10-23
 retail-national-eggplant-per-lb-no,Eggplant,National,retail,Eggplant per lb — National,,per lb,,,No,$/per lb,$/per lb,1.0,,2021-01-08,2026-10-23
+retail-national-flavored-milk-all-fat-tests-gallon-no,Flavored Milk,National,retail,Flavored Milk All Fat Tests Gallon — National,All Fat Tests,Gallon,,,No,$/Gallon,$/Gallon,0.923,,2021-01-14,2026-10-23
+retail-national-flavored-milk-all-fat-tests-half-gallon-no,Flavored Milk,National,retail,Flavored Milk All Fat Tests Half Gallon — National,All Fat Tests,Half Gallon,,,No,$/Half Gallon,$/Half Gallon,0.904,,2021-01-07,2026-10-23
 retail-national-garlic-per-sleeve-no,Garlic,National,retail,Garlic per sleeve — National,,per sleeve,,,No,$/per sleeve,$/per sleeve,1.0,,2021-01-08,2026-10-23
 retail-national-grapefruit-red-each-no,Grapefruit,National,retail,Grapefruit RED each — National,RED,each,,,No,$/each,$/each,0.885,,2021-01-08,2026-10-23
 retail-national-grapefruit-red-per-lb-no,Grapefruit,National,retail,Grapefruit RED per lb — National,RED,per lb,,,No,$/per lb,$/per lb,0.596,,2021-01-08,2026-10-23
@@ -56,12 +71,16 @@ retail-national-honey-12-oz-no,Honey,National,retail,Honey 12 oz — National,,1
 retail-national-honey-16-oz-no,Honey,National,retail,Honey 16 oz — National,,16 oz,,,No,$/16 oz,$/16 oz,1.0,,2025-08-08,2026-10-23
 retail-national-honeydews-each-no,Honeydews,National,retail,Honeydews each — National,,each,,,No,$/each,$/each,0.942,,2021-01-08,2026-10-23
 retail-national-honeydews-per-lb-no,Honeydews,National,retail,Honeydews per lb — National,,per lb,,,No,$/per lb,$/per lb,0.538,,2021-01-15,2026-09-25
+retail-national-ice-cream-14-16-oz-no,Ice Cream,National,retail,Ice Cream 14-16 oz — National,,14-16 oz,,,No,$/14-16 oz,$/14-16 oz,1.0,,2023-02-03,2026-10-23
+retail-national-ice-cream-48-64-oz-no,Ice Cream,National,retail,Ice Cream 48-64 oz — National,,48-64 oz,,,No,$/48-64 oz,$/48-64 oz,1.0,,2021-01-07,2026-10-23
 retail-national-jalapeno-peppers-per-lb-no,Jalapeno Peppers,National,retail,Jalapeno Peppers per lb — National,,per lb,,,No,$/per lb,$/per lb,0.981,,2021-01-08,2026-10-23
 retail-national-jicama-per-lb-no,Jicama,National,retail,Jicama per lb — National,,per lb,,,No,$/per lb,$/per lb,0.885,,2025-08-22,2026-10-23
 retail-national-kale-1-lb-bag-no,Kale,National,retail,Kale 1 lb bag — National,,1 lb bag,,,No,$/1 lb bag,$/1 lb bag,0.577,,2021-01-08,2026-10-16
 retail-national-kale-per-bunch-no,Kale,National,retail,Kale per bunch — National,,per bunch,,,No,$/per bunch,$/per bunch,0.519,,2021-01-08,2026-10-16
 retail-national-kiwifruit-hayward-2-lb-containers-with-lids-no,Kiwifruit,National,retail,Kiwifruit HAYWARD 2-lb containers with lids — National,HAYWARD,2-lb containers with lids,,,No,$/2-lb containers with lids,$/2-lb containers with lids,0.558,,2023-11-17,2026-10-23
 retail-national-kiwifruit-yellow-flesh-1-lb-containers-with-lids-no,Kiwifruit,National,retail,Kiwifruit YELLOW FLESH 1-lb containers with lids — National,YELLOW FLESH,1-lb containers with lids,,,No,$/1-lb containers with lids,$/1-lb containers with lids,0.712,,2023-08-18,2026-10-23
+retail-national-lamb-loin-chops-per-lb-environment-conventional-pack-regular-no,Lamb,National,retail,Lamb Loin Chops environment=Conventional; pack=Regular per lb — National,Loin Chops,per lb,,environment=Conventional; pack=Regular,No,$/per lb,$/per lb,0.769,,2024-09-06,2026-10-23
+retail-national-lamb-shoulder-blade-chops-per-lb-environment-conventional-pack-regular-no,Lamb,National,retail,Lamb Shoulder Blade Chops environment=Conventional; pack=Regular per lb — National,Shoulder Blade Chops,per lb,,environment=Conventional; pack=Regular,No,$/per lb,$/per lb,0.808,,2024-09-06,2026-10-23
 retail-national-lemons-2-lb-bag-no,Lemons,National,retail,Lemons 2 lb bag — National,,2 lb bag,,,No,$/2 lb bag,$/2 lb bag,1.0,,2016-01-08,2026-10-23
 retail-national-lemons-each-no,Lemons,National,retail,Lemons each — National,,each,,,No,$/each,$/each,1.0,,2016-01-08,2026-10-23
 retail-national-lettuce-iceberg-each-no,Lettuce,National,retail,Lettuce Iceberg each — National,Iceberg,each,,,No,$/each,$/each,0.904,,2016-01-08,2026-10-23
@@ -70,6 +89,8 @@ retail-national-limes-2-pound-bags-no,Limes,National,retail,Limes 2 pound bags �
 retail-national-limes-each-no,Limes,National,retail,Limes each — National,,each,,,No,$/each,$/each,1.0,,2016-01-08,2026-10-23
 retail-national-mangoes-round-varieties-each-no,Mangoes,National,retail,Mangoes Round Varieties each — National,Round Varieties,each,,,No,$/each,$/each,1.0,,2023-08-18,2026-10-23
 retail-national-mangoes-yellow-varieties-each-no,Mangoes,National,retail,Mangoes YELLOW VARIETIES each — National,YELLOW VARIETIES,each,,,No,$/each,$/each,0.577,,2023-08-18,2026-08-21
+retail-national-milk-all-fat-tests-gallon-no,Milk,National,retail,Milk All Fat Tests Gallon — National,All Fat Tests,Gallon,,,No,$/Gallon,$/Gallon,1.0,,2021-01-07,2026-10-23
+retail-national-milk-all-fat-tests-half-gallon-no,Milk,National,retail,Milk All Fat Tests Half Gallon — National,All Fat Tests,Half Gallon,,,No,$/Half Gallon,$/Half Gallon,1.0,,2021-01-07,2026-10-23
 retail-national-mixed-mini-sweet-peppers-1-lb-package-no,Mixed Mini Sweet Peppers,National,retail,Mixed Mini Sweet Peppers 1 lb package — National,,1 lb package,,,No,$/1 lb package,$/1 lb package,0.962,,2021-01-08,2026-10-23
 retail-national-mixed-mini-sweet-peppers-8-oz-package-no,Mixed Mini Sweet Peppers,National,retail,Mixed Mini Sweet Peppers 8 oz package — National,,8 oz package,,,No,$/8 oz package,$/8 oz package,0.615,,2025-08-22,2026-10-09
 retail-national-mushrooms-cremini-8-oz-package-no,Mushrooms,National,retail,Mushrooms CREMINI 8 oz package — National,CREMINI,8 oz package,,,No,$/8 oz package,$/8 oz package,1.0,,2023-08-18,2026-10-23
@@ -99,6 +120,8 @@ retail-national-plantains-per-lb-no,Plantains,National,retail,Plantains per lb �
 retail-national-plums-per-lb-no,Plums,National,retail,Plums per lb — National,,per lb,,,No,$/per lb,$/per lb,0.75,,2021-01-08,2026-10-16
 retail-national-poblano-pepper-per-lb-no,Poblano Pepper,National,retail,Poblano Pepper per lb — National,,per lb,,,No,$/per lb,$/per lb,0.75,,2025-08-08,2026-10-23
 retail-national-pomegranates-each-no,Pomegranates,National,retail,Pomegranates each — National,,each,,,No,$/each,$/each,0.635,,2021-01-08,2026-10-23
+retail-national-pork-self-service-deli-ham-tub-pouch-per-lb-environment-conventional-pack-5-15-oz-no,Pork,National,retail,Pork Self-Service Deli Ham Tub/Pouch environment=Conventional; pack=5-15 oz per lb — National,Self-Service Deli Ham Tub/Pouch,per lb,,environment=Conventional; pack=5-15 oz,No,$/per lb,$/per lb,1.0,,2024-09-06,2026-10-23
+retail-national-pork-sliced-bacon-per-lb-environment-conventional-pack-1-2-lbs-no,Pork,National,retail,Pork Sliced Bacon environment=Conventional; pack=1-2 Lbs per lb — National,Sliced Bacon,per lb,,environment=Conventional; pack=1-2 Lbs,No,$/per lb,$/per lb,1.0,,2024-09-06,2026-10-23
 retail-national-potatoes-russet-5-lb-bag-no,Potatoes,National,retail,Potatoes RUSSET 5 lb bag — National,RUSSET,5 lb bag,,,No,$/5 lb bag,$/5 lb bag,1.0,,2016-01-08,2026-10-23
 retail-national-potatoes-yellow-type-5-lb-bag-no,Potatoes,National,retail,Potatoes YELLOW TYPE 5 lb bag — National,YELLOW TYPE,5 lb bag,,,No,$/5 lb bag,$/5 lb bag,1.0,,2016-01-08,2026-10-23
 retail-national-radishes-per-bunch-no,Radishes,National,retail,Radishes per bunch — National,,per bunch,,,No,$/per bunch,$/per bunch,1.0,,2021-01-08,2026-10-23
@@ -107,6 +130,8 @@ retail-national-raspberries-6-oz-package-no,Raspberries,National,retail,Raspberr
 retail-national-salad-mixed-types-10-12-oz-package-no,Salad (Mixed Types),National,retail,Salad (Mixed Types) 10-12 oz package — National,,10-12 oz package,,,No,$/10-12 oz package,$/10-12 oz package,1.0,,2021-01-08,2026-10-23
 retail-national-salad-mixed-types-5-9-oz-package-no,Salad (Mixed Types),National,retail,Salad (Mixed Types) 5-9 oz package — National,,5-9 oz package,,,No,$/5-9 oz package,$/5-9 oz package,1.0,,2021-01-08,2026-10-23
 retail-national-serrano-peppers-per-lb-no,Serrano Peppers,National,retail,Serrano Peppers per lb — National,,per lb,,,No,$/per lb,$/per lb,0.654,,2021-01-08,2026-10-16
+retail-national-sour-cream-16-oz-no,Sour Cream,National,retail,Sour Cream 16 oz — National,,16 oz,,,No,$/16 oz,$/16 oz,1.0,,2021-01-07,2026-10-23
+retail-national-sour-cream-24-oz-no,Sour Cream,National,retail,Sour Cream 24 oz — National,,24 oz,,,No,$/24 oz,$/24 oz,1.0,,2023-02-03,2026-10-23
 retail-national-spinach-flat-type-5-7-oz-package-no,Spinach,National,retail,Spinach FLAT TYPE 5-7 oz package — National,FLAT TYPE,5-7 oz package,,,No,$/5-7 oz package,$/5-7 oz package,0.808,,2023-08-18,2026-10-23
 retail-national-spinach-flat-type-8-10-oz-package-no,Spinach,National,retail,Spinach FLAT TYPE 8-10 oz package — National,FLAT TYPE,8-10 oz package,,,No,$/8-10 oz package,$/8-10 oz package,1.0,,2023-08-18,2026-10-23
 retail-national-squash-yellow-crookneck-straightneck-per-lb-no,Squash,National,retail,Squash Yellow Crookneck/Straightneck per lb — National,Yellow Crookneck/Straightneck,per lb,,,No,$/per lb,$/per lb,1.0,,2021-01-08,2026-10-23
@@ -122,9 +147,13 @@ retail-national-tangerines-mandarins-3-lb-bag-no,Tangerines/Mandarins,National,r
 retail-national-tomatillos-per-lb-no,Tomatillos,National,retail,Tomatillos per lb — National,,per lb,,,No,$/per lb,$/per lb,0.962,,2021-01-08,2026-10-23
 retail-national-tomatoes-plum-type-roma-per-lb-no,Tomatoes,National,retail,Tomatoes Plum Type (Roma) per lb — National,Plum Type (Roma),per lb,,,No,$/per lb,$/per lb,0.981,,2016-01-08,2026-10-23
 retail-national-tomatoes-vine-ripes-on-the-vine-per-lb-environment-greenhouse-no,Tomatoes,National,retail,Tomatoes VINE RIPES - ON THE VINE environment=Greenhouse per lb — National,VINE RIPES - ON THE VINE,per lb,,environment=Greenhouse,No,$/per lb,$/per lb,1.0,,2016-01-08,2026-10-23
+retail-national-turkey-self-service-deli-tub-pouch-per-lb-environment-conventional-pack-5-15-oz-no,Turkey,National,retail,Turkey Self-Service Deli Tub/Pouch environment=Conventional; pack=5-15 oz per lb — National,Self-Service Deli Tub/Pouch,per lb,,environment=Conventional; pack=5-15 oz,No,$/per lb,$/per lb,1.0,,2024-09-06,2026-10-23
+retail-national-turkey-service-deli-cat-1-per-lb-environment-conventional-no,Turkey,National,retail,Turkey Service Deli - Cat 1 environment=Conventional per lb — National,Service Deli - Cat 1,per lb,,environment=Conventional,No,$/per lb,$/per lb,1.0,,2024-09-06,2026-10-23
 retail-national-turnip-tops-per-bunch-no,Turnip Tops,National,retail,Turnip Tops per bunch — National,,per bunch,,,No,$/per bunch,$/per bunch,0.731,,2021-01-15,2026-10-23
 retail-national-watermelons-red-flesh-seedless-miniature-each-no,Watermelons,National,retail,Watermelons RED FLESH SEEDLESS MINIATURE each — National,RED FLESH SEEDLESS MINIATURE,each,,,No,$/each,$/each,0.942,,2021-01-08,2026-10-23
 retail-national-watermelons-red-flesh-seedless-type-each-no,Watermelons,National,retail,Watermelons RED FLESH SEEDLESS TYPE each — National,RED FLESH SEEDLESS TYPE,each,,,No,$/each,$/each,0.808,,2021-02-26,2026-10-23
+retail-national-yogurt-greek-4-6-oz-no,Yogurt,National,retail,Yogurt Greek 4-6 oz — National,Greek,4-6 oz,,,No,$/4-6 oz,$/4-6 oz,1.0,,2021-01-07,2026-10-23
+retail-national-yogurt-yogurt-4-6-oz-no,Yogurt,National,retail,Yogurt Yogurt 4-6 oz — National,Yogurt,4-6 oz,,,No,$/4-6 oz,$/4-6 oz,1.0,,2021-01-07,2026-10-23
 shipping-point-central-and-southern-california-and-arizona-lemons-7-10-bushel-cartons-115s-n,Lemons,CENTRAL AND SOUTHERN CALIFORNIA AND ARIZONA,shipping point,Lemons 7/10 bushel cartons 115s — CENTRAL AND SOUTHERN CALIFORNIA AND ARIZONA,,7/10 bushel cartons,115s,,N,$/package,$/package,0.516,,2016-01-04,2026-10-27
 shipping-point-central-and-southern-california-and-arizona-lemons-7-10-bushel-cartons-140s-n,Lemons,CENTRAL AND SOUTHERN CALIFORNIA AND ARIZONA,shipping point,Lemons 7/10 bushel cartons 140s — CENTRAL AND SOUTHERN CALIFORNIA AND ARIZONA,,7/10 bushel cartons,140s,,N,$/package,$/package,0.516,,2016-01-04,2026-10-27
 shipping-point-columbia-basin-washington-and-umatilla-basin-oregon-onions-dry-red-25-lb-sacks-jumbo-globe-type-n,"Onions, Dry",COLUMBIA BASIN WASHINGTON AND UMATILLA BASIN OREGON,shipping point,"Onions, Dry Red Globe type 25 lb sacks jumbo — COLUMBIA BASIN WASHINGTON AND UMATILLA BASIN OREGON",Red,25 lb sacks,jumbo,Globe type,N,$/package,$/package,0.81,,2016-01-04,2026-10-27

@@ -18,7 +18,7 @@ from .usda import Client, USDAError
 
 log = logging.getLogger("pipeline")
 
-SOURCES = ["terminal", "shipping_point", "retail", "beef", "chicken", "movement"]
+SOURCES = ["terminal", "shipping_point", "retail", "staples", "beef", "chicken", "movement"]
 
 
 def sum_duplicates(rows):
@@ -69,6 +69,12 @@ def run(client, start, end, sources):
             job("retail", slug, lambda slug=slug: [
                 row for row in (normalize.retail(r, fetched_at) for r in client.mars(slug, "Report Details", start, end))
                 if row["commodity"] in config.RETAIL_COMMODITIES or row["market"] == "National"])
+
+    if "staples" in sources:
+        for slug in config.STAPLE_REPORTS:
+            job("staples", slug, lambda slug=slug: [
+                row for row in (normalize.staple(r, fetched_at) for r in client.mars(slug, "Report Details", start, end))
+                if row["market"] == "National"])
 
     if "movement" in sources:
         for slug in config.MOVEMENT_REPORTS:

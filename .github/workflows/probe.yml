@@ -14,7 +14,7 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install requests
-      - run: python scripts/probe_api.py
+      - run: python scripts/probe_retail.py
         env:
           MARS_API_KEY: ${{ secrets.MARS_API_KEY }}
       - uses: actions/upload-artifact@v4

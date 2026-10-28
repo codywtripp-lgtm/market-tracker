@@ -23,7 +23,8 @@ not read as AI-generated. Check new work against the "Never" list before it ship
    legibility-first typeface. Nothing that could belong to any SaaS product.
 
 ## Tokens
-- **Type:** Atkinson Hyperlegible Next (Braille Institute; designed for low-vision readers). Weights 400 / 700 / 800.
+- **Type:** Figtree, weights 400 / 600 / 700 / 800, tabular figures for prices. (Atkinson Hyperlegible was dropped on
+  2026-10-28: its slashed zero read as odd in prices and years, per a reader.) Plain zero, no monospace digits.
   - Display 44/48 (phone 32/36), 800
   - Section 28/34 (phone 24/30), 800
   - Item 21/28, 700
@@ -46,6 +47,9 @@ not read as AI-generated. Check new work against the "Never" list before it ship
 ## Components
 - **Header:** white, tag-and-leaf mark + wordmark, plain text links. Under it, the **Grocery / Wholesale** switch
   (two segments, the current one filled).
+- **Search:** in the header on every page, placeholder "Search items"; suggestions show the item and its section
+  (Grocery store / Wholesale market), no prices. Arrow keys, Enter, Escape. Without JavaScript it opens /search/ (A to Z).
+- **Aisles:** on grocery pages, Produce / Meat & poultry / Dairy & eggs tabs under the switch, the way a shopper walks the store.
 - **Shelf tag:** yellow, notched like a supermarket tag, price large. Only for items that are a great price this week.
 - **Price check bar:** low / typical / high zones for the same weeks in past years, with a marker for this week and
   plain labels under it.
