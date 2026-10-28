@@ -30,13 +30,15 @@ jobs:
           sparse-checkout: |
             site
             scripts
+            pipeline
             data/export
-            data/briefs
-            data/pages
+            data/board
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - run: python scripts/build_site.py
+      - name: Link preview images
+        run: python scripts/og_images.py
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

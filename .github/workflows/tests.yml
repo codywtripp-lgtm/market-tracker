@@ -36,16 +36,25 @@ jobs:
       - run: python -m pipeline.alerts
       - run: python -m pipeline.forecast
       - run: python -m pipeline.track_record
-      - run: python -m pipeline.brief
-      - run: python -m pipeline.pages
+      - name: USDA supply and demand calls are being kept
+        run: |
+          python - <<'EOF'
+          import csv, datetime as dt, glob
+          f = sorted(glob.glob("data/raw/shipping_point/*/*.csv"))[-1]
+          rows = list(csv.DictReader(open(f, encoding="utf-8")))
+          got = [r for r in rows if r.get("supply_tone")]
+          print(f"{f}: {len(got)} of {len(rows)} shipping-point rows have a supply call", {r["supply_tone"] for r in got[:200]})
+          EOF
+      - run: python -m pipeline.board
       - run: python scripts/build_site.py
+      - run: python scripts/og_images.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: smoke-data
           path: |
             data/export/
-            data/briefs/
+            data/board/
       - uses: actions/upload-artifact@v4
         with:
           name: site-preview
