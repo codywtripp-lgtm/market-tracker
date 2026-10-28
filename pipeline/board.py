@@ -186,7 +186,7 @@ def chart(hist, i):
     last = pts[-1][0]
     fut = [p for p in i["points"] if p["week"] > last.isoformat()]
     W, H = 720, 280
-    L, R, T, B = 52, 16, 14, 30
+    L, R, T, B = 64, 16, 14, 34
     vals = [p for _, p, _, _ in pts] + [v for _, _, lo, hi in pts for v in (lo, hi) if v is not None]
     vals += [p["lo"] for p in fut] + [p["hi"] for p in fut]
     lo_v, hi_v = min(vals), max(vals)
@@ -211,7 +211,8 @@ def chart(hist, i):
     m = dt.date(t0.year, t0.month, 1)
     while m <= t1:
         if m >= t0:
-            g.append(f'<text class="xlab" x="{x(m):.1f}" y="{H - 8}">{m:%b}{" " + str(m.year) if m.month == 1 else ""}</text>')
+            odd = " odd" if m.month % 2 else ""  # every other month is hidden on phones
+            g.append(f'<text class="xlab{odd}" x="{x(m):.1f}" y="{H - 8}">{m:%b}{" " + str(m.year)[2:] if m.month == 1 else ""}</text>')
         m = dt.date(m.year + (m.month == 12), m.month % 12 + 1, 1)
     band = [(d, lo, hi) for d, _, lo, hi in pts if lo is not None]
     if band:

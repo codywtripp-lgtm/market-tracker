@@ -134,7 +134,7 @@ small { font-size: 14px; }
 .b-item b { display: block; font-size: 17px; }
 .b-item small, .season small, .out small { display: block; color: var(--muted); font-size: 14px; font-weight: 400; }
 .b-price b { display: block; font-size: 19px; }
-.season b, .out b { color: var(--tone); font-size: 15px; font-weight: 700; }
+.season b, .out b { color: var(--tone); font-size: 15px; font-weight: 700; white-space: nowrap; }
 .chg { font-size: 14px; font-weight: 600; color: var(--tone); }
 .chg.up { --tone: var(--up); } .chg.down { --tone: var(--down); } .chg.flat { --tone: var(--muted); font-weight: 400; }
 .spark { display: block; width: 128px; height: 38px; }
@@ -361,7 +361,8 @@ table.mini th:first-child, table.mini td:first-child { text-align: left; }
   .b-out { grid-area: out; }
   .b-season { grid-area: season; text-align: right; }
   .b-season, .b-out { min-width: 0; }
-  .b-out small, .b-season small { display: inline; margin-left: 5px; }
+  .b-out small { display: inline; margin-left: 5px; }
+  .b-season small { display: none; }
   .notes li { grid-template-columns: 1fr; padding: 12px 14px; }
   .spark { width: 84px; height: 32px; }
   .quote { grid-template-columns: 1fr; padding: 18px; gap: 18px; }
@@ -369,6 +370,11 @@ table.mini th:first-child, table.mini td:first-child { text-align: left; }
   .q-facts { grid-template-columns: 1fr 1fr; }
   .q-facts div:last-child { grid-column: 1 / -1; }
   .chart { padding: 12px 10px 10px; }
+  .chart .ylab, .chart .xlab { font-size: 24px; }
+  .chart .xlab.odd { display: none; }
+  .chart .price { stroke-width: 3.5; }
+  .chart .fcmid { stroke-width: 3; }
+  .b-out { white-space: nowrap; }
   .t th, .t td { padding: 10px; }
   .markets th:nth-child(3), .markets td:nth-child(3) { display: none; }
   .stack thead { display: none; }

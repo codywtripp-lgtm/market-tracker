@@ -10,6 +10,7 @@ track record page in the shared frame, and writes the JSON the price-history pag
 """
 
 import csv
+import hashlib
 import datetime as dt
 import html
 import json
@@ -125,6 +126,8 @@ ICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0
         "%3Crect width='28' height='28' rx='7' fill='%232f8a57'/%3E%3Cpath d='M6 18.5l5-5.5 4 3 7-8' stroke='%23fff' "
         "stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M6 22h16' "
         "stroke='%23fff' stroke-opacity='.55' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")
+# cache-buster so a design change shows up right away instead of after the browser's cache expires
+ASSET_V = hashlib.sha1((ROOT / "site" / "style.css").read_bytes() + (ROOT / "site" / "tabs.js").read_bytes()).hexdigest()[:8]
 NAV = (("", "Today's prices"), ("charts/", "Price history"), ("why/", "Track record"))
 
 
@@ -164,8 +167,8 @@ def page(title, desc, canonical, up, body, active=None, head="", og=None, main_c
 <meta property="og:url" content="{canonical}">{image}
 <link rel="icon" href="{ICON}">
 {FONTS}
-<link rel="stylesheet" href="{up}style.css">{head}
-<script src="{up}tabs.js" defer></script></head>
+<link rel="stylesheet" href="{up}style.css?v={ASSET_V}">{head}
+<script src="{up}tabs.js?v={ASSET_V}" defer></script></head>
 <body>
 {topbar(up, active)}
 <main class="{main_class}">
@@ -282,6 +285,7 @@ def charts_page():
     text = tpl.read_text(encoding="utf-8")
     text = text.replace("<!--TOP-->", topbar("../", "charts/")).replace("<!--FOOT-->", footer("../"))
     text = text.replace("<!--HEAD-->", f'<link rel="icon" href="{ICON}">{FONTS}')
+    text = text.replace('href="../style.css"', f'href="../style.css?v={ASSET_V}"')
     write(tpl, text)
     return [f"{SITE_URL}charts/"]
 
