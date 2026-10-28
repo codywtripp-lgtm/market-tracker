@@ -1,35 +1,130 @@
 series_id,commodity,market,market_type,label,variety,pack_size,item_size,properties,organic,price_unit,compare_unit,coverage_last_year,headline,first_date,last_date
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,Apples COSMIC CRISP per lb — National,COSMIC CRISP,per lb,,,No,$/per lb,$/per lb,1.0,,2024-09-13,2026-10-23
+retail-national-apples-honeycrisp-per-lb-no,Apples,National,retail,Apples HONEYCRISP per lb — National,HONEYCRISP,per lb,,,No,$/per lb,$/per lb,1.0,,2021-01-08,2026-10-23
+retail-national-apples-processed-juice-64-oz-1-2-gallon-no,"Apples, Processed",National,retail,"Apples, Processed JUICE 64 oz (1/2 gallon) — National",JUICE,64 oz (1/2 gallon),,,No,$/64 oz (1/2 gallon),$/64 oz (1/2 gallon),1.0,,2021-01-08,2026-10-23
+retail-national-apples-processed-juice-marked-cider-64-oz-1-2-gallon-no,"Apples, Processed",National,retail,"Apples, Processed JUICE MARKED CIDER 64 oz (1/2 gallon) — National",JUICE MARKED CIDER,64 oz (1/2 gallon),,,No,$/64 oz (1/2 gallon),$/64 oz (1/2 gallon),0.827,,2021-01-08,2026-10-23
+retail-national-artichokes-each-no,Artichokes,National,retail,Artichokes each — National,,each,,,No,$/each,$/each,0.538,,2021-01-22,2026-10-23
+retail-national-asparagus-green-per-lb-no,Asparagus,National,retail,Asparagus GREEN per lb — National,GREEN,per lb,,,No,$/per lb,$/per lb,0.923,,2021-01-08,2026-10-16
 retail-national-avocados-hass-each-no,Avocados,National,retail,Avocados HASS each — National,HASS,each,,,No,$/each,$/each,1.0,,2016-01-08,2026-10-23
 retail-national-avocados-hass-marked-large-each-no,Avocados,National,retail,Avocados Hass-Marked Large each — National,Hass-Marked Large,each,,,No,$/each,$/each,1.0,,2023-08-18,2026-10-23
 retail-national-bananas-per-lb-no,Bananas,National,retail,Bananas per lb — National,,per lb,,,No,$/per lb,$/per lb,1.0,,2016-01-08,2026-10-23
+retail-national-beans-round-green-type-12-oz-bag-no,Beans,National,retail,Beans ROUND GREEN TYPE 12 oz bag — National,ROUND GREEN TYPE,12 oz bag,,,No,$/12 oz bag,$/12 oz bag,1.0,,2023-08-18,2026-10-23
+retail-national-beans-round-green-type-per-lb-no,Beans,National,retail,Beans ROUND GREEN TYPE per lb — National,ROUND GREEN TYPE,per lb,,,No,$/per lb,$/per lb,0.962,,2021-01-08,2026-10-23
+retail-national-beets-per-lb-no,Beets,National,retail,Beets per lb — National,,per lb,,,No,$/per lb,$/per lb,0.904,,2021-01-08,2026-10-23
+retail-national-blackberries-1-pint-11-12-oz-cntr-w-lid-no,Blackberries,National,retail,Blackberries 1 pint (11-12 oz cntr w/ lid) — National,,1 pint (11-12 oz cntr w/ lid),,,No,$/1 pint (11-12 oz cntr w/ lid),$/1 pint (11-12 oz cntr w/ lid),0.885,,2023-08-18,2026-10-23
+retail-national-blackberries-5-6-6-oz-package-no,Blackberries,National,retail,Blackberries 5.6-6 oz package — National,,5.6-6 oz package,,,No,$/5.6-6 oz package,$/5.6-6 oz package,1.0,,2021-01-08,2026-10-23
 retail-national-blueberries-1-pint-11-12-oz-cntr-w-lid-no,Blueberries,National,retail,Blueberries 1 pint (11-12 oz cntr w/ lid) — National,,1 pint (11-12 oz cntr w/ lid),,,No,$/1 pint (11-12 oz cntr w/ lid),$/1 pint (11-12 oz cntr w/ lid),1.0,,2023-08-18,2026-10-23
 retail-national-blueberries-9-8-oz-package-no,Blueberries,National,retail,Blueberries 9.8 oz package — National,,9.8 oz package,,,No,$/9.8 oz package,$/9.8 oz package,0.923,,2025-08-15,2026-10-23
 retail-national-broccoli-per-bunch-no,Broccoli,National,retail,Broccoli per bunch — National,,per bunch,,,No,$/per bunch,$/per bunch,0.962,,2016-01-08,2026-10-23
 retail-national-broccoli-crown-cut-per-lb-no,Broccoli,National,retail,Broccoli CROWN CUT per lb — National,CROWN CUT,per lb,,,No,$/per lb,$/per lb,1.0,,2016-01-08,2026-10-23
+retail-national-brussels-sprouts-1-lb-bag-no,Brussels Sprouts,National,retail,Brussels Sprouts 1 lb bag — National,,1 lb bag,,,No,$/1 lb bag,$/1 lb bag,0.731,,2023-09-08,2026-10-23
+retail-national-brussels-sprouts-per-lb-no,Brussels Sprouts,National,retail,Brussels Sprouts per lb — National,,per lb,,,No,$/per lb,$/per lb,0.827,,2021-01-08,2026-10-23
+retail-national-cabbage-round-green-type-per-lb-no,Cabbage,National,retail,Cabbage ROUND GREEN TYPE per lb — National,ROUND GREEN TYPE,per lb,,,No,$/per lb,$/per lb,1.0,,2021-01-08,2026-10-23
+retail-national-cactus-leaf-nopales-1-1-5-lb-bags-no,Cactus Leaf (Nopales),National,retail,Cactus Leaf (Nopales) 1-1.5 lb bags — National,,1-1.5 lb bags,,,No,$/1-1.5 lb bags,$/1-1.5 lb bags,0.673,,2025-08-15,2026-10-23
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,Cactus Leaf (Nopales) per lb — National,,per lb,,,No,$/per lb,$/per lb,0.519,,2021-01-08,2026-10-23
+retail-national-cantaloupes-each-no,Cantaloupes,National,retail,Cantaloupes each — National,,each,,,No,$/each,$/each,1.0,,2021-01-08,2026-10-23
+retail-national-cantaloupes-per-lb-no,Cantaloupes,National,retail,Cantaloupes per lb — National,,per lb,,,No,$/per lb,$/per lb,0.846,,2021-01-08,2026-10-16
 retail-national-carrots-baby-peeled-1-lb-bag-no,Carrots,National,retail,Carrots BABY PEELED 1 lb bag — National,BABY PEELED,1 lb bag,,,No,$/1 lb bag,$/1 lb bag,1.0,,2016-01-08,2026-10-23
 retail-national-carrots-baby-peeled-2-lb-bag-no,Carrots,National,retail,Carrots BABY PEELED 2 lb bag — National,BABY PEELED,2 lb bag,,,No,$/2 lb bag,$/2 lb bag,0.981,,2016-01-08,2026-10-23
+retail-national-cauliflower-each-no,Cauliflower,National,retail,Cauliflower each — National,,each,,,No,$/each,$/each,1.0,,2021-01-08,2026-10-23
+retail-national-cauliflower-per-lb-no,Cauliflower,National,retail,Cauliflower per lb — National,,per lb,,,No,$/per lb,$/per lb,0.885,,2021-01-08,2026-10-23
 retail-national-celery-each-no,Celery,National,retail,Celery each — National,,each,,,No,$/each,$/each,0.981,,2016-01-08,2026-10-23
 retail-national-celery-hearts-per-package-no,Celery,National,retail,Celery HEARTS per package — National,HEARTS,per package,,,No,$/per package,$/per package,0.865,,2023-09-08,2026-10-23
+retail-national-chayote-each-no,Chayote,National,retail,Chayote each — National,,each,,,No,$/each,$/each,0.75,,2021-01-08,2026-10-09
+retail-national-chayote-per-lb-no,Chayote,National,retail,Chayote per lb — National,,per lb,,,No,$/per lb,$/per lb,0.731,,2021-01-08,2026-10-23
+retail-national-cherries-red-varieties-per-lb-no,Cherries,National,retail,Cherries RED VARIETIES per lb — National,RED VARIETIES,per lb,,,No,$/per lb,$/per lb,0.654,,2021-01-08,2026-08-28
+retail-national-cilantro-per-bunch-no,Cilantro,National,retail,Cilantro per bunch — National,,per bunch,,,No,$/per bunch,$/per bunch,1.0,,2021-01-08,2026-10-23
+retail-national-clementines-2-lb-bag-no,Clementines,National,retail,Clementines 2 lb bag — National,,2 lb bag,,,No,$/2 lb bag,$/2 lb bag,0.885,,2021-01-08,2026-10-23
+retail-national-clementines-3-lb-bag-no,Clementines,National,retail,Clementines 3 lb bag — National,,3 lb bag,,,No,$/3 lb bag,$/3 lb bag,0.962,,2021-01-08,2026-10-23
+retail-national-collards-1-lb-bag-no,Collards,National,retail,Collards 1 lb bag — National,,1 lb bag,,,No,$/1 lb bag,$/1 lb bag,0.673,,2021-01-08,2026-10-16
+retail-national-collards-per-bunch-no,Collards,National,retail,Collards per bunch — National,,per bunch,,,No,$/per bunch,$/per bunch,0.769,,2021-01-08,2026-10-23
+retail-national-corn-sweet-each-no,Corn-Sweet,National,retail,Corn-Sweet each — National,,each,,,No,$/each,$/each,0.904,,2021-01-08,2026-10-23
+retail-national-corn-sweet-trays-4-5-ears-film-wrapped-no,Corn-Sweet,National,retail,Corn-Sweet trays 4-5 ears film wrapped — National,,trays 4-5 ears film wrapped,,,No,$/trays 4-5 ears film wrapped,$/trays 4-5 ears film wrapped,1.0,,2023-08-18,2026-10-23
 retail-national-cucumbers-each-no,Cucumbers,National,retail,Cucumbers each — National,,each,,,No,$/each,$/each,1.0,,2016-01-08,2026-10-23
 retail-national-cucumbers-long-seedless-each-environment-greenhouse-no,Cucumbers,National,retail,Cucumbers LONG SEEDLESS environment=Greenhouse each — National,LONG SEEDLESS,each,,environment=Greenhouse,No,$/each,$/each,1.0,,2016-01-08,2026-10-23
+retail-national-curly-parsley-per-bunch-no,Curly Parsley,National,retail,Curly Parsley per bunch — National,,per bunch,,,No,$/per bunch,$/per bunch,0.731,,2025-08-22,2026-10-23
+retail-national-eggplant-each-no,Eggplant,National,retail,Eggplant each — National,,each,,,No,$/each,$/each,0.538,,2021-01-08,2026-10-23
+retail-national-eggplant-per-lb-no,Eggplant,National,retail,Eggplant per lb — National,,per lb,,,No,$/per lb,$/per lb,1.0,,2021-01-08,2026-10-23
+retail-national-garlic-per-sleeve-no,Garlic,National,retail,Garlic per sleeve — National,,per sleeve,,,No,$/per sleeve,$/per sleeve,1.0,,2021-01-08,2026-10-23
+retail-national-grapefruit-red-each-no,Grapefruit,National,retail,Grapefruit RED each — National,RED,each,,,No,$/each,$/each,0.885,,2021-01-08,2026-10-23
+retail-national-grapefruit-red-per-lb-no,Grapefruit,National,retail,Grapefruit RED per lb — National,RED,per lb,,,No,$/per lb,$/per lb,0.596,,2021-01-08,2026-10-23
 retail-national-grapes-red-seedless-per-lb-no,Grapes,National,retail,Grapes RED SEEDLESS per lb — National,RED SEEDLESS,per lb,,,No,$/per lb,$/per lb,1.0,,2016-01-08,2026-10-23
 retail-national-grapes-white-seedless-type-per-lb-no,Grapes,National,retail,Grapes WHITE SEEDLESS TYPE per lb — National,WHITE SEEDLESS TYPE,per lb,,,No,$/per lb,$/per lb,1.0,,2016-01-08,2026-10-23
+retail-national-hemp-seeds-shelled-24-oz-no,Hemp Seeds Shelled,National,retail,Hemp Seeds Shelled 24 oz — National,,24 oz,,,No,$/24 oz,$/24 oz,0.5,,2025-08-15,2026-10-23
+retail-national-hemp-seeds-shelled-8-oz-no,Hemp Seeds Shelled,National,retail,Hemp Seeds Shelled 8 oz — National,,8 oz,,,No,$/8 oz,$/8 oz,0.942,,2021-01-08,2026-10-23
+retail-national-honey-12-oz-no,Honey,National,retail,Honey 12 oz — National,,12 oz,,,No,$/12 oz,$/12 oz,1.0,,2025-08-15,2026-10-23
+retail-national-honey-16-oz-no,Honey,National,retail,Honey 16 oz — National,,16 oz,,,No,$/16 oz,$/16 oz,1.0,,2025-08-08,2026-10-23
+retail-national-honeydews-each-no,Honeydews,National,retail,Honeydews each — National,,each,,,No,$/each,$/each,0.942,,2021-01-08,2026-10-23
+retail-national-honeydews-per-lb-no,Honeydews,National,retail,Honeydews per lb — National,,per lb,,,No,$/per lb,$/per lb,0.538,,2021-01-15,2026-09-25
+retail-national-jalapeno-peppers-per-lb-no,Jalapeno Peppers,National,retail,Jalapeno Peppers per lb — National,,per lb,,,No,$/per lb,$/per lb,0.981,,2021-01-08,2026-10-23
+retail-national-jicama-per-lb-no,Jicama,National,retail,Jicama per lb — National,,per lb,,,No,$/per lb,$/per lb,0.885,,2025-08-22,2026-10-23
+retail-national-kale-1-lb-bag-no,Kale,National,retail,Kale 1 lb bag — National,,1 lb bag,,,No,$/1 lb bag,$/1 lb bag,0.577,,2021-01-08,2026-10-16
+retail-national-kale-per-bunch-no,Kale,National,retail,Kale per bunch — National,,per bunch,,,No,$/per bunch,$/per bunch,0.519,,2021-01-08,2026-10-16
+retail-national-kiwifruit-hayward-2-lb-containers-with-lids-no,Kiwifruit,National,retail,Kiwifruit HAYWARD 2-lb containers with lids — National,HAYWARD,2-lb containers with lids,,,No,$/2-lb containers with lids,$/2-lb containers with lids,0.558,,2023-11-17,2026-10-23
+retail-national-kiwifruit-yellow-flesh-1-lb-containers-with-lids-no,Kiwifruit,National,retail,Kiwifruit YELLOW FLESH 1-lb containers with lids — National,YELLOW FLESH,1-lb containers with lids,,,No,$/1-lb containers with lids,$/1-lb containers with lids,0.712,,2023-08-18,2026-10-23
 retail-national-lemons-2-lb-bag-no,Lemons,National,retail,Lemons 2 lb bag — National,,2 lb bag,,,No,$/2 lb bag,$/2 lb bag,1.0,,2016-01-08,2026-10-23
 retail-national-lemons-each-no,Lemons,National,retail,Lemons each — National,,each,,,No,$/each,$/each,1.0,,2016-01-08,2026-10-23
 retail-national-lettuce-iceberg-each-no,Lettuce,National,retail,Lettuce Iceberg each — National,Iceberg,each,,,No,$/each,$/each,0.904,,2016-01-08,2026-10-23
 retail-national-lettuce-romaine-hearts-3-count-no,Lettuce,National,retail,Lettuce Romaine (Hearts) 3 count — National,Romaine (Hearts),3 count,,,No,$/3 count,$/3 count,0.962,,2016-01-08,2026-10-23
 retail-national-limes-2-pound-bags-no,Limes,National,retail,Limes 2 pound bags — National,,2 pound bags,,,No,$/2 pound bags,$/2 pound bags,0.962,,2025-08-15,2026-10-23
 retail-national-limes-each-no,Limes,National,retail,Limes each — National,,each,,,No,$/each,$/each,1.0,,2016-01-08,2026-10-23
+retail-national-mangoes-round-varieties-each-no,Mangoes,National,retail,Mangoes Round Varieties each — National,Round Varieties,each,,,No,$/each,$/each,1.0,,2023-08-18,2026-10-23
+retail-national-mangoes-yellow-varieties-each-no,Mangoes,National,retail,Mangoes YELLOW VARIETIES each — National,YELLOW VARIETIES,each,,,No,$/each,$/each,0.577,,2023-08-18,2026-08-21
+retail-national-mixed-mini-sweet-peppers-1-lb-package-no,Mixed Mini Sweet Peppers,National,retail,Mixed Mini Sweet Peppers 1 lb package — National,,1 lb package,,,No,$/1 lb package,$/1 lb package,0.962,,2021-01-08,2026-10-23
+retail-national-mixed-mini-sweet-peppers-8-oz-package-no,Mixed Mini Sweet Peppers,National,retail,Mixed Mini Sweet Peppers 8 oz package — National,,8 oz package,,,No,$/8 oz package,$/8 oz package,0.615,,2025-08-22,2026-10-09
+retail-national-mushrooms-cremini-8-oz-package-no,Mushrooms,National,retail,Mushrooms CREMINI 8 oz package — National,CREMINI,8 oz package,,,No,$/8 oz package,$/8 oz package,1.0,,2023-08-18,2026-10-23
+retail-national-mushrooms-white-8-oz-package-no,Mushrooms,National,retail,Mushrooms WHITE 8 oz package — National,WHITE,8 oz package,,,No,$/8 oz package,$/8 oz package,1.0,,2021-01-08,2026-10-23
+retail-national-mustard-per-bunch-no,Mustard,National,retail,Mustard per bunch — National,,per bunch,,,No,$/per bunch,$/per bunch,0.635,,2023-09-08,2026-10-23
+retail-national-nectarines-various-white-flesh-varieties-per-lb-no,Nectarines,National,retail,Nectarines VARIOUS WHITE FLESH VARIETIES per lb — National,VARIOUS WHITE FLESH VARIETIES,per lb,,,No,$/per lb,$/per lb,0.538,,2021-02-05,2026-09-11
+retail-national-nectarines-various-yellow-flesh-varieties-per-lb-no,Nectarines,National,retail,Nectarines VARIOUS YELLOW FLESH VARIETIES per lb — National,VARIOUS YELLOW FLESH VARIETIES,per lb,,,No,$/per lb,$/per lb,0.712,,2021-01-08,2026-09-18
 retail-national-onions-dry-yellow-3-lb-bag-no,"Onions, Dry",National,retail,"Onions, Dry YELLOW 3 lb bag — National",YELLOW,3 lb bag,,,No,$/3 lb bag,$/3 lb bag,1.0,,2016-01-08,2026-10-23
 retail-national-onions-dry-yellow-marked-sweet-per-lb-no,"Onions, Dry",National,retail,"Onions, Dry YELLOW MARKED SWEET per lb — National",YELLOW MARKED SWEET,per lb,,,No,$/per lb,$/per lb,1.0,,2016-01-08,2026-10-23
+retail-national-onions-green-per-bunch-no,"Onions, Green",National,retail,"Onions, Green per bunch — National",,per bunch,,,No,$/per bunch,$/per bunch,1.0,,2021-01-08,2026-10-23
+retail-national-onions-green-bulb-type-per-bunch-no,"Onions, Green",National,retail,"Onions, Green BULB TYPE per bunch — National",BULB TYPE,per bunch,,,No,$/per bunch,$/per bunch,0.635,,2025-08-22,2026-09-25
+retail-national-oranges-navel-each-no,Oranges,National,retail,Oranges NAVEL each — National,NAVEL,each,,,No,$/each,$/each,1.0,,2021-01-08,2026-10-23
+retail-national-oranges-navel-per-lb-no,Oranges,National,retail,Oranges NAVEL per lb — National,NAVEL,per lb,,,No,$/per lb,$/per lb,0.981,,2021-01-08,2026-10-23
+retail-national-ornamentals-rose-hybrid-tea-bunched-12s-no,Ornamentals,National,retail,"Ornamentals Rose, Hybrid Tea bunched 12s — National","Rose, Hybrid Tea",bunched 12s,,,No,$/bunched 12s,$/bunched 12s,0.942,,2021-01-08,2026-10-23
+retail-national-ornamentals-tulips-bunched-10s-no,Ornamentals,National,retail,Ornamentals Tulips bunched 10s — National,Tulips,bunched 10s,,,No,$/bunched 10s,$/bunched 10s,0.731,,2021-01-08,2026-10-23
+retail-national-papaya-maradol-tainung-types-per-lb-no,Papaya,National,retail,Papaya MARADOL/TAINUNG TYPES per lb — National,MARADOL/TAINUNG TYPES,per lb,,,No,$/per lb,$/per lb,1.0,,2021-01-08,2026-10-23
+retail-national-peaches-various-white-flesh-varieties-per-lb-no,Peaches,National,retail,Peaches VARIOUS WHITE FLESH VARIETIES per lb — National,VARIOUS WHITE FLESH VARIETIES,per lb,,,No,$/per lb,$/per lb,0.538,,2021-01-29,2026-10-02
+retail-national-peaches-various-yellow-flesh-varieties-per-lb-no,Peaches,National,retail,Peaches VARIOUS YELLOW FLESH VARIETIES per lb — National,VARIOUS YELLOW FLESH VARIETIES,per lb,,,No,$/per lb,$/per lb,0.827,,2021-01-08,2026-10-23
+retail-national-pears-bartlett-per-lb-no,Pears,National,retail,Pears BARTLETT per lb — National,BARTLETT,per lb,,,No,$/per lb,$/per lb,0.981,,2021-01-08,2026-10-23
+retail-national-pears-bosc-per-lb-no,Pears,National,retail,Pears BOSC per lb — National,BOSC,per lb,,,No,$/per lb,$/per lb,0.923,,2021-01-08,2026-10-23
 retail-national-peppers-bell-type-red-each-no,"Peppers, Bell Type",National,retail,"Peppers, Bell Type RED each — National",RED,each,,,No,$/each,$/each,1.0,,2016-01-08,2026-10-23
 retail-national-peppers-bell-type-yellow-each-no,"Peppers, Bell Type",National,retail,"Peppers, Bell Type YELLOW each — National",YELLOW,each,,,No,$/each,$/each,1.0,,2016-01-08,2026-10-23
+retail-national-pineapples-each-no,Pineapples,National,retail,Pineapples each — National,,each,,,No,$/each,$/each,1.0,,2021-01-08,2026-10-23
+retail-national-pineapples-per-lb-no,Pineapples,National,retail,Pineapples per lb — National,,per lb,,,No,$/per lb,$/per lb,1.0,,2021-01-08,2026-10-23
+retail-national-plain-parsley-per-bunch-no,Plain Parsley,National,retail,Plain Parsley per bunch — National,,per bunch,,,No,$/per bunch,$/per bunch,0.75,,2025-09-05,2026-10-23
+retail-national-plantains-per-lb-no,Plantains,National,retail,Plantains per lb — National,,per lb,,,No,$/per lb,$/per lb,0.962,,2025-08-15,2026-10-23
+retail-national-plums-per-lb-no,Plums,National,retail,Plums per lb — National,,per lb,,,No,$/per lb,$/per lb,0.75,,2021-01-08,2026-10-16
+retail-national-poblano-pepper-per-lb-no,Poblano Pepper,National,retail,Poblano Pepper per lb — National,,per lb,,,No,$/per lb,$/per lb,0.75,,2025-08-08,2026-10-23
+retail-national-pomegranates-each-no,Pomegranates,National,retail,Pomegranates each — National,,each,,,No,$/each,$/each,0.635,,2021-01-08,2026-10-23
 retail-national-potatoes-russet-5-lb-bag-no,Potatoes,National,retail,Potatoes RUSSET 5 lb bag — National,RUSSET,5 lb bag,,,No,$/5 lb bag,$/5 lb bag,1.0,,2016-01-08,2026-10-23
 retail-national-potatoes-yellow-type-5-lb-bag-no,Potatoes,National,retail,Potatoes YELLOW TYPE 5 lb bag — National,YELLOW TYPE,5 lb bag,,,No,$/5 lb bag,$/5 lb bag,1.0,,2016-01-08,2026-10-23
+retail-national-radishes-per-bunch-no,Radishes,National,retail,Radishes per bunch — National,,per bunch,,,No,$/per bunch,$/per bunch,1.0,,2021-01-08,2026-10-23
+retail-national-raspberries-1-pint-11-12-oz-cntr-w-lid-no,Raspberries,National,retail,Raspberries 1 pint (11-12 oz cntr w/ lid) — National,,1 pint (11-12 oz cntr w/ lid),,,No,$/1 pint (11-12 oz cntr w/ lid),$/1 pint (11-12 oz cntr w/ lid),0.846,,2023-08-18,2026-10-23
+retail-national-raspberries-6-oz-package-no,Raspberries,National,retail,Raspberries 6 oz package — National,,6 oz package,,,No,$/6 oz package,$/6 oz package,1.0,,2023-08-18,2026-10-23
+retail-national-salad-mixed-types-10-12-oz-package-no,Salad (Mixed Types),National,retail,Salad (Mixed Types) 10-12 oz package — National,,10-12 oz package,,,No,$/10-12 oz package,$/10-12 oz package,1.0,,2021-01-08,2026-10-23
+retail-national-salad-mixed-types-5-9-oz-package-no,Salad (Mixed Types),National,retail,Salad (Mixed Types) 5-9 oz package — National,,5-9 oz package,,,No,$/5-9 oz package,$/5-9 oz package,1.0,,2021-01-08,2026-10-23
+retail-national-serrano-peppers-per-lb-no,Serrano Peppers,National,retail,Serrano Peppers per lb — National,,per lb,,,No,$/per lb,$/per lb,0.654,,2021-01-08,2026-10-16
+retail-national-spinach-flat-type-5-7-oz-package-no,Spinach,National,retail,Spinach FLAT TYPE 5-7 oz package — National,FLAT TYPE,5-7 oz package,,,No,$/5-7 oz package,$/5-7 oz package,0.808,,2023-08-18,2026-10-23
+retail-national-spinach-flat-type-8-10-oz-package-no,Spinach,National,retail,Spinach FLAT TYPE 8-10 oz package — National,FLAT TYPE,8-10 oz package,,,No,$/8-10 oz package,$/8-10 oz package,1.0,,2023-08-18,2026-10-23
+retail-national-squash-yellow-crookneck-straightneck-per-lb-no,Squash,National,retail,Squash Yellow Crookneck/Straightneck per lb — National,Yellow Crookneck/Straightneck,per lb,,,No,$/per lb,$/per lb,1.0,,2021-01-08,2026-10-23
+retail-national-squash-zucchini-per-lb-no,Squash,National,retail,Squash Zucchini per lb — National,Zucchini,per lb,,,No,$/per lb,$/per lb,1.0,,2021-01-08,2026-10-23
 retail-national-strawberries-1-lb-package-no,Strawberries,National,retail,Strawberries 1 lb package — National,,1 lb package,,,No,$/1 lb package,$/1 lb package,1.0,,2016-01-08,2026-10-23
 retail-national-strawberries-2-lb-package-no,Strawberries,National,retail,Strawberries 2 lb package — National,,2 lb package,,,No,$/2 lb package,$/2 lb package,0.846,,2016-01-08,2026-10-23
+retail-national-sugar-snap-peas-8-oz-bags-no,Sugar Snap Peas,National,retail,Sugar Snap Peas 8 oz bags — National,,8 oz bags,,,No,$/8 oz bags,$/8 oz bags,0.596,,2025-08-15,2026-10-23
+retail-national-sweet-potatoes-3-lb-bag-no,Sweet Potatoes,National,retail,Sweet Potatoes 3 lb bag — National,,3 lb bag,,,No,$/3 lb bag,$/3 lb bag,0.577,,2023-09-29,2026-10-23
+retail-national-sweet-potatoes-per-lb-no,Sweet Potatoes,National,retail,Sweet Potatoes per lb — National,,per lb,,,No,$/per lb,$/per lb,1.0,,2021-01-08,2026-10-23
+retail-national-tangelos-each-no,Tangelos,National,retail,Tangelos each — National,,each,,,No,$/each,$/each,0.558,,2021-01-08,2026-10-16
+retail-national-tangerines-mandarins-2-lb-bag-no,Tangerines/Mandarins,National,retail,Tangerines/Mandarins 2 lb bag — National,,2 lb bag,,,No,$/2 lb bag,$/2 lb bag,1.0,,2021-01-08,2026-10-23
+retail-national-tangerines-mandarins-3-lb-bag-no,Tangerines/Mandarins,National,retail,Tangerines/Mandarins 3 lb bag — National,,3 lb bag,,,No,$/3 lb bag,$/3 lb bag,1.0,,2021-01-08,2026-10-23
+retail-national-tomatillos-per-lb-no,Tomatillos,National,retail,Tomatillos per lb — National,,per lb,,,No,$/per lb,$/per lb,0.962,,2021-01-08,2026-10-23
 retail-national-tomatoes-plum-type-roma-per-lb-no,Tomatoes,National,retail,Tomatoes Plum Type (Roma) per lb — National,Plum Type (Roma),per lb,,,No,$/per lb,$/per lb,0.981,,2016-01-08,2026-10-23
 retail-national-tomatoes-vine-ripes-on-the-vine-per-lb-environment-greenhouse-no,Tomatoes,National,retail,Tomatoes VINE RIPES - ON THE VINE environment=Greenhouse per lb — National,VINE RIPES - ON THE VINE,per lb,,environment=Greenhouse,No,$/per lb,$/per lb,1.0,,2016-01-08,2026-10-23
+retail-national-turnip-tops-per-bunch-no,Turnip Tops,National,retail,Turnip Tops per bunch — National,,per bunch,,,No,$/per bunch,$/per bunch,0.731,,2021-01-15,2026-10-23
+retail-national-watermelons-red-flesh-seedless-miniature-each-no,Watermelons,National,retail,Watermelons RED FLESH SEEDLESS MINIATURE each — National,RED FLESH SEEDLESS MINIATURE,each,,,No,$/each,$/each,0.942,,2021-01-08,2026-10-23
+retail-national-watermelons-red-flesh-seedless-type-each-no,Watermelons,National,retail,Watermelons RED FLESH SEEDLESS TYPE each — National,RED FLESH SEEDLESS TYPE,each,,,No,$/each,$/each,0.808,,2021-02-26,2026-10-23
 shipping-point-central-and-southern-california-and-arizona-lemons-7-10-bushel-cartons-115s-n,Lemons,CENTRAL AND SOUTHERN CALIFORNIA AND ARIZONA,shipping point,Lemons 7/10 bushel cartons 115s — CENTRAL AND SOUTHERN CALIFORNIA AND ARIZONA,,7/10 bushel cartons,115s,,N,$/package,$/package,0.516,,2016-01-04,2026-10-27
 shipping-point-central-and-southern-california-and-arizona-lemons-7-10-bushel-cartons-140s-n,Lemons,CENTRAL AND SOUTHERN CALIFORNIA AND ARIZONA,shipping point,Lemons 7/10 bushel cartons 140s — CENTRAL AND SOUTHERN CALIFORNIA AND ARIZONA,,7/10 bushel cartons,140s,,N,$/package,$/package,0.516,,2016-01-04,2026-10-27
 shipping-point-columbia-basin-washington-and-umatilla-basin-oregon-onions-dry-red-25-lb-sacks-jumbo-globe-type-n,"Onions, Dry",COLUMBIA BASIN WASHINGTON AND UMATILLA BASIN OREGON,shipping point,"Onions, Dry Red Globe type 25 lb sacks jumbo — COLUMBIA BASIN WASHINGTON AND UMATILLA BASIN OREGON",Red,25 lb sacks,jumbo,Globe type,N,$/package,$/package,0.81,,2016-01-04,2026-10-27

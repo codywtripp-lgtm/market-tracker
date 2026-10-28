@@ -117,29 +117,35 @@ SITE_URL = "https://producepricetracker.com/"
 SITE_NAME = "Produce Price Tracker"
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
          '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap">')
-# the mark: a price line over a crate slat, in the brand green
-MARK = ('<svg viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="7" fill="#2f8a57"/>'
-        '<path d="M6 18.5l5-5.5 4 3 7-8" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" '
-        'stroke-linejoin="round"/><path d="M6 22h16" stroke="#fff" stroke-opacity=".55" stroke-width="2" stroke-linecap="round"/></svg>')
-ICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E"
-        "%3Crect width='28' height='28' rx='7' fill='%232f8a57'/%3E%3Cpath d='M6 18.5l5-5.5 4 3 7-8' stroke='%23fff' "
-        "stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M6 22h16' "
-        "stroke='%23fff' stroke-opacity='.55' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")
+         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700;800&display=swap">')
+# the mark: a grocery price tag (leaf green, punched hole) with a yellow leaf
+MARK = ('<svg viewBox="0 0 36 36" aria-hidden="true"><path d="M3 18 12 7h21v22H12z" fill="#12512f"/>'
+        '<circle cx="11.5" cy="18" r="2.4" fill="#fff"/><path d="M17 25c.4-7.2 5-11.4 12-12-.6 7-5.2 11.6-12 12z" '
+        'fill="#ffd84d"/><path d="M17.6 24.4c2.6-3.6 5.4-6.4 8.6-8.6" stroke="#12512f" stroke-width="1.4" fill="none" '
+        'stroke-linecap="round"/></svg>')
+ICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E"
+        "%3Cpath d='M3 18 12 7h21v22H12z' fill='%2312512f'/%3E%3Ccircle cx='11.5' cy='18' r='2.4' fill='%23fff'/%3E"
+        "%3Cpath d='M17 25c.4-7.2 5-11.4 12-12-.6 7-5.2 11.6-12 12z' fill='%23ffd84d'/%3E%3C/svg%3E")
 # cache-buster so a design change shows up right away instead of after the browser's cache expires
 ASSET_V = hashlib.sha1((ROOT / "site" / "style.css").read_bytes() + (ROOT / "site" / "tabs.js").read_bytes()).hexdigest()[:8]
-NAV = (("", "Today's prices"), ("charts/", "Price history"), ("why/", "Track record"))
+VIEWS = (("", "Grocery store"), ("wholesale/", "Wholesale market"))
+LINKS = (("charts/", "Price history"), ("why/", "Track record"))
 
 
 def _esc(s):
     return html.escape(str(s or ""), quote=True)
 
 
-def topbar(up, active=None):
+def topbar(up, active=None, view="wholesale"):
+    """Logo and small links, then the switch between the two views (grocery shoppers / the trade)."""
     cur = ' aria-current="page"'
-    links = "".join(f'<a href="{up}{href}"{cur if href == active else ""}>{label}</a>' for href, label in NAV)
+    links = "".join(f'<a href="{up}{href}"{cur if href == active else ""}>{label}</a>' for href, label in LINKS)
+    on = ' aria-current="true"'
+    switch = "".join(f'<a href="{up}{href}"{on if (href == "") == (view == "grocery") else ""}>{label}</a>'
+                     for href, label in VIEWS)
     return (f'<header class="top"><div class="wrap"><a class="logo" href="{up}">{MARK}{SITE_NAME}</a>'
-            f'<nav class="nav" aria-label="Site">{links}</nav></div></header>')
+            f'<nav class="links" aria-label="More">{links}</nav></div></header>'
+            f'<div class="wrap"><nav class="switch" aria-label="Prices for">{switch}</nav></div>')
 
 
 def footer(up):
@@ -153,7 +159,7 @@ def footer(up):
             f"<nav>{markets}</nav><nav>{items}</nav></div></footer>")
 
 
-def page(title, desc, canonical, up, body, active=None, head="", og=None, main_class="wrap"):
+def page(title, desc, canonical, up, body, active=None, head="", og=None, main_class="wrap", view="wholesale"):
     image = (f'<meta property="og:image" content="{SITE_URL}og/{og}.png">'
              '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">'
              '<meta name="twitter:card" content="summary_large_image">') if og else ""
@@ -170,7 +176,7 @@ def page(title, desc, canonical, up, body, active=None, head="", og=None, main_c
 <link rel="stylesheet" href="{up}style.css?v={ASSET_V}">{head}
 <script src="{up}tabs.js?v={ASSET_V}" defer></script></head>
 <body>
-{topbar(up, active)}
+{topbar(up, active, view)}
 <main class="{main_class}">
 {body}
 </main>
@@ -206,14 +212,15 @@ def board_pages():
     cards = {}
     urls = []
 
-    def emit(rel, frag_name, title, depth, active=None, og_key=None, head=""):
+    def emit(rel, frag_name, title, depth, active=None, og_key=None, head="", view="wholesale"):
         frag = (BOARD / f"{frag_name}.html").read_text(encoding="utf-8")
         up = "../" * depth
         desc = _text(frag, "answer") or _text(frag, "lede")
         if og_key and og_key in og:
             cards[og_key] = og[og_key]
         write(OUT / rel / "index.html", page(title, desc, SITE_URL + rel, up, frag.replace('href="@/', f'href="{up}'),
-                                             active=active, og=og_key if og_key in og else None, head=head))
+                                             active=active, og=og_key if og_key in og else None, head=head,
+                                             view=view))
         urls.append(SITE_URL + rel)
 
     dataset = json.dumps({
@@ -224,8 +231,11 @@ def board_pages():
         "url": SITE_URL, "creator": {"@type": "Organization", "name": SITE_NAME},
         "isBasedOn": "https://www.ams.usda.gov/market-news", "temporalCoverage": f"2016-01-01/{as_of.isoformat()}",
         "spatialCoverage": ["New York, NY", "Los Angeles, CA", "Chicago, IL"]})
-    emit("", "home", f"Wholesale Produce Prices Today: Hunts Point, Los Angeles, Chicago | {SITE_NAME}", 0, active="",
-         og_key="home", head=f'<script type="application/ld+json">{dataset}</script>')
+    if (BOARD / "grocery.html").exists():
+        emit("", "grocery", f"Produce Prices This Week: Best Buys at the Grocery Store | {SITE_NAME}", 0,
+             og_key="home", view="grocery")
+    emit("wholesale/", "home", f"Wholesale Produce Prices Today: Hunts Point, Los Angeles, Chicago | {SITE_NAME}", 1,
+         og_key="wholesale", head=f'<script type="application/ld+json">{dataset}</script>')
     for m, slug in board.MARKET_PAGES.items():
         place = "Hunts Point (New York)" if m == "New York" else m
         emit(f"{slug}/", f"market-{board.MKEY[m]}", f"{place} Wholesale Produce Prices Today | {SITE_NAME}", 1,
@@ -284,6 +294,7 @@ def charts_page():
         return []
     text = tpl.read_text(encoding="utf-8")
     text = text.replace("<!--TOP-->", topbar("../", "charts/")).replace("<!--FOOT-->", footer("../"))
+    text = text.replace('<script src="app.js"></script>', f'<script src="app.js?v={ASSET_V}"></script>')
     text = text.replace("<!--HEAD-->", f'<link rel="icon" href="{ICON}">{FONTS}')
     text = text.replace('href="../style.css"', f'href="../style.css?v={ASSET_V}"')
     write(tpl, text)
@@ -309,7 +320,8 @@ def seo_files(urls):
 Updated every market evening (Monday to Saturday). Prices are USDA "mostly" prices per case, not supplier quotes.
 
 ## Pages
-- [Today's prices]({SITE_URL}): every item, all three markets, and what's firming or softening
+- [Grocery prices this week]({SITE_URL}): best buys in supermarket produce ads, what's in season, what's pricey
+- [Wholesale prices today]({SITE_URL}wholesale/): every item, all three terminal markets, firming or softening
 - [Track record]({SITE_URL}why/): how accurate the forecasts have been, 2021 to 2026, misses included
 - [Price history]({SITE_URL}charts/): 10 years of weekly prices per item
 

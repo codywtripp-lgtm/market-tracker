@@ -1,28 +1,39 @@
 series_id,commodity,market,market_type,label,week_start,compare_price,compare_unit,seasonal_norm,pct_vs_norm,percentile,status,years_of_history,pct_vs_4_weeks_ago,pct_vs_last_year
+retail-national-collards-per-bunch-no,Collards,National,retail,Collards per bunch — National,2026-10-19,0.97,$/per bunch,2.1774,-55.5,8,cheap,5,-61.4,-44.6
 terminal-new-york-peppers-bell-type-5-kg-11-lb-cartons-extra-large-yellow-n,"Peppers, Bell Type",New York,terminal,"Peppers, Bell Type Yellow 5 kg/11 lb cartons extra large — New York",2026-10-26,11.0,$/package,19.6279,-44.0,16,cheap,5,57.1,0.0
 shipping-point-mexico-crossings-through-texas-avocados-hass-cartons-2-layer-36s-n,Avocados,MEXICO CROSSINGS THROUGH TEXAS,shipping point,Avocados Hass cartons 2 layer 36s — MEXICO CROSSINGS THROUGH TEXAS,2026-10-26,27.25,$/package,48.4616,-43.8,5,cheap,9,-22.7,0.0
+retail-national-turnip-tops-per-bunch-no,Turnip Tops,National,retail,Turnip Tops per bunch — National,2026-10-19,0.97,$/per bunch,1.7218,-43.7,19,cheap,5,0.0,-47.8
 terminal-chicago-avocados-hass-cartons-2-layer-36s-n,Avocados,Chicago,terminal,Avocados Hass cartons 2 layer 36s — Chicago,2026-10-26,33.0,$/package,56.6707,-41.8,6,cheap,10,-16.9,1.2
+retail-national-eggplant-each-no,Eggplant,National,retail,Eggplant each — National,2026-10-19,1.49,$/each,2.5183,-40.8,17,cheap,5,,-40.4
 terminal-los-angeles-avocados-hass-cartons-2-layer-48s-n,Avocados,Los Angeles,terminal,Avocados Hass cartons 2 layer 48s — Los Angeles,2026-10-26,32.0,$/package,53.7724,-40.5,0,cheap,10,-5.9,-1.5
 shipping-point-santa-maria-california-broccoli-crown-cut-20-lb-cartons-loose-n,Broccoli,SANTA MARIA CALIFORNIA,shipping point,Broccoli Crown cut 20 lb cartons loose — SANTA MARIA CALIFORNIA,2026-10-26,13.05,$/package,21.6623,-39.8,9,cheap,7,-54.6,-48.1
+retail-national-mustard-per-bunch-no,Mustard,National,retail,Mustard per bunch — National,2026-10-19,0.97,$/per bunch,1.5608,-37.9,17,cheap,3,0.0,-47.8
 terminal-los-angeles-lemons-7-10-bushel-cartons-115s-n,Lemons,Los Angeles,terminal,Lemons 7/10 bushel cartons 115s — Los Angeles,2026-10-26,25.5,$/package,40.82,-37.5,0,cheap,10,19.7,-41.4
 terminal-new-york-avocados-hass-cartons-2-layer-48s-n,Avocados,New York,terminal,Avocados Hass cartons 2 layer 48s — New York,2026-10-26,31.5,$/package,50.1212,-37.2,12,cheap,10,5.7,0.3
 retail-national-cucumbers-long-seedless-each-environment-greenhouse-no,Cucumbers,National,retail,Cucumbers LONG SEEDLESS environment=Greenhouse each — National,2026-10-19,1.09,$/each,1.72,-36.6,0,cheap,10,-14.2,-9.9
 shipping-point-mexico-crossings-through-texas-avocados-hass-cartons-2-layer-32s-n,Avocados,MEXICO CROSSINGS THROUGH TEXAS,shipping point,Avocados Hass cartons 2 layer 32s — MEXICO CROSSINGS THROUGH TEXAS,2026-10-26,31.25,$/package,47.4657,-34.2,19,cheap,8,-17.0,6.8
 retail-national-strawberries-2-lb-package-no,Strawberries,National,retail,Strawberries 2 lb package — National,2026-10-19,3.99,$/2 lb package,5.9873,-33.4,6,cheap,10,-20.0,-42.9
 terminal-los-angeles-lemons-7-10-bushel-cartons-140s-n,Lemons,Los Angeles,terminal,Lemons 7/10 bushel cartons 140s — Los Angeles,2026-10-26,27.75,$/package,39.5495,-29.8,6,cheap,10,23.3,-35.5
+retail-national-ornamentals-rose-hybrid-tea-bunched-12s-no,Ornamentals,National,retail,"Ornamentals Rose, Hybrid Tea bunched 12s — National",2026-10-19,8.42,$/bunched 12s,11.7891,-28.6,8,cheap,5,-15.6,-1.1
 shipping-point-central-and-southern-california-and-arizona-lemons-7-10-bushel-cartons-115s-n,Lemons,CENTRAL AND SOUTHERN CALIFORNIA AND ARIZONA,shipping point,Lemons 7/10 bushel cartons 115s — CENTRAL AND SOUTHERN CALIFORNIA AND ARIZONA,2026-10-26,27.7812,$/package,38.5982,-28.0,0,cheap,10,,-22.3
 retail-national-avocados-hass-each-no,Avocados,National,retail,Avocados HASS each — National,2026-10-19,0.99,$/each,1.3714,-27.8,6,cheap,10,12.5,-3.9
 shipping-point-mexico-crossings-through-texas-broccoli-crown-cut-20-lb-cartons-loose-short-trim-n,Broccoli,MEXICO CROSSINGS THROUGH TEXAS,shipping point,Broccoli Crown cut Short trim 20 lb cartons loose — MEXICO CROSSINGS THROUGH TEXAS,2026-10-26,12.5,$/package,17.1621,-27.2,14,cheap,10,-46.6,-35.4
 terminal-chicago-broccoli-crown-cut-20-lb-cartons-loose-short-trim-n,Broccoli,Chicago,terminal,Broccoli Crown cut Short trim 20 lb cartons loose — Chicago,2026-10-26,21.0833,$/package,28.8355,-26.9,11,cheap,7,-43.9,-38.6
+retail-national-tangerines-mandarins-2-lb-bag-no,Tangerines/Mandarins,National,retail,Tangerines/Mandarins 2 lb bag — National,2026-10-19,3.64,$/2 lb bag,4.9493,-26.5,0,cheap,5,-16.7,-27.1
 terminal-chicago-lemons-7-10-bushel-cartons-115s-n,Lemons,Chicago,terminal,Lemons 7/10 bushel cartons 115s — Chicago,2026-10-26,31.75,$/package,42.9829,-26.1,10,cheap,10,-16.4,-11.1
+retail-national-spinach-flat-type-5-7-oz-package-no,Spinach,National,retail,Spinach FLAT TYPE 5-7 oz package — National,2026-10-19,2.27,$/5-7 oz package,3.0671,-26.0,0,cheap,3,-33.2,-35.1
 shipping-point-central-and-southern-california-and-arizona-lemons-7-10-bushel-cartons-140s-n,Lemons,CENTRAL AND SOUTHERN CALIFORNIA AND ARIZONA,shipping point,Lemons 7/10 bushel cartons 140s — CENTRAL AND SOUTHERN CALIFORNIA AND ARIZONA,2026-10-26,27.9312,$/package,37.7156,-25.9,0,cheap,10,,-24.6
 terminal-chicago-lemons-7-10-bushel-cartons-95s-n,Lemons,Chicago,terminal,Lemons 7/10 bushel cartons 95s — Chicago,2026-10-26,32.4583,$/package,43.537,-25.4,4,cheap,10,-14.6,-14.4
+retail-national-oranges-navel-per-lb-no,Oranges,National,retail,Oranges NAVEL per lb — National,2026-10-19,1.19,$/per lb,1.5756,-24.5,0,cheap,5,-25.6,-11.2
+retail-national-grapefruit-red-per-lb-no,Grapefruit,National,retail,Grapefruit RED per lb — National,2026-10-19,0.99,$/per lb,1.309,-24.4,6,cheap,5,,0.0
 terminal-los-angeles-avocados-hass-cartons-2-layer-60s-n,Avocados,Los Angeles,terminal,Avocados Hass cartons 2 layer 60s — Los Angeles,2026-10-26,31.5,$/package,41.044,-23.3,16,cheap,10,1.6,1.6
 retail-national-potatoes-yellow-type-5-lb-bag-no,Potatoes,National,retail,Potatoes YELLOW TYPE 5 lb bag — National,2026-10-19,2.97,$/5 lb bag,3.8685,-23.2,0,cheap,10,-5.7,-23.3
 retail-national-peppers-bell-type-red-each-no,"Peppers, Bell Type",National,retail,"Peppers, Bell Type RED each — National",2026-10-19,1.17,$/each,1.5083,-22.4,0,cheap,10,-2.5,-1.7
 retail-national-peppers-bell-type-yellow-each-no,"Peppers, Bell Type",National,retail,"Peppers, Bell Type YELLOW each — National",2026-10-19,1.17,$/each,1.5029,-22.2,0,cheap,10,-3.3,-7.9
+retail-national-salad-mixed-types-10-12-oz-package-no,Salad (Mixed Types),National,retail,Salad (Mixed Types) 10-12 oz package — National,2026-10-19,2.3,$/10-12 oz package,2.9524,-22.1,0,cheap,5,-5.3,-16.4
 terminal-chicago-strawberries-flats-8-1-lb-containers-with-lids-medium-y,Strawberries,Chicago,terminal,Strawberries flats 8 1-lb containers with lids medium organic — Chicago,2026-10-26,30.0,$/package,38.4869,-22.1,0,cheap,4,1.4,
 retail-national-avocados-hass-marked-large-each-no,Avocados,National,retail,Avocados Hass-Marked Large each — National,2026-10-19,1.21,$/each,1.5475,-21.8,0,cheap,3,-10.4,-6.9
+retail-national-corn-sweet-trays-4-5-ears-film-wrapped-no,Corn-Sweet,National,retail,Corn-Sweet trays 4-5 ears film wrapped — National,2026-10-19,3.54,$/trays 4-5 ears film wrapped,4.5183,-21.7,7,cheap,3,-6.8,6.0
 terminal-new-york-broccoli-crown-cut-cartons-short-trim-n,Broccoli,New York,terminal,Broccoli Crown cut Short trim cartons — New York,2026-10-26,19.0,$/package,24.1042,-21.2,5,cheap,8,-47.8,
 retail-national-lemons-2-lb-bag-no,Lemons,National,retail,Lemons 2 lb bag — National,2026-10-19,3.25,$/2 lb bag,4.0947,-20.6,0,cheap,10,-29.5,-21.5
 terminal-los-angeles-broccoli-crown-cut-20-lb-cartons-loose-n,Broccoli,Los Angeles,terminal,Broccoli Crown cut 20 lb cartons loose — Los Angeles,2026-10-26,22.5,$/package,28.1502,-20.1,22,cheap,10,-27.4,-33.4
@@ -33,32 +44,53 @@ terminal-los-angeles-carrots-25-lb-sacks-loose-jumbo-n,Carrots,Los Angeles,termi
 terminal-new-york-lemons-7-10-bushel-cartons-140s-n,Lemons,New York,terminal,Lemons 7/10 bushel cartons 140s — New York,2026-10-26,33.0,$/package,40.7721,-19.1,6,cheap,10,-20.5,-18.7
 shipping-point-kern-district-california-carrots-25-lb-sacks-loose-jumbo-n,Carrots,KERN DISTRICT CALIFORNIA,shipping point,Carrots 25 lb sacks loose jumbo — KERN DISTRICT CALIFORNIA,2026-10-26,10.0,$/package,12.1782,-17.9,10,cheap,10,-2.4,-9.1
 terminal-los-angeles-broccoli-cartons-bunched-14s-n,Broccoli,Los Angeles,terminal,Broccoli cartons bunched 14s — Los Angeles,2026-10-26,20.5,$/package,24.7582,-17.2,32,normal,10,-29.3,-34.9
+retail-national-blackberries-1-pint-11-12-oz-cntr-w-lid-no,Blackberries,National,retail,Blackberries 1 pint (11-12 oz cntr w/ lid) — National,2026-10-19,4.31,$/1 pint (11-12 oz cntr w/ lid),5.1844,-16.9,30,normal,3,-26.2,
 shipping-point-kern-district-california-carrots-50-lb-sacks-loose-jumbo-n,Carrots,KERN DISTRICT CALIFORNIA,shipping point,Carrots 50 lb sacks loose jumbo — KERN DISTRICT CALIFORNIA,2026-10-26,20.0,$/package,24.0647,-16.9,10,cheap,10,15.9,-13.0
+retail-national-watermelons-red-flesh-seedless-type-each-no,Watermelons,National,retail,Watermelons RED FLESH SEEDLESS TYPE each — National,2026-10-19,3.98,$/each,4.779,-16.7,17,cheap,5,-18.9,-14.2
 retail-national-lettuce-romaine-hearts-3-count-no,Lettuce,National,retail,Lettuce Romaine (Hearts) 3 count — National,2026-10-19,2.99,$/3 count,3.5813,-16.5,2,cheap,10,-15.5,-11.0
+retail-national-clementines-3-lb-bag-no,Clementines,National,retail,Clementines 3 lb bag — National,2026-10-19,4.49,$/3 lb bag,5.3283,-15.7,4,cheap,5,-4.1,-14.1
+retail-national-grapefruit-red-each-no,Grapefruit,National,retail,Grapefruit RED each — National,2026-10-19,1.08,$/each,1.2726,-15.1,20,cheap,5,-12.9,-13.6
 terminal-chicago-avocados-hass-cartons-2-layer-60s-n,Avocados,Chicago,terminal,Avocados Hass cartons 2 layer 60s — Chicago,2026-10-26,32.0,$/package,37.5731,-14.8,10,cheap,10,-0.9,21.2
+retail-national-salad-mixed-types-5-9-oz-package-no,Salad (Mixed Types),National,retail,Salad (Mixed Types) 5-9 oz package — National,2026-10-19,2.62,$/5-9 oz package,3.0615,-14.4,0,cheap,5,4.8,-8.1
 retail-national-tomatoes-vine-ripes-on-the-vine-per-lb-environment-greenhouse-no,Tomatoes,National,retail,Tomatoes VINE RIPES - ON THE VINE environment=Greenhouse per lb — National,2026-10-19,1.73,$/per lb,1.9982,-13.4,6,cheap,10,-24.1,-3.9
 terminal-chicago-celery-cartons-2-1-2-dozen-n,Celery,Chicago,terminal,Celery cartons 2 1/2 dozen — Chicago,2026-10-26,24.0,$/package,27.6262,-13.1,22,cheap,10,-7.3,-14.7
 retail-national-tomatoes-plum-type-roma-per-lb-no,Tomatoes,National,retail,Tomatoes Plum Type (Roma) per lb — National,2026-10-19,1.23,$/per lb,1.4127,-12.9,14,cheap,10,4.2,17.1
+retail-national-apples-honeycrisp-per-lb-no,Apples,National,retail,Apples HONEYCRISP per lb — National,2026-10-19,1.83,$/per lb,2.0927,-12.6,16,cheap,5,-2.7,4.6
+retail-national-oranges-navel-each-no,Oranges,National,retail,Oranges NAVEL each — National,2026-10-19,0.89,$/each,1.0181,-12.6,4,cheap,5,-18.3,-11.0
 terminal-chicago-cucumbers-1-1-9-bushel-cartons-medium-n,Cucumbers,Chicago,terminal,Cucumbers 1 1/9 bushel cartons medium — Chicago,2026-10-26,26.1667,$/package,29.8735,-12.4,20,cheap,9,20.0,6.8
 terminal-new-york-lemons-7-10-bushel-cartons-165s-n,Lemons,New York,terminal,Lemons 7/10 bushel cartons 165s — New York,2026-10-26,36.0,$/package,41.0738,-12.4,22,cheap,10,2.9,-10.8
 terminal-chicago-celery-cartons-film-bags-30s-n,Celery,Chicago,terminal,Celery cartons film bags 30s — Chicago,2026-10-26,26.0,$/package,29.6077,-12.2,22,cheap,10,-7.1,-12.6
+retail-national-apples-processed-juice-marked-cider-64-oz-1-2-gallon-no,"Apples, Processed",National,retail,"Apples, Processed JUICE MARKED CIDER 64 oz (1/2 gallon) — National",2026-10-19,3.82,$/64 oz (1/2 gallon),4.3454,-12.1,4,cheap,5,-12.2,-14.3
+retail-national-tomatillos-per-lb-no,Tomatillos,National,retail,Tomatillos per lb — National,2026-10-19,0.97,$/per lb,1.0988,-11.7,12,cheap,5,-27.1,10.2
 retail-national-strawberries-1-lb-package-no,Strawberries,National,retail,Strawberries 1 lb package — National,2026-10-19,3.22,$/1 lb package,3.6174,-11.0,10,cheap,10,21.5,3.9
+retail-national-mushrooms-cremini-8-oz-package-no,Mushrooms,National,retail,Mushrooms CREMINI 8 oz package — National,2026-10-19,2.06,$/8 oz package,2.3009,-10.5,20,cheap,3,-10.0,-8.8
 retail-national-celery-hearts-per-package-no,Celery,National,retail,Celery HEARTS per package — National,2026-10-19,2.7,$/per package,2.9814,-9.4,29,normal,3,-15.9,8.0
 wholesale-eastern-chicken-all-items-fresh-domestic-all-sizes,Chicken,Eastern,wholesale,Chicken All Items Fresh Domestic All Sizes — Eastern,2026-10-19,115.26,cents/lb,127.2762,-9.4,25,cheap,4,-0.2,7.4
 retail-national-lemons-each-no,Lemons,National,retail,Lemons each — National,2026-10-19,0.64,$/each,0.7017,-8.8,22,cheap,10,28.0,-7.2
+retail-national-tangerines-mandarins-3-lb-bag-no,Tangerines/Mandarins,National,retail,Tangerines/Mandarins 3 lb bag — National,2026-10-19,4.78,$/3 lb bag,5.2296,-8.6,20,cheap,5,12.5,4.4
+retail-national-clementines-2-lb-bag-no,Clementines,National,retail,Clementines 2 lb bag — National,2026-10-19,4.05,$/2 lb bag,4.4265,-8.5,20,cheap,5,14.7,4.9
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,Cactus Leaf (Nopales) per lb — National,2026-10-19,0.89,$/per lb,0.9708,-8.3,27,normal,5,-7.3,-10.1
 retail-national-broccoli-crown-cut-per-lb-no,Broccoli,National,retail,Broccoli CROWN CUT per lb — National,2026-10-19,1.86,$/per lb,2.0252,-8.2,22,cheap,10,-7.5,-8.8
+retail-national-raspberries-6-oz-package-no,Raspberries,National,retail,Raspberries 6 oz package — National,2026-10-19,2.74,$/6 oz package,2.977,-8.0,20,cheap,3,13.2,-0.4
 wholesale-central-chicken-all-items-fresh-domestic-all-sizes,Chicken,Central,wholesale,Chicken All Items Fresh Domestic All Sizes — Central,2026-10-19,103.25,cents/lb,111.3992,-7.3,25,cheap,4,0.8,18.5
 terminal-los-angeles-strawberries-flats-8-1-lb-containers-with-lids-medium-large-n,Strawberries,Los Angeles,terminal,Strawberries flats 8 1-lb containers with lids medium-large — Los Angeles,2026-10-26,23.0,$/package,24.6992,-6.9,33,normal,4,13.9,
 wholesale-national-chicken-all-items-fresh-domestic-all-sizes,Chicken,National,wholesale,Chicken ALL Items Fresh Domestic All Sizes — National,2026-10-19,117.39,cents/lb,125.5909,-6.5,25,cheap,4,0.8,9.7
+retail-national-papaya-maradol-tainung-types-per-lb-no,Papaya,National,retail,Papaya MARADOL/TAINUNG TYPES per lb — National,2026-10-19,1.03,$/per lb,1.0995,-6.3,24,cheap,5,3.0,-4.6
+retail-national-pears-bartlett-per-lb-no,Pears,National,retail,Pears BARTLETT per lb — National,2026-10-19,1.71,$/per lb,1.8158,-5.8,28,normal,5,-1.2,12.5
+retail-national-cantaloupes-each-no,Cantaloupes,National,retail,Cantaloupes each — National,2026-10-19,3.09,$/each,3.2781,-5.7,24,cheap,5,0.0,14.9
 wholesale-central-chicken-wog-fresh-domestic-all-sizes,Chicken,Central,wholesale,Chicken WOG Fresh Domestic All Sizes — Central,2026-10-19,103.25,cents/lb,109.5124,-5.7,25,cheap,4,0.8,20.4
+retail-national-brussels-sprouts-per-lb-no,Brussels Sprouts,National,retail,Brussels Sprouts per lb — National,2026-10-19,2.64,$/per lb,2.7895,-5.4,40,normal,5,-8.0,39.7
 wholesale-national-chicken-wog-fresh-domestic-all-sizes,Chicken,National,wholesale,Chicken WOG Fresh Domestic All Sizes — National,2026-10-19,116.57,cents/lb,122.7405,-5.0,30,normal,4,0.8,12.2
 terminal-new-york-carrots-baby-peeled-cartons-30-1-lb-film-bags-n,Carrots,New York,terminal,Carrots Baby peeled cartons 30 1-lb film bags — New York,2026-10-26,29.0,$/package,30.3481,-4.4,23,cheap,7,0.0,0.0
+retail-national-raspberries-1-pint-11-12-oz-cntr-w-lid-no,Raspberries,National,retail,Raspberries 1 pint (11-12 oz cntr w/ lid) — National,2026-10-19,5.0,$/1 pint (11-12 oz cntr w/ lid),5.2126,-4.1,47,normal,3,0.0,41.2
 retail-national-grapes-red-seedless-per-lb-no,Grapes,National,retail,Grapes RED SEEDLESS per lb — National,2026-10-19,2.3,$/per lb,2.3895,-3.7,36,normal,10,-2.5,8.5
 wholesale-national-chicken-wog-fresh-domestic-2-51-to-3-50-lb,Chicken,National,wholesale,Chicken WOG Fresh Domestic 2.51 to 3.50 LB — National,2026-10-19,117.24,cents/lb,121.5748,-3.6,50,normal,4,2.7,18.3
 terminal-chicago-bananas-40-lb-cartons-n,Bananas,Chicago,terminal,Bananas 40 lb cartons — Chicago,2026-10-26,21.0,$/package,21.7417,-3.4,18,cheap,10,0.0,13.5
+retail-national-eggplant-per-lb-no,Eggplant,National,retail,Eggplant per lb — National,2026-10-19,1.57,$/per lb,1.612,-2.6,40,normal,5,8.3,52.4
 retail-national-bananas-per-lb-no,Bananas,National,retail,Bananas per lb — National,2026-10-19,0.58,$/per lb,0.5942,-2.4,38,normal,10,-4.9,-6.5
 terminal-new-york-celery-cartons-film-bags-30s-n,Celery,New York,terminal,Celery cartons film bags 30s — New York,2026-10-26,28.0,$/package,28.6821,-2.4,32,normal,10,3.7,-3.4
 retail-national-grapes-white-seedless-type-per-lb-no,Grapes,National,retail,Grapes WHITE SEEDLESS TYPE per lb — National,2026-10-19,2.41,$/per lb,2.4581,-2.0,40,normal,10,2.6,3.9
+retail-national-sweet-potatoes-3-lb-bag-no,Sweet Potatoes,National,retail,Sweet Potatoes 3 lb bag — National,2026-10-19,2.99,$/3 lb bag,3.0441,-1.8,45,normal,3,,
 terminal-chicago-cucumbers-1-1-9-bushel-cartons-large-n,Cucumbers,Chicago,terminal,Cucumbers 1 1/9 bushel cartons large — Chicago,2026-10-26,29.5,$/package,30.0455,-1.8,44,normal,9,14.8,13.9
 terminal-los-angeles-onions-dry-red-25-lb-sacks-jumbo-globe-type-n,"Onions, Dry",Los Angeles,terminal,"Onions, Dry Red Globe type 25 lb sacks jumbo — Los Angeles",2026-10-26,15.0,$/package,15.2687,-1.8,44,normal,10,20.0,50.0
 terminal-chicago-peppers-bell-type-1-1-9-bushel-cartons-extra-large-green-n,"Peppers, Bell Type",Chicago,terminal,"Peppers, Bell Type Green 1 1/9 bushel cartons extra large — Chicago",2026-10-26,25.6667,$/package,26.0579,-1.5,44,normal,5,46.7,82.0
@@ -67,6 +99,8 @@ terminal-new-york-onions-dry-pearl-type-cartons-12-10-oz-packages-small-red-n,"O
 shipping-point-santa-maria-california-strawberries-flats-8-1-lb-containers-with-lids-medium-n,Strawberries,SANTA MARIA CALIFORNIA,shipping point,Strawberries flats 8 1-lb containers with lids medium — SANTA MARIA CALIFORNIA,2026-10-26,21.5,$/package,21.7311,-1.1,46,normal,3,124.0,-14.7
 shipping-point-santa-maria-california-strawberries-flats-8-1-lb-containers-with-lids-medium-y,Strawberries,SANTA MARIA CALIFORNIA,shipping point,Strawberries flats 8 1-lb containers with lids medium organic — SANTA MARIA CALIFORNIA,2026-10-26,29.0,$/package,29.3209,-1.1,48,normal,6,59.3,0.7
 terminal-los-angeles-bananas-baby-15-lb-cartons-n,Bananas,Los Angeles,terminal,Bananas Baby 15 lb cartons — Los Angeles,2026-10-26,15.0,$/package,15.1005,-0.7,42,normal,10,0.0,3.4
+retail-national-pears-bosc-per-lb-no,Pears,National,retail,Pears BOSC per lb — National,2026-10-19,1.75,$/per lb,1.7576,-0.4,44,normal,5,-4.4,13.6
+retail-national-spinach-flat-type-8-10-oz-package-no,Spinach,National,retail,Spinach FLAT TYPE 8-10 oz package — National,2026-10-19,2.62,$/8-10 oz package,2.6267,-0.3,47,normal,3,30.3,-6.4
 shipping-point-columbia-basin-washington-and-umatilla-basin-oregon-potatoes-russet-50-lb-cartons-100s-norkotah-n,Potatoes,COLUMBIA BASIN WASHINGTON AND UMATILLA BASIN OREGON,shipping point,Potatoes Russet Norkotah 50 lb cartons 100s — COLUMBIA BASIN WASHINGTON AND UMATILLA BASIN OREGON,2026-10-26,11.5,$/package,11.5392,-0.3,48,normal,10,4.5,64.3
 terminal-chicago-carrots-25-lb-sacks-loose-jumbo-n,Carrots,Chicago,terminal,Carrots 25 lb sacks loose jumbo — Chicago,2026-10-26,14.75,$/package,14.7622,-0.1,50,normal,8,-3.9,6.9
 wholesale-western-chicken-all-items-fresh-domestic-all-sizes,Chicken,Western,wholesale,Chicken All Items Fresh Domestic All Sizes — Western,2026-10-19,138.83,cents/lb,138.2228,0.4,50,normal,4,0.4,10.7
@@ -76,56 +110,83 @@ wholesale-western-chicken-wog-fresh-domestic-all-sizes,Chicken,Western,wholesale
 terminal-los-angeles-celery-cartons-2-dozen-n,Celery,Los Angeles,terminal,Celery cartons 2 dozen — Los Angeles,2026-10-26,22.5,$/package,22.1085,1.8,54,normal,10,15.4,-11.8
 terminal-new-york-carrots-topped-50-lb-sacks-loose-jumbo-n,Carrots,New York,terminal,Carrots Topped 50 lb sacks loose jumbo — New York,2026-10-26,19.25,$/package,18.9126,1.8,56,normal,9,6.9,-13.5
 terminal-new-york-bananas-40-lb-cartons-bagged-green-n,Bananas,New York,terminal,Bananas Green 40 lb cartons bagged — New York,2026-10-26,18.5,$/package,18.1334,2.0,67,normal,3,2.8,15.6
+retail-national-blackberries-5-6-6-oz-package-no,Blackberries,National,retail,Blackberries 5.6-6 oz package — National,2026-10-19,3.02,$/5.6-6 oz package,2.9559,2.2,68,normal,5,10.6,13.1
+retail-national-artichokes-each-no,Artichokes,National,retail,Artichokes each — National,2026-10-19,3.0,$/each,2.9329,2.3,57,normal,5,,-24.8
+retail-national-corn-sweet-each-no,Corn-Sweet,National,retail,Corn-Sweet each — National,2026-10-19,0.58,$/each,0.5638,2.9,56,normal,5,28.9,23.4
+retail-national-chayote-per-lb-no,Chayote,National,retail,Chayote per lb — National,2026-10-19,0.88,$/per lb,0.8547,3.0,54,normal,5,29.4,22.2
 shipping-point-mexico-crossings-through-texas-peppers-bell-type-11-lb-cartons-extra-large-orange-n,"Peppers, Bell Type",MEXICO CROSSINGS THROUGH TEXAS,shipping point,"Peppers, Bell Type Orange 11 lb cartons extra large — MEXICO CROSSINGS THROUGH TEXAS",2026-10-26,12.5,$/package,12.1403,3.0,60,normal,5,127.3,10.6
+retail-national-apples-processed-juice-64-oz-1-2-gallon-no,"Apples, Processed",National,retail,"Apples, Processed JUICE 64 oz (1/2 gallon) — National",2026-10-19,2.82,$/64 oz (1/2 gallon),2.7165,3.8,84,expensive,5,-4.4,3.7
 wholesale-national-beef-loin-tndrloin-trmd-heavy-189a-4-choice-cuts-choice,Beef,National,wholesale,"Beef Loin, tndrloin, trmd, heavy (189A  4) Choice Choice Cuts — National",2026-10-26,1648.48,$/cwt,1568.587,5.1,64,normal,10,-6.6,-17.5
+retail-national-cabbage-round-green-type-per-lb-no,Cabbage,National,retail,Cabbage ROUND GREEN TYPE per lb — National,2026-10-19,0.76,$/per lb,0.7224,5.2,88,expensive,5,5.6,11.8
+retail-national-pomegranates-each-no,Pomegranates,National,retail,Pomegranates each — National,2026-10-19,2.96,$/each,2.8143,5.2,60,normal,5,-2.3,-1.3
+retail-national-beets-per-lb-no,Beets,National,retail,Beets per lb — National,2026-10-19,0.92,$/per lb,0.8657,6.3,64,normal,5,17.9,-7.1
 terminal-los-angeles-celery-cartons-2-1-2-dozen-n,Celery,Los Angeles,terminal,Celery cartons 2 1/2 dozen — Los Angeles,2026-10-26,22.75,$/package,21.409,6.3,54,normal,10,23.0,-3.2
 terminal-new-york-bananas-40-lb-cartons-bagged-yellow-n,Bananas,New York,terminal,Bananas Yellow 40 lb cartons bagged — New York,2026-10-26,22.0,$/package,20.6919,6.3,90,expensive,4,0.0,4.8
 shipping-point-columbia-basin-washington-and-umatilla-basin-oregon-onions-dry-red-25-lb-sacks-jumbo-globe-type-n,"Onions, Dry",COLUMBIA BASIN WASHINGTON AND UMATILLA BASIN OREGON,shipping point,"Onions, Dry Red Globe type 25 lb sacks jumbo — COLUMBIA BASIN WASHINGTON AND UMATILLA BASIN OREGON",2026-10-26,9.5,$/package,8.846,7.4,64,normal,10,-17.4,58.3
 shipping-point-mexico-crossings-through-texas-peppers-bell-type-11-lb-cartons-extra-large-yellow-n,"Peppers, Bell Type",MEXICO CROSSINGS THROUGH TEXAS,shipping point,"Peppers, Bell Type Yellow 11 lb cartons extra large — MEXICO CROSSINGS THROUGH TEXAS",2026-10-26,12.5,$/package,11.5956,7.8,52,normal,5,127.3,19.0
+retail-national-cauliflower-per-lb-no,Cauliflower,National,retail,Cauliflower per lb — National,2026-10-19,1.66,$/per lb,1.536,8.1,62,normal,5,-19.4,11.4
 terminal-new-york-peppers-bell-type-1-1-9-bushel-cartons-jumbo-green-n,"Peppers, Bell Type",New York,terminal,"Peppers, Bell Type Green 1 1/9 bushel cartons jumbo — New York",2026-10-26,28.0,$/package,25.8867,8.2,73,normal,5,27.3,
 retail-national-limes-each-no,Limes,National,retail,Limes each — National,2026-10-19,0.43,$/each,0.3965,8.4,74,normal,10,19.4,16.2
 retail-national-onions-dry-yellow-marked-sweet-per-lb-no,"Onions, Dry",National,retail,"Onions, Dry YELLOW MARKED SWEET per lb — National",2026-10-19,1.5,$/per lb,1.3693,9.5,88,expensive,10,2.0,21.0
+retail-national-mixed-mini-sweet-peppers-1-lb-package-no,Mixed Mini Sweet Peppers,National,retail,Mixed Mini Sweet Peppers 1 lb package — National,2026-10-19,3.66,$/1 lb package,3.3291,9.9,72,normal,5,-2.4,11.9
 shipping-point-mexico-crossings-through-texas-cucumbers-1-1-9-bushel-cartons-medium-n,Cucumbers,MEXICO CROSSINGS THROUGH TEXAS,shipping point,Cucumbers 1 1/9 bushel cartons medium — MEXICO CROSSINGS THROUGH TEXAS,2026-10-26,21.95,$/package,19.9254,10.2,63,normal,10,1.9,15.7
+retail-national-sweet-potatoes-per-lb-no,Sweet Potatoes,National,retail,Sweet Potatoes per lb — National,2026-10-19,1.21,$/per lb,1.0962,10.4,96,expensive,5,-11.7,10.0
 terminal-chicago-peppers-bell-type-1-1-9-bushel-cartons-jumbo-green-n,"Peppers, Bell Type",Chicago,terminal,"Peppers, Bell Type Green 1 1/9 bushel cartons jumbo — Chicago",2026-10-26,28.6667,$/package,25.9693,10.4,68,normal,5,68.6,93.7
 wholesale-national-beef-round-eye-of-round-171c-3-choice-cuts-choice,Beef,National,wholesale,"Beef Round, eye of round (171C  3) Choice Choice Cuts — National",2026-10-26,398.205,$/cwt,359.8596,10.7,68,normal,10,-1.6,-20.4
 wholesale-national-beef-brisket-deckle-off-bnls-120-1-choice-cuts-choice,Beef,National,wholesale,"Beef Brisket, deckle-off, bnls (120  1) Choice Choice Cuts — National",2026-10-26,381.9,$/cwt,342.2011,11.6,70,normal,10,-12.0,-13.2
+retail-national-mushrooms-white-8-oz-package-no,Mushrooms,National,retail,Mushrooms WHITE 8 oz package — National,2026-10-19,2.27,$/8 oz package,2.0253,12.1,84,expensive,5,22.0,15.8
+retail-national-cauliflower-each-no,Cauliflower,National,retail,Cauliflower each — National,2026-10-19,3.44,$/each,3.0485,12.8,96,expensive,5,17.8,28.8
 terminal-los-angeles-lettuce-romaine-cartons-film-lined-24s-n,"Lettuce, Romaine",Los Angeles,terminal,"Lettuce, Romaine cartons film lined 24s — Los Angeles",2026-10-26,47.5,$/package,41.984,13.1,60,normal,6,109.3,-12.0
 terminal-los-angeles-peppers-bell-type-1-1-9-bushel-cartons-large-green-n,"Peppers, Bell Type",Los Angeles,terminal,"Peppers, Bell Type Green 1 1/9 bushel cartons large — Los Angeles",2026-10-26,31.5,$/package,27.7811,13.4,76,expensive,5,80.0,34.0
+retail-national-pineapples-each-no,Pineapples,National,retail,Pineapples each — National,2026-10-19,3.4,$/each,2.976,14.2,88,expensive,5,25.5,42.9
 terminal-new-york-cucumbers-1-1-9-bushel-cartons-large-n,Cucumbers,New York,terminal,Cucumbers 1 1/9 bushel cartons large — New York,2026-10-26,34.25,$/package,29.9236,14.5,68,normal,10,26.9,26.9
+retail-national-brussels-sprouts-1-lb-bag-no,Brussels Sprouts,National,retail,Brussels Sprouts 1 lb bag — National,2026-10-19,3.46,$/1 lb bag,3.0053,15.1,71,normal,3,,39.0
 terminal-new-york-blueberries-flats-12-1-pint-cups-with-lids-large-n,Blueberries,New York,terminal,Blueberries flats 12 1-pint cups with lids large — New York,2026-10-26,48.0,$/package,41.1452,16.7,72,normal,8,4.1,13.5
 terminal-chicago-onions-dry-red-25-lb-sacks-jumbo-globe-type-n,"Onions, Dry",Chicago,terminal,"Onions, Dry Red Globe type 25 lb sacks jumbo — Chicago",2026-10-26,21.0,$/package,17.9381,17.1,90,expensive,10,16.7,61.5
 wholesale-national-beef-round-outside-round-171b-3-choice-cuts-choice,Beef,National,wholesale,"Beef Round, outside round (171B  3) Choice Choice Cuts — National",2026-10-26,384.88,$/cwt,327.5252,17.5,80,expensive,10,-1.9,-5.4
+retail-national-pineapples-per-lb-no,Pineapples,National,retail,Pineapples per lb — National,2026-10-19,0.93,$/per lb,0.7891,17.9,80,expensive,5,17.7,3.3
 terminal-los-angeles-cucumbers-1-1-9-bushel-cartons-medium-n,Cucumbers,Los Angeles,terminal,Cucumbers 1 1/9 bushel cartons medium — Los Angeles,2026-10-26,31.0,$/package,26.1567,18.5,80,expensive,10,2.3,47.6
 wholesale-national-beef-round-knuckle-peeled-167a-4-choice-cuts-choice,Beef,National,wholesale,"Beef Round, knuckle, peeled (167A  4) Choice Choice Cuts — National",2026-10-26,394.195,$/cwt,332.6386,18.5,64,normal,10,-5.3,-18.7
 wholesale-national-beef-round-top-inside-round-168-3-choice-cuts-choice,Beef,National,wholesale,"Beef Round, top inside round (168  3) Choice Choice Cuts — National",2026-10-26,364.385,$/cwt,307.5653,18.5,82,expensive,10,-7.0,-10.4
 terminal-los-angeles-lettuce-iceberg-cartons-film-lined-24s-n,"Lettuce, Iceberg",Los Angeles,terminal,"Lettuce, Iceberg cartons film lined 24s — Los Angeles",2026-10-26,53.0,$/package,44.4904,19.1,68,normal,5,13.7,49.7
 retail-national-broccoli-per-bunch-no,Broccoli,National,retail,Broccoli per bunch — National,2026-10-19,3.5,$/per bunch,2.9322,19.4,98,expensive,10,26.4,36.7
 terminal-los-angeles-onions-dry-yellow-50-lb-sacks-jumbo-n,"Onions, Dry",Los Angeles,terminal,"Onions, Dry Yellow 50 lb sacks jumbo — Los Angeles",2026-10-26,19.0,$/package,15.8862,19.6,80,expensive,10,2.7,68.9
+retail-national-onions-green-per-bunch-no,"Onions, Green",National,retail,"Onions, Green per bunch — National",2026-10-19,0.99,$/per bunch,0.8248,20.0,80,expensive,5,8.8,25.3
+retail-national-mangoes-round-varieties-each-no,Mangoes,National,retail,Mangoes Round Varieties each — National,2026-10-19,1.38,$/each,1.1492,20.1,73,normal,3,-16.9,-17.4
 retail-national-onions-dry-yellow-3-lb-bag-no,"Onions, Dry",National,retail,"Onions, Dry YELLOW 3 lb bag — National",2026-10-19,3.12,$/3 lb bag,2.5825,20.8,90,expensive,10,-0.6,-1.9
+retail-national-beans-round-green-type-12-oz-bag-no,Beans,National,retail,Beans ROUND GREEN TYPE 12 oz bag — National,2026-10-19,3.66,$/12 oz bag,3.0276,20.9,93,expensive,3,43.0,36.6
+retail-national-garlic-per-sleeve-no,Garlic,National,retail,Garlic per sleeve — National,2026-10-19,2.33,$/per sleeve,1.9242,21.1,92,expensive,5,21.4,17.1
+retail-national-jalapeno-peppers-per-lb-no,Jalapeno Peppers,National,retail,Jalapeno Peppers per lb — National,2026-10-19,1.51,$/per lb,1.2457,21.2,92,expensive,5,11.0,16.2
 shipping-point-mexico-crossings-through-texas-cucumbers-1-1-9-bushel-cartons-large-n,Cucumbers,MEXICO CROSSINGS THROUGH TEXAS,shipping point,Cucumbers 1 1/9 bushel cartons large — MEXICO CROSSINGS THROUGH TEXAS,2026-10-26,23.95,$/package,19.765,21.2,75,expensive,10,21.9,19.8
 wholesale-national-beef-loin-top-butt-boneless-184-3-choice-cuts-choice,Beef,National,wholesale,"Beef Loin, top butt, boneless (184  3) Choice Choice Cuts — National",2026-10-26,490.265,$/cwt,401.8591,22.0,90,expensive,10,-2.7,-8.2
 terminal-chicago-broccoli-cartons-bunched-14s-n,Broccoli,Chicago,terminal,Broccoli cartons bunched 14s — Chicago,2026-10-19,37.5,$/package,30.6939,22.2,78,expensive,10,5.0,-12.6
 terminal-new-york-broccoli-cartons-bunched-14s-n,Broccoli,New York,terminal,Broccoli cartons bunched 14s — New York,2026-10-19,33.0,$/package,26.994,22.2,87,expensive,10,6.8,
 terminal-new-york-strawberries-flats-8-1-lb-containers-with-lids-extra-large-n,Strawberries,New York,terminal,Strawberries flats 8 1-lb containers with lids extra large — New York,2026-10-26,34.0,$/package,27.5892,23.2,73,normal,3,277.8,-10.5
 retail-national-celery-each-no,Celery,National,retail,Celery each — National,2026-10-19,2.0,$/each,1.6225,23.3,100,expensive,10,22.0,8.1
+retail-national-kiwifruit-yellow-flesh-1-lb-containers-with-lids-no,Kiwifruit,National,retail,Kiwifruit YELLOW FLESH 1-lb containers with lids — National,2026-10-19,5.54,$/1-lb containers with lids,4.4474,24.6,91,expensive,3,-9.6,37.5
 terminal-chicago-strawberries-flats-8-1-lb-containers-with-lids-medium-n,Strawberries,Chicago,terminal,Strawberries flats 8 1-lb containers with lids medium — Chicago,2026-10-26,31.0,$/package,24.7013,25.5,79,expensive,5,37.8,-9.9
 terminal-chicago-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",Chicago,terminal,"Tomatoes, Plum Type Roma Light red-red 25 lb cartons loose extra large — Chicago",2026-10-26,35.6667,$/package,28.3908,25.6,94,expensive,10,41.3,46.2
+retail-national-peaches-various-yellow-flesh-varieties-per-lb-no,Peaches,National,retail,Peaches VARIOUS YELLOW FLESH VARIETIES per lb — National,2026-10-19,2.99,$/per lb,2.3722,26.0,89,expensive,5,3.1,11.2
 terminal-los-angeles-cucumbers-1-1-9-bushel-cartons-large-n,Cucumbers,Los Angeles,terminal,Cucumbers 1 1/9 bushel cartons large — Los Angeles,2026-10-26,31.0,$/package,24.5966,26.0,82,expensive,10,8.0,29.2
 retail-national-cucumbers-each-no,Cucumbers,National,retail,Cucumbers each — National,2026-10-19,1.03,$/each,0.8161,26.2,100,expensive,10,37.3,43.1
 terminal-los-angeles-lettuce-romaine-hearts-cartons-film-lined-48s-n,"Lettuce, Romaine",Los Angeles,terminal,"Lettuce, Romaine Hearts cartons film lined 48s — Los Angeles",2026-10-26,58.5,$/package,46.3218,26.3,74,normal,8,82.8,
+retail-national-honeydews-each-no,Honeydews,National,retail,Honeydews each — National,2026-10-19,5.3,$/each,4.176,26.9,86,expensive,5,5.8,20.2
 wholesale-national-beef-cutout-600-900-lb-choice,Beef,National,wholesale,Beef Cutout 600-900 lb Choice — National,2026-10-26,370.83,$/cwt,291.4129,27.3,90,expensive,10,-2.3,-2.2
 terminal-chicago-tomatoes-vine-ripes-5-kg-11-lb-flats-medium-large-light-red-red-on-the-vine-n,Tomatoes,Chicago,terminal,"Tomatoes Vine ripes Light red-red, on the vine 5 kg/11 lb flats medium-large — Chicago",2026-10-26,21.0,$/package,16.4474,27.7,68,normal,5,27.3,76.5
 terminal-los-angeles-potatoes-russet-50-lb-cartons-80s-n,Potatoes,Los Angeles,terminal,Potatoes Russet 50 lb cartons 80s — Los Angeles,2026-10-26,23.0,$/package,17.9928,27.8,76,expensive,10,-5.2,80.4
 terminal-new-york-onions-dry-yellow-50-lb-sacks-jumbo-n,"Onions, Dry",New York,terminal,"Onions, Dry Yellow 50 lb sacks jumbo — New York",2026-10-26,23.5,$/package,18.2698,28.6,80,expensive,10,2.2,67.9
 terminal-los-angeles-peppers-bell-type-1-1-9-bushel-cartons-extra-large-green-n,"Peppers, Bell Type",Los Angeles,terminal,"Peppers, Bell Type Green 1 1/9 bushel cartons extra large — Los Angeles",2026-10-26,35.875,$/package,27.7811,29.1,88,expensive,5,84.0,40.7
+retail-national-squash-yellow-crookneck-straightneck-per-lb-no,Squash,National,retail,Squash Yellow Crookneck/Straightneck per lb — National,2026-10-19,1.94,$/per lb,1.4988,29.4,100,expensive,5,17.6,40.6
 terminal-chicago-carrots-50-lb-sacks-loose-jumbo-n,Carrots,Chicago,terminal,Carrots 50 lb sacks loose jumbo — Chicago,2026-10-26,26.5,$/package,20.4596,29.5,78,expensive,10,3.1,23.5
 terminal-chicago-lettuce-iceberg-cartons-film-lined-24s-n,"Lettuce, Iceberg",Chicago,terminal,"Lettuce, Iceberg cartons film lined 24s — Chicago",2026-10-26,70.5833,$/package,54.391,29.8,75,expensive,5,11.2,26.3
+retail-national-cilantro-per-bunch-no,Cilantro,National,retail,Cilantro per bunch — National,2026-10-19,0.85,$/per bunch,0.6545,29.9,88,expensive,5,3.7,16.4
 wholesale-national-beef-rib-ribeye-lip-on-bn-in-109e-1-choice-cuts-choice,Beef,National,wholesale,"Beef Rib, ribeye, lip-on, bn-in (109E  1) Choice Choice Cuts — National",2026-10-26,1405.325,$/cwt,1078.6033,30.3,100,expensive,10,2.7,10.6
 terminal-chicago-potatoes-russet-50-lb-cartons-80s-n,Potatoes,Chicago,terminal,Potatoes Russet 50 lb cartons 80s — Chicago,2026-10-26,27.0,$/package,20.6916,30.5,77,expensive,10,-4.4,87.5
 shipping-point-mexico-crossings-through-texas-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-n,"Tomatoes, Plum Type",MEXICO CROSSINGS THROUGH TEXAS,shipping point,"Tomatoes, Plum Type Roma 25 lb cartons loose extra large — MEXICO CROSSINGS THROUGH TEXAS",2026-10-26,30.45,$/package,23.02,32.3,95,expensive,10,37.5,97.9
 terminal-chicago-onions-dry-yellow-50-lb-sacks-jumbo-n,"Onions, Dry",Chicago,terminal,"Onions, Dry Yellow 50 lb sacks jumbo — Chicago",2026-10-26,24.25,$/package,18.2332,33.0,80,expensive,10,-5.8,98.8
 wholesale-national-beef-cutout-600-900-lb-select,Beef,National,wholesale,Beef Cutout 600-900 lb Select — National,2026-10-26,358.205,$/cwt,268.6304,33.3,92,expensive,10,0.0,-0.6
 terminal-chicago-limes-seedless-type-40-lb-cartons-175s-n,Limes,Chicago,terminal,Limes Seedless type 40 lb cartons 175s — Chicago,2026-10-26,34.0,$/package,25.4686,33.5,88,expensive,10,-22.0,71.7
+retail-national-hemp-seeds-shelled-8-oz-no,Hemp Seeds Shelled,National,retail,Hemp Seeds Shelled 8 oz — National,2026-10-19,11.99,$/8 oz,8.9693,33.7,92,expensive,5,24.8,39.1
 wholesale-national-beef-loin-strip-bnls-0x1-180-3-choice-cuts-choice,Beef,National,wholesale,"Beef Loin, strip, bnls, 0x1 (180  3) Choice Choice Cuts — National",2026-10-26,940.41,$/cwt,703.0677,33.8,92,expensive,10,-2.9,-2.1
 wholesale-national-beef-chuck-shoulder-clod-trmd-114a-3-choice-cuts-choice,Beef,National,wholesale,"Beef Chuck, shoulder clod, trmd (114A  3) Choice Choice Cuts — National",2026-10-26,415.26,$/cwt,308.6543,34.5,100,expensive,10,-2.0,7.0
 terminal-los-angeles-limes-seedless-type-40-lb-cartons-200s-n,Limes,Los Angeles,terminal,Limes Seedless type 40 lb cartons 200s — Los Angeles,2026-10-26,34.5,$/package,25.4522,35.5,67,normal,3,-15.0,63.5
@@ -134,7 +195,10 @@ terminal-new-york-limes-seedless-type-40-lb-cartons-175s-n,Limes,New York,termin
 wholesale-national-beef-chuck-roll-lxl-neck-off-116a-3-choice-cuts-choice,Beef,National,wholesale,"Beef Chuck, roll, lxl, neck/off (116A  3) Choice Choice Cuts — National",2026-10-26,597.545,$/cwt,434.2655,37.6,96,expensive,10,0.4,27.3
 shipping-point-columbia-basin-washington-and-umatilla-basin-oregon-onions-dry-yellow-50-lb-sacks-colossal-hybrid-n,"Onions, Dry",COLUMBIA BASIN WASHINGTON AND UMATILLA BASIN OREGON,shipping point,"Onions, Dry Yellow Hybrid 50 lb sacks colossal — COLUMBIA BASIN WASHINGTON AND UMATILLA BASIN OREGON",2026-10-26,13.5,$/package,9.7911,37.9,70,normal,10,-10.0,92.9
 terminal-new-york-tomatoes-plum-type-roma-25-lb-cartons-loose-extra-large-light-red-red-n,"Tomatoes, Plum Type",New York,terminal,"Tomatoes, Plum Type Roma Light red-red 25 lb cartons loose extra large — New York",2026-10-26,43.25,$/package,31.3429,38.0,98,expensive,9,76.5,90.8
+retail-national-squash-zucchini-per-lb-no,Squash,National,retail,Squash Zucchini per lb — National,2026-10-19,1.91,$/per lb,1.3744,39.0,100,expensive,5,19.4,41.5
 terminal-los-angeles-limes-seedless-type-40-lb-cartons-230s-n,Limes,Los Angeles,terminal,Limes Seedless type 40 lb cartons 230s — Los Angeles,2026-10-26,34.0,$/package,24.4341,39.1,67,normal,3,-16.3,60.4
+retail-national-beans-round-green-type-per-lb-no,Beans,National,retail,Beans ROUND GREEN TYPE per lb — National,2026-10-19,2.75,$/per lb,1.9418,41.6,100,expensive,5,26.7,51.9
+retail-national-watermelons-red-flesh-seedless-miniature-each-no,Watermelons,National,retail,Watermelons RED FLESH SEEDLESS MINIATURE each — National,2026-10-19,4.99,$/each,3.5226,41.7,96,expensive,5,16.9,19.7
 shipping-point-mexico-crossings-through-texas-tomatoes-plum-type-roma-25-lb-cartons-loose-large-n,"Tomatoes, Plum Type",MEXICO CROSSINGS THROUGH TEXAS,shipping point,"Tomatoes, Plum Type Roma 25 lb cartons loose large — MEXICO CROSSINGS THROUGH TEXAS",2026-10-26,29.45,$/package,20.7692,41.8,98,expensive,10,44.7,113.5
 terminal-new-york-limes-seedless-type-40-lb-cartons-200s-n,Limes,New York,terminal,Limes Seedless type 40 lb cartons 200s — New York,2026-10-26,35.0,$/package,24.4318,43.3,88,expensive,10,-22.2,66.3
 retail-national-blueberries-1-pint-11-12-oz-cntr-w-lid-no,Blueberries,National,retail,Blueberries 1 pint (11-12 oz cntr w/ lid) — National,2026-10-19,5.69,$/1 pint (11-12 oz cntr w/ lid),3.968,43.4,100,expensive,3,15.7,50.9
@@ -155,12 +219,26 @@ shipping-point-mexico-crossings-through-texas-limes-seedless-type-40-lb-cartons-
 shipping-point-mexico-crossings-through-texas-limes-seedless-type-40-lb-cartons-230s-n,Limes,MEXICO CROSSINGS THROUGH TEXAS,shipping point,Limes Seedless type 40 lb cartons 230s — MEXICO CROSSINGS THROUGH TEXAS,2026-10-26,23.5,$/package,13.9379,68.6,88,expensive,10,-22.2,86.5
 terminal-chicago-tomatoes-mature-greens-25-lb-cartons-loose-extra-large-n,Tomatoes,Chicago,terminal,Tomatoes Mature greens 25 lb cartons loose extra large — Chicago,2026-10-26,54.5,$/package,31.1164,75.1,100,expensive,5,175.3,148.9
 terminal-new-york-lettuce-romaine-cartons-24s-n,"Lettuce, Romaine",New York,terminal,"Lettuce, Romaine cartons 24s — New York",2026-10-26,60.0,$/package,33.953,76.7,88,expensive,10,93.5,-8.4
+retail-national-radishes-per-bunch-no,Radishes,National,retail,Radishes per bunch — National,2026-10-19,1.55,$/per bunch,0.8762,76.9,100,expensive,5,58.2,70.3
 terminal-chicago-lettuce-iceberg-cartons-24s-film-wrapped-n,"Lettuce, Iceberg",Chicago,terminal,"Lettuce, Iceberg cartons 24s film wrapped — Chicago",2026-10-26,71.1667,$/package,37.454,90.0,90,expensive,10,9.0,23.2
 shipping-point-columbia-basin-washington-and-umatilla-basin-oregon-potatoes-russet-50-lb-cartons-40s-norkotah-n,Potatoes,COLUMBIA BASIN WASHINGTON AND UMATILLA BASIN OREGON,shipping point,Potatoes Russet Norkotah 50 lb cartons 40s — COLUMBIA BASIN WASHINGTON AND UMATILLA BASIN OREGON,2026-10-26,21.0,$/package,11.0143,90.7,90,expensive,10,16.7,223.1
+retail-national-ornamentals-tulips-bunched-10s-no,Ornamentals,National,retail,Ornamentals Tulips bunched 10s — National,2026-10-19,14.99,$/bunched 10s,7.5481,98.6,91,expensive,5,,18.6
 shipping-point-mexico-crossings-through-texas-lettuce-iceberg-cartons-24s-film-wrapped-n,"Lettuce, Iceberg",MEXICO CROSSINGS THROUGH TEXAS,shipping point,"Lettuce, Iceberg cartons 24s film wrapped — MEXICO CROSSINGS THROUGH TEXAS",2026-10-26,26.5,$/package,13.264,99.8,67,normal,3,-6.0,-4.7
 terminal-new-york-tomatoes-mature-greens-25-lb-cartons-loose-5x6-size-n,Tomatoes,New York,terminal,Tomatoes Mature greens 25 lb cartons loose 5x6 size — New York,2026-10-26,70.5,$/package,29.776,136.8,100,expensive,10,226.4,249.0
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,Apples COSMIC CRISP per lb — National,2026-10-19,1.54,$/per lb,,,,not enough history,2,-7.2,-6.7
 retail-national-blueberries-9-8-oz-package-no,Blueberries,National,retail,Blueberries 9.8 oz package — National,2026-10-19,5.49,$/9.8 oz package,,,,not enough history,1,-9.0,9.1
+retail-national-cactus-leaf-nopales-1-1-5-lb-bags-no,Cactus Leaf (Nopales),National,retail,Cactus Leaf (Nopales) 1-1.5 lb bags — National,2026-10-19,2.8,$/1-1.5 lb bags,,,,not enough history,1,,17.2
+retail-national-curly-parsley-per-bunch-no,Curly Parsley,National,retail,Curly Parsley per bunch — National,2026-10-19,0.96,$/per bunch,,,,not enough history,1,-3.0,
+retail-national-hemp-seeds-shelled-24-oz-no,Hemp Seeds Shelled,National,retail,Hemp Seeds Shelled 24 oz — National,2026-10-19,23.99,$/24 oz,,,,not enough history,1,26.9,20.0
+retail-national-honey-12-oz-no,Honey,National,retail,Honey 12 oz — National,2026-10-19,5.59,$/12 oz,,,,not enough history,1,21.5,37.3
+retail-national-honey-16-oz-no,Honey,National,retail,Honey 16 oz — National,2026-10-19,9.11,$/16 oz,,,,not enough history,1,26.5,57.9
+retail-national-jicama-per-lb-no,Jicama,National,retail,Jicama per lb — National,2026-10-19,1.38,$/per lb,,,,not enough history,1,-13.8,97.1
+retail-national-kiwifruit-hayward-2-lb-containers-with-lids-no,Kiwifruit,National,retail,Kiwifruit HAYWARD 2-lb containers with lids — National,2026-10-19,6.99,$/2-lb containers with lids,,,,not enough history,2,,40.1
 retail-national-limes-2-pound-bags-no,Limes,National,retail,Limes 2 pound bags — National,2026-10-19,4.63,$/2 pound bags,,,,not enough history,1,-5.7,10.8
+retail-national-plain-parsley-per-bunch-no,Plain Parsley,National,retail,Plain Parsley per bunch — National,2026-10-19,0.96,$/per bunch,,,,not enough history,1,-3.0,
+retail-national-plantains-per-lb-no,Plantains,National,retail,Plantains per lb — National,2026-10-19,0.79,$/per lb,,,,not enough history,1,-11.2,-19.4
+retail-national-poblano-pepper-per-lb-no,Poblano Pepper,National,retail,Poblano Pepper per lb — National,2026-10-19,1.97,$/per lb,,,,not enough history,1,35.9,32.2
+retail-national-sugar-snap-peas-8-oz-bags-no,Sugar Snap Peas,National,retail,Sugar Snap Peas 8 oz bags — National,2026-10-19,3.5,$/8 oz bags,,,,not enough history,1,,16.7
 shipping-point-san-joaquin-valley-and-kern-district-california-grapes-red-seedless-19-lb-containers-bagged-large-extra-l,Grapes,SAN JOAQUIN VALLEY AND KERN DISTRICT CALIFORNIA,shipping point,Grapes Red seedless 19 lb containers bagged large-extra large — SAN JOAQUIN VALLEY AND KERN DISTRICT CALIFORNIA,2026-10-26,24.95,$/package,,,,not enough history,0,0.0,
 shipping-point-san-joaquin-valley-and-kern-district-california-grapes-red-seedless-19-lb-containers-bagged-large-extra-l,Grapes,SAN JOAQUIN VALLEY AND KERN DISTRICT CALIFORNIA,shipping point,Grapes Red seedless 19 lb containers bagged large-extra large organic — SAN JOAQUIN VALLEY AND KERN DISTRICT CALIFORNIA,2026-10-26,31.95,$/package,,,,not enough history,0,6.7,
 shipping-point-south-and-central-district-california-celery-cartons-2-1-2-dozen-y,Celery,SOUTH AND CENTRAL DISTRICT CALIFORNIA,shipping point,Celery cartons 2 1/2 dozen organic — SOUTH AND CENTRAL DISTRICT CALIFORNIA,2026-10-26,36.5,$/package,,,,not enough history,1,2.8,-2.4

@@ -15,3 +15,14 @@
   try { saved = localStorage.getItem("market"); } catch (e) { /* private mode */ }
   if (saved) show(saved, false);
 })();
+
+// Grocery list: type to filter the "every item" table.
+(() => {
+  const box = document.getElementById("find");
+  if (!box) return;
+  const rows = [...document.querySelectorAll("tr[data-name]")];
+  box.addEventListener("input", () => {
+    const q = box.value.trim().toLowerCase();
+    rows.forEach((r) => { r.hidden = q !== "" && !r.dataset.name.includes(q); });
+  });
+})();
