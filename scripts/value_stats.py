@@ -34,7 +34,7 @@ def replay():
         test = usable[usable["year"] == Y].dropna(subset=[f"y{H}"])
         if len(train) < 500 or test.empty:
             continue
-        out.append(test[["commodity", "market", "week", "year", "compare_price", f"y{H}"]]
+        out.append(test[["series_id", "commodity", "market", "week", "year", "compare_price", f"y{H}"]]
                    .assign(pred=pred_fn(fit_fn(train, H), test, H)))
     r = pd.concat(out, ignore_index=True).rename(columns={f"y{H}": "y"})
     r["ape_model"] = np.abs(np.expm1(r["pred"]) - np.expm1(r["y"]))
@@ -47,6 +47,11 @@ def replay():
         use.append(pd.Series([ok.get(k, True) for k in zip(cur["commodity"], cur["market"])], index=cur.index))
     r["final"] = np.where(pd.concat(use).sort_index(), r["pred"], 0.0)
     return r
+
+
+def fc_call(pred):
+    change = float(np.expm1(pred))
+    return "steady" if abs(change) < CALL else ("firming" if change > 0 else "softening")
 
 
 def main():
@@ -77,6 +82,28 @@ def main():
         "alert_hit_pct": round(100 * good["hits"].sum() / good["cases"].sum(), 1),
         "alert_base_pct": round(100 * (good["base_rate"] * good["cases"]).sum() / good["cases"].sum(), 1),
     }
+    # Of ALL 10%+ two-week moves (not just the ones we called), how many did the brief call in advance?
+    r["move"] = np.expm1(r["y"])
+    moved = r[r["move"].abs() >= 0.10]
+    called = (np.abs(np.expm1(moved["final"])) >= CALL) & (np.sign(moved["final"]) == np.sign(moved["move"]))
+    value["big_moves_called_ahead_pct"] = round(100 * called.mean(), 1)
+    value["big_moves_called_wrong_way_pct"] = round(100 * ((np.abs(np.expm1(moved["final"])) >= CALL)
+                                                            & ~called).mean(), 1)
+    # Examples: the biggest New York moves of the last 12 months, one per item, hits AND misses,
+    # on the headline packs the brief shows (best-covered series per item and market).
+    series = pd.read_csv(fc.EXPORT / "series.csv")
+    series = series[series["market_type"] == "terminal"]
+    headline = set(series.sort_values("coverage_last_year").groupby(["commodity", "market"]).tail(1)["series_id"])
+    recent = r[(r["market"] == "New York") & r["series_id"].isin(headline)
+               & (r["week"] >= r["week"].max() - pd.Timedelta(weeks=52))].copy()
+    recent = recent.loc[recent.groupby("commodity")["move"].apply(lambda m: m.abs().idxmax())]
+    recent = recent[recent["move"].abs() >= 0.15].sort_values("move", key=abs, ascending=False).head(6)
+    value["examples"] = [{
+        "week": x["week"].date().isoformat(), "commodity": x["commodity"], "market": x["market"],
+        "price": round(float(x["compare_price"]), 2), "price_after": round(float(x["compare_price"] * (1 + x["move"])), 2),
+        "move_pct": round(100 * float(x["move"]), 1),
+        "call": fc_call(x["final"]),
+    } for _, x in recent.iterrows()]
     (fc.EXPORT / "value.json").write_text(json.dumps(value, indent=1))
     print(json.dumps(value, indent=1))
 

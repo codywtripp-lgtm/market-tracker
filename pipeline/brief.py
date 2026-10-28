@@ -8,7 +8,7 @@ where prices are likely heading over the next two weeks, and what that means for
 
 Writes data/briefs/<market date>.html, an HTML fragment dated by the latest terminal-market
 day in the data. scripts/build_site.py wraps each one into a page under /brief/ and an RSS feed
-(which an email newsletter service can send automatically). Re-running the same day overwrites it.
+(for feed readers). Re-running the same day overwrites it.
 
 Rules for the calls: docs/brief.md
 """
@@ -243,7 +243,7 @@ def pill(status):
     return f'<span class="pill {cls}"><span aria-hidden="true">{icon}</span> {word}</span>'
 
 
-def plain_pctile(p):
+def plain_pctile(p, vs_norm=None):
     """Where today's price ranks among the same weeks in past years, in words."""
     if p is None:
         return "Not enough history to compare yet"
@@ -253,6 +253,8 @@ def plain_pctile(p):
     if p <= 25:
         return "Cheaper than most past years at this time"
     if p < 75:
+        if vs_norm is not None and abs(vs_norm) >= 15:
+            return f"{'Above' if vs_norm > 0 else 'Below'} the usual price, but within the normal range for this time of year"
         return "About the usual price for this time of year"
     if p < 90:
         return "Pricier than most past years at this time"
@@ -266,7 +268,7 @@ def meter(i):
         return ""
     cls = {"cheap": "good", "expensive": "bad"}.get(i["status"], "neutral")
     pos = min(max(p, 3), 97)
-    return (f'<div class="meter" role="img" aria-label="{esc(plain_pctile(p))}">'
+    return (f'<div class="meter" role="img" aria-label="{esc(plain_pctile(p, i['vs_norm']))}">'
             f'<div class="track"><span class="usual"></span><span class="dot {cls}" style="left:{pos:.0f}%"></span></div>'
             '<div class="ends"><span>Cheapest</span><span>Usual</span><span>Priciest</span></div></div>')
 
@@ -320,12 +322,12 @@ def sizes_line(opts):
     return f'<div class="sizes">Case price by size today: {bits}</div>'
 
 
-def item_card(i, hist, opts=None):
+def item_card(i, hist, opts=None, title=None):
     return (f'<div class="item">'
-            f'<div class="item-head"><div><div class="item-name">{esc(i["name"])}</div>'
+            f'<div class="item-head"><div><div class="item-name">{esc(title or i["name"])}</div>'
             f'<div class="item-pack">{esc(i["pack"])}</div></div>'
             f'<div class="item-price">{money(i["price"])}<small>per case</small></div></div>'
-            f'<div class="item-status">{pill(i["status"])} <span>{esc(plain_pctile(i["pctile"]))}</span></div>'
+            f'<div class="item-status">{pill(i["status"])} <span>{esc(plain_pctile(i["pctile"], i["vs_norm"]))}</span></div>'
             f'{meter(i)}'
             f'<div class="item-trend">{spark(hist, i)}{outlook(i)}</div>'
             + (f'<p class="action">{esc(i["action"])}</p>' if i["action"] else "") +

@@ -147,7 +147,7 @@ def main():
 
 # ---------- daily buyer's brief ----------
 # pipeline/brief.py writes one HTML fragment per market day to data/briefs/; here each becomes a page,
-# /brief/ shows the latest, and feed.xml carries full issues (an email service can send from it).
+# /brief/ shows the latest, and feed.xml carries full issues.
 BRIEFS = ROOT / "data" / "briefs"
 BRIEF_TITLE = "Produce Buyer's Brief"
 
@@ -227,19 +227,35 @@ def why_page():
     live_line = (f"<p>Since going live on {_esc(live['since'])}, {live['in_range_pct']:.0f}% of {live['scored']:,} scored "
                  f"forecasts landed inside their range. The running score is on the "
                  f"<a href=\"../\">dashboard</a>, misses included.</p>") if live.get("scored") else ""
+    def ex_row(e):
+        hit = e["call"] == ("firming" if e["move_pct"] > 0 else "softening")
+        said = {"firming": "▲ Firming", "softening": "▼ Softening"}.get(e["call"], "Steady (missed it)")
+        d = dt.date.fromisoformat(e["week"])
+        return (f'<tr><td><strong>{_esc(NICE.get(e["commodity"], e["commodity"]))}</strong><br><small>week of {d:%b} {d.day}, {d.year}</small></td>'
+                f'<td>${e["price"]:,.2f} → <strong>${e["price_after"]:,.2f}</strong><br><small>{"+" if e["move_pct"] > 0 else ""}{e["move_pct"]:.0f}% in 2 weeks</small></td>'
+                f'<td><span class="pill {"good" if hit else "bad"}">{"✓" if hit else "✕"} {said}</span></td></tr>')
+    examples = v.get("examples", [])
+    hits = sum(e["call"] == ("firming" if e["move_pct"] > 0 else "softening") for e in examples)
+    ex_html = (f"""<h2>The biggest New York spikes of the past year</h2>
+<p>Every item's largest 2-week move at Hunts Point in the last 12 months, and what the model said two weeks before,
+using only data available at the time. It saw {hits} of these {len(examples)} coming. The miss is shown too.</p>
+<table class="brief-table ex"><thead><tr><th>Item</th><th>Case price</th><th>Two weeks before, the model said</th></tr></thead>
+<tbody>{"".join(ex_row(e) for e in examples)}</tbody></table>""" if examples else "")
     body = f"""<p class="eyebrow">For wholesale produce buyers</p>
-<h1>Know where produce prices are heading before your supplier calls.</h1>
-<p class="lede">A free daily brief on the New York (Hunts Point), Los Angeles and Chicago terminal markets: today's
-moves, whether each price is high or low for the season, whether it's firming or softening over the next two weeks,
-and what that means for your pricing, inventory and specs. Three minutes to read, before the next order.</p>
+<h1>See produce price moves coming, two weeks out.</h1>
+<p class="lede">USDA reports tell you what traded yesterday. This free daily brief tells you which way Hunts Point,
+Los Angeles and Chicago prices are likely to go next, item by item, tested on five years of market data. Then
+it tells you what that means for your contract pricing, customer quotes, inventory and specs.</p>
 <p><a class="btn cta" href="../brief/">Read today's brief →</a></p>
 
 <div class="stats">
-  <div><strong>{v['calls_right_pct']:.0f}%</strong><span>of calls on direction were right ({v['calls']:,} calls, {_esc(v['years'])})</span></div>
-  <div><strong>{v['big_moves_right_pct']:.0f}%</strong><span>right when the price then moved 10% or more</span></div>
-  <div><strong>${v['avg_dollars_per_case']:.2f}</strong><span>average move per case in the direction called, within 2 weeks</span></div>
+  <div><strong>{v['calls_right_pct']:.0f}%</strong><span>of firming / softening calls got the direction right ({v['calls']:,} calls, {_esc(v['years'])})</span></div>
+  <div><strong>{v['big_moves_called_ahead_pct']:.0f}%</strong><span>of all 10%+ price swings flagged two weeks ahead; called the wrong way only {v['big_moves_called_wrong_way_pct']:.0f}%</span></div>
+  <div><strong>${v['avg_dollars_per_case']:.2f}</strong><span>average move per case, in the direction called, within two weeks</span></div>
   <div><strong>{v['alert_hit_pct']:.0f}%</strong><span>early warnings that came true, vs. {v['alert_base_pct']:.0f}% by chance ({v['alert_cases']:,} past cases)</span></div>
 </div>
+
+{ex_html}
 
 <h2>Why not just read the USDA reports?</h2>
 <p>The reports are where the numbers come from, and they are good at saying what traded today. They don't tell you
@@ -269,18 +285,20 @@ what that means for your next order.</p>
 
 <h2>Honest about the limits</h2>
 <p>These are USDA-reported terminal prices, not your supplier's quote, and a forecast is a range, not a promise: about
-one in five prices lands outside it. The test is walk-forward: each year was predicted only with data from before it.</p>
+one in five prices lands outside it. About half of big swings come with no call at all; when the brief has no
+signal it says "Steady" rather than guess. Every number here comes from a walk-forward test: each year was
+predicted only with data from before it, the way it works live.</p>
 {live_line}
 <p class="fine">Built by a former New York produce buyer. Data: USDA AMS Market News, updated every market evening.</p>
 <p><a class="btn cta" href="../brief/">Read today's brief →</a></p>"""
-    title = "Daily wholesale produce price brief for buyers"
+    title = "See produce price moves coming two weeks out"
     desc = ("Free daily brief for produce buyers: Hunts Point, LA and Chicago terminal prices vs. usual for the "
             "season, a tested 2-week outlook and early warnings.")
     page = f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{_esc(title)} | Produce Price Check</title>
 <meta name="description" content="{_esc(desc)}">
-<meta property="og:title" content="Know where produce prices are heading before your supplier calls">
+<meta property="og:title" content="See produce price moves coming, two weeks out">
 <meta property="og:description" content="{_esc(desc)}">
 <link rel="canonical" href="{SITE_URL}why/">
 <link rel="stylesheet" href="../style.css"></head>
@@ -340,6 +358,38 @@ def _line(i):
     return " — ".join(b for b in bits if b)
 
 
+PAGES_DIR = ROOT / "data" / "pages"  # rich fragments from pipeline/pages.py (nightly)
+
+
+def rich_page(slug, name, body, dash):
+    """Wrap a pipeline/pages.py fragment: search title and description from today's numbers, links to every item."""
+    answer = re.search(r'<p class="answer">(.*?)</p>', body, re.S)
+    desc = html.unescape(re.sub(r"<[^>]+>", "", answer.group(1))) if answer else ""
+    title = f"{name.title()} Prices Today: Wholesale Case Price & 2-Week Outlook"
+    others = " · ".join(f'<a href="../{sl}/">{_esc(nm)}</a>' for c, (sl, nm) in PAGE_NAMES.items() if sl != slug)
+    return f"""<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{_esc(title)} | Produce Price Check</title>
+<meta name="description" content="{_esc(desc[:300])}">
+<link rel="canonical" href="{SITE_URL}{slug}/">
+<meta property="og:title" content="{_esc(title)}">
+<meta property="og:description" content="{_esc(desc[:300])}">
+<meta property="og:url" content="{SITE_URL}{slug}/">
+<link rel="stylesheet" href="../style.css"></head>
+<body><main class="landing brief">
+<p class="sub"><a href="../">Produce Price Check</a> · <a href="../brief/">Today's brief</a> · <a href="../why/">How accurate is it?</a></p>
+{body}
+<p><a class="btn cta" href="{_esc(dash)}">See the 10-year price chart →</a></p>
+<h2>Other wholesale produce prices</h2>
+<p class="others">{others}</p>
+<p class="fine">Prices are the USDA “mostly” price per case at the terminal markets (USDA AMS Market News), for the
+most consistently reported pack in each market, updated every market evening. “Usual” = the same weeks of the year
+over the past 10 years, adjusted for inflation. Forecast ranges hold about 80% of the time. Market prices, not a
+supplier's quote.</p>
+</main></body></html>
+"""
+
+
 def landing_pages(latest, as_of, extra_urls=()):
     by_c = defaultdict(list)
     for i in latest:
@@ -358,6 +408,14 @@ def landing_pages(latest, as_of, extra_urls=()):
                 seen.add(i["market"])
                 lines.append(f"<li>{_line(i)}</li>")
         dash = f"../?m=ny&c={quote(commodity)}"
+        rich = PAGES_DIR / f"{slug}.html"
+        if rich.exists():
+            page = rich_page(slug, name, rich.read_text(encoding="utf-8"), dash)
+            (OUT / slug).mkdir(parents=True, exist_ok=True)
+            (OUT / slug / "index.html").write_text(page, encoding="utf-8")
+            urls.append(f"{SITE_URL}{slug}/")
+            links.append(f'<a href="{slug}/">{_esc(name)} prices</a>')
+            continue
         title = f"{name} wholesale prices this week — New York, Los Angeles, Chicago"
         desc = (f"{name} wholesale case prices from USDA terminal markets (Hunts Point NY, LA, Chicago), updated every "
                 f"evening: this week vs. usual for the season, 1–4 week forecast and early-warning alerts.")
