@@ -151,7 +151,7 @@ def topbar(up, active=None, view="wholesale", aisle=None):
     switch = "".join(f'<a href="{up}{href}"{on if (href == "") == (view == "grocery") else ""}>{label}</a>'
                      for href, label in VIEWS)
     search = (f'<form class="search" role="search" action="{up}search/" data-root="{up}" '
-              f'data-view="{"g" if view == "grocery" else "w"}">'
+              f'data-view="{"g" if view == "grocery" else "w"}" data-ver="{ASSET_V}{dt.date.today():%m%d}">'
               '<label class="vh" for="q">Search prices</label>'
               '<input id="q" name="q" type="search" placeholder="Search items" autocomplete="off" '
               'role="combobox" aria-expanded="false" aria-controls="q-list" aria-autocomplete="list">'
@@ -329,8 +329,8 @@ def board_pages():
         card = og.get(key, {})
         emit(f"grocery/{f.stem}/", f"grocery/{f.stem}", f"{singular(short).title()} Prices This Week at the Grocery Store",
              2, og_key=key, view="grocery", day=g_day, aisle=card.get("aisle", ""),
-             find={"name": short, "price": (card.get("price", "") + ("" if card.get("unit", "").startswith("/") else " ")
-                                            + card.get("unit", "")).strip(),
+             find={"name": short, "price": "" if card.get("tone") == "flat" and card.get("out", "").startswith("No price")
+                   else (card.get("price", "") + ("" if card.get("unit", "").startswith("/") else " ") + card.get("unit", "")).strip(),
                    "status": card.get("out", ""), "tone": card.get("tone", ""),
                    "where": AISLE_NAME.get(card.get("aisle", ""), "Produce")},
              head=crumbs_ld(("Grocery prices", SITE_URL), (short, f"{SITE_URL}grocery/{f.stem}/")))

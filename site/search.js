@@ -13,7 +13,9 @@
   // "strawberries" ~ "strawberry", "apples" ~ "apple", "eggs" ~ "egg"
   const one = (w) => (w.endsWith("ies") ? w.slice(0, -3) + "y" : w.length > 3 && w.endsWith("s") && !w.endsWith("ss") ? w.slice(0, -1) : w);
   const norm = (s) => s.toLowerCase().replace(/[^a-z0-9 ]/g, " ").split(/\s+/).filter(Boolean).map(one).join(" ");
-  const load = () => index || (index = fetch(root + "search.json").then((r) => r.json()).catch(() => []));
+  // versioned, so a cached older copy of the list can never mix grocery and wholesale results
+  const ver = input.form.getAttribute("data-ver") || "";
+  const load = () => index || (index = fetch(root + "search.json?v=" + ver).then((r) => r.json()).catch(() => []));
 
   const close = () => { list.hidden = true; input.setAttribute("aria-expanded", "false"); active = -1; };
   const mark = (i) => {
@@ -29,17 +31,16 @@
     const items = await load();
     const words = q.split(" ");
     const hits = items
-      .filter((it) => it.v === view)
+      .filter((it) => it.v === view)  // only this side of the site
       .map((it) => ({ it, key: norm(it.n + " " + (it.k || "")) }))
-      .filter(({ key }) => words.every((w) => key.split(" ").some((k) => k.startsWith(w)) || key.includes(w)))
+      .filter(({ key }) => words.every((w) => key.split(" ").some((k) => k.startsWith(w))))  // match word starts only
       // items with a price first, then names that start with what was typed, then A to Z
       .sort((a, b) => (!!b.it.p - !!a.it.p) || (b.key.startsWith(q) - a.key.startsWith(q)) || a.it.n.localeCompare(b.it.n))
       .slice(0, 8);
     list.innerHTML = hits.length ? hits.map(({ it }, n) =>
       `<li role="option" id="q-${n}" data-url="${root}${esc(it.u)}">` +
       `<span class="q-top"><span class="q-name">${esc(it.n)}</span>${it.p ? `<span class="qs-price">${esc(it.p)}</span>` : ""}</span>` +
-      `<span class="q-meta">${it.s ? `<span class="${tone[it.t] || ""}">${esc(it.s)}</span>` : ""}` +
-      `${it.s && it.a ? " · " : ""}<span class="q-where">${esc(it.a)}</span></span></li>`).join("")
+      (it.s ? `<span class="q-meta ${tone[it.t] || ""}">${esc(it.s)}</span>` : "") + `</li>`).join("")
       : `<li class="q-none" role="option" aria-disabled="true">No match. Try “eggs”, “chicken” or “apples”.</li>`;
     list.hidden = false;
     input.setAttribute("aria-expanded", "true");

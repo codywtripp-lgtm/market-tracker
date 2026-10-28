@@ -98,7 +98,7 @@ main.wrap > section:first-child { margin-top: 0; }
 #q-list li[aria-selected="true"] { background: var(--band); }
 .q-name { font-weight: 700; }
 .q-meta { display: block; color: var(--ink-2); font-size: 15px; margin-top: 2px; }
-.q-meta .good { color: var(--good); font-weight: 700; } .q-meta .bad { color: var(--bad); font-weight: 700; }
+.q-meta.good { color: var(--good); font-weight: 700; } .q-meta.bad { color: var(--bad); font-weight: 700; }
 #q-list .q-none { color: var(--ink-2); cursor: default; }
 
 /* grocery aisles */
