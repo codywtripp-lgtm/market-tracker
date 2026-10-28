@@ -9,7 +9,7 @@ import html
 import json
 import re
 
-from . import grocery
+from . import grocery, quality
 
 
 def esc(s):
@@ -28,6 +28,15 @@ WHOLESALE = {"Avocados": "avocado-prices", "Strawberries": "strawberry-prices", 
              "Lemons": "lemon-prices", "Limes": "lime-prices", "Cucumbers": "cucumber-prices", "Broccoli": "broccoli-prices",
              "Celery": "celery-prices", "Carrots": "carrot-prices", "Bananas": "banana-prices",
              "Blueberries": "blueberry-prices", "Grapes": "grape-prices"}
+
+
+def qual(i):
+    """One plain word for quality; the reason shows on hover or tap (site/tabs.js)."""
+    if not i.get("quality"):
+        return ""
+    level, reason = i["quality"]
+    return (f'<span class="ql"><button type="button" class="ql-btn q-{level.lower()}" aria-expanded="false">'
+            f'{level} quality</button><span class="ql-tip" role="tooltip">{esc(reason)}</span></span>')
 
 
 def link(i):
@@ -108,11 +117,11 @@ def page(today, items):
              f'reported by USDA</p><p class="lede">{esc(lede(items, buys, pricey))}</p></section>']
     if buys:
         tiles = "".join(
-            f'<li class="buy">{tag(i)}<div class="buy-body"><h3>{link(i)}</h3>'
+            f'<li class="buy">{tag(i)}<div class="buy-body"><h3>{link(i)}</h3>{qual(i)}'
             f'<p class="buy-why">{why_line(i, today)}</p>{price_bar(i, today)}</div></li>' for i in buys)
         parts.append(f'<section><h2>Best buys</h2><ul class="buys">{tiles}</ul></section>')
     if season:
-        chips = "".join(f'<li><a class="sname" href="@/grocery/{i["slug"]}/">{esc(i["short"])}</a>'
+        chips = "".join(f'<li><span><a class="sname" href="@/grocery/{i["slug"]}/">{esc(i["short"])}</a>{qual(i)}</span>'
                         f'<span class="sword {STATUS[i["status"]][1]}">{esc(STATUS[i["status"]][0])}</span></li>'
                         for i in season)
         parts.append(f'<section class="band"><h2>In season now</h2><p class="sub">Peak flavor and supply this '
@@ -120,7 +129,7 @@ def page(today, items):
                      f'<ul class="season-list">{chips}</ul></section>')
     if pricey:
         rows = "".join(
-            f'<li><div><b>{link(i)}</b><span>{money(i["price"])}{esc(i["unit"])}, '
+            f'<li><div><b>{link(i)}</b>{qual(i)}<span>{money(i["price"])}{esc(i["unit"])}, '
             f'<b class="bad">{i["vs_usual"]}% above usual</b></span></div>'
             + (f'<p class="swap">Try {esc(i["swap"].lower())} instead</p>' if i.get("swap") else "") + "</li>"
             for i in pricey[:8])
@@ -131,14 +140,18 @@ def page(today, items):
         f'<td class="n">{money(i["price"])}<small>{esc(i["unit"].strip())}</small></td>'
         f'<td><span class="word {STATUS[i["status"]][1]}">{esc(STATUS[i["status"]][0])}</span>'
         + (f'<small>{abs(i["vs_usual"])}% {"below" if i["vs_usual"] < 0 else "above"} usual</small>'
-           if i["vs_usual"] is not None and abs(i["vs_usual"]) >= 3 else "") + "</td></tr>"
+           if i["vs_usual"] is not None and abs(i["vs_usual"]) >= 3 else "") + f"</td><td>{qual(i)}</td></tr>"
         for i in items)
     parts.append('<section><h2>Every item in this week’s ads</h2>'
                  '<label class="find"><span>Find an item</span><input type="search" id="find" '
                  'placeholder="Apples, berries, lettuce…" autocomplete="off"></label>'
                  '<table class="all"><thead><tr><th scope="col">Item</th><th scope="col" class="n">Ad price</th>'
-                 f'<th scope="col">For the time of year</th></tr></thead><tbody>{rows}</tbody></table></section>')
-    parts.append(f'<section class="how"><h2>How this works</h2><p>Every week USDA records the produce prices '
+                 f'<th scope="col">For the time of year</th><th scope="col">Quality now</th></tr></thead>'
+                 f'<tbody>{rows}</tbody></table></section>')
+    parts.append(f'<section class="how"><h2>How this works</h2><p>Quality is what to expect this time of year: new '
+                 'crop and peak harvest rate excellent; storage, imports, end-of-season and growing-area changeovers rate '
+                 'fair or poor. Tap or hover over a rating for the reason. A low price on poor-quality produce is never '
+                 'listed as a best buy.</p><p>Every week USDA records the produce prices '
                  f'supermarkets advertise, about {stores:,} stores for the most-advertised items. We compare this '
                  'week’s average ad price with the same weeks in the last five to ten years, adjusted for inflation: '
                  'the cheapest quarter of those weeks is a great price, the highest quarter is pricey. “In season” is '
@@ -226,7 +239,11 @@ def season_sentence(i, today):
         s = f"{i['short']} {verb(i)} out of season now; {'they’re' if plural(i) else 'it’s'} in season in {when_in}."
     else:
         s = ""
-    if i["cheapest_months"]:
+    best = quality.best_months(i["commodity"])
+    if i["cheapest_months"] and best and not set(i["cheapest_months"]) & set(best):
+        s += (f" Ads are lowest in {grocery.month_list(i['cheapest_months'])}, but that’s out-of-season produce; "
+              f"for the best quality, buy in {grocery.month_list(best)}.")
+    elif i["cheapest_months"]:
         s += f" {'They’re' if plural(i) else 'It’s'} usually cheapest in {grocery.month_list(i['cheapest_months'])}."
     return s.strip()
 
@@ -255,7 +272,7 @@ def item_page(i, today, all_items):
              f'<p class="answer">{answer(i, today)}</p></section>']
     if i["this_week"]:
         word, tone = STATUS[i["status"]]
-        parts.append(f'<section class="gquote">{tag(i)}<div><p class="gword {tone}">{esc(word)}</p>'
+        parts.append(f'<section class="gquote">{tag(i)}<div><p class="gword {tone}">{esc(word)}</p>{qual(i)}'
                      f'<p class="buy-why">{why_line(i, today) or esc(i["name"])}</p>{price_bar(i, today)}</div></section>')
         if i.get("swap"):
             parts.append(f'<p class="swap big">Pricey this week. Try {esc(i["swap"].lower())} instead.</p>')
@@ -263,9 +280,14 @@ def item_page(i, today, all_items):
             parts.append(f'<p class="fine">Only {i["stores"]:,} stores advertised {"them" if plural(i) else "it"} this '
                          "week, often a single chain, so treat the comparison loosely.</p>")
     when_bits = []
+    if i.get("quality"):
+        when_bits.append(f"<li><b>Quality now</b><span><b class=\"q-{i['quality'][0].lower()}\">{i['quality'][0]}.</b> "
+                         f"{esc(i['quality'][1])}</span></li>")
     if i["seasons"]:
         when_bits.append(f"<li><b>In season</b><span>{esc(', '.join(s.capitalize() for s in i['seasons']))} "
                          "(USDA seasonal produce guide)</span></li>")
+    if quality.best_months(i["commodity"]):
+        when_bits.append(f"<li><b>Best quality</b><span>{grocery.month_list(quality.best_months(i['commodity']))}</span></li>")
     if i["cheapest_months"]:
         when_bits.append(f"<li><b>Usually cheapest</b><span>{grocery.month_list(i['cheapest_months'])}</span></li>")
     if i["peak_months"]:

@@ -1,0 +1,157 @@
+# Quality calendar (for review)
+
+What shoppers see each month: one word, with the reason on hover or tap. Source: `pipeline/quality.py`.
+Real conditions (USDA quality flags, short supply, shipments) can lower a rating in a given week (`pipeline/conditions.py`).
+**Owner: correct anything that's off for the trade; one line per fix is enough.**
+
+- **Apples**
+  - Sep, Oct, Nov, Dec: **Excellent**. New-crop apples, fresh from the fall harvest.
+  - Jan, Feb, Mar, Apr: **Good**. Last fall's crop from controlled-atmosphere storage, still crisp.
+  - May, Jun, Jul: **Fair**. Late-storage apples, softer and less juicy, plus some imports from New Zealand and Chile.
+  - Aug: **Poor**. The oldest storage apples of the year: often soft and mealy. New-crop apples arrive in September.
+- **Apricots**
+  - May, Jun, Jul: **Excellent**. Short U.S. season.
+  - Jan, Feb, Mar, Apr, Aug, Sep, Oct, Nov, Dec: **Poor**. Out of season; imported.
+- **Asparagus**
+  - Mar, Apr, May: **Excellent**. Peak U.S. spring season.
+  - Jan, Feb, Jun, Jul, Aug, Sep, Oct, Nov, Dec: **Good**. Imported from Peru and Mexico.
+- **Avocados**: Good all year. Hass avocados come from Mexico and California all year.
+- **Bananas**: Good all year. Imported from Central and South America all year.
+- **Beans**: Good all year. Grown all year in rotating regions.
+- **Blackberries**
+  - Jun, Jul, Aug: **Excellent**. Peak U.S. season.
+  - Jan, Feb, Mar, Apr, May, Sep, Oct, Nov, Dec: **Good**. Mostly from Mexico.
+- **Blueberries**
+  - May, Jun, Jul, Aug: **Excellent**. Peak U.S. season.
+  - Sep, Oct: **Fair**. End of the U.S. season, before imports ramp up.
+  - Jan, Feb, Mar, Nov, Dec: **Good**. Imported from Peru and Chile.
+  - Apr: **Good**. Early berries from Florida, Georgia and Mexico.
+- **Broccoli**: Good all year. Grown all year in California and Arizona.
+- **Brussels Sprouts**
+  - Sep, Oct, Nov, Dec: **Excellent**. Peak fall harvest.
+  - Jan, Feb, Mar: **Good**. Late season.
+  - Apr, May, Jun, Jul, Aug: **Fair**. Imported, out of season.
+- **Cabbage**: Good all year. Grown all year.
+- **Cantaloupes**
+  - Jun, Jul, Aug, Sep: **Excellent**. Peak California and Arizona season.
+  - Jan, Feb, Mar, Apr, May, Oct, Nov, Dec: **Fair**. Imported from Central America; often less sweet.
+- **Carrots**: Good all year. Grown and stored all year.
+- **Cauliflower**: Good all year. Grown all year in California and Arizona.
+- **Celery**: Good all year. Grown all year in California.
+- **Cherries**
+  - Jun, Jul: **Excellent**. Peak Northwest and California season.
+  - Aug: **Fair**. End of the season.
+  - Jan, Nov, Dec: **Fair**. Imported from Chile.
+- **Cilantro**: Good all year. Grown all year.
+- **Clementines**
+  - Jan, Nov, Dec: **Excellent**. Peak season.
+  - Feb, Mar, Apr: **Good**. Late season.
+  - May, Jun, Jul, Aug, Sep, Oct: **Fair**. Imported, between U.S. seasons.
+- **Coconut**: Good all year. Imported all year.
+- **Collards**
+  - Jan, Feb, Mar, Oct, Nov, Dec: **Excellent**. Cool-season green, sweetest after frost.
+  - Apr, May, Jun, Jul, Aug, Sep: **Good**. Available, but tougher in the heat.
+- **Corn-Sweet**
+  - Jun, Jul, Aug, Sep: **Excellent**. Peak U.S. season; local corn is at its sweetest.
+  - May, Oct: **Good**. Early or late in the season.
+  - Jan, Feb, Mar, Apr, Nov, Dec: **Fair**. Shipped from Florida and Mexico; less sweet.
+- **Cranberries**
+  - Oct, Nov, Dec: **Excellent**. Fresh harvest.
+  - Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep: **Fair**. From storage, out of season.
+- **Cucumbers**: Good all year. Grown all year in rotating regions.
+- **Garlic**: Good all year. From storage and imports all year.
+- **Grapefruit**
+  - Jan, Feb, Mar, Apr, Nov, Dec: **Excellent**. Peak Florida and Texas season.
+  - May, Jun, Jul, Aug, Sep, Oct: **Fair**. Late season and imports.
+- **Grapes**
+  - Jul, Aug, Sep, Oct, Nov: **Excellent**. Peak California season.
+  - Jan, Dec: **Fair**. California grapes from storage.
+  - Feb, Mar, Apr: **Good**. Imported from Chile and Peru.
+  - May, Jun: **Fair**. Between seasons: early Mexican and late Chilean grapes.
+- **Honeydews**
+  - Jul, Aug, Sep, Oct: **Excellent**. Peak season.
+  - Jan, Feb, Mar, Apr, May, Jun, Nov, Dec: **Fair**. Imported; often less sweet.
+- **Jalapeno Peppers**: Good all year. Grown all year.
+- **Kale**
+  - Jan, Feb, Mar, Apr, Oct, Nov, Dec: **Excellent**. Cool-season green, at its best now.
+  - May, Jun, Jul, Aug, Sep: **Good**. Fine, though tougher in the heat.
+- **Kiwifruit**: Good all year. From California and New Zealand all year.
+- **Lemons**: Good all year. Grown year-round in California, Arizona and Mexico.
+- **Lettuce**
+  - May, Jun, Jul, Aug, Sep, Oct: **Good**. From the Salinas Valley, California.
+  - Nov, Dec: **Fair**. Growing moves from Salinas to Yuma, Arizona; supply and quality can be uneven.
+  - Jan, Feb: **Good**. From Yuma, Arizona and the Imperial Valley.
+  - Mar, Apr: **Fair**. Growing moves back from the desert to Salinas; supply and quality can be uneven.
+- **Limes**: Good all year. Imported from Mexico year-round.
+- **Mangoes**
+  - Apr, May, Jun, Jul, Aug: **Excellent**. Peak Mexico season.
+  - Jan, Feb, Mar, Sep, Oct, Nov, Dec: **Good**. Imported from Peru, Ecuador and Brazil.
+- **Mixed Mini Sweet Peppers**: Good all year. Greenhouse-grown all year.
+- **Mushrooms**: Good all year. Grown indoors all year.
+- **Nectarines**
+  - Jun, Jul, Aug: **Excellent**. Peak U.S. season.
+  - May, Sep: **Fair**. Early or late in the season.
+  - Jan, Feb, Mar, Apr, Oct, Nov, Dec: **Poor**. Imported from Chile: often mealy.
+- **Onions, Dry**: Good all year. Fresh or from storage all year.
+- **Onions, Green**: Good all year. Grown all year.
+- **Oranges**
+  - Jan, Feb, Mar, Apr, Dec: **Excellent**. Peak navel orange season from California and Florida.
+  - May, Jun: **Good**. Late navels and early Valencias.
+  - Jul, Aug, Sep, Oct: **Fair**. Valencias and imports from South Africa and Chile; juicy but often greener-skinned.
+  - Nov: **Good**. Early navels, sometimes tart until December.
+- **Papaya**: Good all year. Imported all year.
+- **Peaches**
+  - Jun, Jul, Aug: **Excellent**. Peak U.S. season.
+  - May, Sep: **Fair**. Early or late in the season; can be hard or mealy.
+  - Jan, Feb, Mar, Apr, Oct, Nov, Dec: **Poor**. Imported from Chile: often mealy and slow to ripen.
+- **Pears**
+  - Aug, Sep, Oct, Nov, Dec: **Excellent**. New-crop Bartlett, Anjou and Bosc from the Pacific Northwest.
+  - Jan, Feb, Mar, Apr: **Good**. Stored Anjou and Bosc, still good.
+  - May, Jun, Jul: **Fair**. Late storage and imports from Argentina and Chile.
+- **Peppers, Bell Type**: Good all year. Field and greenhouse peppers all year.
+- **Persimmons**
+  - Oct, Nov, Dec: **Excellent**. Peak season.
+  - Jan, Feb: **Fair**. Late season.
+- **Pineapples**: Good all year. Imported from Costa Rica all year.
+- **Plantains**: Good all year. Imported all year.
+- **Plums**
+  - Jun, Jul, Aug, Sep: **Excellent**. Peak U.S. season.
+  - Jan, Feb, Mar, Apr, May, Oct, Nov, Dec: **Fair**. Imported from Chile.
+- **Pomegranates**
+  - Oct, Nov, Dec: **Excellent**. Peak California season.
+  - Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep: **Fair**. From storage or imported.
+- **Potatoes**
+  - Aug, Sep, Oct, Nov, Dec: **Excellent**. New-crop potatoes.
+  - Jan, Feb, Mar, Apr, May: **Good**. From storage; they keep well.
+  - Jun, Jul: **Fair**. The oldest storage potatoes before the new crop.
+- **Pumpkins**
+  - Sep, Oct: **Excellent**. Peak season.
+  - Nov: **Good**. End of the season.
+- **Radishes**: Good all year. Grown all year.
+- **Raspberries**
+  - Jun, Jul, Aug, Sep: **Excellent**. Peak U.S. season.
+  - Jan, Feb, Mar, Apr, May, Oct, Nov, Dec: **Good**. Mostly from Mexico and California's coast.
+- **Salad (Mixed Types)**: Good all year. Bagged greens all year.
+- **Spinach**
+  - Jan, Feb, Mar, Apr, May, Oct, Nov, Dec: **Excellent**. Cool-season green, at its best now.
+  - Jun, Jul, Aug, Sep: **Good**. Available, but heat can shorten shelf life.
+- **Squash**: Good all year. Grown all year in rotating regions.
+- **Strawberries**
+  - Mar, Apr, May, Jun: **Excellent**. Peak California and Florida season.
+  - Jul, Aug, Sep: **Good**. California summer berries.
+  - Oct, Nov: **Fair**. End of the California season; fall rain and heat can mean soft, short-lived berries.
+  - Jan, Feb, Dec: **Good**. Florida and Mexico winter berries.
+- **Sweet Potatoes**
+  - Sep, Oct, Nov, Dec: **Excellent**. Fresh-harvested and cured.
+  - Jan, Feb, Mar, Apr, May, Jun, Jul, Aug: **Good**. From storage; they keep well.
+- **Tangerines/Mandarins**
+  - Jan, Feb, Nov, Dec: **Excellent**. Peak California mandarin season.
+  - Mar, Apr: **Good**. Late-season California mandarins.
+  - May, Jun, Jul, Aug, Sep, Oct: **Fair**. Imports from Peru, Chile and South Africa.
+- **Tomatoes**
+  - Jul, Aug, Sep: **Excellent**. Peak field-grown season.
+  - Jan, Feb, Mar, Apr, May, Jun, Oct, Nov, Dec: **Good**. Greenhouse and Mexican or Florida tomatoes: steady, but less flavor than summer.
+- **Watermelons**
+  - Jun, Jul, Aug: **Excellent**. Peak U.S. season.
+  - May, Sep: **Good**. Early or late U.S. season.
+  - Jan, Feb, Mar, Apr, Oct, Nov, Dec: **Fair**. Imported from Mexico and Central America; flavor is hit and miss.

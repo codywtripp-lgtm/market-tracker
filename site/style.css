@@ -18,6 +18,7 @@
   --bad-bg: #fbecea;
   --flat: #5d6470;
   --tag: #ffd84d;
+  --fair: #8a5a00;
   --link: #12512f;
   --font: "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", Verdana, sans-serif;
 
@@ -37,7 +38,7 @@
     color-scheme: dark;
     --ink: #f1efe9; --ink-2: #c9c6be; --ink-3: #a6a39b; --line: #34332f; --line-2: #4a4843;
     --page: #151513; --band: #1f1e1b; --leaf: #7fd19c; --good: #6fd492; --good-bg: #16291d;
-    --bad: #ff8b7e; --bad-bg: #2d1916; --flat: #a6a39b; --link: #8fdcaa;
+    --bad: #ff8b7e; --bad-bg: #2d1916; --flat: #a6a39b; --link: #8fdcaa; --fair: #e6b85c;
     --surface: #1c1c19; --surface-2: #23221f; --up-line: #5b2b26; --down-line: #255639;
     --usual: rgba(241, 239, 233, 0.1); --wash: rgba(241, 239, 233, 0.05); --on-ink: #151513;
     --grid: #2a2926; --axis: #4a4843; --band-chart: #2c2b27;
@@ -47,7 +48,7 @@
   color-scheme: dark;
   --ink: #f1efe9; --ink-2: #c9c6be; --ink-3: #a6a39b; --line: #34332f; --line-2: #4a4843;
   --page: #151513; --band: #1f1e1b; --leaf: #7fd19c; --good: #6fd492; --good-bg: #16291d;
-  --bad: #ff8b7e; --bad-bg: #2d1916; --flat: #a6a39b; --link: #8fdcaa;
+  --bad: #ff8b7e; --bad-bg: #2d1916; --flat: #a6a39b; --link: #8fdcaa; --fair: #e6b85c;
   --surface: #1c1c19; --surface-2: #23221f; --up-line: #5b2b26; --down-line: #255639;
   --usual: rgba(241, 239, 233, 0.1); --wash: rgba(241, 239, 233, 0.05); --on-ink: #151513;
   --grid: #2a2926; --axis: #4a4843; --band-chart: #2c2b27;
@@ -113,6 +114,19 @@ main.wrap > section:first-child { margin-top: 0; }
 .pbar-labels { display: grid; grid-template-columns: 25fr 50fr 25fr; font-size: 14px; line-height: 20px; color: var(--ink-3); margin-top: 6px; }
 .pbar-labels span:nth-child(2) { text-align: center; } .pbar-labels span:nth-child(3) { text-align: right; }
 .pbar-note { font-size: 16px; line-height: 22px; color: var(--ink-2); margin: 4px 0 0; }
+
+/* quality: one word; the reason on hover or tap */
+.ql { position: relative; display: inline-block; margin: 2px 0 6px; }
+.ql-btn { border: 0; background: none; padding: 0; font: inherit; font-size: 16px; font-weight: 700; cursor: help;
+  text-decoration: underline dotted 1px; text-underline-offset: 4px; }
+.q-excellent { color: var(--good); } .q-good { color: var(--ink-2); } .q-fair { color: var(--fair); } .q-poor { color: var(--bad); }
+.ql-tip { display: none; position: absolute; left: 0; top: calc(100% + 6px); z-index: 5; width: max-content; max-width: 280px;
+  padding: 10px 12px; background: var(--ink); color: var(--page); font-size: 15px; line-height: 21px; font-weight: 400; border-radius: 6px; }
+.ql-btn:hover + .ql-tip, .ql-btn:focus-visible + .ql-tip, .ql-btn[aria-expanded="true"] + .ql-tip { display: block; }
+.season-list .ql { display: block; margin: 0; }
+.season-list .ql-btn { font-size: 15px; }
+.pricey .ql { display: block; margin: 0; }
+.buy .ql { display: block; }
 
 /* grocery item page */
 .gquote { display: grid; grid-template-columns: 132px 1fr; gap: 24px; align-items: start; margin-top: 40px; max-width: 640px; }
@@ -391,8 +405,9 @@ main.dash { min-width: 0; }
   .all, .all tbody { display: block; }
   .all tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
   .all th, .all td { display: block; padding: 0; border: 0; }
-  .all td:last-child { grid-column: 1 / -1; }
-  .all td:last-child small { display: inline; margin-left: 8px; }
+  .all td:nth-child(3), .all td:last-child { grid-column: 1 / -1; }
+  .all td:nth-child(3) small { display: inline; margin-left: 8px; }
+  .all .ql { margin: 0; }
   .tabs { gap: 24px; }
   .bhead { display: none; }
   .brow { grid-template-columns: minmax(0, 1fr) 84px 92px; grid-template-areas: "item spark price" "out season season"; gap: 6px 12px; }
@@ -402,6 +417,10 @@ main.dash { min-width: 0; }
   .b-season small { display: none; }
   .spark { width: 84px; height: 32px; }
   .notes li { grid-template-columns: 1fr; }
+  .ql { display: block; }
+  .ql-tip { position: static; width: auto; max-width: none; margin-top: 6px; }
+  .ql-btn:hover + .ql-tip { display: none; }
+  .ql-btn[aria-expanded="true"] + .ql-tip { display: block; }
   .facts li { grid-template-columns: 1fr; }
   .gquote { grid-template-columns: 112px 1fr; gap: 16px; }
   .quote { grid-template-columns: 1fr; gap: 24px; }

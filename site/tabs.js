@@ -16,6 +16,19 @@
   if (saved) show(saved, false);
 })();
 
+// Quality ratings: the reason shows on hover (desktop, via CSS) or on tap (phones); tap elsewhere to close.
+(() => {
+  const close = (except) => document.querySelectorAll('.ql-btn[aria-expanded="true"]').forEach((b) => {
+    if (b !== except) b.setAttribute("aria-expanded", "false");
+  });
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest(".ql-btn");
+    close(b);
+    if (b) b.setAttribute("aria-expanded", b.getAttribute("aria-expanded") === "true" ? "false" : "true");
+  });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(null); });
+})();
+
 // Grocery list: type to filter the "every item" table.
 (() => {
   const box = document.getElementById("find");
