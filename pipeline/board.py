@@ -15,7 +15,7 @@ import datetime as dt
 import json
 import re
 
-from . import brief, store
+from . import brief, cpi, grocery, grocery_view, store
 from .brief import esc, money, whole
 from .usual import with_usual
 
@@ -578,7 +578,7 @@ def item_page(commodity, rows, hist, today, sizes, alerts, as_of, notes, only=No
     shown = [r for r in rows if r["market"] == only] if only else rows
     lead = shown[0]
     h1 = f"{PAGES[commodity][1]} prices today" + (f", {only}" if only else "")  # "Strawberry prices today"
-    parts = [f'<nav class="crumbs"><a href="@/">Today\'s prices</a><span>/</span>'
+    parts = [f'<nav class="crumbs"><a href="@/wholesale/">Wholesale prices</a><span>/</span>'
              + (f'<a href="@/{PAGES[commodity][0]}/">{esc(title)}</a><span>/</span>{esc(only)}' if only else esc(title))
              + "</nav>",
              f'<div class="pagehead"><h1>{esc(h1)}</h1>'
@@ -625,6 +625,9 @@ def build():
 
     notes = supply_notes(as_of)
     out = {"home": home(items, hist, today, alerts, as_of, record, notes)}
+    g_day, g_items = grocery.build(store.iter_all("retail"), cpi.Deflator(cpi.load()))
+    if g_items:
+        out["grocery"] = grocery_view.page(g_day, g_items)
     for m in MARKETS:
         out[f"market-{MKEY[m]}"] = home(items, hist, today, alerts, as_of, record, notes, only=m)
     for commodity, (slug, _) in PAGES.items():
@@ -635,7 +638,13 @@ def build():
         for i in rows:
             out[f"items/{slug}--{MARKET_SLUG[i['market']]}"] = item_page(commodity, rows, hist, today, sizes, alerts,
                                                                        as_of, notes, only=i["market"])
-    out["og"] = json.dumps(og_data(items, hist, as_of), separators=(",", ":"))
+    og = og_data(items, hist, as_of)
+    if g_items:
+        og["home"] = {"title": "This week’s best buys in the produce aisle",
+                      "sub": f"Supermarket prices · week of {g_day:%B} {g_day.day}, {g_day.year}",
+                      "rows": [{"name": i["short"], "word": f"{abs(i['vs_usual'])}% below usual" if i["vs_usual"] else "In season",
+                                "tone": "down", "price": f"${i['price']:.2f}"} for i in grocery.best_buys(g_items, 4)]}
+    out["og"] = json.dumps(og, separators=(",", ":"))
     return as_of, out
 
 
@@ -651,7 +660,7 @@ def og_data(items, hist, as_of):
                           "price": money(i["price"])} for i in moving]}
         out[f"market-{MKEY[m]}"] = card
         if m == "New York":
-            out["home"] = {**card, "title": "Wholesale produce prices today"}
+            out["wholesale"] = {**card, "title": "Wholesale produce prices today"}
     for i in items:
         if i["market"] != "New York":
             continue
