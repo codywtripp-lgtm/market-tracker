@@ -78,8 +78,11 @@ def day(d):
 
 
 def pack(s):
+    """'Seedless, 40 lb cartons, 175s' from USDA's 'SEEDLESS TYPE' / '40 lb cartons' / '175s'."""
     bits = [s.get("variety", ""), s.get("properties", ""), s.get("pack_size", ""), s.get("item_size", "")]
-    return " · ".join(b for b in bits if b and b not in ("N/A", "NA"))
+    bits = [re.sub(r"\s+TYPE$", "", b).lower() if b.isupper() else b for b in bits if b and b not in ("N/A", "NA")]
+    text = ", ".join(bits)
+    return text[:1].upper() + text[1:]
 
 
 # Produce is bought for daily need, so "wait" is not an option. What a buyer can change is how
@@ -123,7 +126,7 @@ def call(status, change, stable, commodity=""):
         return d, ("Keep inventory tight and stay on the open market; don't lock price at today's level."
                    + (" Relief is coming on a high market." if status == "expensive" else ""))
     if status == "expensive":
-        return d, ("High for the season with no relief in sight. Check other sizes or packs below, "
+        return d, ("High for the season with no relief in sight. Look at other counts or packs, "
                    "and price quotes to cover it.")
     if status == "cheap":
         return d, "Good value for the season: a good item to feature on specials and promotions."
@@ -203,14 +206,16 @@ def weekly_history(items, weeks=12):
     return {sid: sorted(v)[-weeks:] for sid, v in hist.items()}
 
 
-# ---------- visual pieces (built for a reader who wants the answer at a glance) ----------
-# Every color comes with an icon and a word, so nothing depends on color alone.
+# ---------- visual pieces ----------
+# Set like a market sheet: ruled entries and tables, no boxes. Red and green carry one meaning each
+# (red = costs the buyer more, green = costs less) and always come with an arrow and a word.
 GROUP_HEAD = {  # market direction over the next two weeks
-    "firming": ("▲", "Firming", "Expected up 5% or more within two weeks."),
-    "softening": ("▼", "Softening", "Expected down 5% or more within two weeks."),
-    "steady": ("=", "Steady", "No big move expected."),
+    "firming": ("▲", "Firming", "Expected to rise 5% or more within two weeks."),
+    "softening": ("▼", "Softening", "Expected to ease 5% or more within two weeks."),
+    "steady": ("", "Steady", "No big move expected."),
 }
 DIR_WORD = {"firming": "▲ Firming", "softening": "▼ Softening", "steady": "Steady"}
+DIR_TONE = {"firming": "bad", "softening": "good"}
 
 
 def size_options(latest, series):
@@ -237,40 +242,41 @@ def size_options(latest, series):
     return out
 
 
-def pill(status):
-    icon, word = {"cheap": ("▼", "Low for season"), "expensive": ("▲", "High for season")}.get(status, ("●", "Normal"))
+def tag(status):
+    """Season status as a coloured word with an arrow: High for the season / Low for the season / Normal."""
+    icon, word = {"cheap": ("▼", "Low for the season"), "expensive": ("▲", "High for the season")}.get(status, ("", "Normal"))
     cls = {"cheap": "good", "expensive": "bad"}.get(status, "neutral")
-    return f'<span class="pill {cls}"><span aria-hidden="true">{icon}</span> {word}</span>'
+    return f'<span class="tag {cls}">{icon + " " if icon else ""}{word}</span>'
 
 
 def plain_pctile(p, vs_norm=None):
     """Where today's price ranks among the same weeks in past years, in words."""
     if p is None:
-        return "Not enough history to compare yet"
+        return "Not enough history to compare yet."
     # cut-offs match the cheap / normal / high status (pipeline/export.py: 25th and 75th percentile)
     if p <= 10:
-        return "Cheaper than almost every past year at this time"
+        return "Cheaper than almost every past year at this time."
     if p <= 25:
-        return "Cheaper than most past years at this time"
+        return "Cheaper than most past years at this time."
     if p < 75:
         if vs_norm is not None and abs(vs_norm) >= 15:
-            return f"{'Above' if vs_norm > 0 else 'Below'} the usual price, but within the normal range for this time of year"
-        return "About the usual price for this time of year"
+            return f"{'Above' if vs_norm > 0 else 'Below'} the usual price, but inside the normal range for the season."
+        return "About the usual price for this time of year."
     if p < 90:
-        return "Pricier than most past years at this time"
-    return "Pricier than almost every past year at this time"
+        return "Higher than most past years at this time."
+    return "Higher than almost every past year at this time."
 
 
 def meter(i):
-    """Position of today's price between the cheapest and priciest past years (same weeks), with a 'usual' tick."""
+    """Where today's price sits between the cheapest and highest past years (same weeks), with a mark at usual."""
     p = i["pctile"]
     if p is None:
         return ""
     cls = {"cheap": "good", "expensive": "bad"}.get(i["status"], "neutral")
-    pos = min(max(p, 3), 97)
+    pos = min(max(p, 2), 98)
     return (f'<div class="meter" role="img" aria-label="{esc(plain_pctile(p, i['vs_norm']))}">'
-            f'<div class="track"><span class="usual"></span><span class="dot {cls}" style="left:{pos:.0f}%"></span></div>'
-            '<div class="ends"><span>Cheapest</span><span>Usual</span><span>Priciest</span></div></div>')
+            f'<div class="track"><span class="usual"></span><span class="needle {cls}" style="left:{pos:.0f}%"></span></div>'
+            '<div class="ends"><span>Cheapest year</span><span>Usual</span><span>Highest year</span></div></div>')
 
 
 def spark(hist, i):
@@ -283,7 +289,7 @@ def spark(hist, i):
     lo, hi = min(vals), max(vals)
     span = (hi - lo) or 1
     n = len(hist) + len(fut)
-    W, H, pad = 220, 56, 5
+    W, H, pad = 240, 56, 5
     x = lambda k: pad + k * (W - 2 * pad) / max(n - 1, 1)  # noqa: E731
     y = lambda v: H - pad - (v - lo) / span * (H - 2 * pad)  # noqa: E731
     line = "M" + "L".join(f"{x(k):.1f},{y(v):.1f}" for k, (_, v) in enumerate(hist))
@@ -295,9 +301,9 @@ def spark(hist, i):
         out += '<path class="band" d="M' + "L".join(f"{a:.1f},{b:.1f}" for a, b in top + bot) + 'Z"/>'
         out += ('<path class="mid" d="M' + f"{x(k0):.1f},{y(v0):.1f}"
                 + "".join(f"L{x(k0 + 1 + j):.1f},{y(p['mid']):.1f}" for j, p in enumerate(fut)) + '"/>')
-    out += f'<path class="line" d="{line}"/><circle class="now" cx="{x(k0):.1f}" cy="{y(v0):.1f}" r="4"/>'
+    out += f'<path class="line" d="{line}"/><circle class="now" cx="{x(k0):.1f}" cy="{y(v0):.1f}" r="3.5"/>'
     label = (f"{i['name']}, last 12 weeks: {money(hist[0][1])} to {money(v0)}"
-             + (f"; likely {whole(fut[-1]['lo'])}–{whole(fut[-1]['hi'])} by {fut[-1]['week']}" if fut else ""))
+             + (f"; likely {whole(fut[-1]['lo'])} to {whole(fut[-1]['hi'])} by {fut[-1]['week']}" if fut else ""))
     return (f'<svg class="spark" viewBox="0 0 {W} {H}" role="img" aria-label="{esc(label)}">'
             f"<title>{esc(label)}</title>{out}</svg>")
 
@@ -306,28 +312,28 @@ def outlook(i):
     if not i["range"]:
         return ""
     if i["stable"] or i["change"] is None or abs(i["change"]) < MOVE:
-        icon, word, cls = "=", "Steady", "neutral"
+        word, cls = "Steady", "neutral"
     elif i["change"] > 0:
-        icon, word, cls = "▲", "Firming", "bad"
+        word, cls = "▲ Firming", "bad"
     else:
-        icon, word, cls = "▼", "Softening", "good"
-    return (f'<div class="outlook"><span class="arrow {cls}" aria-hidden="true">{icon}</span>'
-            f'<span><strong>Next 2 weeks: {word}</strong><br>likely {whole(i["range"][0])}–{whole(i["range"][1])} a case</span></div>')
+        word, cls = "▼ Softening", "good"
+    return (f'<div class="outlook">Next two weeks: <b class="arrow {cls}">{word}</b><br>'
+            f'likely {whole(i["range"][0])} to {whole(i["range"][1])} a case</div>')
 
 
 def sizes_line(opts):
     if not opts:
         return ""
-    bits = " · ".join(f"<strong>{esc(o[1])}</strong> {money(o[2] * o[0])}" for o in opts)
-    return f'<div class="sizes">Case price by size today: {bits}</div>'
+    bits = ", ".join(f"{esc(o[1])} {money(o[2] * o[0])}" for o in opts)
+    return f'<div class="sizes">Other counts today: {bits}.</div>'
 
 
 def item_card(i, hist, opts=None, title=None):
     return (f'<div class="item">'
             f'<div class="item-head"><div><div class="item-name">{esc(title or i["name"])}</div>'
             f'<div class="item-pack">{esc(i["pack"])}</div></div>'
-            f'<div class="item-price">{money(i["price"])}<small>per case</small></div></div>'
-            f'<div class="item-status">{pill(i["status"])} <span>{esc(plain_pctile(i["pctile"], i["vs_norm"]))}</span></div>'
+            f'<div class="item-price">{money(i["price"])}<small>a case</small></div></div>'
+            f'<div class="item-status">{tag(i["status"])} {esc(plain_pctile(i["pctile"], i["vs_norm"]))}</div>'
             f'{meter(i)}'
             f'<div class="item-trend">{spark(hist, i)}{outlook(i)}</div>'
             + (f'<p class="action">{esc(i["action"])}</p>' if i["action"] else "") +
@@ -335,13 +341,80 @@ def item_card(i, hist, opts=None, title=None):
             f'</div>')
 
 
+def moves_table(moves, with_item=True):
+    """Today's 5%+ moves as a table: item, market, previous quote, today, change."""
+    head = ("<th>Item</th>" if with_item else "") + '<th>Market</th><th class="num">Last quote</th><th class="num">Today</th><th class="num">Change</th>'
+    rows = []
+    for m in moves:
+        up = m["day_change"] > 0
+        chg = f'<b class="arrow {"bad" if up else "good"}">{"▲" if up else "▼"} {abs(round(100 * m["day_change"]))}%</b>'
+        tone = f'<small>USDA: “{esc(m["tone"].capitalize())}”</small>' if m.get("tone") else ""
+        rows.append("<tr>" + (f'<td>{esc(m["name"])}{tone}</td>' if with_item else "")
+                    + f'<td data-label="Market">{esc(m["market"])}{"" if with_item else tone}</td>'
+                    f'<td class="num" data-label="Last quote">{money(m["before"])}</td>'
+                    f'<td class="num" data-label="Today"><b>{money(m["today"])}</b></td>'
+                    f'<td class="num" data-label="Change">{chg}</td></tr>')
+    return f'<table class="data stack"><thead><tr>{head}</tr></thead><tbody>{"".join(rows)}</tbody></table>'
+
+
+def warnings_list(alerts, with_headline=True):
+    return '<ul class="warnings">' + "".join(
+        f'<li><b class="arrow {"bad" if a["direction"] == "up" else "good"}" aria-hidden="true">'
+        f'{"▲" if a["direction"] == "up" else "▼"}</b><span><b>{esc(a["expect"])}</b>'
+        + (f'<br>{esc(a["headline"].replace(a["commodity"], PRODUCE_NAMES.get(a["commodity"], a["commodity"]), 1))}'
+           if with_headline else "")
+        + f'<br><small>{esc(a["record"])}</small></span></li>' for a in alerts) + "</ul>"
+
+
 def compact_rows(rows):
-    return '<div class="rows">' + "".join(
-        f'<div class="row"><span class="row-name">{esc(i["name"])}</span>'
-        f'<span class="row-price">{money(i["price"])}</span>{pill(i["status"])}'
-        f'<span class="row-call">{esc(DIR_WORD.get(i["dir"], ""))}'
-        f'{(" · likely " + whole(i["range"][0]) + "–" + whole(i["range"][1])) if i["range"] else ""}</span></div>'
-        for i in rows) + "</div>"
+    """Other markets: one table row per item that is moving or out of the ordinary."""
+    body = "".join(
+        f'<tr><td>{esc(i["name"])}<small>{esc(i["pack"])}</small></td>'
+        f'<td class="num" data-label="Case">{money(i["price"])}</td>'
+        f'<td data-label="Season">{tag(i["status"])}</td>'
+        f'<td data-label="Next 2 weeks">'
+        + (f'<b class="arrow {DIR_TONE.get(i["dir"], "neutral")}">{esc(DIR_WORD.get(i["dir"], ""))}</b>' if i["dir"] else "")
+        + (f'<small>{whole(i["range"][0])} to {whole(i["range"][1])}</small>' if i["range"] else "")
+        + "</td></tr>" for i in rows)
+    return ('<table class="data stack"><thead><tr><th>Item</th><th class="num">Case</th><th>For the season</th>'
+            f'<th>Next 2 weeks</th></tr></thead><tbody>{body}</tbody></table>')
+
+
+def name_list(rows):
+    """'romaine, iceberg and cucumbers' (lower case inside a sentence, Roma kept capitalised)."""
+    names = [i["name"].lower().replace("roma ", "Roma ") for i in rows]
+    return names[0] if len(names) == 1 else ", ".join(names[:-1]) + " and " + names[-1]
+
+
+MASS = {"Iceberg", "Romaine", "Broccoli", "Celery"}  # "romaine is", but "limes are"
+
+
+def verb(rows):
+    return "is" if len(rows) == 1 and rows[0]["name"] in MASS else "are"
+
+
+def cap(s):
+    return s[:1].upper() + s[1:]
+
+
+def lede(groups, high, value):
+    """One or two plain sentences on New York today, the way a market reporter opens."""
+    bits = []
+    firm, soft = groups["firming"][:3], groups["softening"][:3]
+    if firm and soft:
+        bits.append(f"{cap(name_list(firm))} {verb(firm)} firming at Hunts Point, "
+                    f"while {name_list(soft)} {verb(soft)} softening.")
+    elif firm:
+        bits.append(f"{cap(name_list(firm))} {verb(firm)} firming at Hunts Point.")
+    elif soft:
+        bits.append(f"{cap(name_list(soft))} {verb(soft)} softening at Hunts Point.")
+    else:
+        bits.append("Hunts Point looks steady across the board for the next two weeks.")
+    if high:
+        bits.append(f"{cap(name_list(high[:3]))} {verb(high[:3])} high for the season.")
+    elif value:
+        bits.append(f"{cap(name_list(value[:3]))} {verb(value[:3])} good value for the season.")
+    return " ".join(bits)
 
 
 def build():
@@ -368,68 +441,50 @@ def build():
     high = sorted((i for i in ny if i["status"] == "expensive"), key=lambda i: -(i["pctile"] or 0))
 
     parts = [
-        f"<h1>Produce Buyer's Brief: {as_of.strftime('%A')}, {day(as_of)}, {as_of.year}</h1>",
-        '<p class="lede">Wholesale case prices from USDA Market News, compared with the same weeks of the last '
-        '10 years, and where they are likely to be in two weeks.</p>',
+        f"<h1>Market report for {as_of.strftime('%A')}, {day(as_of)}, {as_of.year}</h1>",
+        '<p class="dateline">Wholesale case prices, New York (Hunts Point), Los Angeles and Chicago</p>',
+        f'<p class="lede">{esc(lede(groups, high, value))}</p>',
     ]
 
-    # 1. At a glance: three tiles a reader can act on without scrolling
-    def names(rows, n=5):
-        if not rows:
-            return "<span class=\"none\">Nothing today</span>"
-        more = f" <span class=\"more\">+{len(rows) - n} more</span>" if len(rows) > n else ""
-        return " ".join(f'<span class="chip">{esc(i["name"])}</span>' for i in rows[:n]) + more
-    def tile(cls, icon, head, sub, rows):
-        return (f'<div class="tile {cls}"><div class="tile-head"><span class="ico" aria-hidden="true">{icon}</span>'
-                f'{head}</div><div class="tile-sub">{sub}</div><div class="tile-n">{len(rows)}</div>{names(rows)}</div>')
+    # 1. Summary: four ruled lines a reader can act on without scrolling
+    def line(head, sub, rows, tone=""):
+        names = esc(", ".join(i["name"] for i in rows)) if rows else '<span class="none">None today</span>'
+        return f'<div><dt class="{tone}"><span class="arrow">{head}</span><small>{sub}</small></dt><dd>{names}</dd></div>'
     parts.append(
-        '<h2>At a glance: New York</h2><div class="glance">'
-        + tile("up", "▲", "Firming", "Likely higher in 2 weeks", groups["firming"])
-        + tile("down", "▼", "Softening", "Likely lower in 2 weeks", groups["softening"])
-        + tile("high", "!", "High for the season", "Priced above most past years", high)
-        + tile("value", "★", "Good value", "Priced below most past years", value)
-        + "</div>")
+        '<h2>New York summary</h2><dl class="summary">'
+        + line("▲ Firming", "Likely higher in two weeks", groups["firming"], "bad")
+        + line("▼ Softening", "Likely lower in two weeks", groups["softening"], "good")
+        + line("High for the season", "Higher than most past years", high)
+        + line("Good value", "Cheaper than most past years", value)
+        + "</dl>")
 
     # 2. Today's moves
-    if today:
-        lines = "".join(
-            f'<div class="move"><span class="arrow {"bad" if m["day_change"] > 0 else "good"}" aria-hidden="true">'
-            f'{"▲" if m["day_change"] > 0 else "▼"}</span>'
-            f'<span><strong>{esc(m["name"])}</strong> · {esc(m["market"])}<br>'
-            f'{money(m["before"])} → <strong>{money(m["today"])}</strong> a case, '
-            f'{"up" if m["day_change"] > 0 else "down"} {abs(round(100 * m["day_change"]))}%'
-            + (f'<br><small>USDA: “{esc(m["tone"].capitalize())}”</small>' if m["tone"] else "")
-            + "</span></div>" for m in today[:8])
-        parts += ["<h2>What moved today</h2>", f'<div class="moves">{lines}</div>']
-    else:
-        parts += ["<h2>What moved today</h2>", '<p class="quiet">A quiet day: nothing moved 5% or more.</p>']
+    parts.append("<h2>What moved today</h2>")
+    parts.append(moves_table(today[:10]) if today else '<p class="quiet">A quiet day. Nothing moved 5% or more.</p>')
 
     # 3. Early warnings in full
     if alerts:
-        al = "".join(
-            f'<div class="warn"><span class="arrow {"bad" if a["direction"] == "up" else "good"}" aria-hidden="true">'
-            f'{"▲" if a["direction"] == "up" else "▼"}</span><span><strong>{esc(a["expect"])}</strong><br>'
-            f'{esc(a["headline"])}<br><small>{esc(a["record"])}</small></span></div>' for a in alerts[:6])
         parts += ["<h2>Early warnings</h2>",
                   '<p class="quiet">Only signals that have called the next move right at least 65% of the time over 10 years.</p>',
-                  f'<div class="moves">{al}</div>']
+                  warnings_list(alerts[:6])]
 
     # 4. New York item by item, grouped by market direction
     parts.append("<h2>New York, item by item</h2>")
     for g, (icon, head, sub) in GROUP_HEAD.items():
         if groups[g]:
-            parts += [f'<h3 class="group {g}"><span class="ico" aria-hidden="true">{icon}</span>{head}'
-                      f' <small>{sub}</small></h3>',
+            arrow = f'<span class="arrow">{icon}</span> ' if icon else ""
+            parts += [f'<h3 class="group {g}">{arrow}{head}<small>{sub}</small></h3>',
                       '<div class="items">' + "".join(item_card(i, hist.get(i["series_id"], []), sizes.get((i["commodity"], i["market"])))
                                                      for i in groups[g]) + "</div>"]
 
-    # 5. Other markets: just what's not steady
+    # 5. Other markets: just what's moving or out of the ordinary
     for market in MARKETS[1:]:
         rows = sorted((i for i in items if i["market"] == market and (i["dir"] in ("firming", "softening")
                                                                        or i["status"] in ("cheap", "expensive"))),
                       key=lambda i: (i["dir"] != "firming", i["dir"] != "softening", i["name"]))
         if rows:
-            parts += [f"<h2>{market}: worth a look</h2>", compact_rows(rows)]
+            parts += [f"<h2>{market}</h2>", '<p class="quiet">Items that are moving or out of the ordinary for the season.</p>',
+                      compact_rows(rows)]
 
     # 6. Supply as simple bars (more or less shipped than this week last year)
     notes = [r for r in supply if _num(r["vs_last_year_pct"]) is not None and abs(_num(r["vs_last_year_pct"])) >= SUPPLY_NOTE]
@@ -437,29 +492,29 @@ def build():
         notes.sort(key=lambda r: _num(r["vs_last_year_pct"]))
         bars = "".join(
             f'<div class="sbar"><span class="sname">{esc(PRODUCE_NAMES.get(r["commodity"], r["commodity"]))}</span>'
-            f'<span class="strack"><span class="sfill {"less" if v < 0 else "more"}" style="width:{min(abs(v), 100) / 2:.0f}%"></span></span>'
+            f'<span class="strack"><span class="sfill" style="width:{min(abs(v), 100):.0f}%"></span></span>'
             f'<span class="sval">{abs(round(v))}% {"less" if v < 0 else "more"}</span></div>'
             for r in notes for v in [_num(r["vs_last_year_pct"])])
-        parts += ["<h2>Supply: shipped vs. a year ago</h2>",
+        parts += ["<h2>Supply against a year ago</h2>",
                   f'<p class="quiet">USDA-reported shipments, week of {day(dt.date.fromisoformat(notes[0]["week"]))}. '
-                  'Less supply usually means firmer prices.</p>', f'<div class="supply">{bars}</div>']
+                  'Less supply usually means a firmer market.</p>', f'<div class="supply">{bars}</div>']
 
-    # 7. Track record as two numbers
+    # 7. Track record, in a sentence
     live, al_rec = record.get("forecasts_live", {}), record.get("alerts", {})
-    tiles = []
+    said = []
     if live.get("scored"):
-        tiles.append(f'<div class="stat"><strong>{live["in_range_pct"]:.0f}%</strong>'
-                     f'<span>of {live["scored"]:,} price forecasts landed in their range (aim: 80%)</span></div>')
+        said.append(f"{live['in_range_pct']:.0f}% of {live['scored']:,} price forecasts have landed inside their range "
+                    "(the aim is 80%)")
     if al_rec.get("decided"):
-        tiles.append(f'<div class="stat"><strong>{al_rec["came_true"]} of {al_rec["decided"]}</strong>'
-                     '<span>early warnings came true</span></div>')
-    if tiles:
-        parts += ["<h2>How we've done so far</h2>", f'<div class="stats">{"".join(tiles)}</div>']
+        said.append(f"{al_rec['came_true']} of {al_rec['decided']} early warnings came true")
+    if said:
+        parts += ["<h2>Track record so far</h2>",
+                  f'<p>Since going live, {" and ".join(said)}. <a href="../why/">The full record</a>.</p>']
     parts.append(
-        '<p class="fine">How to read this: prices are the USDA “mostly” price per case for the pack shown (the most '
-        "consistently reported pack in each market). “Cheap” and “High” compare with the same weeks in past years, "
-        "adjusted for inflation. The chart shows the last 12 weeks; the shaded part is where the price will likely be "
-        "(80% of the time). Market prices, not your supplier's quote; a guide, not a guarantee.</p>")
+        '<p class="fine">How to read this: prices are the USDA “mostly” price per case for the main pack the trade buys '
+        "in each market. High and low for the season compare with the same weeks in past years, adjusted for "
+        "inflation. Each small chart shows the last 12 weeks; the shaded part is where the price is likely to be "
+        "(80% of the time). Market prices, not your supplier's quote.</p>")
     return as_of, "\n".join(parts) + "\n"
 
 

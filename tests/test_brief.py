@@ -37,7 +37,18 @@ def test_build_from_current_export():
     as_of, body = brief.build()
     assert as_of.weekday() < 6  # a market day
     assert "<h2>What moved today</h2>" in body
-    assert "At a glance: New York" in body
+    assert "<h2>New York summary</h2>" in body
     assert "<svg class=\"spark\"" in body
     for banned in ("Wait if you can", "Hold off", "Good time to buy"):
         assert banned not in body
+    # no app-style widgets: the page is set as ruled entries and tables
+    for widget in ('class="pill', 'class="tile', 'class="chip', 'class="stat"', " — "):
+        assert widget not in body
+
+
+def test_lede_agreement():
+    rows = lambda *names: [{"name": n} for n in names]  # noqa: E731
+    groups = {"firming": rows("Romaine"), "softening": rows("Limes", "Roma tomatoes"), "steady": []}
+    assert brief.lede(groups, rows("Strawberries"), []) == (
+        "Romaine is firming at Hunts Point, while limes and Roma tomatoes are softening. "
+        "Strawberries are high for the season.")
