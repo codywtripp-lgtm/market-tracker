@@ -230,8 +230,8 @@ def why_page():
     body = f"""<p class="eyebrow">For wholesale produce buyers</p>
 <h1>Know where produce prices are heading before your supplier calls.</h1>
 <p class="lede">A free daily brief on the New York (Hunts Point), Los Angeles and Chicago terminal markets: today's
-moves, whether each price is high or low for the season, where it is likely to be in two weeks, and a plain
-call on each item. Three minutes to read, before the next buy.</p>
+moves, whether each price is high or low for the season, whether it's firming or softening over the next two weeks,
+and what that means for your pricing, inventory and specs. Three minutes to read, before the next order.</p>
 <p><a class="btn cta" href="../brief/">Read today's brief →</a></p>
 
 <div class="stats">
@@ -249,15 +249,16 @@ what that means for your next order.</p>
 <tr><td>Is this price high?</td><td>Today's price only</td><td>Compared with the same weeks of the last 10 years, adjusted for inflation</td></tr>
 <tr><td>Where is it going?</td><td>Not covered</td><td>A 2-week price range per item, tested on five years of data</td></tr>
 <tr><td>Early warning</td><td>You spot shipping-point moves yourself, if you have time</td><td>Flagged when a signal has called the next move at least 65% of the time</td></tr>
-<tr><td>What to do</td><td>Up to you</td><td>One plain call per item: buy ahead, buy as needed, hold off, steady</td></tr>
+<tr><td>What it means for you</td><td>Up to you</td><td>Firming, softening or steady per item, with what to do about pricing, inventory depth and specs</td></tr>
 </tbody></table>
 
 <h2>How buyers use it</h2>
 <ul>
-<li><strong>Book or buy spot.</strong> When a rise is called, lock in with your supplier; when it's easing, buy hand to mouth.</li>
-<li><strong>Push back on quotes.</strong> Know whether a "market's up" call matches what the terminals and shipping points show.</li>
-<li><strong>Quote customers and menus.</strong> Price ahead with a range, not a guess.</li>
-<li><strong>Swap smart.</strong> See what's cheap for the season right now, e.g. one pepper color 40% under another.</li>
+<li><strong>Lock price or stay open.</strong> On a firming market, lock price with your supplier before it moves; on a softening one, stay on the open market.</li>
+<li><strong>Set how deep to buy.</strong> Hard items (onions, potatoes, carrots, citrus) can go a few days deeper ahead of a rise; perishables stay bought to need.</li>
+<li><strong>Get quotes out right.</strong> Update customer pricing before the market moves, not after your margin is gone.</li>
+<li><strong>Check your specs.</strong> See case prices across counts (48s vs. 60s, 175s vs. 200s) and what's good value to feature on specials.</li>
+<li><strong>Check the supplier's story.</strong> Know whether "the market's up" matches what the terminals and shipping points show.</li>
 </ul>
 
 <h2>Where it's strongest</h2>

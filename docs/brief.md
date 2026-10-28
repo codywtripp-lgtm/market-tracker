@@ -12,7 +12,7 @@ Per item: price, status pill, a meter placing today's price between the cheapest
 and the 2-week outlook. Inline SVG renders on the site; email clients that block SVG still get every number as text.
 
 ## What's in it
-- **At a glance (NY)**: three tiles: good time to buy, wait if you can, early warnings.
+- **At a glance (NY)**: four tiles: firming, softening, high for the season, good value.
 - **Today at the terminals**: headline items whose latest quote moved ≥5% from the previous one (with USDA's market tone).
 - **Early warnings**: current alerts (`alerts.json`, rules in `docs/alerts.md`).
 - **New York, item by item**: cards grouped by what to do, best-covered terminal series per item.
@@ -20,15 +20,23 @@ and the 2-week outlook. Inline SVG renders on the site; email clients that block
 - **Supply**: shipments ≥15% off last year (`supply.csv`).
 - **Track record**: live forecast range hits and alert results (`track_record.json`).
 
-## Calls
-"Change" = forecast midpoint for 2 weeks after the last full week, vs. last week's price.
-Items where "no change" forecasts best (`forecast_report_card.csv`, `uses = no change`) count as steady.
+## Calls (trade terms)
+Produce is bought for daily need, so the brief never says "wait" or "buy now". It says which way the market is
+going and what a buyer can actually change. Owner feedback 2026-10-28.
 
-| Change | Cheap | Normal | Expensive |
-|---|---|---|---|
-| ≥ +5% | Buy ahead | Book ahead if you can | Book ahead if you can |
-| ≥ −5% | Hold off where you can | Hold off where you can | Buy as needed |
-| smaller / steady | Good value, holding steady | Steady | High, no relief expected yet |
+Direction = forecast midpoint for 2 weeks after the last full week vs. last week's price: **firming** ≥ +5%,
+**softening** ≤ −5%, else **steady** (also steady where "no change" forecasts best, `forecast_report_card.csv`).
+
+| | What the brief says to do |
+|---|---|
+| Firming, hard item (onions, potatoes, carrots, lemons, limes) | It stores: buy a few days deeper; lock price; update quotes |
+| Firming, perishable | Buy to need, but lock price with the supplier and update quotes |
+| Softening | Keep inventory tight, stay on the open market, don't lock at today's level |
+| Steady, high for season | No relief in sight: check other sizes/packs, price quotes to cover it |
+| Steady, low for season | Good value: feature on specials and promotions |
+
+The hard-item list (`HARD_ITEMS` in `pipeline/brief.py`) is an assumption for the owner to confirm.
+Each card also shows the case price for every count the market quotes in the same pack (e.g. 48s / 60s avocados).
 
 ## Not yet
 Email delivery needs a newsletter account (owner action). Paid tier only after there are readers.
