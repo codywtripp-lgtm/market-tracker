@@ -47,8 +47,10 @@ not read as AI-generated. Check new work against the "Never" list before it ship
 ## Components
 - **Header:** white, tag-and-leaf mark + wordmark, plain text links. Under it, the **Grocery / Wholesale** switch
   (two segments, the current one filled).
-- **Search:** in the header on every page, placeholder "Search items"; suggestions show the item and its section
-  (Grocery store / Wholesale market), no prices. Arrow keys, Enter, Escape. Without JavaScript it opens /search/ (A to Z).
+- **Search:** in the header on every page, placeholder "Search items". Scoped to the side you're on: grocery pages
+  suggest grocery items only, wholesale pages wholesale only. Each suggestion: item and price on the first line; how
+  the price compares with usual (green/red word) and the aisle or market on the second. Arrow keys, Enter, Escape.
+  Without JavaScript it opens /search/ (A to Z, grocery and wholesale in separate lists).
 - **Aisles:** on grocery pages, Produce / Meat & poultry / Dairy & eggs tabs under the switch, the way a shopper walks the store.
 - **Shelf tag:** yellow, notched like a supermarket tag, price large. Only for items that are a great price this week.
 - **Price check bar:** low / typical / high zones for the same weeks in past years, with a marker for this week and

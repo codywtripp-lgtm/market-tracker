@@ -91,10 +91,14 @@ main.wrap > section:first-child { margin-top: 0; }
 .search input::-webkit-search-cancel-button { cursor: pointer; }
 #q-list { position: absolute; left: 0; right: 0; top: calc(100% + 6px); z-index: 20; list-style: none; margin: 0; padding: 6px;
   background: var(--page); border: 1px solid var(--line-2); border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, .12); }
-#q-list li { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 10px 12px; border-radius: 8px; cursor: pointer; }
+#q-list li { display: block; padding: 10px 12px; border-radius: 8px; cursor: pointer; }
+.q-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.qs-price { font-weight: 700; white-space: nowrap; }
+.q-where { white-space: nowrap; }
 #q-list li[aria-selected="true"] { background: var(--band); }
 .q-name { font-weight: 700; }
-.q-meta { color: var(--ink-2); font-size: 15px; white-space: nowrap; }
+.q-meta { display: block; color: var(--ink-2); font-size: 15px; margin-top: 2px; }
+.q-meta .good { color: var(--good); font-weight: 700; } .q-meta .bad { color: var(--bad); font-weight: 700; }
 #q-list .q-none { color: var(--ink-2); cursor: default; }
 
 /* grocery aisles */
