@@ -147,7 +147,7 @@ def main():
 
 # ---------- daily buyer's brief ----------
 # pipeline/brief.py writes one HTML fragment per market day to data/briefs/; here each becomes a page,
-# /brief/ shows the latest, and feed.xml carries full issues (an email service can send from it).
+# /brief/ shows the latest, and feed.xml carries full issues.
 BRIEFS = ROOT / "data" / "briefs"
 BRIEF_TITLE = "Produce Buyer's Brief"
 
@@ -358,6 +358,38 @@ def _line(i):
     return " — ".join(b for b in bits if b)
 
 
+PAGES_DIR = ROOT / "data" / "pages"  # rich fragments from pipeline/pages.py (nightly)
+
+
+def rich_page(slug, name, body, dash):
+    """Wrap a pipeline/pages.py fragment: search title and description from today's numbers, links to every item."""
+    answer = re.search(r'<p class="answer">(.*?)</p>', body, re.S)
+    desc = html.unescape(re.sub(r"<[^>]+>", "", answer.group(1))) if answer else ""
+    title = f"{name.title()} Prices Today: Wholesale Case Price & 2-Week Outlook"
+    others = " · ".join(f'<a href="../{sl}/">{_esc(nm)}</a>' for c, (sl, nm) in PAGE_NAMES.items() if sl != slug)
+    return f"""<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{_esc(title)} | Produce Price Check</title>
+<meta name="description" content="{_esc(desc[:300])}">
+<link rel="canonical" href="{SITE_URL}{slug}/">
+<meta property="og:title" content="{_esc(title)}">
+<meta property="og:description" content="{_esc(desc[:300])}">
+<meta property="og:url" content="{SITE_URL}{slug}/">
+<link rel="stylesheet" href="../style.css"></head>
+<body><main class="landing brief">
+<p class="sub"><a href="../">Produce Price Check</a> · <a href="../brief/">Today's brief</a> · <a href="../why/">How accurate is it?</a></p>
+{body}
+<p><a class="btn cta" href="{_esc(dash)}">See the 10-year price chart →</a></p>
+<h2>Other wholesale produce prices</h2>
+<p class="others">{others}</p>
+<p class="fine">Prices are the USDA “mostly” price per case at the terminal markets (USDA AMS Market News), for the
+most consistently reported pack in each market, updated every market evening. “Usual” = the same weeks of the year
+over the past 10 years, adjusted for inflation. Forecast ranges hold about 80% of the time. Market prices, not a
+supplier's quote.</p>
+</main></body></html>
+"""
+
+
 def landing_pages(latest, as_of, extra_urls=()):
     by_c = defaultdict(list)
     for i in latest:
@@ -376,6 +408,14 @@ def landing_pages(latest, as_of, extra_urls=()):
                 seen.add(i["market"])
                 lines.append(f"<li>{_line(i)}</li>")
         dash = f"../?m=ny&c={quote(commodity)}"
+        rich = PAGES_DIR / f"{slug}.html"
+        if rich.exists():
+            page = rich_page(slug, name, rich.read_text(encoding="utf-8"), dash)
+            (OUT / slug).mkdir(parents=True, exist_ok=True)
+            (OUT / slug / "index.html").write_text(page, encoding="utf-8")
+            urls.append(f"{SITE_URL}{slug}/")
+            links.append(f'<a href="{slug}/">{_esc(name)} prices</a>')
+            continue
         title = f"{name} wholesale prices this week — New York, Los Angeles, Chicago"
         desc = (f"{name} wholesale case prices from USDA terminal markets (Hunts Point NY, LA, Chicago), updated every "
                 f"evening: this week vs. usual for the season, 1–4 week forecast and early-warning alerts.")
