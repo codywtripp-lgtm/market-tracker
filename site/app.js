@@ -1,4 +1,4 @@
-// Produce Price Check — one page: filters on the left, big moves, what's going on, one chart, cheap/expensive list.
+// Produce Price Tracker, price charts page: filters on the left, big moves, what's going on, one chart, cheap/expensive list.
 "use strict";
 
 const MARKETS = [
@@ -65,8 +65,8 @@ function describePack(i) {
 }
 
 function badge(i) {
-  if (i.status === "cheap") return `<span class="badge cheap">▼ Cheap</span>`;
-  if (i.status === "expensive") return `<span class="badge expensive">▲ Expensive</span>`;
+  if (i.status === "cheap") return `<span class="badge cheap">▼ Low for the season</span>`;
+  if (i.status === "expensive") return `<span class="badge expensive">▲ High for the season</span>`;
   if (i.status === "normal") return `<span class="badge normal">Normal</span>`;
   return `<span class="badge none">New</span>`;
 }
@@ -87,7 +87,7 @@ function writeUrl() {
 // ---------- selection ----------
 function add(key) {
   if (state.selected.includes(key)) return true;
-  if (state.selected.length >= MAX_SERIES) { toast(`Up to ${MAX_SERIES} items at once — take one off first.`); return false; }
+  if (state.selected.length >= MAX_SERIES) { toast(`Up to ${MAX_SERIES} items at once. Take one off first.`); return false; }
   const used = new Set(Object.values(state.slots));
   let slot = 1; while (used.has(slot)) slot++;
   state.slots[key] = slot;
@@ -143,7 +143,7 @@ function renderAlerts() {
   const terminal = ["ny", "la", "chi"].includes(state.market);
   const mine = terminal ? state.alerts.filter((a) => a.market === here) : state.alerts;
   const elsewhere = terminal ? state.alerts.length - mine.length : 0;
-  $("alerts-h").textContent = terminal ? `Alerts · ${here}` : "Alerts";
+  $("alerts-h").textContent = terminal ? `Early warnings, ${here}` : "Early warnings";
   const body = mine.map((a) => `<button class="alert" data-alert="${esc(a.market)}|${esc(a.commodity)}">
       <span class="arrow ${a.direction}" aria-hidden="true">${a.direction === "up" ? "▲" : "▼"}</span>
       <span class="h">${esc(a.headline)}</span>
@@ -152,7 +152,7 @@ function renderAlerts() {
   const al = (state.record || {}).alerts || {};
   const record = al.decided ? `<p class="hint">Past alerts: ${al.came_true} of ${al.decided} came true.</p>` : "";
   $("alerts-list").innerHTML = (body || `<p class="hint">No alerts for ${esc(here)} right now. Alerts only fire when a signal with a strong 10-year track record is on.</p>`)
-    + (elsewhere ? `<p class="hint">${elsewhere} more in other markets — switch market above.</p>` : "") + record;
+    + (elsewhere ? `<p class="hint">${elsewhere} more in other markets. Switch market to see them.</p>` : "") + record;
 }
 // ---------- track record ----------
 function renderRecord() {
@@ -194,7 +194,7 @@ function renderMoves() {
     .filter((i) => (i.vs4w != null && Math.abs(i.vs4w) >= 15) || (i.vsNorm != null && Math.abs(i.vsNorm) >= 25))
     .map((i) => ({ i, size: Math.max(Math.abs(i.vs4w ?? 0), Math.abs(i.vsNorm ?? 0)) }))
     .sort((a, b) => b.size - a.size).slice(0, 3);
-  $("moves-h").textContent = `Big moves · ${market().label}`;
+  $("moves-h").textContent = `Biggest moves, ${market().label}`;
   $("moves-list").innerHTML = moves.length ? `<div class="moves">${moves.map(({ i }) => {
     const up = (i.vs4w ?? i.vsNorm ?? 0) > 0;
     const why = [i.vs4w != null ? `${pct(i.vs4w)} in 4 weeks` : "", i.vsNorm != null ? `${pct(i.vsNorm)} vs usual for this time of year` : "",
@@ -237,7 +237,7 @@ function renderNews() {
       <div><div class="t">${esc(i.key)} · ${money(i.price)}${unitLabel(i.unit)} ${badge(i)}</div>
       <div class="d">${esc(describePack(i))}</div>
       <div class="d">${esc(newsLine(i))}</div></div></li>`).join("")
-    : `<li class="hint">Pick items in Filters to see what's going on.</li>`;
+    : `<li class="hint">Pick items under Items and markets to see what's going on.</li>`;
 }
 
 // ---------- chart ----------
@@ -301,7 +301,7 @@ function draw() {
       + (forecastPoints(drawn, mode).length ? `<span><i class="fc" style="border-color:${color(drawn[0].item.key)}"></i>Forecast, 80% range</span>` : "") : "";
 
   if (!drawn.length) {
-    el.innerHTML = `<div class="empty-chart">${series.length ? "Not enough history yet to chart these." : "Pick items in Filters to chart them."}</div>`;
+    el.innerHTML = `<div class="empty-chart">${series.length ? "Not enough history yet to chart these." : "Pick items under Items and markets to chart them."}</div>`;
     $("table").innerHTML = "";
     return;
   }
@@ -423,7 +423,7 @@ function draw() {
 // ---------- list ----------
 function renderList() {
   const items = itemsInMarket().sort((a, b) => (ORDER[a.status] ?? 3) - (ORDER[b.status] ?? 3) || Math.abs(b.vsNorm ?? 0) - Math.abs(a.vsNorm ?? 0));
-  $("list-h").textContent = `Cheap & expensive right now · ${market().label}`;
+  $("list-h").textContent = `Low and high for the season, ${market().label}`;
   $("list").innerHTML = items.map((i) => {
     const on = state.selected.includes(i.key);
     return `<li><button class="row" aria-pressed="${on}" data-toggle="${esc(i.key)}">

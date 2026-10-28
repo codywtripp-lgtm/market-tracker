@@ -3,24 +3,32 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Produce Price Check</title>
-  <meta name="description" content="Wholesale produce, beef and chicken prices this week vs. the usual price for this time of year. USDA data, updated every evening.">
+  <title>Wholesale Produce Price Charts | Produce Price Tracker</title>
+  <meta name="description" content="Wholesale produce prices at the New York, Los Angeles and Chicago terminal markets against the usual for the season, with 10 years of history and a two-week outlook. USDA data, updated every evening.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231c1b19'/%3E%3Cpath d='M5 23l7-8 5 4 10-11' stroke='%23fbfaf6' stroke-width='3' fill='none'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,700&display=swap">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="top">
+  <header class="mast"><div class="mast-in"><div class="mast-row">
+    <a class="mast-name" href="./">Produce Price Tracker</a>
+    <nav class="mast-nav" aria-label="Site"><a href="brief/">Today's report</a><a href="./" aria-current="page">Price charts</a><a href="why/">Track record</a></nav></div>
+    <p class="mast-tag">Wholesale produce prices at the New York, Los Angeles and Chicago terminal markets, from USDA Market News. Updated every market evening.</p>
+  </div></header>
+
+  <div class="dash-intro">
     <div>
-      <h1>Produce Price Check</h1>
-      <p class="sub">USDA wholesale prices vs. what's usual for this time of year. <span id="asof"></span></p>
-      <p class="sub"><a href="brief/">This week's buyer's brief →</a></p>
+      <h1>Price charts</h1>
+      <p class="sub">Each item against the usual price for the same weeks in past years. <span id="asof"></span></p>
     </div>
-    <button id="open-filters" class="btn filters-btn" aria-controls="filters" aria-expanded="false">Filters <span id="filter-count"></span></button>
-  </header>
+    <button id="open-filters" class="btn filters-btn" aria-controls="filters" aria-expanded="false">Items and markets <span id="filter-count"></span></button>
+  </div>
 
   <div class="layout">
-    <aside id="filters" class="filters" aria-label="Filters">
+    <aside id="filters" class="filters" aria-label="Items and markets">
       <div class="sheet-head">
-        <strong>Filters</strong>
+        <strong>Items and markets</strong>
         <button id="close-filters" class="btn">Done</button>
       </div>
 
@@ -52,17 +60,17 @@
 
     <main>
       <section id="alerts" class="card alerts" aria-labelledby="alerts-h">
-        <h2 id="alerts-h" class="sh">Alerts</h2>
+        <h2 id="alerts-h" class="sh">Early warnings</h2>
         <div id="alerts-list"></div>
       </section>
 
       <section id="moves" class="card" aria-labelledby="moves-h">
-        <h2 id="moves-h" class="sh">Big moves</h2>
+        <h2 id="moves-h" class="sh">Biggest moves</h2>
         <div id="moves-list"></div>
       </section>
 
       <section class="card" aria-labelledby="news-h">
-        <h2 id="news-h" class="sh">What's going on</h2>
+        <h2 id="news-h" class="sh">Selected items</h2>
         <ul id="news" class="news"></ul>
       </section>
 
@@ -83,7 +91,7 @@
       </section>
 
       <section class="card" aria-labelledby="list-h">
-        <h2 id="list-h" class="sh">Cheap &amp; expensive right now</h2>
+        <h2 id="list-h" class="sh">Low and high for the season</h2>
         <p class="hint">Tap a row to add it to the chart or take it off.</p>
         <ul id="list" class="list"></ul>
       </section>
@@ -93,8 +101,9 @@
   <div id="toast" class="toast" role="status" hidden></div>
 
   <footer class="foot">
-    Data: USDA AMS Market News (terminal markets, shipping point, retail ads, boxed beef, chicken). Updated every evening.
-    Prices in today's dollars where compared across years (adjusted for food inflation). "Usual" = typical price for the same weeks in past years.
+    Prices are the USDA “mostly” price per case at the terminal markets, from USDA AMS Market News (terminal markets, shipping points, retail ads, boxed beef and chicken).
+    Prices compared across years are in today's dollars, adjusted for food inflation. “Usual” means the same weeks of the year over the past 10 years.
+    These are market prices, not a supplier's quote.
     <p class="foot-links"><!--COMMODITY_LINKS--></p>
   </footer>
   <script src="app.js"></script>

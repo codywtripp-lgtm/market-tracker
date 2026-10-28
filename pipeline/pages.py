@@ -62,9 +62,9 @@ def answer(name, i, as_of):
     s += "."
     if i["range"]:
         lo, hi = brief.whole(i["range"][0]), brief.whole(i["range"][1])
-        s += {"firming": f" The market is <strong>firming</strong>: likely {lo}–{hi} a case within two weeks.",
-              "softening": f" The market is <strong>softening</strong>: likely {lo}–{hi} a case within two weeks.",
-              }.get(i["dir"], f" The market looks <strong>steady</strong>: likely {lo}–{hi} a case over the next two weeks.")
+        s += {"firming": f" The market is <strong>firming</strong>: likely {lo} to {hi} a case within two weeks.",
+              "softening": f" The market is <strong>softening</strong>: likely {lo} to {hi} a case within two weeks.",
+              }.get(i["dir"], f" The market looks <strong>steady</strong>: likely {lo} to {hi} a case over the next two weeks.")
     return s
 
 
@@ -72,20 +72,22 @@ def faq(name, rows, supply_pct):
     """Short Q&A in search words, answered only with today's numbers."""
     ny = rows[0]
     lower = plural(name)
+    single = name.lower().replace("roma ", "Roma ")  # "onion prices", "Roma tomato prices"
+    verb = "is" if lower == single else "are"  # "romaine is", "onions are"
     qa = [(f"How much does a case of {lower} cost wholesale right now?",
            " ".join(f"{brief.money(i['price'])} in {i['market']} ({i['pack']})." for i in rows))]
     if ny["vs_norm"] is not None:
         why = (f" USDA-reported shipments are {abs(round(supply_pct))}% {'below' if supply_pct < 0 else 'above'} "
                f"the same week last year." if supply_pct is not None and abs(supply_pct) >= 10 else "")
-        qa.append((f"Are {lower} prices high right now?",
-                   f"In New York, {lower} is {season_phrase(ny)}.{why}"))
+        qa.append((f"Are {single} prices high right now?",
+                   f"In New York, {lower} {verb} {season_phrase(ny)}.{why}"))
     if ny["range"]:
         word = {"firming": "go up", "softening": "come down"}.get(ny["dir"], "stay about the same")
-        qa.append((f"Will {lower} prices go up or down?",
-                   f"The two-week forecast for New York says {word}: likely {brief.whole(ny['range'][0])}–"
+        qa.append((f"Will {single} prices go up or down?",
+                   f"The two-week forecast for New York says prices should {word}, likely {brief.whole(ny['range'][0])} to "
                    f"{brief.whole(ny['range'][1])} a case. Forecasts like this landed inside their range about 80% "
                    "of the time in testing (2021–2026)."))
-    return ("<h2>Quick answers</h2>" + "".join(f'<h3 class="q">{brief.esc(q)}</h3><p>{brief.esc(a)}</p>' for q, a in qa))
+    return ("<h2>Questions buyers ask</h2>" + "".join(f'<h3 class="q">{brief.esc(q)}</h3><p>{brief.esc(a)}</p>' for q, a in qa))
 
 
 def build_all():
@@ -108,23 +110,15 @@ def build_all():
         rows = sorted((i for i in items if i["commodity"] == commodity), key=lambda i: brief.MARKETS.index(i["market"]))
         if not rows:
             continue
-        parts = [f"<h1>{brief.esc(name)} prices today: wholesale, per case</h1>",
-                 f'<p class="dateline">Updated {as_of:%A}, {as_of:%B} {as_of.day}, {as_of.year} · USDA terminal market prices</p>',
+        parts = [f"<h1>Wholesale {brief.esc(name.lower()).replace('roma ', 'Roma ')} prices today</h1>",
+                 f'<p class="dateline">Updated {as_of:%A}, {as_of:%B} {as_of.day}, {as_of.year}, from USDA terminal market reports</p>',
                  f'<p class="answer">{answer(name, rows[0], as_of)}</p>']
         moved = [m for m in today if m["commodity"] == commodity]
         if moved:
-            parts.append("<h2>Moved today</h2><div class=\"moves\">" + "".join(
-                f'<div class="move"><span class="arrow {"bad" if m["day_change"] > 0 else "good"}" aria-hidden="true">'
-                f'{"▲" if m["day_change"] > 0 else "▼"}</span><span><strong>{brief.esc(m["market"])}</strong>: '
-                f'{brief.money(m["before"])} → <strong>{brief.money(m["today"])}</strong> a case, '
-                f'{"up" if m["day_change"] > 0 else "down"} {abs(round(100 * m["day_change"]))}%</span></div>'
-                for m in moved) + "</div>")
+            parts += ["<h2>Moved today</h2>", brief.moves_table(moved, with_item=False)]
         warn = [a for a in alerts if a["commodity"] == commodity]
         if warn:
-            parts.append("<h2>Early warning</h2><div class=\"moves\">" + "".join(
-                f'<div class="warn"><span class="arrow {"bad" if a["direction"] == "up" else "good"}" aria-hidden="true">'
-                f'{"▲" if a["direction"] == "up" else "▼"}</span><span><strong>{brief.esc(a["expect"])}</strong><br>'
-                f'<small>{brief.esc(a["record"])}</small></span></div>' for a in warn) + "</div>")
+            parts += ["<h2>Early warning</h2>", brief.warnings_list(warn, with_headline=False)]
         parts.append("<h2>By market</h2><div class=\"items\">" + "".join(
             brief.item_card(i, hist.get(i["series_id"], []), sizes.get((i["commodity"], i["market"])),
                             title=MARKET_LONG[i["market"]]) for i in rows) + "</div>")

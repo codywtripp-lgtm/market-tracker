@@ -5,18 +5,22 @@ reports) and writes `data/briefs/<market date>.html` (owner asked for daily, 202
 `/brief/<date>/` (archive) and `/brief/feed.xml` (RSS with the full text).
 
 ## Design
-Built for buyers who aren't data people: big type, one idea per block, and every color paired with an icon and
-a word (✓ / ✕ / !, ▲ / ▼, CHEAP / NORMAL / HIGH). Up = bad for the buyer (red), down = good (green).
-Per item: price, status pill, a meter placing today's price between the cheapest and priciest past years
-(same weeks; cut-offs match the 25th/75th-percentile status), a 12-week sparkline with the likely range shaded,
-and the 2-week outlook. Inline SVG charts; every number is also in the text.
+Set like a trade market sheet, not an app (owner 2026-10-28: it must not look AI-made). Masthead with a double
+rule, Source Serif 4 headings, Public Sans text with tabular figures, one paper colour, ruled sections and tables.
+No rounded cards, pills, tinted tiles, icon circles, gradients or hero stat rows. Red = costs the buyer more,
+green = costs less; always with an arrow and a word. Shared page frame (masthead, fonts, footer) is `page()` in
+`scripts/build_site.py`; styles in `site/style.css`.
+Per item: case price, season status word, a hairline meter placing today's price between the cheapest and highest
+past years (same weeks; cut-offs match the 25th/75th-percentile status), a 12-week sparkline with the likely range
+shaded, and the 2-week outlook. Every number is also in the text.
 
 ## What's in it
-- **At a glance (NY)**: four tiles: firming, softening, high for the season, good value.
+- **Opening sentence**: what's firming / softening / high at Hunts Point, written like a market reporter.
+- **New York summary**: four ruled lines: firming, softening, high for the season, good value.
 - **Today at the terminals**: headline items whose latest quote moved ≥5% from the previous one (with USDA's market tone).
 - **Early warnings**: current alerts (`alerts.json`, rules in `docs/alerts.md`).
-- **New York, item by item**: cards grouped by what to do, best-covered terminal series per item.
-- **LA / Chicago**: compact rows, only items that aren't steady.
+- **New York, item by item**: ruled entries grouped by direction, main trade pack per item.
+- **LA / Chicago**: a table of items that are moving or out of the ordinary for the season.
 - **Supply**: shipments ≥15% off last year (`supply.csv`).
 - **Track record**: live forecast range hits and alert results (`track_record.json`).
 
@@ -37,7 +41,7 @@ Direction = forecast midpoint for 2 weeks after the last full week vs. last week
 
 "Stores" = the low end of USDA Agriculture Handbook 66 storage life is 4+ weeks (`STORAGE_LIFE` in `pipeline/brief.py`).
 Grapes (2–8 weeks), avocados (2–4), lettuce and peppers (2–3) fall short, so they stay "buy to need".
-Each card also shows the case price for every count the market quotes in the same pack (e.g. 48s / 60s avocados).
+Each entry also shows the case price for every count the market quotes in the same pack (e.g. 48s / 60s avocados).
 
 ## Not yet
 No newsletter (owner decision 2026-10-28): the website and search are the channel. Commodity pages for search: `pipeline/pages.py`.
