@@ -19,10 +19,12 @@ import statistics
 from collections import defaultdict
 
 from . import cpi, store
+from .usual import with_usual
 
 WINDOW_DAYS = 15     # same weeks in earlier years: +/- 2 weeks
 MIN_YEARS = 3
 LOW, HIGH = 25, 75   # percentile cut-offs, same as the wholesale view
+MIN_STORES = 200     # fewer stores than this is often one chain's flyer: shown, but never headlined
 
 SKIP = {"Hemp Seeds Shelled", "Hemp Protein", "Hemp (Seed) Oil", "Ornamentals", "Apples, Processed", "Prunes"}
 NAMES = {
@@ -66,6 +68,20 @@ FAMILIES = [
     ["Mangoes", "Pineapples", "Papaya", "Kiwifruit"],
     ["Potatoes", "Sweet Potatoes"],
 ]
+
+
+MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
+          "November", "December"]
+
+
+def slug(commodity):
+    return re.sub(r"[^a-z0-9]+", "-", NAMES.get(commodity, commodity).lower()).strip("-")
+
+
+def month_list(ms):
+    """[4, 5, 6] -> 'April, May and June' (in calendar order)."""
+    names = [MONTHS[m - 1] for m in sorted(ms)]
+    return names[0] if len(names) == 1 else ", ".join(names[:-1]) + " and " + names[-1]
 
 
 def season_of(d):
@@ -146,13 +162,15 @@ def build(rows, deflator=None):
         # the item's main pack: most store-weeks of ads in the last year
         key = max(packs, key=lambda k: sum(s for d, xs in packs[k].items() if d >= year_ago for _, s in xs))
         days = packs[key]
-        if latest not in days:
-            continue  # not advertised this week
+        if max(days) < year_ago:
+            continue  # not advertised in the last year
         week = {}
         for d, xs in days.items():
             stores = sum(s for _, s in xs)
             week[d] = (sum(p * s for p, s in xs) / stores, stores)
-        price, stores = week[latest]
+        this_week = latest in week
+        last = latest if this_week else max(week)
+        price, stores = week[last]
         real = {d: p * deflator.factor(d) for d, (p, _) in week.items()}
         pool, years, past_stores = [], set(), defaultdict(float)
         for d in week:
@@ -166,12 +184,28 @@ def build(rows, deflator=None):
                     pool.append(real[d])
                     years.add(back)
                     past_stores[back] += week[d][1]
-        item = {"commodity": commodity, "name": display(commodity, key[0]), "short": sentence(NAMES.get(commodity, commodity)),
-                "unit": unit(key[1]), "price": round(price, 2), "stores": int(stores),
-                "in_season": commodity in SEASONS[season], "status": "new", "vs_usual": None, "pctile": None,
+        # usual range for each week (same weeks, earlier years, today's dollars), for the item page chart
+        dated = [(dt.date.fromisoformat(d), week[d][0], real[d]) for d in sorted(week)]
+        band = {r[0]: (r[4], r[5]) for r in with_usual(dated)}
+        # when it's usually cheapest (median price in today's dollars by month) and most advertised
+        by_month, ads_month = defaultdict(list), defaultdict(list)
+        for d, (p, st) in week.items():
+            by_month[int(d[5:7])].append(real[d])
+            ads_month[int(d[5:7])].append(st)
+        med = {m: statistics.median(v) for m, v in by_month.items() if len(v) >= 3}
+        cheapest = sorted(med, key=med.get)[:3] if len(med) >= 6 else []
+        ads = {m: statistics.median(v) for m, v in ads_month.items()}
+        peak = sorted(ads, key=ads.get, reverse=True)[:3] if len(ads) >= 6 else []
+        item = {"commodity": commodity, "slug": slug(commodity), "name": display(commodity, key[0]),
+                "short": sentence(NAMES.get(commodity, commodity)), "unit": unit(key[1]), "price": round(price, 2),
+                "stores": int(stores), "this_week": this_week, "last_date": last,
+                "in_season": commodity in SEASONS[season], "seasons": [k for k in SEASONS if commodity in SEASONS[k]],
+                "cheapest_months": cheapest, "peak_months": peak,
+                "status": "new" if this_week else "absent", "vs_usual": None, "pctile": None,
                 "low": None, "high": None, "featured": None,
-                "history": [(d, round(week[d][0], 2)) for d in sorted(week) if d >= year_ago]}
-        if len(years) >= MIN_YEARS:
+                "chart": [(d, round(p, 2), band.get(d, (None, None)))
+                          for d, (p, _) in sorted(week.items()) if d >= (today - dt.timedelta(days=371)).isoformat()]}
+        if len(years) >= MIN_YEARS and this_week:
             pool.sort()
             now = real[latest]
             usual = statistics.median(pool)
@@ -183,18 +217,19 @@ def build(rows, deflator=None):
             expected = statistics.mean(past_stores[y] for y in years) / 5  # stores per week, same weeks before
             item["featured"] = round(stores / expected, 2) if expected else None
         items.append(item)
-    by_c = {i["commodity"]: i for i in items}
+    by_c = {i["commodity"]: i for i in items if i["this_week"]}
     for i in items:
         if i["status"] == "high":
             fam = next((f for f in FAMILIES if i["commodity"] in f), [])
             alts = [by_c[c] for c in fam if c in by_c and c != i["commodity"] and by_c[c]["status"] == "low"
-                    and by_c[c]["in_season"]]  # never suggest out-of-season fruit as the better buy
+                    and by_c[c]["in_season"] and by_c[c]["stores"] >= MIN_STORES]  # never suggest out-of-season fruit as the better buy
             i["swap"] = min(alts, key=lambda a: a["vs_usual"])["short"] if alts else None
     return today, sorted(items, key=lambda i: i["name"])
 
 
 def best_buys(items, n=8):
     """Low for the time of year, in-season and widely featured first."""
+    items = [i for i in items if i["this_week"] and i["stores"] >= MIN_STORES]
     good = [i for i in items if i["status"] == "low" or (i["status"] == "typical" and i["in_season"]
                                                            and (i["featured"] or 0) >= 1.3 and (i["vs_usual"] or 0) <= 0)]
     return sorted(good, key=lambda i: (i["status"] != "low", -(i["in_season"]), i["vs_usual"] or 0))[:n]
@@ -202,7 +237,7 @@ def best_buys(items, n=8):
 
 def main():
     today, items = build(store.iter_all("retail"), cpi.Deflator(cpi.load()))
-    print(f"grocery: {len(items)} items advertised the week of {today}")
+    print(f"grocery: {sum(i['this_week'] for i in items)} of {len(items)} items advertised the week of {today}")
     for i in best_buys(items):
         print(f"  {i['name']}: ${i['price']}{i['unit']}  {i['vs_usual']}% vs usual  in season={i['in_season']}")
 
