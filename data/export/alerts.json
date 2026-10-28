@@ -1,38 +1,16 @@
 {
- "asOf": "2026-10-25",
+ "asOf": "2026-10-28",
  "alerts": [
   {
    "signal": "usda_tone",
-   "commodity": "Broccoli",
-   "market": "New York",
+   "commodity": "Lettuce, Iceberg",
+   "market": "Los Angeles",
    "direction": "down",
-   "headline": "Broccoli: USDA reporters in New York call the market lower (\u201cMarket slightly lower\u201d).",
-   "expect": "Expect New York prices to fall next week.",
-   "record": "That happened 28 of the last 32 times (normally 30%).",
-   "hit_rate": 0.875,
-   "id": "usda_tone|Broccoli|New York|down|2026-10-19"
-  },
-  {
-   "signal": "usda_tone",
-   "commodity": "Tomatoes, Plum Type",
-   "market": "New York",
-   "direction": "up",
-   "headline": "Tomatoes, Plum Type: USDA reporters in New York call the market higher (\u201cMarket slightly higher\u201d).",
-   "expect": "Expect New York prices to rise next week.",
-   "record": "That happened 35 of the last 46 times (normally 31%).",
-   "hit_rate": 0.761,
-   "id": "usda_tone|Tomatoes, Plum Type|New York|up|2026-10-19"
-  },
-  {
-   "signal": "usda_tone",
-   "commodity": "Tomatoes",
-   "market": "New York",
-   "direction": "up",
-   "headline": "Tomatoes: USDA reporters in New York call the market higher (\u201cMarket mature greens slightly higher, others about steady\u201d).",
-   "expect": "Expect New York prices to rise next week.",
-   "record": "That happened 37 of the last 56 times (normally 30%).",
-   "hit_rate": 0.661,
-   "id": "usda_tone|Tomatoes|New York|up|2026-10-19"
+   "headline": "Lettuce, Iceberg: USDA reporters in Los Angeles call the market lower (\u201cMarket slightly lower\u201d).",
+   "expect": "Expect Los Angeles prices to fall next week.",
+   "record": "That happened 46 of the last 61 times (normally 32%).",
+   "hit_rate": 0.754,
+   "id": "usda_tone|Lettuce, Iceberg|Los Angeles|down|2026-10-26"
   }
  ]
 }

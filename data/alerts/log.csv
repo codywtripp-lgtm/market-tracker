@@ -54,3 +54,4 @@ usda_tone|Tomatoes|New York|up|2026-10-19,2026-10-20,usda_tone,Tomatoes,New York
 "usda_tone|Lettuce, Iceberg|New York|down|2026-10-19",2026-10-21,usda_tone,"Lettuce, Iceberg",New York,down,"Lettuce, Iceberg: USDA reporters in New York call the market lower (“Market slightly lower”)."
 usda_tone|Limes|New York|up|2026-10-19,2026-10-22,usda_tone,Limes,New York,up,"Limes: USDA reporters in New York call the market higher (“Market mexico slightly higher, others about steady”)."
 usda_tone|Broccoli|New York|down|2026-10-19,2026-10-23,usda_tone,Broccoli,New York,down,Broccoli: USDA reporters in New York call the market lower (“Market slightly lower”).
+"usda_tone|Lettuce, Iceberg|Los Angeles|down|2026-10-26",2026-10-28,usda_tone,"Lettuce, Iceberg",Los Angeles,down,"Lettuce, Iceberg: USDA reporters in Los Angeles call the market lower (“Market slightly lower”)."
