@@ -116,6 +116,22 @@ def change(v, unit=""):
     return f'<span class="chg {tone}">{arrow} {abs(round(100 * v))}%</span>'
 
 
+def expected(i):
+    """(expected case price in two weeks, change) or (None, None). The 80% range is too wide to say in words
+    (iceberg: $37 to $70), so text gives the expected price; the range is only the chart's shading."""
+    if not i["range"] or i["change"] is None:
+        return None, None
+    return i["price"] * (1 + i["change"]), i["change"]
+
+
+def expect_text(i, unit=" a case"):
+    mid, chg = expected(i)
+    if mid is None:
+        return ""
+    move = "" if abs(chg) < 0.02 else f", {'up' if chg > 0 else 'down'} about {abs(round(100 * chg))}%"
+    return f"about {whole(mid)}{unit}{move}"
+
+
 def day_note(v):
     """Under a row's price: today's move if there was one, else the unit."""
     return change(v) if v is not None and abs(v) >= 0.005 else '<small class="unit">a case</small>'
@@ -126,7 +142,7 @@ def outlook(i):
         return '<span class="out flat">No forecast</span>'
     arrow, word, tone = DIR[i["dir"] or "steady"]
     return (f'<span class="out {tone}"><b>{arrow + " " if arrow else ""}{word}</b>'
-            f'<small>{whole(i["range"][0])}–{whole(i["range"][1])}</small></span>')
+            f'<small>{"about " + whole(expected(i)[0]) if expected(i)[0] is not None else ""}</small></span>')
 
 
 def season(i):
@@ -217,7 +233,7 @@ def chart(hist, i):
              f"from {money(pts[0][1])} to {money(pts[-1][1])}")
     legend = ('<div class="legend"><span><i class="k-price"></i>Weekly case price</span>'
               '<span><i class="k-usual"></i>Usual range for the time of year</span>'
-              + (f'<span><i class="k-fc {DIR[i["dir"] or "steady"][2]}"></i>Likely range, next weeks</span>' if fut else "")
+              + (f'<span><i class="k-fc {DIR[i["dir"] or "steady"][2]}"></i>Forecast; shading is where 8 in 10 outcomes land</span>' if fut else "")
               + "</div>")
     rows = "".join(f"<tr><td>{d:%b} {d.day}, {d.year}</td><td>{money(p)}</td>"
                    f"<td>{(money(lo) + ' to ' + money(hi)) if lo is not None else ''}</td></tr>" for d, p, lo, hi in reversed(pts))
@@ -283,8 +299,8 @@ def actions(rows, market):
             lis = "".join(
                 f'<li><a href="{item_link(i["commodity"], market)}"><span>{esc(name(i["commodity"]))}</span>'
                 f'<span class="num">{money(i["price"])}'
-                + (f' <span class="to">→ about {whole(i["price"] * (1 + i["change"]))}</span>'
-                   if key in ("firming", "softening") and i["change"] is not None else "")
+                + (f' <span class="to">→ about {whole(expected(i)[0])}</span>'
+                   if key in ("firming", "softening") and expected(i)[0] is not None else "")
                 + "</span></a></li>" for i in items)
         else:
             lis = '<li class="none">Nothing today</li>'
@@ -294,7 +310,7 @@ def actions(rows, market):
 
 def board_rows(rows, hist, today, market):
     head = ('<div class="bhead" aria-hidden="true"><span>Item</span><span>For the season</span><span>12 weeks</span>'
-            '<span class="r">Case price</span><span>Next 2 weeks, likely range</span></div>')
+            '<span class="r">Case price</span><span>Next 2 weeks</span></div>')
     body = "".join(
         f'<a class="brow" href="{item_link(i["commodity"], market)}">'
         f'<span class="b-item"><b>{esc(name(i["commodity"]))}</b><small>{esc(i["pack"])}</small></span>'
@@ -489,15 +505,14 @@ def answer(i, as_of):
         s += f", {esc(brief.vs_usual(i['vs_norm']))}{' the usual price' if abs(i['vs_norm']) >= 5 else ''} for this time of year"
     s += "."
     if i["range"]:
-        lo, hi = whole(i["range"][0]), whole(i["range"][1])
         word = {"firming": "is <strong>firming</strong>", "softening": "is <strong>softening</strong>"}.get(
             i["dir"], "looks <strong>steady</strong>")
-        s += f" The market {word}, likely {lo} to {hi} a case in two weeks."
+        s += f" The market {word}: in two weeks, expect {expect_text(i)}."
     return s
 
 
 def quote(i, hist, today, opts, note=""):
-    rng = f"{whole(i['range'][0])} to {whole(i['range'][1])}" if i["range"] else ""
+    rng = expect_text(i)
     arrow, word, tone = DIR[i["dir"] or "steady"]
     sz = ""
     if opts:
@@ -509,7 +524,7 @@ def quote(i, hist, today, opts, note=""):
             f'<div><dt>Today</dt><dd>{change(today.get(i["series_id"]), "today")}</dd></div>'
             f'<div><dt>For the season</dt><dd>{season(i)}</dd></div>'
             f'<div><dt>Next 2 weeks</dt><dd><span class="out {tone}"><b>{arrow + " " if arrow else ""}{word}</b>'
-            f'{f"<small>{rng} a case</small>" if rng else ""}</span></dd></div>'
+            f'{f"<small>{rng}</small>" if rng else ""}</span></dd></div>'
             "</dl></div>"
             + (f'<div class="todo {tone}"><h2>What to do</h2><p>{esc(i["action"])}</p></div>' if i["action"] else "")
             + (f'<div class="supply-note"><h2>Supply news</h2><p>{esc(note)}</p></div>' if note else "")
@@ -530,9 +545,8 @@ def faq(commodity, rows):
     if ny["range"]:
         word = {"firming": "go up", "softening": "come down"}.get(ny["dir"], "stay about the same")
         qa.append((f"Will {single} prices go up or down?",
-                   f"The two-week forecast for {ny['market']} says prices should {word}, likely {whole(ny['range'][0])} "
-                   f"to {whole(ny['range'][1])} a case. Forecasts like this landed inside their range about 80% of "
-                   "the time in testing (2021 to 2026)."))
+                   f"The two-week forecast for {ny['market']} says prices should {word}: {expect_text(ny)}. "
+                   "When it calls a firming or softening market, it was right about 7 times in 10 in testing (2021 to 2026)."))
     return qa
 
 
@@ -620,7 +634,7 @@ def og_data(items, hist, as_of):
         if i["market"] != "New York":
             continue
         arrow, word, tone = DIR[i["dir"] or "steady"]
-        rng = f", likely {whole(i['range'][0])} to {whole(i['range'][1])} in 2 weeks" if i["range"] else ""
+        rng = f", {expect_text(i, '')} in 2 weeks" if i["range"] else ""
         out[PAGES[i["commodity"]][0]] = {
             "title": f"{PAGES[i['commodity']][1]} prices today", "sub": f"Wholesale, Hunts Point (New York) · {date}",
             "price": money(i["price"]), "out": f"{arrow + ' ' if arrow else ''}{word}{rng}", "tone": tone,
