@@ -285,6 +285,12 @@ def board_pages():
         place = "Hunts Point (New York)" if m == "New York" else m
         emit(f"{slug}/", f"market-{board.MKEY[m]}", f"{place} Wholesale Produce Prices Today", 1,
              og_key=f"market-{board.MKEY[m]}")
+    if (BOARD / "thanksgiving.html").exists():
+        year = re.search(r"Thanksgiving produce prices (\d{4})", (BOARD / "thanksgiving.html").read_text(encoding="utf-8"))
+        emit("thanksgiving-produce-prices/", "thanksgiving",
+             f"Thanksgiving Produce Prices {year.group(1) if year else ''}: What to Buy Now, What to Wait For", 1,
+             og_key="thanksgiving", view="grocery", day=g_day,
+             head=crumbs_ld(("Grocery prices", SITE_URL), ("Thanksgiving produce prices", f"{SITE_URL}thanksgiving-produce-prices/")))
     for f in sorted((BOARD / "grocery").glob("*.html")) if (BOARD / "grocery").exists() else []:
         key = f"g-{f.stem}"
         name = og.get(key, {}).get("title", f.stem.replace("-", " ").capitalize() + " prices this week")

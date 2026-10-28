@@ -94,6 +94,12 @@ main.wrap > section:first-child { margin-top: 0; }
 .lede { font-size: 24px; line-height: 34px; margin: 0; max-width: 34ch; }
 .sub { color: var(--ink-2); max-width: 60ch; margin: -12px 0 24px; }
 
+.promo { margin: 32px 0 0; padding: 16px 20px; background: var(--band); border-radius: 8px; font-weight: 700; max-width: 760px; }
+.tg td small { display: block; color: var(--ink-2); font-weight: 400; }
+.data tbody th { font-size: 19px; color: var(--ink); font-weight: 700; border-bottom: 1px solid var(--line); padding: 14px 16px 14px 0; vertical-align: top; }
+.data tbody th a { color: var(--ink); }
+.data tbody th .ql { display: block; }
+
 /* best buys: a shelf tag and the reason, in two columns; no boxes */
 .buys { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 56px; }
 .buy { display: grid; grid-template-columns: 120px 1fr; gap: 20px; align-items: start; }
@@ -465,6 +471,7 @@ main.dash { min-width: 0; }
   .stack tr { border-bottom: 1px solid var(--line); padding: 14px 0; }
   .stack td { border: 0; padding: 2px 0; text-align: left !important; }
   .stack td:first-child { font-weight: 700; }
+  .stack tbody th { display: block; border: 0; padding: 0 0 4px; }
   .stack td[data-label]::before { content: attr(data-label) ": "; color: var(--ink-2); font-weight: 400; }
 }
 @media (prefers-reduced-motion: reduce) { .filters { transition: none; } }

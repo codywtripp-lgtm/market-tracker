@@ -642,6 +642,9 @@ def build():
         out["grocery"] = grocery_view.page(g_day, g_items)
         for gi in g_items:
             out[f"grocery/{gi['slug']}"] = grocery_view.item_page(gi, g_day, g_items)
+        _, tg_page = grocery_view.thanksgiving_page(g_day, g_items)
+        if tg_page:
+            out["thanksgiving"] = tg_page
     for m in MARKETS:
         out[f"market-{MKEY[m]}"] = home(items, hist, today, alerts, as_of, record, notes, only=m)
     for commodity, (slug, _) in PAGES.items():
@@ -660,6 +663,17 @@ def build():
                                  "out": word + (f", {abs(gi['vs_usual'])}% {'below' if gi['vs_usual'] < 0 else 'above'} usual"
                                                 if gi.get("vs_usual") else ""),
                                  "tone": {"low": "down", "high": "up"}.get(gi["status"], "flat"), "unit": gi["unit"].strip()}
+    if g_items and "thanksgiving" in out:
+        from . import holiday
+        rows = []
+        for c in ("Sweet Potatoes", "Cranberries", "Brussels Sprouts", "Celery"):
+            gi = next((x for x in g_items if x["commodity"] == c and x["this_week"]), None)
+            o = holiday.item_outlook(gi, g_day) if gi else None
+            if o and o["change"] is not None and o["change"] < 0:
+                rows.append({"name": gi["short"], "word": f"{abs(round(100 * o['change']))}% cheaper by then",
+                             "tone": "down", "price": f"${gi['price']:.2f}"})
+        og["thanksgiving"] = {"title": f"Thanksgiving produce prices {holiday.thanksgiving(g_day.year).year}",
+                              "sub": "Wait for the holiday sales on these", "rows": rows}
     if g_items:
         og["home"] = {"title": "This week’s best buys in the produce aisle",
                       "sub": f"Supermarket prices · week of {g_day:%B} {g_day.day}, {g_day.year}",
