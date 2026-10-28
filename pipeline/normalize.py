@@ -238,18 +238,26 @@ def staple(raw, fetched_at):
     organic = clean(raw.get("organic"))
     if not organic:  # meat, poultry and egg reports say how it was raised instead
         organic = "No" if env.lower() in ("", "conventional") else "Yes" if "organic" in env.lower() else "Other"
-    pack = clean(raw.get("package_size") or raw.get("package"))
-    unit = clean(raw.get("price_unit"))
-    if pack.upper() in ("N/A", "NA", ""):
+    # pack_size is what the price is for ("per lb", "each", "12 count", "Gallon"); the meat reports' pack
+    # label ("Regular", "Value", "1-2 Lbs") is kept as an attribute so value packs stay a separate series
+    desc = clean(raw.get("package_size") or raw.get("package"))
+    desc = "" if desc.upper() in ("N/A", "NA") else desc
+    unit = clean(raw.get("price_unit")).lower()
+    attrs = [f"environment={env}"] if env else []
+    if unit == "per carton":
+        pack = f"{desc} count" if desc.isdigit() else "carton"
+    elif unit in ("per lb", "each"):
         pack = unit
-    elif unit.lower() == "per carton" and pack.isdigit():
-        pack = f"{pack} count"
+        if desc:
+            attrs.append(f"pack={desc}")
+    else:
+        pack = desc or unit
     region = clean(raw.get("region"))
     return finish({
         "report_date": iso_date(raw.get("report_end_date") or raw.get("report_begin_date")),
         "commodity": clean(raw.get("commodity")), "variety": clean(raw.get("type")),
         "pack_size": pack, "properties": clean(raw.get("condition")), "grade": clean(raw.get("quality_grade")),
-        "organic": organic, "other_attributes": f"environment={env}" if env else "",
+        "organic": organic, "other_attributes": "; ".join(attrs),
         "unit_price": num(raw.get("price_avg") if raw.get("price_avg") is not None else raw.get("wtd_avg_price")),
         "price_unit": "$/" + (pack or "unit"),
         "market": "National" if region.lower() == "national" else region, "market_type": "retail",
