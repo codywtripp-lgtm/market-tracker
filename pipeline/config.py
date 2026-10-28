@@ -58,6 +58,10 @@ SHIPPING_POINT_REPORTS = [
 
 RETAIL_REPORTS = ["3324"]
 
+# Weekly grocery feature reports for the other aisles (national rows only, for the grocery view):
+# chicken, eggs, turkey, pork, beef, lamb, dairy.
+STAPLE_REPORTS = ["2756", "2757", "2867", "2868", "3228", "3229", "2995"]
+
 # Shipment volumes (truck/air/boat movement, pounds). USDA moved the Mexico-crossing and
 # Miami numbers from the regional reports into the national one (WA_FV170) around 2024, so
 # all are fetched and de-duplicated when volumes are totalled (pipeline/volumes.py).

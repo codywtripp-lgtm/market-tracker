@@ -231,6 +231,33 @@ def retail(raw, fetched_at):
     }, fetched_at)
 
 
+def staple(raw, fetched_at):
+    """Weekly grocery feature reports for meat, poultry, eggs (2756, 2757, 2867, 2868, 3228, 3229) and dairy (2995):
+    the cut or product, its package, fresh/frozen/prepared, how it was raised, average sale price, store count."""
+    env = clean(raw.get("environment"))
+    organic = clean(raw.get("organic"))
+    if not organic:  # meat, poultry and egg reports say how it was raised instead
+        organic = "No" if env.lower() in ("", "conventional") else "Yes" if "organic" in env.lower() else "Other"
+    pack = clean(raw.get("package_size") or raw.get("package"))
+    unit = clean(raw.get("price_unit"))
+    if pack.upper() in ("N/A", "NA", ""):
+        pack = unit
+    elif unit.lower() == "per carton" and pack.isdigit():
+        pack = f"{pack} count"
+    region = clean(raw.get("region"))
+    return finish({
+        "report_date": iso_date(raw.get("report_end_date") or raw.get("report_begin_date")),
+        "commodity": clean(raw.get("commodity")), "variety": clean(raw.get("type")),
+        "pack_size": pack, "properties": clean(raw.get("condition")), "grade": clean(raw.get("quality_grade")),
+        "organic": organic, "other_attributes": f"environment={env}" if env else "",
+        "unit_price": num(raw.get("price_avg") if raw.get("price_avg") is not None else raw.get("wtd_avg_price")),
+        "price_unit": "$/" + (pack or "unit"),
+        "market": "National" if region.lower() == "national" else region, "market_type": "retail",
+        "store_count": num(raw.get("store_count")),
+        "report_id": clean(raw.get("slug_id")), "report_title": clean(raw.get("report_title")),
+    }, fetched_at)
+
+
 def beef(raw, section, fetched_at):
     """LM_XB403 rows. Prices are $/cwt; normalized to $/lb. One raw cutout row -> two rows."""
     base = {
