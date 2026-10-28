@@ -330,3 +330,8 @@ h3.group.steady { --tone: var(--muted); color: var(--ink-2); }
   .vs td:nth-child(2)::before { content: "USDA reports: "; color: var(--muted); }
   .vs td:nth-child(3)::before { content: "The brief: "; color: var(--muted); }
 }
+@media (max-width: 640px) {
+  .ex thead { display: none; }
+  .ex tr { display: block; border-bottom: 1px solid var(--border); padding: 10px 0; }
+  .ex td { display: block; border: 0; padding: 3px 0; }
+}
