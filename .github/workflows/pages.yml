@@ -5,7 +5,7 @@ name: Website
 on:
   push:
     branches: [main]
-    paths: ["site/**", "scripts/build_site.py", ".github/workflows/pages.yml"]
+    paths: ["site/**", "scripts/build_site.py", "pipeline/**", "data/board/**", ".github/workflows/pages.yml"]
   workflow_run:
     workflows: ["Daily USDA fetch", "Backfill history"]
     types: [completed]
