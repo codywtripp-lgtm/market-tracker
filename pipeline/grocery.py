@@ -233,7 +233,6 @@ def build(rows, deflator=None, live=None):
                 "cheapest_months": cheapest, "peak_months": peak,
                 # typical ad price by month (median, today's dollars) and how many ad weeks back it up
                 "month_price": {m: round(v, 2) for m, v in med.items()},
-                "weeks": week,  # every week's (price, stores) for the main pack, for the holiday guides
                 "status": "new" if this_week else "absent", "vs_usual": None, "pctile": None,
                 "low": None, "high": None, "featured": None,
                 "chart": [(d, round(p, 2), band.get(d, (None, None)))
