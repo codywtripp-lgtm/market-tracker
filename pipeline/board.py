@@ -678,6 +678,9 @@ def build():
                       "rows": [{"name": i["short"], "word": f"{abs(i['vs_usual'])}% below usual" if i["vs_usual"] else "In season",
                                 "tone": "down", "price": f"${i['price']:.2f}"} for i in grocery.best_buys(g_items, 4)]}
     out["og"] = json.dumps(og, separators=(",", ":"))
+    if g_items:
+        from . import grocery_forecast
+        out["outlook_record"] = json.dumps(grocery_forecast.RECORD)
     return as_of, out
 
 
@@ -713,7 +716,7 @@ def main():
         for old in (OUT / sub).glob("*.html"):
             old.unlink()
     for key, body in pages.items():
-        (OUT / (f"{key}.json" if key == "og" else f"{key}.html")).write_text(body, encoding="utf-8")
+        (OUT / (f"{key}.json" if key in ("og", "outlook_record") else f"{key}.html")).write_text(body, encoding="utf-8")
     (OUT / "as_of.txt").write_text(as_of.isoformat())
     if "grocery" in pages:
         g_day = re.search(r"Week of (\w+ \d+, \d{4})", pages["grocery"])
