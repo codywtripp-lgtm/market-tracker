@@ -646,6 +646,7 @@ def build():
                 out[f"aisle-{aisle}"] = body
         for gi in g_items:
             out[f"grocery/{gi['slug']}"] = grocery_view.item_page(gi, g_day, g_items)
+        out["cook"] = grocery_view.cook_page(g_day, g_items)
         _, tg_page = grocery_view.thanksgiving_page(g_day, g_items)
         if tg_page:
             out["thanksgiving"] = tg_page
@@ -715,7 +716,7 @@ def og_data(items, hist, as_of):
 
 def main():
     as_of, pages = build()
-    for sub in ("items", "grocery"):
+    for sub in ("items", "grocery", "recipes"):
         (OUT / sub).mkdir(parents=True, exist_ok=True)
         for old in (OUT / sub).glob("*.html"):
             old.unlink()

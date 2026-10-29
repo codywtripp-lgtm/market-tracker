@@ -8,6 +8,7 @@ import datetime as dt
 import html
 import json
 import re
+from urllib.parse import quote_plus
 
 from . import grocery, quality
 
@@ -113,6 +114,7 @@ AISLE_FIND = {"produce": "Apples, berries, lettuce…", "meat": "Chicken, ground
 
 
 def page(today, items, aisle="produce"):
+    all_items = items
     items = [i for i in items if i["this_week"] and i["aisle"] == aisle]
     if not items:
         return None
@@ -133,6 +135,11 @@ def page(today, items, aisle="produce"):
             f'<li class="buy">{tag(i)}<div class="buy-body"><h3>{link(i)}</h3>{qual(i)}'
             f'<p class="buy-why">{why_line(i, today)}</p>{price_bar(i, today)}</div></li>' for i in buys)
         parts.append(f'<section><h2>Best buys</h2><ul class="buys">{tiles}</ul></section>')
+    if aisle == "produce":  # what to make with this week's best buys, across all aisles
+        from . import recipes
+        parts.append(f'<section><h2>Cook this week</h2><p class="sub">Simple meals built on this week’s best buys.</p>'
+                     f'{cook_rows(recipes.ranked(all_items), all_items, 3)}'
+                     '<p><a class="more-link" href="@/cook-this-week/">See all meal ideas for this week</a></p></section>')
     if season and aisle == "produce":
         chips = "".join(f'<li><span><a class="sname" href="@/grocery/{i["slug"]}/">{esc(i["short"])}</a>{qual(i)}</span>'
                         f'<span class="sword {STATUS[i["status"]][1]}">{esc(STATUS[i["status"]][0])}</span></li>'
@@ -380,9 +387,15 @@ def item_page(i, today, all_items):
     if i["commodity"] in WHOLESALE:
         parts.append(f'<p class="fine">Buy for a restaurant, store or distributor? <a href="@/{WHOLESALE[i["commodity"]]}/">'
                      f'See wholesale {esc(i["short"].lower())} prices and the two-week outlook</a>.</p>')
+    # more from the same aisle, then the way to the other aisles
     others = "".join(f'<a href="@/grocery/{o["slug"]}/">{esc(o["short"])}</a>'
-                     for o in sorted(all_items, key=lambda o: o["short"]) if o["slug"] != i["slug"])
-    parts.append(f'<section><h2>Other produce</h2><nav class="others">{others}</nav></section>')
+                     for o in sorted(all_items, key=lambda o: o["short"])
+                     if o["slug"] != i["slug"] and o["aisle"] == i["aisle"])
+    aisles = {"produce": ("@/", "Produce"), "meat": ("@/meat-prices/", "Meat & poultry"),
+              "dairy": ("@/dairy-and-egg-prices/", "Dairy & eggs")}
+    rest = " · ".join(f'<a href="{u}">{n}</a>' for a, (u, n) in aisles.items() if a != i["aisle"])
+    parts.append(f'<section><h2>More {aisles[i["aisle"]][1].lower()}</h2><nav class="others">{others}</nav>'
+                 f'<p class="fine">Other aisles: {rest}</p></section>')
     return "\n".join(parts) + "\n"
 
 
@@ -470,3 +483,74 @@ def thanksgiving_page(today, items):
              + "".join(f"<h3>{esc(q)}</h3><p>{esc(a)}</p>" for q, a in qa) + "</section>",
              f'<script type="application/ld+json">{faq_ld}</script>']
     return target, "\n".join(parts) + "\n"
+
+
+# ---------- Cook this week ----------
+def _names(xs):
+    n = [x["short"] if x["short"].split()[0] in grocery.KEEP_CAPS else x["short"][:1].lower() + x["short"][1:] for x in xs]
+    return n[0] if len(n) == 1 else ", ".join(n[:-1]) + " and " + n[-1]
+
+
+def _cost(per, partial):
+    if per is None:
+        return ""
+    return f"About {money(per)} a serving" + ("*" if partial else "")
+
+
+def shopping_list(r, items):
+    by_c = {i["commodity"]: i for i in items}
+    out = ""
+    for commodity, _, _, text in r["items"]:
+        i = by_c.get(commodity)
+        if i and i["this_week"]:
+            word, tone = STATUS[i["status"]]
+            price = (f'<a href="@/grocery/{i["slug"]}/" class="ing-price">{money(i["price"])}{esc(i["unit"])}</a>'
+                     f'<span class="ing-word {tone}">{esc(word)}</span>')
+        else:
+            price = '<span class="ing-word flat">No price this week</span>'
+        out += f'<li><span>{esc(text)}</span><span class="ing-tag">{price}</span></li>'
+    return f'<ul class="ing">{out}</ul>'
+
+
+def cook_rows(rows, items, limit=None):
+    """Each meal: name, cost per serving, what it is, its good buys, the shopping list with this week's prices, and a
+    web search for a recipe. We don't publish recipes."""
+    out = ""
+    for r, per, partial, score, good, pricey in rows[:limit]:
+        notes = ""
+        if good:
+            notes += f'<span class="good">Good buys: {esc(_names(good[:4]))}</span>'
+        if pricey:
+            notes += f'<span class="bad">Pricey: {esc(_names(pricey[:3]))}</span>'
+        find = "https://www.google.com/search?q=" + quote_plus(r["name"] + " recipe")
+        out += (f'<li><h3 class="rname">{esc(r["name"])}</h3><span class="rcost">{_cost(per, partial)}</span>'
+                f'<p class="rdesc">{esc(r["desc"])} Serves {r["serves"]}.</p>'
+                f'<span class="rnotes">{notes}</span>'
+                f'<details class="rbuy"><summary>Shopping list</summary>{shopping_list(r, items)}</details>'
+                f'<a class="rfind" href="{find}" target="_blank" rel="noopener">Find a recipe'
+                '<span class="vh"> (web search, opens in a new tab)</span></a></li>')
+    return f'<ul class="recipes">{out}</ul>'
+
+
+COST_NOTE = ("*Cost per serving covers the fresh items on the shopping list, at this week’s average U.S. supermarket "
+             "prices. Pantry staples (oil, spices, rice, pasta) are extra.")
+
+
+def cook_page(today, items):
+    from . import recipes
+    rows = recipes.ranked(items)
+    best = [x for x in rows if x[3] > 0]
+    later = [x for x in rows if x[3] <= 0]
+    stars = sorted({g["short"]: g for x in best[:6] for g in x[4]}.values(), key=lambda g: g["short"])[:5]
+    lede = ("These meals lean on this week’s best buys" + (f": {_names(stars)}." if stars else ".")
+            + " Each is ranked by how many of its main ingredients are a good price and good quality right now.")
+    parts = [f'<section class="intro"><h1>What to cook this week</h1>'
+             f'<p class="date">Week of {today:%B} {today.day}, {today.year}. Based on the average of the prices U.S. '
+             'supermarkets advertised this week, reported by USDA.</p>'
+             f'<p class="lede">{esc(lede)}</p></section>',
+             f'<section><h2>Best this week</h2>{cook_rows(best, items)}</section>']
+    if later:
+        parts.append(f'<section><h2>Better another week</h2><p class="sub">Their main ingredients are pricey right now.</p>'
+                     f'{cook_rows(later, items)}</section>')
+    parts.append(f'<p class="fine">{esc(COST_NOTE)} “Find a recipe” opens a web search.</p>')
+    return "\n".join(parts) + "\n"

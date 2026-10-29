@@ -134,7 +134,8 @@ ICONS = ('<link rel="icon" href="/favicon.svg" type="image/svg+xml">'
 VIEWS = (("", "Grocery store"), ("wholesale/", "Wholesale market"))
 LINKS = (("charts/", "Price history"), ("why/", "Track record"), ("about/", "About"))
 # grocery aisles, the way a shopper walks the store (pages written by pipeline/board.py)
-AISLES = (("", "Produce"), ("meat-prices/", "Meat & poultry"), ("dairy-and-egg-prices/", "Dairy & eggs"))
+AISLES = (("", "Produce"), ("meat-prices/", "Meat & poultry"), ("dairy-and-egg-prices/", "Dairy & eggs"),
+          ("cook-this-week/", "Cook this week"))
 SEARCH = []  # dicts for /search.json and the A to Z page (see emit)
 AISLE_NAME = {"": "Produce", "meat-prices/": "Meat & poultry", "dairy-and-egg-prices/": "Dairy & eggs"}
 
@@ -322,6 +323,11 @@ def board_pages():
              og_key="thanksgiving", view="grocery", day=g_day,
              find={"name": "Thanksgiving prices", "status": "What to buy now, what to wait for", "aka": "holiday turkey"},
              head=crumbs_ld(("Grocery prices", SITE_URL), ("Thanksgiving prices", f"{SITE_URL}thanksgiving-produce-prices/")))
+    if (BOARD / "cook.html").exists():
+        emit("cook-this-week/", "cook", "What to Cook This Week: Cheap Dinner Ideas From This Week’s Best Buys", 1,
+             view="grocery", day=g_day, aisle="cook-this-week/",
+             find={"name": "Cook this week", "status": "Meal ideas from this week’s best buys", "aka": "recipes dinner meals cheap"},
+             head=crumbs_ld(("Grocery prices", SITE_URL), ("Cook this week", f"{SITE_URL}cook-this-week/")))
     for f in sorted((BOARD / "grocery").glob("*.html")) if (BOARD / "grocery").exists() else []:
         key = f"g-{f.stem}"
         name = og.get(key, {}).get("title", f.stem.replace("-", " ").capitalize() + " prices this week")
