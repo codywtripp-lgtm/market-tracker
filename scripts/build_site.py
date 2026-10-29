@@ -108,6 +108,12 @@ def main():
         (OUT / "data" / "s" / f"{sid}.json").write_text(json.dumps(with_usual(rows), separators=(",", ":")))
     urls = board_pages() + why_page() + charts_page() + about_page()
     redirect("brief", "../")
+    if KIT_FORM_ACTION:
+        write(OUT / "thanks" / "index.html", page(
+            "You’re Signed Up", "Check your inbox to confirm the weekly best-buys email.", f"{SITE_URL}thanks/", "../",
+            '<section class="intro"><h1>Almost done</h1><p class="lede">Check your inbox and click the link in the '
+            'confirmation email. The first weekly email arrives on Saturday.</p>'
+            '<p><a href="../">Back to this week’s prices</a></p></section>', view="grocery", noindex=True))
     redirect("cook-this-week", "../")  # removed 2026-10-29
     redirect("thanksgiving-produce-prices", "../")  # removed 2026-10-29
     seo_files(urls)
@@ -119,6 +125,10 @@ SITE_URL = "https://producepricetracker.com/"
 # visit counts: GoatCounter (free, no cookies, no personal data, no consent banner needed); dashboard at
 # https://producepricetracker.goatcounter.com. Its script ignores localhost, so previews aren't counted.
 GOATCOUNTER = "https://producepricetracker.goatcounter.com/count"
+CONTACT = "hello@producepricetracker.com"  # Porkbun email forwarding
+# Weekly email sign-up: the "action" URL of the Kit form (Kit > Grow > Landing pages & forms > the form > Publish >
+# HTML). Public by design. Empty: no sign-up box is shown. Sending: pipeline/newsletter.py.
+KIT_FORM_ACTION = ""
 SITE_NAME = "Produce Price Tracker"
 FONTS_REMOTE = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
          '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
@@ -177,6 +187,20 @@ def topbar(up, active=None, view="wholesale", aisle=None):
             f'<div class="wrap">{sub}</div>')
 
 
+def signup(up):
+    """Weekly email sign-up: an inline form at the end of grocery pages (no pop-ups). Kit sends a confirmation email
+    first (double opt-in), then the sign-up lands on /thanks/."""
+    if not KIT_FORM_ACTION:
+        return ""
+    return (f'<section class="signup" aria-labelledby="signup-h"><h2 id="signup-h">Best buys by email</h2>'
+            '<p>Every Saturday: what’s cheap, what’s in season and what’s pricey at the supermarket, with the two-week '
+            'outlook. Free; unsubscribe anytime.</p>'
+            f'<form action="{_esc(KIT_FORM_ACTION)}" method="post" class="signup-form">'
+            '<label class="vh" for="signup-email">Email address</label>'
+            '<input id="signup-email" type="email" name="email_address" placeholder="you@example.com" required '
+            'autocomplete="email"><button type="submit">Sign up</button></form></section>')
+
+
 def footer(up):
     items = "".join(f'<a href="{up}{slug}/">{_esc(n)} prices</a>' for slug, n in board.PAGES.values())
     markets = "".join(f'<a href="{up}{slug}/">{"Hunts Point" if m == "New York" else m} produce prices</a>'
@@ -184,7 +208,8 @@ def footer(up):
     return ('<footer class="foot"><div class="wrap"><p>Grocery prices are the average of what U.S. supermarkets advertised each week, from USDA’s '
             "National Retail Report. Wholesale prices are the USDA “mostly” price per case at the terminal markets, from "
             "USDA AMS Market News. “Usual” means the same weeks of the year in past years, adjusted for food inflation. "
-            f'<a href="{up}about/">How this site works</a>.</p>'
+            f'<a href="{up}about/">How this site works</a>. Questions or a wrong number? '
+            f'<a href="mailto:{CONTACT}">{CONTACT}</a></p>'
             f'<nav aria-label="Wholesale markets">{markets}</nav><nav aria-label="Wholesale prices by item">{items}</nav></div></footer>')
 
 
@@ -226,6 +251,7 @@ def page(title, desc, canonical, up, body, active=None, head="", og=None, main_c
 {topbar(up, active, view, aisle)}
 <main class="{main_class}">
 {body}
+{signup(up) if view == "grocery" and active != "about/" else ""}
 </main>
 {footer(up)}
 </body></html>
@@ -600,8 +626,12 @@ two weeks. It makes no call when supply reports point the other way.""" + outloo
 <li><b>Wholesale forecasts:</b> case prices one to four weeks out. Accuracy by item is on the
 <a href="../why/">track record page</a>.</li>
 </ul></section>
+<section><h2>Contact</h2>
+<p>Questions, ideas or a number that looks wrong: <a href="mailto:""" + CONTACT + """">""" + CONTACT + """</a>.</p></section>
 <section><h2>Privacy</h2>
-<p>We count visits with GoatCounter, which uses no cookies and collects no personal information.</p></section>
+<p>We count visits with GoatCounter, which uses no cookies and collects no personal information. If you sign up
+for the weekly email, your address is stored by our email service, Kit, and used only to send that email; every
+email has an unsubscribe link.</p></section>
 <section><h2>Limits</h2>
 <p>Grocery prices are what supermarkets advertise; your store’s shelf price can differ. Wholesale prices are USDA
 market reports, so a supplier’s quote can differ too. About one forecast in four is wrong.</p></section>"""
