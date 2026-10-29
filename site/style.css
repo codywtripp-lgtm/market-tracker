@@ -127,7 +127,12 @@ main.wrap > section:first-child { margin-top: 0; }
 .lede { font-size: 24px; line-height: 34px; margin: 0; max-width: 34ch; }
 .sub { color: var(--ink-2); max-width: 60ch; margin: -12px 0 24px; }
 
-.promo { margin: 32px 0 0; padding: 16px 20px; background: var(--band); border-radius: 8px; font-weight: 700; max-width: 760px; }
+.guides { margin: 32px 0 0; max-width: 760px; }
+.guides ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.guides li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.guides a { font-weight: 700; }
+.guides a::after { content: " →"; }
+.guides span { color: var(--ink-2); font-size: 16px; }
 .tg td small { display: block; color: var(--ink-2); font-weight: 400; }
 .data tbody th { font-size: 19px; color: var(--ink); font-weight: 700; border-bottom: 1px solid var(--line); padding: 14px 16px 14px 0; vertical-align: top; }
 .data tbody th a { color: var(--ink); }
@@ -203,7 +208,6 @@ main.wrap > section:first-child { margin-top: 0; }
 .rcost { font-weight: 700; white-space: nowrap; text-align: right; }
 .rnotes { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 15px; }
 .rnotes .good { color: var(--good); font-weight: 700; } .rnotes .bad { color: var(--bad); }
-.more-link { font-weight: 700; }
 .ing { list-style: none; margin: 0; padding: 0; max-width: 720px; }
 .ing { border-top: 2px solid var(--ink); }
 .ing li { display: flex; justify-content: space-between; align-items: baseline; gap: 8px 16px; flex-wrap: wrap; padding: 12px 0; border-bottom: 1px solid var(--line); }

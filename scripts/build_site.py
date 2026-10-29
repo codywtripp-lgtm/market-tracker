@@ -132,10 +132,11 @@ ICONS = ('<link rel="icon" href="/favicon.svg" type="image/svg+xml">'
          '<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">'
          '<link rel="apple-touch-icon" href="/apple-touch-icon.png">')
 VIEWS = (("", "Grocery store"), ("wholesale/", "Wholesale market"))
-LINKS = (("charts/", "Price history"), ("why/", "Track record"), ("about/", "About"))
+# header links per side: price history and the forecast track record are wholesale tools
+LINKS = {"wholesale": (("charts/", "Price history"), ("why/", "Track record"), ("about/", "About")),
+         "grocery": (("search/", "All prices A to Z"), ("about/", "About"))}
 # grocery aisles, the way a shopper walks the store (pages written by pipeline/board.py)
-AISLES = (("", "Produce"), ("meat-prices/", "Meat & poultry"), ("dairy-and-egg-prices/", "Dairy & eggs"),
-          ("cook-this-week/", "Cook this week"))
+AISLES = (("", "Produce"), ("meat-prices/", "Meat & poultry"), ("dairy-and-egg-prices/", "Dairy & eggs"))
 SEARCH = []  # dicts for /search.json and the A to Z page (see emit)
 AISLE_NAME = {"": "Produce", "meat-prices/": "Meat & poultry", "dairy-and-egg-prices/": "Dairy & eggs"}
 
@@ -147,7 +148,7 @@ def _esc(s):
 def topbar(up, active=None, view="wholesale", aisle=None):
     """Logo, search and small links; then grocery / wholesale; then, on grocery pages, the aisles."""
     cur = ' aria-current="page"'
-    links = "".join(f'<a href="{up}{href}"{cur if href == active else ""}>{label}</a>' for href, label in LINKS)
+    links = "".join(f'<a href="{up}{href}"{cur if href == active else ""}>{label}</a>' for href, label in LINKS["grocery" if view == "grocery" else "wholesale"])
     on = ' aria-current="true"'
     switch = "".join(f'<a href="{up}{href}"{on if (href == "") == (view == "grocery") else ""}>{label}</a>'
                      for href, label in VIEWS)
@@ -167,7 +168,7 @@ def topbar(up, active=None, view="wholesale", aisle=None):
 
 
 def footer(up):
-    items = "".join(f'<a href="{up}{slug}/">{_esc(board.name(c))} prices</a>' for c, (slug, _) in board.PAGES.items())
+    items = "".join(f'<a href="{up}{slug}/">{_esc(n)} prices</a>' for slug, n in board.PAGES.values())
     markets = "".join(f'<a href="{up}{slug}/">{"Hunts Point" if m == "New York" else m} produce prices</a>'
                       for m, slug in board.MARKET_PAGES.items())
     return ('<footer class="foot"><div class="wrap"><p>Grocery prices are the average of what U.S. supermarkets advertised each week, from USDA’s '
@@ -270,10 +271,10 @@ def board_pages():
     g_day = (BOARD / "grocery_as_of.txt").read_text().strip() if (BOARD / "grocery_as_of.txt").exists() else as_of.isoformat()
 
     def emit(rel, frag_name, title, depth, active=None, og_key=None, head="", view="wholesale", day=None, find=None,
-             aisle=None):
+             aisle=None, desc=None):
         frag = (BOARD / f"{frag_name}.html").read_text(encoding="utf-8")
         up = "../" * depth
-        desc = _text(frag, "answer") or _text(frag, "lede")
+        desc = desc or _text(frag, "answer") or _text(frag, "lede")
         if og_key and og_key in og:
             cards[og_key] = og[og_key]
         write(OUT / rel / "index.html", page(title, desc, SITE_URL + rel, up, frag.replace('href="@/', f'href="{up}'),
@@ -310,6 +311,8 @@ def board_pages():
                  find={"name": AISLE_NAME[rel], "status": "This week’s best buys", "aka": find[3]},
                  head=crumbs_ld(("Grocery prices", SITE_URL), (AISLE_NAME[rel], f"{SITE_URL}{rel}")))
     emit("wholesale/", "home", "Wholesale Produce Prices Today: Hunts Point, LA, Chicago", 1,
+         desc="Wholesale produce prices today at Hunts Point (New York), Los Angeles and Chicago: what’s firming, "
+              "what’s softening, and a two-week outlook, per case.",
          og_key="wholesale", head=f'<script type="application/ld+json">{dataset}</script>',
          find={"name": "All wholesale prices", "status": "New York, Los Angeles, Chicago", "aka": "terminal market"})
     for m, slug in board.MARKET_PAGES.items():
@@ -317,17 +320,18 @@ def board_pages():
         emit(f"{slug}/", f"market-{board.MKEY[m]}", f"{place} Wholesale Produce Prices Today", 1,
              og_key=f"market-{board.MKEY[m]}")
     if (BOARD / "thanksgiving.html").exists():
-        year = re.search(r"Thanksgiving turkey and produce prices (\d{4})", (BOARD / "thanksgiving.html").read_text(encoding="utf-8"))
+        year = re.search(r"Thanksgiving food prices (\d{4})", (BOARD / "thanksgiving.html").read_text(encoding="utf-8"))
         emit("thanksgiving-produce-prices/", "thanksgiving",
-             f"Thanksgiving Turkey and Produce Prices {year.group(1) if year else ''}: Buy Now or Wait?", 1,
+             f"Thanksgiving Food Prices {year.group(1) if year else ''}: Buy Now or Wait?", 1,
              og_key="thanksgiving", view="grocery", day=g_day,
-             find={"name": "Thanksgiving prices", "status": "What to buy now, what to wait for", "aka": "holiday turkey"},
-             head=crumbs_ld(("Grocery prices", SITE_URL), ("Thanksgiving prices", f"{SITE_URL}thanksgiving-produce-prices/")))
+             desc=re.sub(r", \d+ days? away", "", _text((BOARD / "thanksgiving.html").read_text(encoding="utf-8"), "lede")),
+             find={"name": "Thanksgiving food prices", "status": "What to buy now, what to wait for", "aka": "holiday turkey ham"},
+             head=crumbs_ld(("Grocery prices", SITE_URL), ("Thanksgiving food prices", f"{SITE_URL}thanksgiving-produce-prices/")))
     if (BOARD / "cook.html").exists():
-        emit("cook-this-week/", "cook", "What to Cook This Week: Cheap Dinner Ideas From This Week’s Best Buys", 1,
-             view="grocery", day=g_day, aisle="cook-this-week/",
-             find={"name": "Cook this week", "status": "Meal ideas from this week’s best buys", "aka": "recipes dinner meals cheap"},
-             head=crumbs_ld(("Grocery prices", SITE_URL), ("Cook this week", f"{SITE_URL}cook-this-week/")))
+        emit("cook-this-week/", "cook", "What to Cook This Week: Cheap Meals From This Week’s Best Buys", 1,
+             view="grocery", day=g_day,
+             find={"name": "What to cook this week", "status": "Cheap meals from this week’s best buys", "aka": "recipes dinner meals cheap cook"},
+             head=crumbs_ld(("Grocery prices", SITE_URL), ("What to cook this week", f"{SITE_URL}cook-this-week/")))
     for f in sorted((BOARD / "grocery").glob("*.html")) if (BOARD / "grocery").exists() else []:
         key = f"g-{f.stem}"
         name = og.get(key, {}).get("title", f.stem.replace("-", " ").capitalize() + " prices this week")
@@ -353,7 +357,8 @@ def board_pages():
             if (BOARD / "items" / f"{slug}--{ms}.html").exists():
                 place = "Hunts Point" if m == "New York" else m
                 emit(f"{slug}/{ms}/", f"items/{slug}--{ms}", f"{n} Wholesale Prices Today in {place}",
-                     2, og_key=slug, head=crumbs_ld(*trail, (place, f"{SITE_URL}{slug}/{ms}/")))
+                     2, og_key=slug, desc=f"{n} wholesale prices today at {place}, per case: how they compare with the "
+                                          "usual for the season, the past year, and a two-week outlook.", head=crumbs_ld(*trail, (place, f"{SITE_URL}{slug}/{ms}/")))
     # link preview cards, rendered to PNG by scripts/og_images.py
     for key, c in cards.items():
         write(OUT / "og" / f"{key}.html", og_card(c))
@@ -567,12 +572,13 @@ page comes from a walk-forward test. Each year was predicted only with data from
 def about_page():
     """Where the numbers come from and how the pages are made (owner asked to keep themself off the site)."""
     body = """<section class="intro"><h1>How this site works</h1>
-<p class="lede">Produce Price Tracker shows what fruit and vegetables cost this week, whether that’s cheap or pricey
-for the time of year, and where wholesale prices are likely to go next. It’s free, has no ads and needs no sign-up.</p></section>
+<p class="lede">Produce Price Tracker shows what produce, meat, dairy and eggs cost at U.S. supermarkets this week,
+whether that’s cheap or pricey for the time of year, and where wholesale produce prices are likely to go next. It’s free,
+has no ads and needs no sign-up.</p></section>
 <section><h2>Where the numbers come from</h2>
 <ul>
-<li><b>Grocery prices:</b> USDA’s National Retail Report, the prices supermarkets advertise each week and how many
-stores ran each sale, nationwide.</li>
+<li><b>Grocery prices:</b> USDA’s weekly National Retail Reports for produce, meat, poultry, dairy and eggs: the
+prices supermarkets advertise each week and how many stores advertised them, nationwide.</li>
 <li><b>Wholesale prices:</b> USDA AMS Market News terminal market reports for New York (Hunts Point), Los Angeles and
 Chicago, plus shipping-point reports and shipment volumes.</li>
 <li><b>In season:</b> USDA SNAP-Ed’s Seasonal Produce Guide.</li>
@@ -583,6 +589,9 @@ earlier years compare fairly.</li>
 <p>Every market evening a program downloads the latest USDA reports and rebuilds every page from the data. Nobody
 edits the prices by hand. “Usual” is the same weeks of the year in earlier years, in today’s dollars: the cheapest
 quarter of those weeks counts as a great or low price, the highest quarter as pricey or high.</p>
+<p>Meal ideas price each meal’s fresh ingredients at this week’s average supermarket prices and rank meals by how
+many of their main ingredients are a good price and good quality. The Thanksgiving guide compares how each item’s
+price moved into Thanksgiving week in past years.</p>
 <p>Wholesale forecasts come from a statistical model tested the honest way: each past year was predicted using only
 data from before it. The results, misses included, are on the <a href="../why/">track record page</a>.</p>
 <p>The site’s code was written with the help of AI coding tools. The pages themselves are generated from USDA data by that

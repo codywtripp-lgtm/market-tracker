@@ -79,6 +79,8 @@ def why_line(i, today):
     if i["vs_usual"] is not None and abs(i["vs_usual"]) >= 3:
         bits.append(f'<b class="{"good" if i["vs_usual"] < 0 else "bad"}">{abs(i["vs_usual"])}% '
                     f'{"below" if i["vs_usual"] < 0 else "above"} usual</b> for {when(today)}.')
+    elif i["status"] == "low":  # a great price that is only a hair under the usual range
+        bits.append(f'<b class="good">At the low end of its usual price</b> for {when(today)}.')
     if i["in_season"]:
         bits.append("In season.")
     if i["featured"] and i["featured"] >= 1.3:
@@ -114,7 +116,6 @@ AISLE_FIND = {"produce": "Apples, berries, lettuce…", "meat": "Chicken, ground
 
 
 def page(today, items, aisle="produce"):
-    all_items = items
     items = [i for i in items if i["this_week"] and i["aisle"] == aisle]
     if not items:
         return None
@@ -126,20 +127,12 @@ def page(today, items, aisle="produce"):
     stores = max(i["stores"] for i in items) if items else 0
     parts = [f'<section class="intro"><h1>{AISLE_HEAD[aisle]}</h1>'
              f'<p class="date">Week of {today:%B} {today.day}, {today.year}. Average of the prices U.S. supermarkets advertised this week, reported by USDA. Your store’s price may differ.</p><p class="lede">{esc(lede(items, buys, pricey))}</p></section>']
-    from .holiday import thanksgiving
-    if 0 <= (thanksgiving(today.year) - today).days <= 40 and aisle in ("produce", "meat"):
-        parts.append('<p class="promo"><a href="@/thanksgiving-produce-prices/">Thanksgiving prices: what to buy now '
-                     'and what to wait for</a></p>')
+    parts.append(guides(today))
     if buys:
         tiles = "".join(
             f'<li class="buy">{tag(i)}<div class="buy-body"><h3>{link(i)}</h3>{qual(i)}'
             f'<p class="buy-why">{why_line(i, today)}</p>{price_bar(i, today)}</div></li>' for i in buys)
         parts.append(f'<section><h2>Best buys</h2><ul class="buys">{tiles}</ul></section>')
-    if aisle == "produce":  # what to make with this week's best buys, across all aisles
-        from . import recipes
-        parts.append(f'<section><h2>Cook this week</h2><p class="sub">Simple meals built on this week’s best buys.</p>'
-                     f'{cook_rows(recipes.ranked(all_items), all_items, 3)}'
-                     '<p><a class="more-link" href="@/cook-this-week/">See all meal ideas for this week</a></p></section>')
     if season and aisle == "produce":
         chips = "".join(f'<li><span><a class="sname" href="@/grocery/{i["slug"]}/">{esc(i["short"])}</a>{qual(i)}</span>'
                         f'<span class="sword {STATUS[i["status"]][1]}">{esc(STATUS[i["status"]][0])}</span></li>'
@@ -168,18 +161,20 @@ def page(today, items, aisle="produce"):
                  '<table class="all"><thead><tr><th scope="col">Item</th><th scope="col" class="n">Price</th>'
                  f'<th scope="col">For the time of year</th><th scope="col">Quality now</th></tr></thead>'
                  f'<tbody>{rows}</tbody></table></section>')
-    parts.append(f'<section class="how"><h2>How this works</h2><p>Quality is what to expect this time of year: new '
-                 'crop and peak harvest rate excellent; storage, imports, end-of-season and growing-area changeovers rate '
-                 'fair or poor. Tap or hover over a rating for the reason. A low price on poor-quality produce is never '
-                 'listed as a best buy.</p><p>Every week USDA records the produce prices '
-                 f'supermarkets advertise each week, from about {stores:,} stores for the most common items. We compare this '
-                 'week’s average price with the same weeks in the last five to ten years, adjusted for inflation: '
-                 'the cheapest quarter of those weeks is a great price, the highest quarter is pricey. “In season” is '
-                 'from USDA’s seasonal produce guide. These are advertised prices; your store’s everyday shelf price may '
-                 'differ.</p><p>Buy for a restaurant, store or distributor? <a href="@/wholesale/">See wholesale '
-                 'market prices and two-week forecasts</a>.</p></section>')
-    data = {"@context": "https://schema.org", "@type": "Dataset", "name": "Supermarket produce prices this week",
-            "description": "Average advertised supermarket prices for produce in the U.S., compared with the same "
+    what = {"produce": "produce", "meat": "meat and poultry", "dairy": "dairy and eggs"}[aisle]
+    quality = ('<p>Quality is what to expect this time of year: new crop and peak harvest rate excellent; storage, '
+               'imports, end-of-season and growing-area changeovers rate fair or poor. Tap or hover over a rating for the '
+               'reason. A low price on poor-quality produce is never listed as a best buy.</p>' if aisle == "produce" else "")
+    years = "five to ten years" if aisle == "produce" else "five years"
+    season = " “In season” is from USDA’s seasonal produce guide." if aisle == "produce" else ""
+    parts.append(f'<section class="how"><h2>How this works</h2>{quality}<p>Every week USDA records the {what} prices '
+                 f'U.S. supermarkets advertise, from about {round(stores, -2):,} stores for the most common items. We compare '
+                 f'this week’s average price with the same weeks in the last {years}, adjusted for inflation: the cheapest '
+                 f'quarter of those weeks is a great price, the highest quarter is pricey.{season} These are advertised '
+                 'prices; your store’s everyday shelf price may differ.</p><p>Buy for a restaurant, store or distributor? '
+                 '<a href="@/wholesale/">See wholesale produce prices and two-week forecasts</a>.</p></section>')
+    data = {"@context": "https://schema.org", "@type": "Dataset", "name": f"Supermarket {what} prices this week",
+            "description": f"Average advertised supermarket prices for {what} in the U.S., compared with the same "
                            "weeks in past years.", "isBasedOn": "https://www.ams.usda.gov/market-news/retail"}
     parts.append(f'<script type="application/ld+json">{json.dumps(data)}</script>')
     return "\n".join(parts) + "\n"
@@ -417,8 +412,9 @@ def thanksgiving_page(today, items):
         return None, None
     target = rows[0][1]["target"]
     days = (target - dt.date.today()).days  # the page is rebuilt every evening
-    wait = [i for i, o in rows if o["change"] <= -0.10]
-    rise = [i for i, o in rows if o["change"] >= 0.05]
+    wait = [i for i, o in rows if o["change"] <= -0.10 and o["steady"]]
+    rise = [i for i, o in rows if o["change"] >= 0.05 and o["steady"]]
+    crowd = sorted(((i, o) for i, o in rows if i in wait and (o["stores_x"] or 0) >= 2), key=lambda r: r[1]["change"])
 
     def names(xs):
         n = [x["short"] if x["short"].split()[0] in grocery.KEEP_CAPS else x["short"][:1].lower() + x["short"][1:]
@@ -430,13 +426,15 @@ def thanksgiving_page(today, items):
         return s[:1].upper() + s[1:]
 
     lede = f"Thanksgiving is {target:%B} {target.day}, {days} days away."
-    if wait:
-        lede += (f" {cap(names(wait))} usually get much cheaper the week before, when supermarkets run their holiday "
-                 "sales, so it pays to wait.")
+    if wait:  # name the first four (the order in holiday.ITEMS is the order shoppers care about)
+        some = names(wait[:4]) if len(wait) <= 4 else ", ".join(names(wait[:4]).replace(" and ", ", ").split(", ")) + f" and {len(wait) - 4} more"
+        lede += f" {cap(some)} usually get much cheaper in the Thanksgiving week sales."
     if rise:
         lede += f" {cap(names(rise))} usually cost a bit more by then."
 
     def todo(i, o):
+        if not o["steady"]:
+            return "No rush", ""
         if o["change"] <= -0.10:
             return "Wait for Thanksgiving week", "good"
         if o["change"] >= 0.05:
@@ -459,30 +457,50 @@ def thanksgiving_page(today, items):
     if pricier:
         now_text += f"{cap(names(pricier))} {'are' if len(pricier) > 1 or plural(pricier[0]) else 'is'} pricier than usual."
     now_text = now_text.strip()
-    qa = [("When is the best time to buy produce for Thanksgiving?",
-           "For sweet potatoes, cranberries, celery and Brussels sprouts, the week before Thanksgiving: supermarkets "
-           "run holiday specials on them then, and prices usually drop well below late-October levels. Green beans and mushrooms "
-           "usually go the other way, so buy them when you see a good sale."),
-          ("Are Thanksgiving vegetables more expensive this year?",
-           now_text or "Most are close to their usual price for this time of year."),
-          ("Why are sweet potatoes and cranberries so cheap at Thanksgiving?",
-           "Stores use them as holiday specials to bring shoppers in, so many more stores feature them that week; "
-           "in past years six to eight times as many stores ran sales on them as in late October.")]
+    best = ("Usually Thanksgiving week for " + names(wait) + ": supermarkets run holiday specials on "
+            "them then, and prices drop well below where they are now." if wait else
+            "Most Thanksgiving foods cost about the same then as now, so buy whenever you see a good price.")
+    if rise:
+        best += f" {cap(names(rise))} usually go the other way, so buy them when you see a good price."
+    qa = [("When is the best time to buy food for Thanksgiving?", best),
+          ("Is Thanksgiving food more expensive this year?",
+           now_text or "Most of it is close to its usual price for this time of year.")]
+    if crowd:
+        top = crowd[0][0]
+        each = [f"{round(o['stores_x'])} times higher for {names([i])}" for i, o in crowd[:3]]
+        each = each[0] if len(each) == 1 else ", ".join(each[:-1]) + " and " + each[-1]
+        qa.append((f"Why {'are' if plural(top) else 'is'} {names([top])} so cheap at Thanksgiving?",
+                   "Stores use holiday staples as specials to bring shoppers in, so many more stores feature them that "
+                   f"week. In past years, the number of stores running specials Thanksgiving week was about {each} "
+                   "than at this point in the fall."))
     faq_ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
         {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in qa]})
-    parts = [f'<section class="intro"><h1>Thanksgiving turkey and produce prices {target.year}</h1>'
+    parts = [f'<section class="intro"><h1>Thanksgiving food prices {target.year}</h1>'
              f'<p class="date">Week of {today:%B} {today.day}, {today.year}. Average of the prices U.S. supermarkets advertised this week, reported by USDA. Your store’s price may differ.</p>'
-             f'<p class="lede">{esc(lede)}</p></section>',
+             f'<p class="lede">{esc(lede)}</p></section>', guides(today, skip="thanksgiving"),
              '<section><h2>Buy now or wait?</h2>' + (f"<p>{esc(now_text)}</p>" if now_text else "")
              + '<table class="data stack tg"><thead><tr><th>Item</th><th class="num">Price now</th>'
              f'<th class="num">Last Thanksgiving week</th><th>What to do</th></tr></thead><tbody>{body}</tbody></table>'
              '<p class="fine">“Usually” is the median change in the average advertised price from this point in the fall '
-             'to Thanksgiving week, 2016 to 2025 (five years for items added in 2021). Advertised prices, not everyday shelf '
-             'prices.</p></section>',
+             'to Thanksgiving week, 2016 to 2025 (2021 to 2025 for most items). We only call a direction when at least 7 in '
+             '10 of those years moved the same way. Advertised prices, not everyday shelf prices.</p></section>',
              '<section class="faq"><h2>Questions shoppers ask</h2>'
              + "".join(f"<h3>{esc(q)}</h3><p>{esc(a)}</p>" for q, a in qa) + "</section>",
              f'<script type="application/ld+json">{faq_ld}</script>']
     return target, "\n".join(parts) + "\n"
+
+
+def guides(today, skip=None):
+    """The same short list of planning guides on every aisle page, under the intro: they cut across aisles, so they
+    are links, not aisle tabs. Thanksgiving shows from 40 days out until the day itself."""
+    from .holiday import thanksgiving
+    links = []
+    if 0 <= (thanksgiving(today.year) - today).days <= 40 and skip != "thanksgiving":
+        links.append(("thanksgiving-produce-prices", "Thanksgiving food prices", "What to buy now and what to wait for"))
+    if skip != "cook":
+        links.append(("cook-this-week", "What to cook this week", "Cheap meals built on this week’s best buys"))
+    rows = "".join(f'<li><a href="@/{slug}/">{esc(name)}</a><span>{esc(sub)}</span></li>' for slug, name, sub in links)
+    return f'<nav class="guides" aria-label="Guides"><ul>{rows}</ul></nav>'
 
 
 # ---------- Cook this week ----------
@@ -547,7 +565,7 @@ def cook_page(today, items):
     parts = [f'<section class="intro"><h1>What to cook this week</h1>'
              f'<p class="date">Week of {today:%B} {today.day}, {today.year}. Based on the average of the prices U.S. '
              'supermarkets advertised this week, reported by USDA.</p>'
-             f'<p class="lede">{esc(lede)}</p></section>',
+             f'<p class="lede">{esc(lede)}</p></section>', guides(today, skip="cook"),
              f'<section><h2>Best this week</h2>{cook_rows(best, items)}</section>']
     if later:
         parts.append(f'<section><h2>Better another week</h2><p class="sub">Their main ingredients are pricey right now.</p>'

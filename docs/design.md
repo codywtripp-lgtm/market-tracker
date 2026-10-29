@@ -77,3 +77,9 @@ not read as AI-generated. Check new work against the "Never" list before it ship
 - Google Flights price insights (low / typical / high against past prices): https://blog.google/products/travel/google-flights-find-deals/
 - AI-design tells: https://www.925studios.co/blog/ai-slop-web-design-guide and the pixelslop pattern catalog.
 - USDA SNAP-Ed *Seasonal Produce Guide* (in-season lists by season).
+
+## Navigation (from NN/g research, 2026-10-29)
+- Tabs are for parallel content of the same kind (the aisles). Guides that cut across aisles (meal ideas, holiday guides) are plain links in one consistent spot under the intro, never tabs.
+- One row of tabs that fits a 375px phone; no overflow.
+- Header links are scoped to the side of the site the reader is on.
+- Seasonal promos are text links next to related content, not ad-like boxes (banner blindness).

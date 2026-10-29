@@ -117,7 +117,7 @@ def history(items, weeks=56):
 # ---------- small pieces ----------
 def change(v, unit=""):
     if v is None:
-        return '<span class="chg flat">No change</span>' if unit == "today" else ""
+        return '<span class="chg flat">Not quoted today</span>' if unit == "today" else ""
     if abs(v) < 0.005:
         return '<span class="chg flat">Unchanged</span>'
     tone, arrow = ("up", "▲") if v > 0 else ("down", "▼")
@@ -521,8 +521,15 @@ def home(items, hist, today, alerts, as_of, record, notes, only=None):
 
 
 # ---------- item pages ----------
+def pack_in_sentence(pack):
+    """'Hass, cartons 2 layer, 48s' stays 'Hass, ...'; 'Cartons, film bags 30s' becomes 'cartons, film bags 30s'."""
+    from .grocery import KEEP_CAPS
+    first = pack.split(",")[0].split()[0] if pack else ""
+    return pack if first in KEEP_CAPS or first.isupper() else pack[:1].lower() + pack[1:]
+
+
 def answer(i, as_of):
-    s = (f"On {as_of:%B} {as_of.day}, {as_of.year}, wholesale {in_sentence(i['commodity'])} ({esc(i['pack'].lower())}) "
+    s = (f"On {as_of:%B} {as_of.day}, {as_of.year}, wholesale {in_sentence(i['commodity'])} ({esc(pack_in_sentence(i['pack']))}) "
          f"traded at <strong>{money(i['price'])} a case</strong> in {MARKET_LONG[i['market']]}")
     if i["vs_norm"] is not None:
         s += f", {esc(brief.vs_usual(i['vs_norm']))}{' the usual price' if abs(i['vs_norm']) >= 5 else ''} for this time of year"
@@ -564,7 +571,7 @@ def faq(commodity, rows):
     lower, single = in_sentence(commodity), PAGES[commodity][1].lower().replace("roma ", "Roma ")
     v = "is" if commodity in MASS else "are"
     qa = [(f"How much does a case of {lower} cost wholesale right now?",
-           " ".join(f"{money(i['price'])} in {i['market']} ({i['pack'].lower()})." for i in rows))]
+           " ".join(f"{money(i['price'])} in {i['market']} ({pack_in_sentence(i['pack'])})." for i in rows))]
     if ny["vs_norm"] is not None:
         qa.append((f"Are {single} prices high right now?",
                    f"In {ny['market']}, {lower} {v} {brief.vs_usual(ny['vs_norm'])}"
@@ -671,14 +678,15 @@ def build():
                                  "tone": {"low": "down", "high": "up"}.get(gi["status"], "flat"), "unit": gi["unit"].strip()}
     if g_items and "thanksgiving" in out:
         from . import holiday
-        rows = []
-        for c in ("Sweet Potatoes", "Cranberries", "Brussels Sprouts", "Celery"):
+        drops = []
+        for c in holiday.ITEMS:
             gi = next((x for x in g_items if x["commodity"] == c and x["this_week"]), None)
             o = holiday.item_outlook(gi, g_day) if gi else None
-            if o and o["change"] is not None and o["change"] < 0:
-                rows.append({"name": gi["short"], "word": f"{abs(round(100 * o['change']))}% cheaper by then",
-                             "tone": "down", "price": f"${gi['price']:.2f}"})
-        og["thanksgiving"] = {"title": f"Thanksgiving produce prices {holiday.thanksgiving(g_day.year).year}",
+            if o and o["change"] is not None and o["change"] <= -0.10 and o["steady"]:
+                drops.append((o["change"], gi))
+        rows = [{"name": gi["short"], "word": f"{abs(round(100 * ch))}% cheaper by then", "tone": "down",
+                 "price": f"${gi['price']:.2f}"} for ch, gi in sorted(drops, key=lambda d: d[0])[:4]]
+        og["thanksgiving"] = {"title": f"Thanksgiving food prices {holiday.thanksgiving(g_day.year).year}",
                               "sub": "Wait for the holiday specials on these", "rows": rows}
     if g_items:
         og["home"] = {"title": "This week’s best buys in the produce aisle",

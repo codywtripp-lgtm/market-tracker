@@ -1,4 +1,4 @@
-"""Thanksgiving produce prices: what the holiday items cost now, and how their sale prices usually move by
+"""Thanksgiving food prices: what the holiday items cost now, and how their sale prices usually move by
 Thanksgiving week.
 
 Supermarkets put Thanksgiving staples on sale the week before the holiday. From USDA's weekly retail report
@@ -9,10 +9,11 @@ week, how many more stores put it on sale that week, and what it cost last Thank
 import datetime as dt
 import statistics
 
-ITEMS = ["Whole turkey", "Sweet Potatoes", "Cranberries", "Celery", "Brussels Sprouts", "Beans", "Potatoes", "Onions, Dry", "Carrots",
+ITEMS = ["Whole turkey", "Sweet Potatoes", "Cranberries", "Butter", "Spiral ham", "Cream cheese", "Sour cream", "Eggs", "Celery", "Brussels Sprouts", "Beans", "Potatoes", "Onions, Dry", "Carrots",
          "Mushrooms", "Apples", "Pears", "Oranges", "Tangerines/Mandarins", "Pumpkins", "Garlic", "Salad (Mixed Types)"]
-KEEPS = {"Whole turkey", "Potatoes", "Onions, Dry", "Sweet Potatoes", "Garlic", "Carrots", "Apples", "Pumpkins", "Oranges"}  # fine to buy ahead
+KEEPS = {"Whole turkey", "Butter", "Eggs", "Potatoes", "Onions, Dry", "Sweet Potatoes", "Garlic", "Carrots", "Apples", "Pumpkins", "Oranges"}  # fine to buy ahead
 WINDOW = 12  # days before Thanksgiving: the weekly report dated in this window carries the holiday sales
+AGREE = 0.7  # share of past years that must move the same way before we call a direction
 
 
 def thanksgiving(year):
@@ -40,8 +41,9 @@ def item_outlook(i, today):
             ratios.append(_mean([p for p, _ in at]) / _mean([p for p, _ in before]))
             stores.append(_mean([s for _, s in at]) / _mean([s for _, s in before]))
     last = [p for d, (p, _) in week.items() if 0 < (thanksgiving(target.year - 1) - d).days <= WINDOW]
-    return {"target": target, "years": len(ratios),
-            "change": statistics.median(ratios) - 1 if len(ratios) >= 3 else None,
+    change = statistics.median(ratios) - 1 if len(ratios) >= 3 else None
+    agree = (sum((r - 1 > 0) == (change > 0) for r in ratios) / len(ratios)) if change is not None else 0
+    return {"target": target, "years": len(ratios), "change": change, "steady": agree >= AGREE,
             "stores_x": statistics.median(stores) if len(stores) >= 3 else None,
             "last_tg": _mean(last)}
 
@@ -50,8 +52,11 @@ def advice(i, o):
     c = o["change"]
     if c is None:
         return "Not enough past years to say how it moves into Thanksgiving week."
+    if not o["steady"] and abs(c) >= 0.05:
+        return "No reliable pattern: in past years the price went up some years and down in others. Buy when it suits you."
     if c <= -0.10:
-        more = f", when {o['stores_x']:.0f} times as many stores feature it" if (o["stores_x"] or 0) >= 2 else ""
+        them = "them" if i["short"].endswith("s") else "it"
+        more = f", when {o['stores_x']:.0f} times as many stores feature {them}" if (o["stores_x"] or 0) >= 2 else ""
         return f"Wait for the holiday specials: usually {abs(round(100 * c))}% cheaper Thanksgiving week{more}."
     if c >= 0.05:
         if i["commodity"] in KEEPS:
