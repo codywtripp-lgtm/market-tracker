@@ -152,6 +152,7 @@ def page(today, items, aisle="produce"):
         tiles = "".join(
             f'<li class="buy">{tag(i)}<div class="buy-body"><h3>{link(i)}</h3>'
             f'<p class="buy-why">{why_line(i, today)}</p>'
+            + (f'<p class="cause">{esc(i["why"])}</p>' if i.get("why") else "")
             + (f'<p class="ahead">{ahead(i)}</p>' if ahead(i) else "") + f'{qual(i)}</div></li>' for i in buys)
         parts.append(f'<section><h2>Best buys</h2><ul class="buys">{tiles}</ul></section>')
     if season and aisle == "produce":
@@ -165,6 +166,7 @@ def page(today, items, aisle="produce"):
         rows = "".join(
             f'<li><div><b>{link(i)}</b>{qual(i)}<span>{money(i["price"])}{esc(i["unit"])}, '
             f'<b class="bad">{i["vs_usual"]}% above usual</b></span></div>'
+            + (f'<p class="cause">{esc(i["why"])}</p>' if i.get("why") else "")
             + (f'<p class="ahead">{ahead(i)}</p>' if ahead(i) else "")
             + (f'<p class="swap">Try {esc(i["swap"].lower())} instead</p>' if i.get("swap") else "") + "</li>"
             for i in pricey[:8])
@@ -353,6 +355,10 @@ def faq(i, today):
         ans = "" if not i["seasons"] else season_sentence(i, today).split(" They’re usually")[0].split(" It’s usually")[0]
         qa.append((f"{'Are' if plural(i) else 'Is'} {name} in season right now?",
                    ans or "USDA’s seasonal guide doesn’t list it; stores carry it most of the year."))
+    if i.get("why") and i["status"] in ("low", "high"):
+        cause = i["why"].removeprefix("Why: ")
+        qa.append((f"Why {verb(i)} {name} so {'cheap' if i['status'] == 'low' else 'expensive'} right now?",
+                   cause[:1].upper() + cause[1:].rstrip(".") + ", according to this week’s USDA reports."))
     if ahead(i):
         qa.append((f"Will {name} get {'cheaper' if i['outlook'] < 0 else 'more expensive'} soon?",
                    f"{ahead(i)} {record_sentence()}".strip()))
@@ -378,6 +384,7 @@ def item_page(i, today, all_items):
         word, tone = STATUS[i["status"]]
         parts.append(f'<section class="gquote">{tag(i)}<div><p class="gword {tone}">{esc(word)}</p>{qual(i)}'
                      f'<p class="buy-why">{why_line(i, today) or esc(i["name"])}</p>'
+                     + (f'<p class="cause big">{esc(i["why"])}</p>' if i.get("why") else "")
                      + (f'<p class="ahead big">{ahead(i)}</p>' if ahead(i) else "")
                      + f'{price_bar(i, today)}</div></section>')
         if i.get("swap"):

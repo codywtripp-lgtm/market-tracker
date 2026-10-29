@@ -257,6 +257,8 @@ def build(rows, deflator=None, live=None):
             expected = statistics.mean(past_stores[y] for y in years) / 5  # stores per week, same weeks before
             item["featured"] = round(stores / expected, 2) if expected else None
         items.append(item)
+    from . import why
+    sig = why.signals() if live is None else {}  # supply and wholesale behind the price (tests pass live={})
     if live is None:
         path = store.DATA / "export" / "supply.csv"
         ship = {}
@@ -277,7 +279,11 @@ def build(rows, deflator=None, live=None):
     from . import grocery_forecast
     ahead, _ = grocery_forecast.outlook(data, deflator, lambda p: main_pack(p, year_ago), today)
     for i in items:
+        short = any("short supplies" in n for n in (live.get(i["commodity"]) or {}).get("notes", []))
+        i["why"] = why.sentence(why.reasons(i, sig.get(i["commodity"]), short)) if i["this_week"] else ""
         ch = ahead.get(i["commodity"]) if i["this_week"] else None
+        if ch is not None and why.holds_back(ch, sig.get(i["commodity"]), short):
+            ch = None
         i["outlook"] = round(ch, 3) if ch is not None and abs(ch) >= grocery_forecast.CALL else None
     by_c = {i["commodity"]: i for i in items if i["this_week"]}
     for i in items:

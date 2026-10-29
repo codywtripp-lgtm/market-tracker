@@ -109,3 +109,14 @@ def test_grocery_outlook_learns_that_prices_far_from_usual_come_back():
     w = gf.fit(rows)
     assert gf.predict(w, {"seasonal": 0.0, "gap": -0.3, "mom": 0.0}) > gf.CALL  # on sale now: likely back up
     assert gf.predict(w, {"seasonal": 0.0, "gap": 0.3, "mom": 0.0}) < -gf.CALL  # spiked: likely to ease
+
+
+def test_why_names_supply_causes_and_holds_back_calls_the_cause_contradicts():
+    from pipeline import grocery_forecast as gf, why
+    pricey = {"status": "high"}
+    sig = {"ship": -30.0, "whole": 40.0, "trend": 12.0}
+    assert why.sentence(why.reasons(pricey, sig)) == ("Why: shipments are 30% below last year and wholesale prices "
+                                                      "at Hunts Point are 40% above usual.")
+    assert why.holds_back(-0.15, sig)  # short supply, wholesale climbing: don't say "likely to drop"
+    assert not why.holds_back(-0.15, {"ship": 5.0, "trend": -3.0})
+    assert gf.call(-0.2, {"run": 1}) is None and gf.call(-0.2, {"run": 0}) == -0.2  # high for weeks: lasting cause

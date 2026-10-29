@@ -121,6 +121,8 @@ main.wrap > section:first-child { margin-top: 0; }
 .shelf-unit { display: block; font-size: 14px; line-height: 18px; font-weight: 600; padding-left: 4px; }
 .buy-why { color: var(--ink-2); font-size: 16px; line-height: 23px; margin: 0; }
 .buy .ql { display: inline-block; margin: 2px 0 0; }
+.cause { font-size: 16px; line-height: 23px; color: var(--ink-2); margin: 2px 0 0; }
+.cause.big { font-size: 18px; line-height: 26px; margin: 8px 0 0; }
 .ahead { font-size: 16px; line-height: 23px; font-weight: 600; margin: 2px 0 0; }
 .ahead.big { font-size: 18px; line-height: 26px; margin: 8px 0 12px; }
 
@@ -470,7 +472,8 @@ main.dash { min-width: 0; }
   .cal th[scope="row"] { width: 58px; font-size: 13px; }
   .cal .mfull { display: none; } .cal .mone { display: inline; }
   .cal .cq { height: 26px; }
-  .gquote { grid-template-columns: 112px 1fr; gap: 16px; }
+  .gquote { grid-template-columns: 1fr; gap: 12px; }
+  .gquote .shelf { justify-self: start; min-width: 112px; }
   .quote { grid-template-columns: 1fr; gap: 24px; }
   .q-price { font-size: 52px; line-height: 52px; }
   .q-facts { grid-template-columns: 1fr 1fr; }

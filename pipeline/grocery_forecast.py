@@ -20,6 +20,7 @@ import statistics
 HORIZON = 2  # weeks
 MIN_STORES = 200
 CALL, HIT = 0.10, 0.05  # call a move of 10%+; it counts as right if the price then moved 5%+ that way
+RUN, RUN_WEEKS = 0.15, 3  # a price 15%+ from usual for each of the last 3 weeks has a lasting cause: don't call it back
 FEATS = ("seasonal", "gap", "mom")
 RECORD = {"calls": 0, "right": 0, "since": None}  # walk-forward track record, set by outlook()
 
@@ -48,6 +49,30 @@ def _near(dates, values, when, tol=3):
     return None if best is None else values[best]
 
 
+def _gap(dates, logp, k):
+    """log(price / usual) at index k; usual = median of the same weeks (+-15 days) in earlier years."""
+    pool = []
+    for back in range(1, 11):
+        then = dates[k] - dt.timedelta(days=round(365.25 * back))
+        pool += logp[bisect.bisect_left(dates, then - dt.timedelta(days=15)):bisect.bisect_right(dates, then + dt.timedelta(days=15))]
+    return logp[k] - statistics.median(pool) if len(pool) >= 6 else None
+
+
+def _run(dates, logp, k):
+    """+1 if the price was RUN+ above usual in each of the last RUN_WEEKS weeks, -1 if that far below, else 0."""
+    gaps = []
+    for w in range(1, RUN_WEEKS + 1):
+        j = bisect.bisect_left(dates, dates[k] - dt.timedelta(weeks=w, days=3))
+        if j >= k or abs((dates[j] - (dates[k] - dt.timedelta(weeks=w))).days) > 3:
+            return 0
+        gaps.append(_gap(dates, logp, j))
+    if all(g is not None and g >= RUN for g in gaps):
+        return 1
+    if all(g is not None and g <= -RUN for g in gaps):
+        return -1
+    return 0
+
+
 def features(dates, logp, k, h=HORIZON):
     d, v = dates[k], logp[k]
     seas, pool = [], []
@@ -63,7 +88,16 @@ def features(dates, logp, k, h=HORIZON):
         return None
     prev = _near(dates, logp, d - dt.timedelta(weeks=2))
     return {"date": d, "seasonal": statistics.median(seas), "gap": v - statistics.median(pool),
-            "mom": (v - prev) if prev is not None else 0.0}
+            "mom": (v - prev) if prev is not None else 0.0, "run": _run(dates, logp, k)}
+
+
+def call(p, f):
+    """The forecast change if it's a call we make, else None. No call against a lasting move: tested 2022-2026,
+    "likely to drop" after 3+ weeks well above usual came true 55% of the time (70% otherwise), and "likely to
+    rise" after 3+ weeks well below usual 49% (75% otherwise)."""
+    if abs(p) < CALL or (p < 0 and f.get("run") == 1) or (p > 0 and f.get("run") == -1):
+        return None
+    return p
 
 
 def training_rows(pts, h=HORIZON):
@@ -123,8 +157,8 @@ def track_record(rows_by_item, first_year=2022):
             continue
         w = fit(train)
         for r in (r for r in rows if r["date"].year == year):
-            p = predict(w, r)
-            if abs(p) >= CALL:
+            p = call(predict(w, r), r)
+            if p is not None:
                 calls += 1
                 right += r["y"] >= HIT if p > 0 else r["y"] <= -HIT
     return {"calls": calls, "right": right, "since": first_year}
@@ -148,7 +182,8 @@ def outlook(data, deflator, main_pack, today):
         if (today - dates[k]).days > 6 or p[k][2] < MIN_STORES:
             continue
         f = features(dates, logp, k)
-        if f:
-            out[c] = math.exp(predict(w, f)) - 1
+        p = call(predict(w, f), f) if f else None
+        if p is not None:
+            out[c] = math.exp(p) - 1
     RECORD = track_record(rows)
     return out, RECORD
