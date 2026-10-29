@@ -201,12 +201,10 @@ main.wrap > section:first-child { margin-top: 0; }
   column-gap: 40px; align-items: start; border-top: 2px solid var(--ink); }
 .recipes li { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); }
 .rname { margin: 0; font-size: 18px; line-height: 1.35; }
-.rname a { color: var(--ink); text-decoration: none; }
-.rname a:hover { text-decoration: underline; }
-.rname .ext { color: var(--ink-2); font-weight: 400; }
+.rname a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 4px; }
+.rname a:hover { text-decoration-color: currentColor; }
 .rcost { font-weight: 700; white-space: nowrap; text-align: right; }
 .rcost small { font-weight: 400; color: var(--ink-2); font-size: 15px; }
-.rdesc { grid-column: 1 / -1; margin: 0; color: var(--ink-2); font-size: 16px; line-height: 1.45; }
 .rbuy { grid-column: 1 / -1; font-size: 15px; margin-top: 4px; }
 .rbuy summary { cursor: pointer; list-style: none; padding: 4px 0; line-height: 1.45; }
 .rbuy summary::-webkit-details-marker { display: none; }

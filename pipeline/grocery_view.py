@@ -531,8 +531,8 @@ def shopping_list(r, items):
 
 
 def cook_rows(rows, items, limit=None):
-    """Each meal in three short lines: name (a web search for recipes; we don't publish them) and cost per serving;
-    what it is; its good and pricey buys, which open this week's prices for the shopping list."""
+    """Each meal in two lines: name (a web search for recipes; we don't publish them) and cost per serving, then its
+    good and pricey buys, which open this week's prices for the shopping list."""
     out = ""
     for r, per, partial, score, good, pricey in rows[:limit]:
         notes = []
@@ -540,19 +540,21 @@ def cook_rows(rows, items, limit=None):
             notes.append(f'<span class="good">Good buys: {esc(_names(good[:3]))}</span>')
         if pricey:
             notes.append(f'<span class="bad">Pricey: {esc(_names(pricey[:2]))}</span>')
+        if not notes:
+            notes.append("Typical prices")
         find = "https://www.google.com/search?q=" + quote_plus(r["name"] + " recipe")
         out += (f'<li><h3 class="rname"><a href="{find}" target="_blank" rel="noopener">{esc(r["name"])}'
-                '<span class="ext" aria-hidden="true"> ↗</span><span class="vh"> (recipe search, opens in a new tab)</span>'
+                '<span class="vh"> (recipe search, opens in a new tab)</span>'
                 f'</a></h3><span class="rcost">{_cost(per, partial)}</span>'
-                f'<p class="rdesc">{esc(r["desc"])}</p>'
-                f'<details class="rbuy"><summary>{" · ".join(notes) or "Ingredients"}<span class="rmore">Prices</span>'
+                f'<details class="rbuy"><summary>{" · ".join(notes)}<span class="rmore">Prices</span>'
                 f'</summary>{shopping_list(r, items)}</details></li>')
     return f'<ul class="recipes">{out}</ul>'
 
 
-COST_NOTE = ("Cost per serving is for a typical home version of each meal: its fresh ingredients at this week’s average "
+COST_NOTE = ("Meals are ranked by how many of their main ingredients are a good price and good quality this week. "
+             "Tap a meal’s name to search for recipes. Cost per serving is for a typical home version of each meal: its fresh ingredients at this week’s average "
              "U.S. supermarket prices. Pantry staples (oil, spices, rice, pasta) are extra. *Some ingredients had no "
-             "price this week. Meal names open a web search for recipes; we don’t publish recipes.")
+             "price this week. We don’t publish recipes.")
 
 
 def cook_page(today, items):
@@ -561,8 +563,7 @@ def cook_page(today, items):
     best = [x for x in rows if x[3] > 0]
     later = [x for x in rows if x[3] <= 0]
     stars = sorted({g["short"]: g for x in best[:6] for g in x[4]}.values(), key=lambda g: g["short"])[:5]
-    lede = ("These meals lean on this week’s best buys" + (f": {_names(stars)}." if stars else ".")
-            + " Each is ranked by how many of its main ingredients are a good price and good quality right now.")
+    lede = "Meals built on this week’s best buys" + (f": {_names(stars)}." if stars else ".")
     parts = [f'<section class="intro"><h1>What to cook this week</h1>'
              f'<p class="date">Week of {today:%B} {today.day}, {today.year}. Based on the average of the prices U.S. '
              'supermarkets advertised this week, reported by USDA.</p>'
