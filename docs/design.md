@@ -83,3 +83,4 @@ not read as AI-generated. Check new work against the "Never" list before it ship
 - One row of tabs that fits a 375px phone; no overflow.
 - Header links are scoped to the side of the site the reader is on.
 - Seasonal promos are text links next to related content, not ad-like boxes (banner blindness).
+- Lists of ideas (meals) are scannable rows: at most three short lines each (name + cost, one-line description, a tap-to-open detail). No filler like "Serves 4" for things we don't publish.

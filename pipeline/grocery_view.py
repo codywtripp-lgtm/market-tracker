@@ -512,7 +512,7 @@ def _names(xs):
 def _cost(per, partial):
     if per is None:
         return ""
-    return f"About {money(per)} a serving" + ("*" if partial else "")
+    return f"{money(per)}<small> a serving{'*' if partial else ''}</small>"
 
 
 def shopping_list(r, items):
@@ -531,27 +531,28 @@ def shopping_list(r, items):
 
 
 def cook_rows(rows, items, limit=None):
-    """Each meal: name, cost per serving, what it is, its good buys, the shopping list with this week's prices, and a
-    web search for a recipe. We don't publish recipes."""
+    """Each meal in three short lines: name (a web search for recipes; we don't publish them) and cost per serving;
+    what it is; its good and pricey buys, which open this week's prices for the shopping list."""
     out = ""
     for r, per, partial, score, good, pricey in rows[:limit]:
-        notes = ""
+        notes = []
         if good:
-            notes += f'<span class="good">Good buys: {esc(_names(good[:4]))}</span>'
+            notes.append(f'<span class="good">Good buys: {esc(_names(good[:3]))}</span>')
         if pricey:
-            notes += f'<span class="bad">Pricey: {esc(_names(pricey[:3]))}</span>'
+            notes.append(f'<span class="bad">Pricey: {esc(_names(pricey[:2]))}</span>')
         find = "https://www.google.com/search?q=" + quote_plus(r["name"] + " recipe")
-        out += (f'<li><h3 class="rname">{esc(r["name"])}</h3><span class="rcost">{_cost(per, partial)}</span>'
-                f'<p class="rdesc">{esc(r["desc"])} Serves {r["serves"]}.</p>'
-                f'<span class="rnotes">{notes}</span>'
-                f'<details class="rbuy"><summary>Shopping list</summary>{shopping_list(r, items)}</details>'
-                f'<a class="rfind" href="{find}" target="_blank" rel="noopener">Find a recipe'
-                '<span class="vh"> (web search, opens in a new tab)</span></a></li>')
+        out += (f'<li><h3 class="rname"><a href="{find}" target="_blank" rel="noopener">{esc(r["name"])}'
+                '<span class="ext" aria-hidden="true"> ↗</span><span class="vh"> (recipe search, opens in a new tab)</span>'
+                f'</a></h3><span class="rcost">{_cost(per, partial)}</span>'
+                f'<p class="rdesc">{esc(r["desc"])}</p>'
+                f'<details class="rbuy"><summary>{" · ".join(notes) or "Ingredients"}<span class="rmore">Prices</span>'
+                f'</summary>{shopping_list(r, items)}</details></li>')
     return f'<ul class="recipes">{out}</ul>'
 
 
-COST_NOTE = ("*Cost per serving covers the fresh items on the shopping list, at this week’s average U.S. supermarket "
-             "prices. Pantry staples (oil, spices, rice, pasta) are extra.")
+COST_NOTE = ("Cost per serving is for a typical home version of each meal: its fresh ingredients at this week’s average "
+             "U.S. supermarket prices. Pantry staples (oil, spices, rice, pasta) are extra. *Some ingredients had no "
+             "price this week. Meal names open a web search for recipes; we don’t publish recipes.")
 
 
 def cook_page(today, items):
@@ -570,5 +571,5 @@ def cook_page(today, items):
     if later:
         parts.append(f'<section><h2>Better another week</h2><p class="sub">Their main ingredients are pricey right now.</p>'
                      f'{cook_rows(later, items)}</section>')
-    parts.append(f'<p class="fine">{esc(COST_NOTE)} “Find a recipe” opens a web search.</p>')
+    parts.append(f'<p class="fine">{esc(COST_NOTE)}</p>')
     return "\n".join(parts) + "\n"
