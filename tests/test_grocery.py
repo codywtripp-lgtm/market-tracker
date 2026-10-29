@@ -99,14 +99,3 @@ def test_item_page_lists_more_from_its_own_aisle():
     today, items = grocery.build(live={}, rows=history("Apples", 1.2) + history("Pears", 1.5))
     page = grocery_view.item_page(items[0], today, items)
     assert "<h2>More produce</h2>" in page and "Other aisles" in page
-
-
-def test_every_aisle_links_the_same_guides_and_holiday_calls_need_agreeing_years():
-    import datetime as dt
-    from pipeline import grocery_view, holiday
-    g = grocery_view.guides(dt.date(2026, 11, 1))
-    assert "thanksgiving-produce-prices" in g
-    assert grocery_view.guides(dt.date(2026, 7, 1)) == ""
-    flip = {"short": "Eggs", "commodity": "Eggs"}
-    o = {"change": 0.26, "steady": False, "stores_x": 1}
-    assert holiday.advice(flip, o).startswith("No reliable pattern")

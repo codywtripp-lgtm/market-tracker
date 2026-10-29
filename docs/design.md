@@ -79,7 +79,7 @@ not read as AI-generated. Check new work against the "Never" list before it ship
 - USDA SNAP-Ed *Seasonal Produce Guide* (in-season lists by season).
 
 ## Navigation (from NN/g research, 2026-10-29)
-- Tabs are for parallel content of the same kind (the aisles). Guides that cut across aisles (meal ideas, holiday guides) are plain links in one consistent spot under the intro, never tabs.
+- Tabs are for parallel content of the same kind (the aisles). Anything that cuts across aisles is a plain link, never a tab.
 - One row of tabs that fits a 375px phone; no overflow.
 - Header links are scoped to the side of the site the reader is on.
 - Seasonal promos are text links next to related content, not ad-like boxes (banner blindness).
