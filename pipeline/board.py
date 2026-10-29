@@ -322,7 +322,7 @@ def actions(rows, market):
                    "bottoming": ' <small class="turn">easing this week first</small>'}.get(i["dir"], "")
                 + '</span>'
                 f'<span class="num">{money(i["price"])}'
-                + (f' <span class="to">→ about {whole(expected(i)[0])}</span>'
+                + (f' <span class="to">to about {whole(expected(i)[0])}</span>'
                    if key in ("firming", "softening") and expected(i)[0] is not None else "")
                 + "</span></a></li>" for i in items)
         else:
@@ -502,7 +502,7 @@ def tabs(markets, base=""):
 
 
 def dateline(as_of):
-    return f'<p class="date">{as_of:%A}, {as_of:%B} {as_of.day}, {as_of.year} · USDA terminal market prices, updated every market evening</p>'
+    return f'<p class="date">{as_of:%A}, {as_of:%B} {as_of.day}, {as_of.year}. USDA terminal market prices, updated every market evening.</p>'
 
 
 def home(items, hist, today, alerts, as_of, record, notes, only=None):
@@ -557,8 +557,8 @@ def quote(i, hist, today, opts, note=""):
             f'<div><dt>For the season</dt><dd>{season(i)}</dd></div>'
             f'<div><dt>Next 2 weeks</dt><dd><span class="out {tone}"><b>{arrow + " " if arrow else ""}{word}</b>'
             f'{f"<small>{rng}</small>" if rng else ""}</span></dd></div>'
-            + (f'<div class="path"><dt>Week by week</dt><dd>' + " · ".join(
-                f'{"Next week" if h == 1 else f"In {h} weeks"} <b>about {whole(v)}</b>'
+            + (f'<div class="path"><dt>Week by week</dt><dd>' + ", ".join(
+                f'{"next week" if h == 1 else f"in {h} weeks"} <b>about {whole(v)}</b>'
                 for h, v in sorted(i["path"].items()) if h in (1, 2, 4)) + "</dd></div>" if i.get("path") else "")
             + "</dl></div>"
             + (f'<div class="todo {tone}"><h2>What to do</h2><p>{esc(i["action"])}</p></div>' if i["action"] else "")
@@ -596,7 +596,7 @@ def item_page(commodity, rows, hist, today, sizes, alerts, as_of, notes, only=No
              + (f'<a href="@/{PAGES[commodity][0]}/">{esc(title)}</a><span>/</span>{esc(only)}' if only else esc(title))
              + "</nav>",
              f'<div class="pagehead"><h1>{esc(h1)}</h1>'
-             f'<p class="date">Wholesale, per case · updated {as_of:%A}, {as_of:%B} {as_of.day}, {as_of.year}</p>'
+             f'<p class="date">Wholesale price per case, updated {as_of:%A}, {as_of:%B} {as_of.day}, {as_of.year}</p>'
              f'<p class="answer">{answer(lead, as_of)}</p>'
              + (tabs([r["market"] for r in rows], "") if len(shown) > 1 else "") + "</div>"]
     for n, i in enumerate(shown):

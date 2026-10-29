@@ -84,3 +84,13 @@ not read as AI-generated. Check new work against the "Never" list before it ship
 - Header links are scoped to the side of the site the reader is on.
 - Seasonal promos are text links next to related content, not ad-like boxes (banner blindness).
 - Lists of ideas (meals) are scannable rows: at most three short lines each (name + cost, one-line description, a tap-to-open detail). No filler like "Serves 4" for things we don't publish.
+
+## Not looking machine-made (research, 2026-10-30)
+Sources: lists of AI-built-site tells (scalr.sg, falia.co, sailop.com, 925studios.co). What we do about each:
+- **Light only.** A near-black page with one bright accent is the most common Claude-built look. We are a store price sheet: white page, black type.
+- **Typeface: Archivo** (not Inter/Figtree-style defaults). Narrow width (`--narrow`) for headings, prices and the logo, like shelf signage; normal width for text.
+- **No pill controls or segmented switches.** Header is plain text links: Grocery prices, Wholesale prices, About. Each side has its own sub-nav row (aisles; Today / Price history / Track record).
+- **One small radius (4px) or none.** No soft shadows except the search dropdown. Hairline rules, not heavy 2px black rules.
+- **No arrows appended to links, no "·" separators, no fixed groups of three.** Lists name as many items as the data supports.
+- **Repeated items are compact rows,** not tall identical tiles.
+- Copy is specific (numbers, places, dates); no buzzwords, no em-dash habit.

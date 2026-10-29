@@ -93,7 +93,9 @@ def tag(i):
 
 
 def lede(items, buys, pricey):
-    names = [b["short"].lower() for b in buys[:3]]
+    # name the standout deals (however many there are, up to four), not a fixed three
+    standout = [b for b in buys if (b["vs_usual"] or 0) <= -12][:4] or buys[:1]
+    names = [b["short"].lower() for b in standout]
     if not names:
         return "Prices at the store are close to normal for the time of year."
     s = (names[0] if len(names) == 1 else ", ".join(names[:-1]) + " and " + names[-1])
@@ -125,11 +127,12 @@ def page(today, items, aisle="produce"):
     season = sorted((i for i in items if i["in_season"]), key=lambda i: (order[i["status"]], i["short"]))
     stores = max(i["stores"] for i in items) if items else 0
     parts = [f'<section class="intro"><h1>{AISLE_HEAD[aisle]}</h1>'
-             f'<p class="date">Week of {today:%B} {today.day}, {today.year}. Average of the prices U.S. supermarkets advertised this week, reported by USDA. Your store’s price may differ.</p><p class="lede">{esc(lede(items, buys, pricey))}</p></section>']
+             f'<p class="date">Week of {today:%B} {today.day}, {today.year}</p><p class="value">We check every supermarket price '
+             f'against the same week in past years. Best buys are unusually cheap right now, and good quality.</p><p class="lede">{esc(lede(items, buys, pricey))}</p></section>']
     if buys:
         tiles = "".join(
-            f'<li class="buy">{tag(i)}<div class="buy-body"><h3>{link(i)}</h3>{qual(i)}'
-            f'<p class="buy-why">{why_line(i, today)}</p>{price_bar(i, today)}</div></li>' for i in buys)
+            f'<li class="buy">{tag(i)}<div class="buy-body"><h3>{link(i)}</h3>'
+            f'<p class="buy-why">{why_line(i, today)}</p>{qual(i)}</div></li>' for i in buys)
         parts.append(f'<section><h2>Best buys</h2><ul class="buys">{tiles}</ul></section>')
     if season and aisle == "produce":
         chips = "".join(f'<li><span><a class="sname" href="@/grocery/{i["slug"]}/">{esc(i["short"])}</a>{qual(i)}</span>'
@@ -343,7 +346,8 @@ def item_page(i, today, all_items):
         i["aisle"], ("@/", "Produce"))
     parts = [f'<nav class="crumbs"><a href="{up}">{label}</a><span>/</span>{esc(i["short"])}</nav>',
              f'<section class="intro"><h1>{esc(h1)}</h1>'
-             f'<p class="date">Week of {today:%B} {today.day}, {today.year}. Average of the prices U.S. supermarkets advertised this week, reported by USDA. Your store’s price may differ.</p>'
+             f'<p class="date">Week of {today:%B} {today.day}, {today.year}. Average advertised price at U.S. supermarkets, '
+             'checked against the same week in past years.</p>'
              f'<p class="answer">{answer(i, today)}</p></section>']
     if i["this_week"]:
         word, tone = STATUS[i["status"]]
@@ -386,7 +390,7 @@ def item_page(i, today, all_items):
                      if o["slug"] != i["slug"] and o["aisle"] == i["aisle"])
     aisles = {"produce": ("@/", "Produce"), "meat": ("@/meat-prices/", "Meat & poultry"),
               "dairy": ("@/dairy-and-egg-prices/", "Dairy & eggs")}
-    rest = " · ".join(f'<a href="{u}">{n}</a>' for a, (u, n) in aisles.items() if a != i["aisle"])
+    rest = " and ".join(f'<a href="{u}">{n}</a>' for a, (u, n) in aisles.items() if a != i["aisle"])
     parts.append(f'<section><h2>More {aisles[i["aisle"]][1].lower()}</h2><nav class="others">{others}</nav>'
                  f'<p class="fine">Other aisles: {rest}</p></section>')
     return "\n".join(parts) + "\n"

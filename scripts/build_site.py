@@ -122,7 +122,7 @@ GOATCOUNTER = "https://producepricetracker.goatcounter.com/count"
 SITE_NAME = "Produce Price Tracker"
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
          '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700;800&display=swap">')
+         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap">')
 # the mark: a grocery price tag (leaf green, punched hole) with a yellow leaf
 MARK = ('<svg viewBox="0 0 36 36" aria-hidden="true"><path d="M3 18 12 7h21v22H12z" fill="#12512f"/>'
         '<circle cx="11.5" cy="18" r="2.4" fill="#fff"/><path d="M17 25c.4-7.2 5-11.4 12-12-.6 7-5.2 11.6-12 12z" '
@@ -136,10 +136,8 @@ ASSET_V = hashlib.sha1(b"".join((ROOT / "site" / f).read_bytes() for f in ("styl
 ICONS = ('<link rel="icon" href="/favicon.svg" type="image/svg+xml">'
          '<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">'
          '<link rel="apple-touch-icon" href="/apple-touch-icon.png">')
-VIEWS = (("", "Grocery store"), ("wholesale/", "Wholesale market"))
-# header links per side: price history and the forecast track record are wholesale tools
-LINKS = {"wholesale": (("charts/", "Price history"), ("why/", "Track record"), ("about/", "About")),
-         "grocery": (("search/", "All prices A to Z"), ("about/", "About"))}
+NAV = (("grocery", "", "Grocery prices"), ("wholesale", "wholesale/", "Wholesale prices"), ("about", "about/", "About"))
+WHOLESALE_NAV = (("wholesale/", "Today"), ("charts/", "Price history"), ("why/", "Track record"))
 # grocery aisles, the way a shopper walks the store (pages written by pipeline/board.py)
 AISLES = (("", "Produce"), ("meat-prices/", "Meat & poultry"), ("dairy-and-egg-prices/", "Dairy & eggs"))
 SEARCH = []  # dicts for /search.json and the A to Z page (see emit)
@@ -151,25 +149,27 @@ def _esc(s):
 
 
 def topbar(up, active=None, view="wholesale", aisle=None):
-    """Logo, search and small links; then grocery / wholesale; then, on grocery pages, the aisles."""
+    """Logo, the two sides of the site and About as plain links, search; then the sub-nav for the side you're on
+    (grocery aisles, or wholesale today / price history / track record)."""
     cur = ' aria-current="page"'
-    links = "".join(f'<a href="{up}{href}"{cur if href == active else ""}>{label}</a>' for href, label in LINKS["grocery" if view == "grocery" else "wholesale"])
-    on = ' aria-current="true"'
-    switch = "".join(f'<a href="{up}{href}"{on if (href == "") == (view == "grocery") else ""}>{label}</a>'
-                     for href, label in VIEWS)
+    side = "about" if active == "about/" else view
+    main = "".join(f'<a href="{up}{href}"{cur if key == side else ""}>{label}</a>' for key, href, label in NAV)
     search = (f'<form class="search" role="search" action="{up}search/" data-root="{up}" '
               f'data-view="{"g" if view == "grocery" else "w"}" data-ver="{ASSET_V}{dt.date.today():%m%d}">'
               '<label class="vh" for="q">Search prices</label>'
               '<input id="q" name="q" type="search" placeholder="Search items" autocomplete="off" '
               'role="combobox" aria-expanded="false" aria-controls="q-list" aria-autocomplete="list">'
               '<ul id="q-list" role="listbox" aria-label="Matching items" hidden></ul></form>')
-    aisles = ""
-    if view == "grocery" and (BOARD / "aisle-meat.html").exists():
-        aisles = ('<nav class="aisles" aria-label="Aisles">' + "".join(
+    sub = ""
+    if view == "grocery" and active != "about/" and (BOARD / "aisle-meat.html").exists():
+        sub = ('<nav class="aisles" aria-label="Aisles">' + "".join(
             f'<a href="{up}{href}"{cur if href == aisle else ""}>{label}</a>' for href, label in AISLES) + "</nav>")
-    return (f'<header class="top"><div class="wrap"><a class="logo" href="{up}">{MARK}{SITE_NAME}</a>{search}'
-            f'<nav class="links" aria-label="More">{links}</nav></div></header>'
-            f'<div class="wrap"><nav class="switch" aria-label="Prices for">{switch}</nav>{aisles}</div>')
+    elif view == "wholesale" and active != "about/":
+        sub = ('<nav class="aisles" aria-label="Wholesale">' + "".join(
+            f'<a href="{up}{href}"{cur if href == active else ""}>{label}</a>' for href, label in WHOLESALE_NAV) + "</nav>")
+    return (f'<header class="top"><div class="wrap"><a class="logo" href="{up}">{MARK}<span>{SITE_NAME}</span></a>'
+            f'<nav class="primary" aria-label="Main">{main}</nav>{search}</div></header>'
+            f'<div class="wrap">{sub}</div>')
 
 
 def footer(up):
@@ -316,7 +316,7 @@ def board_pages():
             emit(rel, key, title, 1, view="grocery", day=g_day, aisle=rel,
                  find={"name": AISLE_NAME[rel], "status": "This week’s best buys", "aka": find[3]},
                  head=crumbs_ld(("Grocery prices", SITE_URL), (AISLE_NAME[rel], f"{SITE_URL}{rel}")))
-    emit("wholesale/", "home", "Wholesale Produce Prices Today: Hunts Point, LA, Chicago", 1,
+    emit("wholesale/", "home", "Wholesale Produce Prices Today: Hunts Point, LA, Chicago", 1, active="wholesale/",
          desc="Wholesale produce prices today at Hunts Point (New York), Los Angeles and Chicago: what’s firming, "
               "what’s softening, and a two-week outlook, per case.",
          og_key="wholesale", head=f'<script type="application/ld+json">{dataset}</script>',
@@ -367,7 +367,7 @@ def og_card(c):
     return f"""<!doctype html><html><head><meta charset="utf-8"><meta name="robots" content="noindex">{FONTS}
 <style>
 html,body{{margin:0;width:1200px;height:630px;overflow:hidden}}
-body{{background:#ffffff;color:#1b1b1b;font-family:Figtree,"Segoe UI",Arial,sans-serif;font-variant-numeric:tabular-nums;border-top:14px solid #12512f}}
+body{{background:#ffffff;color:#1b1b1b;font-family:Archivo,"Segoe UI",Arial,sans-serif;font-variant-numeric:tabular-nums;border-top:14px solid #12512f}}
 .og{{box-sizing:border-box;height:630px;padding:56px 72px;display:flex;flex-direction:column}}
 .og-top{{display:flex;align-items:center;gap:14px;font-weight:800;font-size:30px}}
 .og-top svg{{width:44px;height:44px}}
