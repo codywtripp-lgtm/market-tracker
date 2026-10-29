@@ -120,9 +120,14 @@ SITE_URL = "https://producepricetracker.com/"
 # https://producepricetracker.goatcounter.com. Its script ignores localhost, so previews aren't counted.
 GOATCOUNTER = "https://producepricetracker.goatcounter.com/count"
 SITE_NAME = "Produce Price Tracker"
-FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
+FONTS_REMOTE = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
          '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap">')
+
+
+def fonts(up):
+    """Archivo is served from this site (site/fonts, SIL Open Font License): no extra connections before text shows."""
+    return f'<link rel="preload" href="{up}fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>'
 # the mark: a grocery price tag (leaf green, punched hole) with a yellow leaf
 MARK = ('<svg viewBox="0 0 36 36" aria-hidden="true"><path d="M3 18 12 7h21v22H12z" fill="#12512f"/>'
         '<circle cx="11.5" cy="18" r="2.4" fill="#fff"/><path d="M17 25c.4-7.2 5-11.4 12-12-.6 7-5.2 11.6-12 12z" '
@@ -180,7 +185,7 @@ def footer(up):
             "National Retail Report. Wholesale prices are the USDA “mostly” price per case at the terminal markets, from "
             "USDA AMS Market News. “Usual” means the same weeks of the year in past years, adjusted for food inflation. "
             f'<a href="{up}about/">How this site works</a>.</p>'
-            f"<nav>{markets}</nav><nav>{items}</nav></div></footer>")
+            f'<nav aria-label="Wholesale markets">{markets}</nav><nav aria-label="Wholesale prices by item">{items}</nav></div></footer>')
 
 
 def snippet(text, limit=155):
@@ -213,7 +218,7 @@ def page(title, desc, canonical, up, body, active=None, head="", og=None, main_c
 <meta property="og:title" content="{_esc(title)}"><meta property="og:description" content="{_esc(desc)}">
 <meta property="og:url" content="{canonical}">{image}
 {ICONS}
-{FONTS}
+{fonts(up)}
 <link rel="stylesheet" href="{up}style.css?v={ASSET_V}">{head}
 <script src="{up}tabs.js?v={ASSET_V}" defer></script><script src="{up}search.js?v={ASSET_V}" defer></script>
 <script data-goatcounter="{GOATCOUNTER}" async src="https://gc.zgo.at/count.js"></script></head>
@@ -364,7 +369,7 @@ def og_card(c):
                    f'<span class="og-n">{_esc(r["price"])}</span></div>' for r in c.get("rows", []))
     main = (f'<div class="og-price">{_esc(c["price"])}<span>{_esc(c.get("unit", "a case"))}</span></div>'
             f'<div class="og-out {c["tone"]}">{_esc(c["out"])}</div>{c.get("spark", "")}' if c.get("price") else rows)
-    return f"""<!doctype html><html><head><meta charset="utf-8"><meta name="robots" content="noindex">{FONTS}
+    return f"""<!doctype html><html><head><meta charset="utf-8"><meta name="robots" content="noindex">{FONTS_REMOTE}
 <style>
 html,body{{margin:0;width:1200px;height:630px;overflow:hidden}}
 body{{background:#ffffff;color:#1b1b1b;font-family:Archivo,"Segoe UI",Arial,sans-serif;font-variant-numeric:tabular-nums;border-top:14px solid #12512f}}
@@ -397,7 +402,7 @@ def charts_page():
     text = tpl.read_text(encoding="utf-8")
     text = text.replace("<!--TOP-->", topbar("../", "charts/")).replace("<!--FOOT-->", footer("../"))
     text = text.replace('<script src="app.js"></script>', f'<script src="app.js?v={ASSET_V}"></script>')
-    text = text.replace("<!--HEAD-->", f'{ICONS}{FONTS}')
+    text = text.replace("<!--HEAD-->", f'{ICONS}{fonts("../")}')
     text = text.replace('href="../style.css"', f'href="../style.css?v={ASSET_V}"')
     write(tpl, text)
     return [(f"{SITE_URL}charts/", dt.date.today().isoformat())]
