@@ -96,7 +96,7 @@ def test_meat_and_dairy_pages_dont_talk_about_seasons():
 
 def test_cook_this_week_links_out_for_recipes_and_prices_the_shopping_list():
     from pipeline import grocery_view, recipes
-    assert all(r["desc"] and "steps" not in r for r in recipes.R)
+    assert all("steps" not in r and "desc" not in r for r in recipes.R)
     page = grocery_view.cook_page(*grocery.build(live={}, rows=history("Broccoli", 0.9)))
     assert "https://www.google.com/search?q=" in page and 'rel="noopener"' in page
     assert "recipes/" not in page  # we don't publish recipe pages
