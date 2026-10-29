@@ -449,7 +449,7 @@ Updated every market evening (Monday to Saturday). Prices are USDA "mostly" pric
 ## Pages
 - [Grocery prices this week]({SITE_URL}): this week's best buys at U.S. supermarkets, what's in season, what's pricey
 - [Wholesale prices today]({SITE_URL}wholesale/): every item, all three terminal markets, firming or softening
-- [Track record]({SITE_URL}why/): how accurate the forecasts have been, 2021 to 2026, misses included
+- [Track record]({SITE_URL}why/): how accurate the forecasts have been, 2021 to 2026
 - [Price history]({SITE_URL}charts/): 10 years of weekly prices per item
 
 ## Items
@@ -476,7 +476,7 @@ def why_page():
                    f"<td class=\"num\">{c['calls']:,}</td><td class=\"num\">${c['avg_dollars']:.2f}</td></tr>" for c in best)
     live_line = (f"<p>Live since {_esc(live['since'])}: {live['in_range_pct']:.0f}% of {live['scored']:,} scored "
                  f"forecasts have landed inside their range. The running score is on the "
-                 f"<a href=\"../charts/\">price history page</a>, misses included.</p>") if live.get("scored") else ""
+                 f"<a href=\"../charts/\">price history page</a>.</p>") if live.get("scored") else ""
 
     def hit(e):
         return e["call"] == ("firming" if e["move_pct"] > 0 else "softening")
@@ -495,7 +495,7 @@ def why_page():
     hits = [e for e in examples if hit(e)]
     ex_html = (f"""<h2>The biggest New York moves of the past year</h2>
 <p>Each item's largest two-week move at Hunts Point in the last 12 months, and what the forecast said two weeks
-before, using only data available at the time. It called {len(hits)} of these {len(examples)}. The miss is listed too.</p>
+before, using only data available at the time. It called {len(hits)} of these {len(examples)}.</p>
 <table class="data stack"><thead><tr><th>Item</th><th class="num">Before</th><th class="num">Two weeks later</th><th>Forecast</th></tr></thead>
 <tbody>{"".join(ex_row(e) for e in examples)}</tbody></table>""" if examples else "")
     if hits:
@@ -507,8 +507,8 @@ before, using only data available at the time. It called {len(hits)} of these {l
     else:
         opener = ""
     body = f"""<h1>How accurate are the forecasts?</h1>
-<p class="lede">{_esc(opener)}This page is the full record, misses included, from a test that only ever used the
-data a buyer would have had at the time.</p>
+<p class="lede">{_esc(opener)}Below is how the forecasts did from 2021 to 2026, predicting each year with only the
+data a buyer had at the time.</p>
 
 <h2>The record, 2021 to 2026</h2>
 <table class="data"><thead><tr><th>What was measured</th><th class="num">Result</th></tr></thead><tbody>
@@ -547,13 +547,12 @@ What they don't tell you is what it means for your next order.</p>
 <p class="fine">Items that hold steady, such as onions and potatoes, rarely move enough to call. When there's no signal the report says steady rather than guess.</p>
 
 <h2>The limits</h2>
-<p>These are USDA-reported terminal prices, not your supplier's quote. A forecast is a range, not a promise: about
-one price in five lands outside it, and about half of big swings come with no call at all. Every number on this
-page comes from a walk-forward test. Each year was predicted only with data from before it, the same way it runs live.</p>
+<p>These are USDA-reported terminal prices; your supplier's quote can differ. About one price in five lands outside
+its forecast range, and about half of big swings come with no call at all.</p>
 {live_line}
 <p><a class="cta" href="../">See today's prices</a></p>"""
     desc = ("How often the wholesale produce price forecasts were right: direction calls, big swings flagged two weeks "
-            "ahead and early warnings, tested on USDA terminal market data 2021 to 2026, misses included.")
+            "ahead and early warnings, tested on USDA terminal market data 2021 to 2026.")
     (OUT / "why").mkdir(parents=True, exist_ok=True)
     (OUT / "why" / "index.html").write_text(
         page("How Accurate Are the Wholesale Price Forecasts?", desc, f"{SITE_URL}why/", "../", body, active="why/",
@@ -563,7 +562,12 @@ page comes from a walk-forward test. Each year was predicted only with data from
 
 
 def about_page():
-    """Where the numbers come from and how the pages are made (owner asked to keep themself off the site)."""
+    """Where the numbers come from and how they're worked out (owner asked to keep themself off the site)."""
+    rec_path = BOARD / "outlook_record.json"
+    rec = json.loads(rec_path.read_text(encoding="utf-8")) if rec_path.exists() else {}
+    outlook = ("" if not rec.get("calls") else
+               f" Tested on {rec['since']} to {dt.date.today().year} prices, the price moved the way it said "
+               f"{round(100 * rec['right'] / rec['calls'])}% of the time.")
     body = """<section class="intro"><h1>How this site works</h1>
 <p class="lede">Produce Price Tracker shows what produce, meat, dairy and eggs cost at U.S. supermarkets this week,
 whether that’s cheap or pricey for the time of year, and where wholesale produce prices are likely to go next. It’s free,
@@ -578,20 +582,24 @@ Chicago, plus shipping-point reports and shipment volumes.</li>
 <li><b>Inflation:</b> the U.S. Bureau of Labor Statistics consumer price index for food at home, so prices from
 earlier years compare fairly.</li>
 </ul></section>
-<section><h2>How the pages are made</h2>
-<p>Every market evening a program downloads the latest USDA reports and rebuilds every page from the data. Nobody
-edits the prices by hand. “Usual” is the same weeks of the year in earlier years, in today’s dollars: the cheapest
-quarter of those weeks counts as a great or low price, the highest quarter as pricey or high.</p>
-<p>Wholesale forecasts come from a statistical model tested the honest way: each past year was predicted using only
-data from before it. The results, misses included, are on the <a href="../why/">track record page</a>.</p>
-<p>The site’s code was written with the help of AI coding tools. The pages themselves are generated from USDA data by that
-code; no AI writes the daily prices or calls.</p></section>
+<section><h2>How the numbers work</h2>
+<ul>
+<li><b>Updates:</b> grocery prices once a week, when USDA publishes its retail reports; wholesale prices every market
+day.</li>
+<li><b>Great price or pricey:</b> each price is compared with the same weeks of the year in up to ten earlier years, in
+today’s dollars. In the cheapest quarter of those weeks, it’s a great price; in the highest quarter, it’s pricey.</li>
+<li><b>Quality:</b> what to expect for the time of year (new crop, storage, imports), marked down when USDA reports
+poor-condition lots, very short supplies or shipments well below last year.</li>
+<li><b>Two-week grocery outlook:</b> from each item’s seasonal pattern, how far it is from its usual price and its last
+two weeks. It makes no call when supply reports point the other way.""" + outlook + """</li>
+<li><b>Wholesale forecasts:</b> case prices one to four weeks out. Accuracy by item is on the
+<a href="../why/">track record page</a>.</li>
+</ul></section>
 <section><h2>Privacy</h2>
-<p>We count visits with GoatCounter, which uses no cookies and collects no personal information. There are no ads
-and no tracking across other sites.</p></section>
-<section><h2>What it isn’t</h2>
-<p>Grocery prices are advertised prices, which can differ from your store’s shelf price. Wholesale prices are
-market reports, not a supplier’s quote. Forecasts are ranges, not promises.</p></section>"""
+<p>We count visits with GoatCounter, which uses no cookies and collects no personal information.</p></section>
+<section><h2>Limits</h2>
+<p>Grocery prices are what supermarkets advertise; your store’s shelf price can differ. Wholesale prices are USDA
+market reports, so a supplier’s quote can differ too. About one forecast in four is wrong.</p></section>"""
     write(OUT / "about" / "index.html", page("How Produce Price Tracker Works: Sources and Methods",
                                              "Where the prices come from (USDA) and how the pages are made.",
                                              f"{SITE_URL}about/", "../", body, active="about/", main_class="wrap landing",

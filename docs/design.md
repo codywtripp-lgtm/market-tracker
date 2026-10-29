@@ -94,3 +94,4 @@ Sources: lists of AI-built-site tells (scalr.sg, falia.co, sailop.com, 925studio
 - **No arrows appended to links, no "·" separators, no fixed groups of three.** Lists name as many items as the data supports.
 - **Repeated items are compact rows,** not tall identical tiles.
 - Copy is specific (numbers, places, dates); no buzzwords, no em-dash habit.
+- **No defensive or self-praising filler** (owner, 2026-10-30): no "nobody edits by hand", "tested the honest way", "misses included", "not X, it's Y". Say what the thing does and the number that shows how well.
