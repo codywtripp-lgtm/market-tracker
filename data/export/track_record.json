@@ -1,5 +1,5 @@
 {
- "asOf": "2026-10-28",
+ "asOf": "2026-10-29",
  "forecasts_live": {
   "scored": 651,
   "since": "2026-09-21",
@@ -11,30 +11,40 @@
   "years": "2021-2026",
   "by_horizon": {
    "1": {
-    "miss_pct": 7.2,
-    "no_change_miss_pct": 8.0
+    "miss_pct": 7.4,
+    "no_change_miss_pct": 8.1
    },
    "2": {
-    "miss_pct": 11.7,
-    "no_change_miss_pct": 13.3
+    "miss_pct": 12.0,
+    "no_change_miss_pct": 13.6
    },
    "3": {
-    "miss_pct": 15.3,
-    "no_change_miss_pct": 17.2
+    "miss_pct": 15.4,
+    "no_change_miss_pct": 17.5
    },
    "4": {
-    "miss_pct": 17.9,
-    "no_change_miss_pct": 20.1
+    "miss_pct": 17.8,
+    "no_change_miss_pct": 20.3
    }
   },
-  "range_coverage_pct": 80.3
+  "range_coverage_pct": 80.7
  },
  "alerts": {
-  "issued": 56,
+  "issued": 57,
   "decided": 34,
   "came_true": 26,
-  "pending": 22,
+  "pending": 23,
   "recent": [
+   {
+    "first_seen": "2026-10-29",
+    "commodity": "Lettuce, Iceberg",
+    "market": "New York",
+    "direction": "down",
+    "signal": "usda_tone",
+    "headline": "Lettuce, Iceberg: USDA reporters in New York call the market lower (\u201cMarket slightly lower\u201d).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
    {
     "first_seen": "2026-10-28",
     "commodity": "Lettuce, Iceberg",
@@ -224,16 +234,6 @@
     "headline": "Limes: USDA reporters in Los Angeles call the market lower (\u201cMarket slightly lower\u201d).",
     "status": "did not happen",
     "moved_pct": -0.7
-   },
-   {
-    "first_seen": "2026-10-15",
-    "commodity": "Strawberries",
-    "market": "Chicago",
-    "direction": "up",
-    "signal": "sp_lead",
-    "headline": "Strawberries: shipping point up 28% this week; Chicago hasn't followed yet (+0% this week).",
-    "status": "pending",
-    "moved_pct": NaN
    }
   ]
  }
