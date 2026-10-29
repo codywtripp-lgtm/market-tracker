@@ -592,7 +592,7 @@ def item_page(commodity, rows, hist, today, sizes, alerts, as_of, notes, only=No
     shown = [r for r in rows if r["market"] == only] if only else rows
     lead = shown[0]
     h1 = f"{PAGES[commodity][1]} prices today" + (f", {only}" if only else "")  # "Strawberry prices today"
-    parts = [f'<nav class="crumbs"><a href="@/wholesale/">Wholesale prices</a><span>/</span>'
+    parts = [f'<nav class="crumbs" aria-label="Breadcrumb"><a href="@/wholesale/">Wholesale prices</a><span>/</span>'
              + (f'<a href="@/{PAGES[commodity][0]}/">{esc(title)}</a><span>/</span>{esc(only)}' if only else esc(title))
              + "</nav>",
              f'<div class="pagehead"><h1>{esc(h1)}</h1>'
@@ -660,7 +660,7 @@ def build():
         if not rows:
             continue
         out[f"items/{slug}"] = item_page(commodity, rows, hist, today, sizes, alerts, as_of, notes)
-        for i in rows:
+        for i in rows if len(rows) > 1 else []:  # one market only: the item page already is that market's page
             out[f"items/{slug}--{MARKET_SLUG[i['market']]}"] = item_page(commodity, rows, hist, today, sizes, alerts,
                                                                        as_of, notes, only=i["market"])
     og = og_data(items, hist, as_of)

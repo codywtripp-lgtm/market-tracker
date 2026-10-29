@@ -164,9 +164,9 @@ def page(today, items, aisle="produce"):
     season = sorted((i for i in items if i["in_season"]), key=lambda i: (order[i["status"]], i["short"]))
     stores = max(i["stores"] for i in items) if items else 0
     parts = [f'<section class="intro"><h1>{AISLE_HEAD[aisle]}</h1>'
-             f'<p class="date">Week of {today:%B} {today.day}, {today.year}</p><p class="value">We compare each price with the same '
-             f'weeks in past years, adjusted for inflation, and forecast where it’s headed over the next two weeks. '
-             f'Best buys are unusually cheap right now and in good condition, based on USDA crop and market reports.</p><p class="lede">{esc(lede(items, buys, pricey))}</p></section>']
+             f'<p class="date">Week of {today:%B} {today.day}, {today.year}</p><p class="value">Each price is compared with the same '
+             f'weeks in past years, adjusted for inflation. Quality comes from USDA crop reports, and every item gets a '
+             f'two-week forecast.</p><p class="lede">{esc(lede(items, buys, pricey))}</p></section>']
     if buys:
         tiles = "".join(
             f'<li class="buy">{tag(i)}<div class="buy-body"><h3>{link(i)}</h3>{row_lines(i, today)}</div></li>'
@@ -391,7 +391,7 @@ def item_page(i, today, all_items):
     h1 = f"How much {verb(i)} {i['short'].lower()} this week?"
     up, label = {"meat": ("@/meat-prices/", "Meat & poultry"), "dairy": ("@/dairy-and-egg-prices/", "Dairy & eggs")}.get(
         i["aisle"], ("@/", "Produce"))
-    parts = [f'<nav class="crumbs"><a href="{up}">{label}</a><span>/</span>{esc(i["short"])}</nav>',
+    parts = [f'<nav class="crumbs" aria-label="Breadcrumb"><a href="{up}">{label}</a><span>/</span>{esc(i["short"])}</nav>',
              f'<section class="intro"><h1>{esc(h1)}</h1>'
              f'<p class="date">Week of {today:%B} {today.day}, {today.year}. Average advertised price at U.S. supermarkets, '
              'checked against the same week in past years.</p>'

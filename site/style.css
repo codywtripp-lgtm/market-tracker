@@ -3,6 +3,9 @@
    like shelf signage), yellow shelf tags. Colour has one meaning each: green = good price / easing,
    red = pricey / rising, grey = typical, tag yellow = great price only. Light only, on purpose. */
 
+@font-face { font-family: "Archivo"; font-style: normal; font-weight: 400 800; font-stretch: 62% 125%; font-display: swap;
+  src: url("fonts/archivo-latin.woff2") format("woff2"); }
+
 :root {
   color-scheme: light;
   --ink: #161616;
@@ -182,6 +185,7 @@ main.wrap > section:first-child { margin-top: 0; }
 a.sname { color: var(--ink); text-decoration: none; }
 a.sname:hover, .buy h3 a:hover, .pricey h3 a:hover, .all th a:hover { text-decoration: underline; }
 .buy h3 a, .pricey h3 a, .all th a { color: var(--ink); text-decoration: none; }
+.buy h3 a, .pricey h3 a, .all th a, a.sname { display: inline-block; padding: 2px 0; }  /* 24px+ tap targets (WCAG 2.5.8) */
 
 /* in season: one tinted band, a simple list */
 .band { background: var(--band); margin-left: -24px; margin-right: -24px; padding: 48px 24px; border-radius: 0; }
@@ -475,7 +479,8 @@ main.dash { min-width: 0; }
   .facts li { grid-template-columns: 1fr; }
   .cal table { border-spacing: 2px 0; }
   .cal th[scope="row"] { width: 58px; font-size: 14px; }
-  .cal .mfull { display: none; } .cal .mone { display: inline; }
+  .cal .mfull { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .cal .mone { display: inline; }
   .cal .cq { height: 26px; }
   .gquote { grid-template-columns: 1fr; gap: 12px; }
   .gquote .shelf { justify-self: start; min-width: 112px; }
