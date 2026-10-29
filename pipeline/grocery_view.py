@@ -118,11 +118,10 @@ def lede(items, buys, pricey):
         return "Prices at the store are close to normal for the time of year."
     s = (names[0] if len(names) == 1 else ", ".join(names[:-1]) + " and " + names[-1])
     s = s[:1].upper() + s[1:] + (" is" if len(names) == 1 else " are") + " the best buys this week."
-    swaps = [p for p in pricey if p.get("swap")]
-    if swaps:
-        p = swaps[0]
-        s += f" {p['short']} {'is' if not p['short'].endswith('s') else 'are'} pricey; {p['swap'].lower()} " \
-             f"{'is' if not p['swap'].endswith('s') else 'are'} the better buy."
+    high = [p["short"].lower() for p in pricey[:2]]
+    if high:
+        h = high[0] if len(high) == 1 else " and ".join(high)
+        s += f" {h[:1].upper() + h[1:]} {'are' if len(high) > 1 or high[0].endswith('s') else 'is'} pricey."
     return s
 
 
@@ -168,11 +167,12 @@ def page(today, items, aisle="produce"):
             f'<b class="bad">{i["vs_usual"]}% above usual</b></span></div>'
             + (f'<p class="cause">{esc(i["why"])}</p>' if i.get("why") else "")
             + (f'<p class="ahead">{ahead(i)}</p>' if ahead(i) else "")
-            + (f'<p class="swap">Try {esc(i["swap"].lower())} instead</p>' if i.get("swap") else "") + "</li>"
+            + "</li>"
             for i in pricey[:8])
         parts.append(f'<section><h2>Pricey right now</h2><ul class="pricey">{rows}</ul></section>')
     rows = "".join(
-        f'<tr data-name="{esc(i["name"].lower())}"><th scope="row">{link(i)}'
+        f'<tr data-name="{esc(i["name"].lower())}" data-v="{"" if i["vs_usual"] is None else i["vs_usual"]}" '
+        f'data-q="{grocery.q_rank(i) if i.get("quality") else -1}"><th scope="row">{link(i)}'
         f'{IN_SEASON if i["in_season"] else ""}</th>'
         f'<td class="n">{money(i["price"])}<small>{esc(i["unit"].strip())}</small></td>'
         f'<td><span class="word {STATUS[i["status"]][1]}">{esc(STATUS[i["status"]][0])}</span>'
@@ -182,8 +182,11 @@ def page(today, items, aisle="produce"):
     parts.append('<section><h2>All prices this week</h2>'
                  '<label class="find"><span>Find an item</span><input type="search" id="find" '
                  f'placeholder="{AISLE_FIND[aisle]}" autocomplete="off"></label>'
-                 '<table class="all"><thead><tr><th scope="col">Item</th><th scope="col" class="n">Price</th>'
-                 f'<th scope="col">For the time of year</th><th scope="col">Quality now</th></tr></thead>'
+                 '<table class="all sortable"><thead><tr>'
+                 '<th scope="col" aria-sort="ascending"><button type="button" data-sort="name">Item</button></th>'
+                 '<th scope="col" class="n">Price</th>'
+                 '<th scope="col"><button type="button" data-sort="v">Vs. usual</button></th>'
+                 '<th scope="col"><button type="button" data-sort="q">Quality</button></th></tr></thead>'
                  f'<tbody>{rows}</tbody></table></section>')
     what = {"produce": "produce", "meat": "meat and poultry", "dairy": "dairy and eggs"}[aisle]
     quality = ('<p>Quality is what to expect this time of year: new crop and peak harvest rate excellent; storage, '
@@ -384,11 +387,9 @@ def item_page(i, today, all_items):
         word, tone = STATUS[i["status"]]
         parts.append(f'<section class="gquote">{tag(i)}<div><p class="gword {tone}">{esc(word)}</p>{qual(i)}'
                      f'<p class="buy-why">{why_line(i, today) or esc(i["name"])}</p>'
-                     + (f'<p class="cause big">{esc(i["why"])}</p>' if i.get("why") else "")
-                     + (f'<p class="ahead big">{ahead(i)}</p>' if ahead(i) else "")
+                     + (f'<p class="cause">{esc(i["why"])}</p>' if i.get("why") else "")
+                     + (f'<p class="ahead">{ahead(i)}</p>' if ahead(i) else "")
                      + f'{price_bar(i, today)}</div></section>')
-        if i.get("swap"):
-            parts.append(f'<p class="swap big">Pricey this week. Try {esc(i["swap"].lower())} instead.</p>')
         if i["stores"] < grocery.MIN_STORES:
             parts.append(f'<p class="fine">Only {i["stores"]:,} stores listed {"them" if plural(i) else "it"} this '
                          "week, often a single chain, so treat the comparison loosely.</p>")
