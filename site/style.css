@@ -191,6 +191,27 @@ main.wrap > section:first-child { margin-top: 0; }
 .cal .legend { margin-top: 12px; }
 .cal .nowkey { color: var(--ink-2); }
 
+/* cook this week */
+.recipes { list-style: none; margin: 0; padding: 0; max-width: 820px; border-top: 2px solid var(--ink); }
+.recipes li { display: grid; grid-template-columns: 1fr auto; gap: 2px 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.rname { margin: 0; font-size: 21px; line-height: 1.3; }
+.rdesc { grid-column: 1 / -1; margin: 2px 0 4px; color: var(--ink-2); }
+.rbuy { grid-column: 1 / -1; margin-top: 8px; }
+.rbuy summary { cursor: pointer; color: var(--link); font-weight: 700; padding: 6px 0; }
+.rbuy .ing { margin-top: 6px; border-top-width: 1px; }
+.rfind { grid-column: 1 / -1; justify-self: start; margin-top: 6px; font-weight: 700; padding: 6px 0; }
+.rcost { font-weight: 700; white-space: nowrap; text-align: right; }
+.rnotes { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 15px; }
+.rnotes .good { color: var(--good); font-weight: 700; } .rnotes .bad { color: var(--bad); }
+.more-link { font-weight: 700; }
+.ing { list-style: none; margin: 0; padding: 0; max-width: 720px; }
+.ing { border-top: 2px solid var(--ink); }
+.ing li { display: flex; justify-content: space-between; align-items: baseline; gap: 8px 16px; flex-wrap: wrap; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.ing-tag { display: inline-flex; gap: 10px; align-items: baseline; white-space: nowrap; }
+.ing-price { font-weight: 700; color: var(--ink); }
+.ing-word { font-size: 15px; font-weight: 700; } .ing-word.good { color: var(--good); } .ing-word.bad { color: var(--bad); }
+.ing-word.flat { color: var(--ink-2); font-weight: 400; }
+
 /* grocery item page */
 .gquote { display: grid; grid-template-columns: 132px 1fr; gap: 24px; align-items: start; margin-top: 40px; max-width: 640px; }
 .gword { font-size: 24px; line-height: 30px; font-weight: 800; margin: 0 0 4px; }
@@ -489,6 +510,8 @@ main.dash { min-width: 0; }
   .ql-btn:hover + .ql-tip { display: none; }
   .ql-btn[aria-expanded="true"] + .ql-tip { display: block; }
   .facts li { grid-template-columns: 1fr; }
+  .recipes li { grid-template-columns: 1fr; }
+  .rcost { text-align: left; }
   .cal table { border-spacing: 2px 0; }
   .cal th[scope="row"] { width: 58px; font-size: 13px; }
   .cal .mfull { display: none; } .cal .mone { display: inline; }
