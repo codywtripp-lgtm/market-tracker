@@ -120,10 +120,12 @@ main.wrap > section:first-child { margin-top: 0; }
   clip-path: polygon(9px 0, 100% 0, 100% 100%, 9px 100%, 0 50%); text-align: left; }
 .shelf-price { display: block; font-size: 28px; line-height: 30px; font-weight: 800; font-stretch: var(--narrow); padding-left: 4px; }
 .shelf-unit { display: block; font-size: 14px; line-height: 18px; font-weight: 700; padding-left: 4px; }
-.buy-why { color: var(--ink-2); font-size: 16px; line-height: 24px; margin: 0; }
+.vs, .meta, .next { color: var(--ink-2); font-size: 16px; line-height: 24px; margin: 0; }
+.meta .ql { display: inline; margin: 0; }
+.next span { font-weight: 700; color: var(--ink); } .next span.good { color: var(--good); } .next span.bad { color: var(--bad); }
+.pprice { float: right; font-weight: 700; }
 .buy .ql { display: inline-block; margin: 2px 0 0; }
 .cause { font-size: 16px; line-height: 24px; color: var(--ink-2); margin: 2px 0 0; }
-.ahead { font-size: 16px; line-height: 24px; color: var(--ink); margin: 4px 0 0; }
 
 /* price check bar: low / typical / high */
 .pbar { max-width: 340px; margin-top: 14px; }
@@ -145,7 +147,6 @@ main.wrap > section:first-child { margin-top: 0; }
 .ql-btn:hover + .ql-tip, .ql-btn:focus-visible + .ql-tip, .ql-btn[aria-expanded="true"] + .ql-tip { display: block; }
 .season-list .ql { display: block; margin: 0; }
 .season-list .ql-btn { font-size: 16px; }
-.pricey .ql { display: block; margin: 0; }
 
 /* season calendar: 12 months, quality and typical ad price */
 .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -179,8 +180,8 @@ main.wrap > section:first-child { margin-top: 0; }
 .facts li { display: grid; grid-template-columns: 220px 1fr; gap: 4px 24px; padding: 14px 0; border-bottom: 1px solid var(--line); }
 .facts span { color: var(--ink-2); }
 a.sname { color: var(--ink); text-decoration: none; }
-a.sname:hover, .buy h3 a:hover, .pricey b a:hover, .all th a:hover { text-decoration: underline; }
-.buy h3 a, .pricey b a, .all th a { color: var(--ink); text-decoration: none; }
+a.sname:hover, .buy h3 a:hover, .pricey h3 a:hover, .all th a:hover { text-decoration: underline; }
+.buy h3 a, .pricey h3 a, .all th a { color: var(--ink); text-decoration: none; }
 
 /* in season: one tinted band, a simple list */
 .band { background: var(--band); margin-left: -24px; margin-right: -24px; padding: 48px 24px; border-radius: 0; }
@@ -194,10 +195,8 @@ a.sname:hover, .buy h3 a:hover, .pricey b a:hover, .all th a:hover { text-decora
 /* pricey */
 .pricey { list-style: none; margin: 0; padding: 0; max-width: 760px; }
 .pricey li { padding: 14px 0; border-bottom: 1px solid var(--line); }
+.pricey h3 { margin: 0 0 2px; }
 .pricey li:first-child { border-top: 1px solid var(--line-2); }
-.pricey li > div > b { display: block; font-size: 18px; }
-.pricey li > div > span:not(.ql) { display: block; color: var(--ink-2); font-size: 16px; }
-.pricey span b { white-space: nowrap; }
 
 /* every item */
 .find { display: block; max-width: 420px; margin-bottom: 24px; }
