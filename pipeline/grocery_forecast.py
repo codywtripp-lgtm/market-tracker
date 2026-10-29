@@ -21,6 +21,7 @@ HORIZON = 2  # weeks
 MIN_STORES = 200
 CALL, HIT = 0.10, 0.05  # call a move of 10%+; it counts as right if the price then moved 5%+ that way
 RUN, RUN_WEEKS = 0.15, 3  # a price 15%+ from usual for each of the last 3 weeks has a lasting cause: don't call it back
+LAST_WEEKS, LAST_MEAN = 8, 0.10  # or on the same side of usual all of the last 8 weeks, 10%+ away on average
 FEATS = ("seasonal", "gap", "mom")
 RECORD = {"calls": 0, "right": 0, "since": None}  # walk-forward track record, set by outlook()
 
@@ -70,6 +71,14 @@ def _run(dates, logp, k):
         return 1
     if all(g is not None and g <= -RUN for g in gaps):
         return -1
+    # a slower, steadier move: every ad in the last 8 weeks on the same side of usual (beef in 2025-26)
+    lo = bisect.bisect_left(dates, dates[k] - dt.timedelta(weeks=LAST_WEEKS))
+    hist = [g for g in (_gap(dates, logp, j) for j in range(lo, k)) if g is not None]
+    if len(hist) >= LAST_WEEKS * 0.75:
+        if all(g > 0 for g in hist) and statistics.mean(hist) >= LAST_MEAN:
+            return 1
+        if all(g < 0 for g in hist) and statistics.mean(hist) <= -LAST_MEAN:
+            return -1
     return 0
 
 
@@ -94,7 +103,8 @@ def features(dates, logp, k, h=HORIZON):
 def call(p, f):
     """The forecast change if it's a call we make, else None. No call against a lasting move: tested 2022-2026,
     "likely to drop" after 3+ weeks well above usual came true 55% of the time (70% otherwise), and "likely to
-    rise" after 3+ weeks well below usual 49% (75% otherwise)."""
+    rise" after 3+ weeks well below usual 49% (75% otherwise). Adding the 8-week rule (prices above usual for two
+    months, as beef in 2025-26 when "likely to drop" was right 49% of the time) took the record from 75% to 77%."""
     if abs(p) < CALL or (p < 0 and f.get("run") == 1) or (p > 0 and f.get("run") == -1):
         return None
     return p
