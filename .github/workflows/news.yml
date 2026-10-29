@@ -1,0 +1,37 @@
+name: News history
+
+# Downloads daily news-volume counts per grocery topic from GDELT (pipeline/news.py) and commits them to
+# data/raw/news. GDELT allows one request every 5 seconds, so a full download takes a couple of hours; the job
+# commits after every topic so progress is kept if it stops.
+on:
+  workflow_dispatch:
+  push:
+    branches: [news-history]
+    paths: [".github/workflows/news.yml", "pipeline/news.py"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: news
+  cancel-in-progress: false
+
+jobs:
+  news:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Download topic by topic
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for t in $(python -c "from pipeline import news; print(' '.join(t.replace(' ', '_') for t in news.TOPICS))"); do
+            python -c "from pipeline import news; news.update(topics=['${t//_/ }'])" || echo "failed: $t"
+            git add data/raw/news
+            git diff --cached --quiet || { git commit -q -m "News history: $t"; git pull -q --rebase && git push -q; }
+          done
