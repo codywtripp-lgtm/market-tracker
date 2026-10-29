@@ -113,3 +113,13 @@ def test_why_names_supply_causes_and_holds_back_calls_the_cause_contradicts():
     assert why.holds_back(-0.15, sig)  # short supply, wholesale climbing: don't say "likely to drop"
     assert not why.holds_back(-0.15, {"ship": 5.0, "trend": -3.0})
     assert gf.call(-0.2, {"run": 1}) is None and gf.call(-0.2, {"run": 0}) == -0.2  # high for weeks: lasting cause
+
+
+def test_weekly_email_lists_best_buys_and_pricey_with_outlook():
+    import datetime as dt
+    from pipeline import newsletter
+    _, items = grocery.build(live={}, rows=history("Apples", 1.2) + history("Blueberries", 5.0))
+    subject, preview, body = newsletter.build(dt.date(2026, 10, 23), items)
+    assert subject == "Best buys this week: apples" and "blueberries" in preview.lower()
+    assert "Best buys" in body and "Pricey right now" in body and "Next 2 weeks" in body
+    assert "grocery/apples/?ref=email" in body

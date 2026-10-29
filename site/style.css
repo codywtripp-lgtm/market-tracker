@@ -347,6 +347,18 @@ a.sname:hover, .buy h3 a:hover, .pricey h3 a:hover, .all th a:hover { text-decor
 .landing li { margin-bottom: 12px; }
 .landing h2 { margin-top: 64px; }
 
+/* weekly email sign-up */
+.signup { margin-top: 64px; padding: 28px 24px; background: var(--band); max-width: 760px; }
+.signup h2 { margin-bottom: 8px; }
+.signup p { color: var(--ink-2); font-size: 16px; line-height: 24px; max-width: 54ch; }
+.signup-form { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.signup-form input { flex: 1 1 240px; height: 44px; padding: 0 12px; border: 1px solid var(--line-2); border-radius: 4px;
+  font-size: 18px; background: var(--page); }
+.signup-form input:focus { border-color: var(--ink); outline: none; }
+.signup-form button { height: 44px; padding: 0 20px; border: 0; border-radius: 4px; background: var(--leaf); color: #fff;
+  font: inherit; font-weight: 700; cursor: pointer; }
+.signup-form button:hover { background: var(--ink); }
+
 /* ---------- footer ---------- */
 .foot { margin-top: 96px; border-top: 1px solid var(--line); padding: 32px 0 64px; color: var(--ink-2); font-size: 16px; line-height: 24px; }
 .foot p { max-width: 75ch; }
