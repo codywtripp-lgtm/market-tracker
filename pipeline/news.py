@@ -101,10 +101,21 @@ def load(topic):
         return {dt.date.fromisoformat(r["date"]): (int(r["count"]), int(r["total"])) for r in csv.DictReader(f)}
 
 
-def update(today=None, topics=None):
-    """Fetch the days each topic is missing, a year at a time; the current year is always refreshed."""
+def _save(topic, have):
+    with open(DIR / f"{topic}.csv", "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(["date", "count", "total"])
+        for d in sorted(have):
+            w.writerow([d.isoformat(), *have[d]])
+
+
+def update(today=None, topics=None, budget=None, pause=60):
+    """Fetch the days each topic is missing, a year at a time (the current year is always refreshed), saving after
+    every year. budget: stop after this many requests, so a scheduled job can fill the history a little at a time
+    without tripping GDELT's rate limit."""
     today = today or dt.date.today()
     DIR.mkdir(parents=True, exist_ok=True)
+    used = 0
     for topic in topics or TOPICS:
         have = load(topic)
         query = f"{TOPICS[topic][0]} {SHOCK}"
@@ -112,16 +123,25 @@ def update(today=None, topics=None):
             start, end = dt.date(year, 1, 1), min(dt.date(year, 12, 31), today)
             if year < today.year and any(d.year == year for d in have):
                 continue
+            if year == today.year and have and max(have) >= today - dt.timedelta(days=1):
+                continue
             if year == today.year and have:
                 start = max(start, max(have) - dt.timedelta(days=14))
-            for d, c, n in _fetch(query, start, end):
+            if budget is not None and used >= budget:
+                print(f"news: request budget used; {topic} resumes from {year} next run")
+                return False
+            used += 1
+            time.sleep(pause)
+            try:
+                rows = _fetch(query, start, end, tries=2)
+            except RuntimeError as e:
+                print(f"news: {e}; will retry next run")
+                return False
+            for d, c, n in rows:
                 have[d] = (c, n)
-        with open(DIR / f"{topic}.csv", "w", newline="", encoding="utf-8") as f:
-            w = csv.writer(f)
-            w.writerow(["date", "count", "total"])
-            for d in sorted(have):
-                w.writerow([d.isoformat(), *have[d]])
+            _save(topic, have)
         print(f"news: {topic} {len(have)} days")
+    return True
 
 
 def surge(item, day, recent=7, base=56):
@@ -153,4 +173,5 @@ def surge(item, day, recent=7, base=56):
 _cache = {}
 
 if __name__ == "__main__":
-    update()
+    import sys
+    update(budget=int(sys.argv[1]) if len(sys.argv) > 1 else None)
