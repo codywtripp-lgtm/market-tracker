@@ -87,6 +87,24 @@ def why_line(i, today):
     return " ".join(bits)
 
 
+def ahead(i):
+    """The two-week outlook in plain words, or "" (pipeline/grocery_forecast.py; only for items with a usual price)."""
+    if not i.get("outlook") or i["status"] not in ("low", "typical", "high"):
+        return ""
+    if i["outlook"] < 0:
+        return "Likely to drop in the next 2 weeks."
+    return ("This price likely won’t last: expect it higher in the next 2 weeks." if i["status"] == "low"
+            else "Likely to rise in the next 2 weeks.")
+
+
+def record_sentence():
+    from .grocery_forecast import RECORD
+    if not RECORD["calls"]:
+        return ""
+    return (f"In testing on {RECORD['since']} to {dt.date.today().year} prices, the price moved the way the outlook said "
+            f"(by 5% or more) {round(100 * RECORD['right'] / RECORD['calls'])}% of the time.")
+
+
 def tag(i):
     return (f'<div class="shelf"><span class="shelf-price">{money(i["price"])}</span>'
             f'<span class="shelf-unit">{esc(i["unit"].strip())}</span></div>')
@@ -127,12 +145,14 @@ def page(today, items, aisle="produce"):
     season = sorted((i for i in items if i["in_season"]), key=lambda i: (order[i["status"]], i["short"]))
     stores = max(i["stores"] for i in items) if items else 0
     parts = [f'<section class="intro"><h1>{AISLE_HEAD[aisle]}</h1>'
-             f'<p class="date">Week of {today:%B} {today.day}, {today.year}</p><p class="value">We check every supermarket price '
-             f'against the same week in past years. Best buys are unusually cheap right now, and good quality.</p><p class="lede">{esc(lede(items, buys, pricey))}</p></section>']
+             f'<p class="date">Week of {today:%B} {today.day}, {today.year}</p><p class="value">We compare each price with the same '
+             f'weeks in past years, adjusted for inflation, and forecast where it’s headed over the next two weeks. '
+             f'Best buys are unusually cheap right now and in good condition, based on USDA crop and market reports.</p><p class="lede">{esc(lede(items, buys, pricey))}</p></section>']
     if buys:
         tiles = "".join(
             f'<li class="buy">{tag(i)}<div class="buy-body"><h3>{link(i)}</h3>'
-            f'<p class="buy-why">{why_line(i, today)}</p>{qual(i)}</div></li>' for i in buys)
+            f'<p class="buy-why">{why_line(i, today)}</p>'
+            + (f'<p class="ahead">{ahead(i)}</p>' if ahead(i) else "") + f'{qual(i)}</div></li>' for i in buys)
         parts.append(f'<section><h2>Best buys</h2><ul class="buys">{tiles}</ul></section>')
     if season and aisle == "produce":
         chips = "".join(f'<li><span><a class="sname" href="@/grocery/{i["slug"]}/">{esc(i["short"])}</a>{qual(i)}</span>'
@@ -145,6 +165,7 @@ def page(today, items, aisle="produce"):
         rows = "".join(
             f'<li><div><b>{link(i)}</b>{qual(i)}<span>{money(i["price"])}{esc(i["unit"])}, '
             f'<b class="bad">{i["vs_usual"]}% above usual</b></span></div>'
+            + (f'<p class="ahead">{ahead(i)}</p>' if ahead(i) else "")
             + (f'<p class="swap">Try {esc(i["swap"].lower())} instead</p>' if i.get("swap") else "") + "</li>"
             for i in pricey[:8])
         parts.append(f'<section><h2>Pricey right now</h2><ul class="pricey">{rows}</ul></section>')
@@ -171,7 +192,8 @@ def page(today, items, aisle="produce"):
     parts.append(f'<section class="how"><h2>How this works</h2>{quality}<p>Every week USDA records the {what} prices '
                  f'U.S. supermarkets advertise, from about {round(stores, -2):,} stores for the most common items. We compare '
                  f'this week’s average price with the same weeks in the last {years}, adjusted for inflation: the cheapest '
-                 f'quarter of those weeks is a great price, the highest quarter is pricey.{season} These are advertised '
+                 f'quarter of those weeks is a great price, the highest quarter is pricey. The two-week outlook comes from a model of each item’s seasonal pattern and how '
+                 f'far it is from its usual price. {record_sentence()}{season} These are advertised '
                  'prices; your store’s everyday shelf price may differ.</p><p>Buy for a restaurant, store or distributor? '
                  '<a href="@/wholesale/">See wholesale produce prices and two-week forecasts</a>.</p></section>')
     data = {"@context": "https://schema.org", "@type": "Dataset", "name": f"Supermarket {what} prices this week",
@@ -331,6 +353,9 @@ def faq(i, today):
         ans = "" if not i["seasons"] else season_sentence(i, today).split(" They’re usually")[0].split(" It’s usually")[0]
         qa.append((f"{'Are' if plural(i) else 'Is'} {name} in season right now?",
                    ans or "USDA’s seasonal guide doesn’t list it; stores carry it most of the year."))
+    if ahead(i):
+        qa.append((f"Will {name} get {'cheaper' if i['outlook'] < 0 else 'more expensive'} soon?",
+                   f"{ahead(i)} {record_sentence()}".strip()))
     if i["cheapest_months"]:
         qa.append((f"When {verb(i)} {name} cheapest?",
                    f"In past years, supermarket prices for {name} were lowest in "
@@ -352,7 +377,9 @@ def item_page(i, today, all_items):
     if i["this_week"]:
         word, tone = STATUS[i["status"]]
         parts.append(f'<section class="gquote">{tag(i)}<div><p class="gword {tone}">{esc(word)}</p>{qual(i)}'
-                     f'<p class="buy-why">{why_line(i, today) or esc(i["name"])}</p>{price_bar(i, today)}</div></section>')
+                     f'<p class="buy-why">{why_line(i, today) or esc(i["name"])}</p>'
+                     + (f'<p class="ahead big">{ahead(i)}</p>' if ahead(i) else "")
+                     + f'{price_bar(i, today)}</div></section>')
         if i.get("swap"):
             parts.append(f'<p class="swap big">Pricey this week. Try {esc(i["swap"].lower())} instead.</p>')
         if i["stores"] < grocery.MIN_STORES:

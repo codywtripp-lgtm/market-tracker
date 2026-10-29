@@ -99,3 +99,13 @@ def test_item_page_lists_more_from_its_own_aisle():
     today, items = grocery.build(live={}, rows=history("Apples", 1.2) + history("Pears", 1.5))
     page = grocery_view.item_page(items[0], today, items)
     assert "<h2>More produce</h2>" in page and "Other aisles" in page
+
+
+def test_grocery_outlook_learns_that_prices_far_from_usual_come_back():
+    import datetime as dt
+    from pipeline import grocery_forecast as gf
+    rows = [{"date": dt.date(2023, 1, 1), "seasonal": 0.0, "gap": g, "mom": 0.0, "y": -0.5 * g}
+            for g in (-0.4, -0.2, 0.0, 0.2, 0.4) for _ in range(200)]
+    w = gf.fit(rows)
+    assert gf.predict(w, {"seasonal": 0.0, "gap": -0.3, "mom": 0.0}) > gf.CALL  # on sale now: likely back up
+    assert gf.predict(w, {"seasonal": 0.0, "gap": 0.3, "mom": 0.0}) < -gf.CALL  # spiked: likely to ease
