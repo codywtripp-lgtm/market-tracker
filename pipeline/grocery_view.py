@@ -8,7 +8,6 @@ import datetime as dt
 import html
 import json
 import re
-from urllib.parse import quote_plus
 
 from . import grocery, quality
 
@@ -491,86 +490,13 @@ def thanksgiving_page(today, items):
 
 
 def guides(today, skip=None):
-    """The same short list of planning guides on every aisle page, under the intro: they cut across aisles, so they
-    are links, not aisle tabs. Thanksgiving shows from 40 days out until the day itself."""
+    """Seasonal guides, linked the same way under the intro on every aisle page: they cut across aisles, so they are
+    links, not aisle tabs. Thanksgiving shows from 40 days out until the day itself."""
     from .holiday import thanksgiving
     links = []
     if 0 <= (thanksgiving(today.year) - today).days <= 40 and skip != "thanksgiving":
         links.append(("thanksgiving-produce-prices", "Thanksgiving food prices", "What to buy now and what to wait for"))
-    if skip != "cook":
-        links.append(("cook-this-week", "What to cook this week", "Cheap meals built on this week’s best buys"))
+    if not links:
+        return ""
     rows = "".join(f'<li><a href="@/{slug}/">{esc(name)}</a><span>{esc(sub)}</span></li>' for slug, name, sub in links)
     return f'<nav class="guides" aria-label="Guides"><ul>{rows}</ul></nav>'
-
-
-# ---------- Cook this week ----------
-def _names(xs):
-    n = [x["short"] if x["short"].split()[0] in grocery.KEEP_CAPS else x["short"][:1].lower() + x["short"][1:] for x in xs]
-    return n[0] if len(n) == 1 else ", ".join(n[:-1]) + " and " + n[-1]
-
-
-def _cost(per, partial):
-    if per is None:
-        return ""
-    return f"{money(per)}<small> a serving{'*' if partial else ''}</small>"
-
-
-def shopping_list(r, items):
-    by_c = {i["commodity"]: i for i in items}
-    out = ""
-    for commodity, _, _, text in r["items"]:
-        i = by_c.get(commodity)
-        if i and i["this_week"]:
-            word, tone = STATUS[i["status"]]
-            price = (f'<a href="@/grocery/{i["slug"]}/" class="ing-price">{money(i["price"])}{esc(i["unit"])}</a>'
-                     f'<span class="ing-word {tone}">{esc(word)}</span>')
-        else:
-            price = '<span class="ing-word flat">No price this week</span>'
-        out += f'<li><span>{esc(text)}</span><span class="ing-tag">{price}</span></li>'
-    return f'<ul class="ing">{out}</ul>'
-
-
-def cook_rows(rows, items, limit=None):
-    """Each meal in two lines: name (a web search for recipes; we don't publish them) and cost per serving, then its
-    good and pricey buys, which open this week's prices for the shopping list."""
-    out = ""
-    for r, per, partial, score, good, pricey in rows[:limit]:
-        notes = []
-        if good:
-            notes.append(f'<span class="good">Good buys: {esc(_names(good[:3]))}</span>')
-        if pricey:
-            notes.append(f'<span class="bad">Pricey: {esc(_names(pricey[:2]))}</span>')
-        if not notes:
-            notes.append("Typical prices")
-        find = "https://www.google.com/search?q=" + quote_plus(r["name"] + " recipe")
-        out += (f'<li><h3 class="rname"><a href="{find}" target="_blank" rel="noopener">{esc(r["name"])}'
-                '<span class="vh"> (recipe search, opens in a new tab)</span>'
-                f'</a></h3><span class="rcost">{_cost(per, partial)}</span>'
-                f'<details class="rbuy"><summary>{" · ".join(notes)}<span class="rmore">Prices</span>'
-                f'</summary>{shopping_list(r, items)}</details></li>')
-    return f'<ul class="recipes">{out}</ul>'
-
-
-COST_NOTE = ("Meals are ranked by how many of their main ingredients are a good price and good quality this week. "
-             "Tap a meal’s name to search for recipes. Cost per serving is for a typical home version of each meal: its fresh ingredients at this week’s average "
-             "U.S. supermarket prices. Pantry staples (oil, spices, rice, pasta) are extra. *Some ingredients had no "
-             "price this week. We don’t publish recipes.")
-
-
-def cook_page(today, items):
-    from . import recipes
-    rows = recipes.ranked(items)
-    best = [x for x in rows if x[3] > 0]
-    later = [x for x in rows if x[3] <= 0]
-    stars = sorted({g["short"]: g for x in best[:6] for g in x[4]}.values(), key=lambda g: g["short"])[:5]
-    lede = "Meals built on this week’s best buys" + (f": {_names(stars)}." if stars else ".")
-    parts = [f'<section class="intro"><h1>What to cook this week</h1>'
-             f'<p class="date">Week of {today:%B} {today.day}, {today.year}. Based on the average of the prices U.S. '
-             'supermarkets advertised this week, reported by USDA.</p>'
-             f'<p class="lede">{esc(lede)}</p></section>', guides(today, skip="cook"),
-             f'<section><h2>Best this week</h2>{cook_rows(best, items)}</section>']
-    if later:
-        parts.append(f'<section><h2>Better another week</h2><p class="sub">Their main ingredients are pricey right now.</p>'
-                     f'{cook_rows(later, items)}</section>')
-    parts.append(f'<p class="fine">{esc(COST_NOTE)}</p>')
-    return "\n".join(parts) + "\n"

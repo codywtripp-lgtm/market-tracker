@@ -653,7 +653,6 @@ def build():
                 out[f"aisle-{aisle}"] = body
         for gi in g_items:
             out[f"grocery/{gi['slug']}"] = grocery_view.item_page(gi, g_day, g_items)
-        out["cook"] = grocery_view.cook_page(g_day, g_items)
         _, tg_page = grocery_view.thanksgiving_page(g_day, g_items)
         if tg_page:
             out["thanksgiving"] = tg_page

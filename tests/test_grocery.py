@@ -94,15 +94,6 @@ def test_meat_and_dairy_pages_dont_talk_about_seasons():
     assert grocery_view.season_sentence(i, None) == "Pork shoulder prices are usually lowest in February, March and April."
 
 
-def test_cook_this_week_links_out_for_recipes_and_prices_the_shopping_list():
-    from pipeline import grocery_view, recipes
-    assert all("steps" not in r and "desc" not in r for r in recipes.R)
-    page = grocery_view.cook_page(*grocery.build(live={}, rows=history("Broccoli", 0.9)))
-    assert "https://www.google.com/search?q=" in page and 'rel="noopener"' in page
-    assert "recipes/" not in page  # we don't publish recipe pages
-    assert '<a href="@/grocery/broccoli/" class="ing-price">$0.90/lb</a>' in page
-
-
 def test_item_page_lists_more_from_its_own_aisle():
     from pipeline import grocery_view
     today, items = grocery.build(live={}, rows=history("Apples", 1.2) + history("Pears", 1.5))
@@ -114,8 +105,8 @@ def test_every_aisle_links_the_same_guides_and_holiday_calls_need_agreeing_years
     import datetime as dt
     from pipeline import grocery_view, holiday
     g = grocery_view.guides(dt.date(2026, 11, 1))
-    assert "thanksgiving-produce-prices" in g and "cook-this-week" in g
-    assert "thanksgiving" not in grocery_view.guides(dt.date(2026, 7, 1))
+    assert "thanksgiving-produce-prices" in g
+    assert grocery_view.guides(dt.date(2026, 7, 1)) == ""
     flip = {"short": "Eggs", "commodity": "Eggs"}
     o = {"change": 0.26, "steady": False, "stores_x": 1}
     assert holiday.advice(flip, o).startswith("No reliable pattern")

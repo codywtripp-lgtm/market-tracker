@@ -108,6 +108,7 @@ def main():
         (OUT / "data" / "s" / f"{sid}.json").write_text(json.dumps(with_usual(rows), separators=(",", ":")))
     urls = board_pages() + why_page() + charts_page() + about_page()
     redirect("brief", "../")
+    redirect("cook-this-week", "../")  # Cook this week was removed 2026-10-29
     seo_files(urls)
     print(f"site: {len(latest)} items, {len(weekly)} series histories, {len(urls)} pages")
 
@@ -327,11 +328,6 @@ def board_pages():
              desc=re.sub(r", \d+ days? away", "", _text((BOARD / "thanksgiving.html").read_text(encoding="utf-8"), "lede")),
              find={"name": "Thanksgiving food prices", "status": "What to buy now, what to wait for", "aka": "holiday turkey ham"},
              head=crumbs_ld(("Grocery prices", SITE_URL), ("Thanksgiving food prices", f"{SITE_URL}thanksgiving-produce-prices/")))
-    if (BOARD / "cook.html").exists():
-        emit("cook-this-week/", "cook", "What to Cook This Week: Cheap Meals From This Week’s Best Buys", 1,
-             view="grocery", day=g_day,
-             find={"name": "What to cook this week", "status": "Cheap meals from this week’s best buys", "aka": "recipes dinner meals cheap cook"},
-             head=crumbs_ld(("Grocery prices", SITE_URL), ("What to cook this week", f"{SITE_URL}cook-this-week/")))
     for f in sorted((BOARD / "grocery").glob("*.html")) if (BOARD / "grocery").exists() else []:
         key = f"g-{f.stem}"
         name = og.get(key, {}).get("title", f.stem.replace("-", " ").capitalize() + " prices this week")
@@ -589,8 +585,7 @@ earlier years compare fairly.</li>
 <p>Every market evening a program downloads the latest USDA reports and rebuilds every page from the data. Nobody
 edits the prices by hand. “Usual” is the same weeks of the year in earlier years, in today’s dollars: the cheapest
 quarter of those weeks counts as a great or low price, the highest quarter as pricey or high.</p>
-<p>Meal ideas price each meal’s fresh ingredients at this week’s average supermarket prices and rank meals by how
-many of their main ingredients are a good price and good quality. The Thanksgiving guide compares how each item’s
+<p>The Thanksgiving guide compares how each item’s
 price moved into Thanksgiving week in past years.</p>
 <p>Wholesale forecasts come from a statistical model tested the honest way: each past year was predicted using only
 data from before it. The results, misses included, are on the <a href="../why/">track record page</a>.</p>
