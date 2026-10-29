@@ -100,7 +100,7 @@ def season_of(d):
 
 
 KEEP_CAPS = {"Brussels", "Swiss", "Roma", "Honeycrisp", "Gala", "Fuji", "Granny", "Smith", "Bartlett", "Anjou", "Bosc",
-             "Hass", "Cara", "Navel", "Valencia", "Medjool", "Thompson", "Rainier", "Bing", "Persian", "Napa"}
+             "Hass", "Cara", "Navel", "Valencia", "Medjool", "Thompson", "Rainier", "Bing", "Persian", "Napa", "Italian", "Greek", "London", "T-bone"}
 
 
 def sentence(n):
