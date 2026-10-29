@@ -95,3 +95,10 @@ Sources: lists of AI-built-site tells (scalr.sg, falia.co, sailop.com, 925studio
 - **Repeated items are compact rows,** not tall identical tiles.
 - Copy is specific (numbers, places, dates); no buzzwords, no em-dash habit.
 - **No defensive or self-praising filler** (owner, 2026-10-30): no "nobody edits by hand", "tested the honest way", "misses included", "not X, it's Y". Say what the thing does and the number that shows how well.
+
+## Type scale (2026-10-30)
+Research: body 16-18px, line height ~1.5, 45-75 characters a line, a modular scale (~1.25), 4-6 sizes, 2-3 weights.
+- Desktop: 14 captions (chart/meter labels, units on tags) / 16 secondary (dates, notes, why and outlook lines, nav, table heads) / 18 body and list names / 22 lede and key figures / 28 h2 and tag prices / 44 h1 / 56 the one big wholesale price.
+- Phone: h1 34, h2 24, lede 20, tag price 24, wholesale price 44; the rest unchanged.
+- Weights: 400 text, 700 emphasis, 800 headings. Nothing else.
+- Secondary information (why, two-week outlook) is 16px regular, never larger than the price it explains.

@@ -39,3 +39,26 @@
     rows.forEach((r) => { r.hidden = q !== "" && !r.dataset.name.includes(q); });
   });
 })();
+
+// Every-item table: sort by item, how the price compares with usual, or quality. Items with no comparison go last.
+(() => {
+  const table = document.querySelector("table.sortable");
+  if (!table) return;
+  const body = table.tBodies[0];
+  const key = { name: (r) => r.dataset.name, v: (r) => r.dataset.v === "" ? null : +r.dataset.v,
+                q: (r) => +r.dataset.q < 0 ? null : -r.dataset.q };  // quality: best first
+  table.querySelectorAll("th button[data-sort]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const th = btn.parentElement;
+      const dir = th.getAttribute("aria-sort") === "ascending" ? -1 : 1;
+      table.querySelectorAll("th[aria-sort]").forEach((t) => t.removeAttribute("aria-sort"));
+      th.setAttribute("aria-sort", dir === 1 ? "ascending" : "descending");
+      const k = key[btn.dataset.sort];
+      [...body.rows].sort((a, b) => {
+        const x = k(a), y = k(b);
+        if (x === null || y === null) return (x === null) - (y === null);
+        return (x < y ? -1 : x > y ? 1 : 0) * dir || a.dataset.name.localeCompare(b.dataset.name);
+      }).forEach((r) => body.appendChild(r));
+    });
+  });
+})();

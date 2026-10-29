@@ -7,7 +7,6 @@ stores ran the ad, national level, every produce item. For each item's most-adve
 - how it compares with the same weeks in earlier years (in today's dollars): low / typical / high,
 - whether it's in season (USDA SNAP-Ed Seasonal Produce Guide) and whether stores are featuring it more than
   usual for the time of year,
-- for pricey items, a cheaper swap from the same family that's a good price this week.
 
 Wholesale prices are not used here: weekly ad prices barely follow them (correlation about 0.1 at 0-8 week
 lags, 2016-2026), so nothing on the grocery view claims they do.
@@ -56,28 +55,6 @@ SEASONS = {
 }
 SEASONS = {k: {w.replace("_", " ") for w in v.split()} for k, v in SEASONS.items()}
 
-# families for "pricey? try this instead"
-FAMILIES = [
-    ["Strawberries", "Blueberries", "Raspberries", "Blackberries"],
-    ["Oranges", "Tangerines/Mandarins", "Clementines", "Grapefruit"],
-    ["Watermelons", "Cantaloupes", "Honeydews"],
-    ["Peaches", "Nectarines", "Plums", "Apricots", "Cherries"],
-    ["Apples", "Pears", "Grapes"],
-    ["Lettuce", "Salad (Mixed Types)", "Spinach"],
-    ["Kale", "Collards", "Swiss Chard", "Turnip Tops", "Mustard"],
-    ["Broccoli", "Cauliflower", "Brussels Sprouts", "Beans", "Asparagus"],
-    ["Peppers, Bell Type", "Mixed Mini Sweet Peppers"],
-    ["Squash", "Eggplant", "Cucumbers"],
-    ["Mangoes", "Pineapples", "Papaya", "Kiwifruit"],
-    ["Potatoes", "Sweet Potatoes"],
-    ["Chicken breasts", "Boneless chicken thighs", "Chicken thighs", "Whole chicken", "Chicken drumsticks"],
-    ["Ground beef", "Lean ground beef", "Ground turkey"],
-    ["Strip steak", "Ribeye steak", "Sirloin steak"],
-    ["Chuck roast", "Pork shoulder", "Stew beef"],
-    ["Pork chops", "Pork tenderloin", "Chicken breasts"],
-    ["Shredded cheese", "Block cheese", "Sliced cheese"],
-    ["Greek yogurt", "Yogurt"],
-]
 
 
 MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
@@ -285,14 +262,6 @@ def build(rows, deflator=None, live=None):
         if ch is not None and why.holds_back(ch, sig.get(i["commodity"]), short):
             ch = None
         i["outlook"] = round(ch, 3) if ch is not None and abs(ch) >= grocery_forecast.CALL else None
-    by_c = {i["commodity"]: i for i in items if i["this_week"]}
-    for i in items:
-        if i["status"] == "high":
-            fam = next((f for f in FAMILIES if i["commodity"] in f), [])
-            alts = [by_c[c] for c in fam if c in by_c and c != i["commodity"] and by_c[c]["status"] == "low"
-                    and (by_c[c]["in_season"] or by_c[c]["aisle"] != "produce") and by_c[c]["stores"] >= MIN_STORES
-                    and q_rank(by_c[c]) >= 2]  # never suggest out-of-season fruit as the better buy
-            i["swap"] = min(alts, key=lambda a: a["vs_usual"])["short"] if alts else None
     return today, sorted(items, key=lambda i: i["name"])
 
 
