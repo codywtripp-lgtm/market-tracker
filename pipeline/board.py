@@ -404,9 +404,19 @@ def place(district):
     return t
 
 
+# names that keep their capital inside a sentence ("Mexico", "California") once USDA's casing is undone
+PROPER = {"mexico", "california", "arizona", "texas", "florida", "georgia", "washington", "oregon", "idaho", "michigan",
+          "peru", "chile", "canada", "guatemala", "honduras", "colombia", "ecuador", "brazil", "argentina", "spain",
+          "salinas", "watsonville", "oxnard", "yuma", "imperial", "coachella", "san", "joaquin", "valley", "santa",
+          "maria", "central", "southern", "northern", "western", "eastern"}
+
+
 def _tone_words(t):
-    t = (t or "").strip().rstrip(".")
-    return t[:1].lower() + t[1:] if t else ""
+    """USDA's supply and demand words in sentence case: they arrive as "LIGHT", "Very Light and in few hands." or
+    "Carton 40-80s exceeds supply , others moderate."."""
+    t = " ".join((t or "").replace(" ,", ",").split()).strip().rstrip(".")
+    words = [w.capitalize() if w.lower().strip(",") in PROPER and w.lower() != w else w.lower() for w in t.split(" ")]
+    return " ".join(words)
 
 
 def _simple_tone(t):

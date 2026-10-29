@@ -44,3 +44,11 @@ def test_new_packs_compare_with_last_year_not_a_dead_end():
     i = {"status": "not enough history", "vs_year": 12.0, "vs_norm": None}
     assert "12% above last year" in board.season(i)
     assert "Not enough history" not in board.season(i)
+
+
+def test_usda_supply_words_read_as_plain_sentences():
+    from pipeline.board import _tone_words
+    assert _tone_words("LIGHT") == "light" and _tone_words("MODERATE") == "moderate"
+    assert _tone_words("Very Light and in few hands.") == "very light and in few hands"
+    assert _tone_words("Carton 40-80s exceeds supply , others moderate.") == "carton 40-80s exceeds supply, others moderate"
+    assert _tone_words("Mexico crossings light") == "Mexico crossings light"
