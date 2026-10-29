@@ -208,8 +208,8 @@ def footer(up):
     return ('<footer class="foot"><div class="wrap"><p>Grocery prices are the average of what U.S. supermarkets advertised each week, from USDA’s '
             "National Retail Report. Wholesale prices are the USDA “mostly” price per case at the terminal markets, from "
             "USDA AMS Market News. “Usual” means the same weeks of the year in past years, adjusted for food inflation. "
-            f'<a href="{up}about/">How this site works</a>. Questions or a wrong number? '
-            f'<a href="mailto:{CONTACT}">{CONTACT}</a></p>'
+            f'<a href="{up}about/">How this site works</a>.</p>'
+            f'<p>Contact: <a href="mailto:{CONTACT}">{CONTACT}</a></p>'
             f'<nav aria-label="Wholesale markets">{markets}</nav><nav aria-label="Wholesale prices by item">{items}</nav></div></footer>')
 
 
@@ -627,7 +627,7 @@ two weeks. It makes no call when supply reports point the other way.""" + outloo
 <a href="../why/">track record page</a>.</li>
 </ul></section>
 <section><h2>Contact</h2>
-<p>Questions, ideas or a number that looks wrong: <a href="mailto:""" + CONTACT + """">""" + CONTACT + """</a>.</p></section>
+<p>Email us at <a href="mailto:""" + CONTACT + """">""" + CONTACT + """</a>.</p></section>
 <section><h2>Privacy</h2>
 <p>We count visits with GoatCounter, which uses no cookies and collects no personal information. If you sign up
 for the weekly email, your address is stored by our email service, Kit, and used only to send that email; every
