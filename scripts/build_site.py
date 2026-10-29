@@ -116,6 +116,9 @@ def main():
 
 # ---------- page frame shared by every page ----------
 SITE_URL = "https://producepricetracker.com/"
+# visit counts: GoatCounter (free, no cookies, no personal data, no consent banner needed); dashboard at
+# https://producepricetracker.goatcounter.com. Its script ignores localhost, so previews aren't counted.
+GOATCOUNTER = "https://producepricetracker.goatcounter.com/count"
 SITE_NAME = "Produce Price Tracker"
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
          '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
@@ -212,7 +215,8 @@ def page(title, desc, canonical, up, body, active=None, head="", og=None, main_c
 {ICONS}
 {FONTS}
 <link rel="stylesheet" href="{up}style.css?v={ASSET_V}">{head}
-<script src="{up}tabs.js?v={ASSET_V}" defer></script><script src="{up}search.js?v={ASSET_V}" defer></script></head>
+<script src="{up}tabs.js?v={ASSET_V}" defer></script><script src="{up}search.js?v={ASSET_V}" defer></script>
+<script data-goatcounter="{GOATCOUNTER}" async src="https://gc.zgo.at/count.js"></script></head>
 <body>
 {topbar(up, active, view, aisle)}
 <main class="{main_class}">
@@ -582,6 +586,9 @@ quarter of those weeks counts as a great or low price, the highest quarter as pr
 data from before it. The results, misses included, are on the <a href="../why/">track record page</a>.</p>
 <p>The site’s code was written with the help of AI coding tools. The pages themselves are generated from USDA data by that
 code; no AI writes the daily prices or calls.</p></section>
+<section><h2>Privacy</h2>
+<p>We count visits with GoatCounter, which uses no cookies and collects no personal information. There are no ads
+and no tracking across other sites.</p></section>
 <section><h2>What it isn’t</h2>
 <p>Grocery prices are advertised prices, which can differ from your store’s shelf price. Wholesale prices are
 market reports, not a supplier’s quote. Forecasts are ranges, not promises.</p></section>"""
