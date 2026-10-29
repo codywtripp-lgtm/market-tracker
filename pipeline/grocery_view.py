@@ -73,18 +73,38 @@ def price_bar(i, today):
             f'<p class="pbar-note">Usually {money(i["low"])}–{money(i["high"])} in {when(today)}</p></div>')
 
 
-def why_line(i, today):
-    bits = []
-    if i["vs_usual"] is not None and abs(i["vs_usual"]) >= 3:
-        bits.append(f'<b class="{"good" if i["vs_usual"] < 0 else "bad"}">{abs(i["vs_usual"])}% '
-                    f'{"below" if i["vs_usual"] < 0 else "above"} usual</b> for {when(today)}.')
-    elif i["status"] == "low":  # a great price that is only a hair under the usual range
-        bits.append(f'<b class="good">At the low end of its usual price</b> for {when(today)}.')
-    if i["in_season"]:
-        bits.append("In season.")
-    if i["featured"] and i["featured"] >= 1.3:
-        bits.append(f"Featured by {i['stores']:,} stores, more than usual.")
-    return " ".join(bits)
+def vs_line(i, today):
+    """Line 1: this week's price against the usual for the time of year."""
+    v = i["vs_usual"]
+    if v is None:
+        return "New this year: no past prices to compare yet."
+    if abs(v) >= 3:
+        return (f'<b class="{"good" if v < 0 else "bad"}">{abs(v)}% {"below" if v < 0 else "above"} usual</b> '
+                f"for {when(today)}")
+    return f"About usual for {when(today)}" if i["status"] == "typical" else f'<b class="good">At the low end of usual</b> for {when(today)}'
+
+
+def meta_line(i):
+    """Line 2 (produce only): quality, with its reason on tap, and whether it's in season."""
+    if i["aisle"] != "produce":
+        return ""
+    season = "in season" if i["in_season"] else ("out of season" if i["seasons"] else "")
+    q = qual(i)
+    if not q and not season:
+        return ""
+    return f'<p class="meta">{q}{", " if q and season else ""}{season if q else season.capitalize()}</p>'
+
+
+def next_line(i):
+    """Line 3: the two-week outlook, for every item, so rows read the same."""
+    o = i.get("outlook") if i["status"] in ("low", "typical", "high") else None
+    word = "likely lower" if o and o < 0 else "likely higher" if o and o > 0 else "no clear change"
+    tone = "good" if o and o < 0 else "bad" if o and o > 0 else ""
+    return f'<p class="next">Next 2 weeks: <span class="{tone}">{word}</span></p>'
+
+
+def row_lines(i, today):
+    return f'<p class="vs">{vs_line(i, today)}</p>{meta_line(i)}{next_line(i)}'
 
 
 def ahead(i):
@@ -149,10 +169,8 @@ def page(today, items, aisle="produce"):
              f'Best buys are unusually cheap right now and in good condition, based on USDA crop and market reports.</p><p class="lede">{esc(lede(items, buys, pricey))}</p></section>']
     if buys:
         tiles = "".join(
-            f'<li class="buy">{tag(i)}<div class="buy-body"><h3>{link(i)}</h3>'
-            f'<p class="buy-why">{why_line(i, today)}</p>'
-            + (f'<p class="cause">{esc(i["why"])}</p>' if i.get("why") else "")
-            + (f'<p class="ahead">{ahead(i)}</p>' if ahead(i) else "") + f'{qual(i)}</div></li>' for i in buys)
+            f'<li class="buy">{tag(i)}<div class="buy-body"><h3>{link(i)}</h3>{row_lines(i, today)}</div></li>'
+            for i in buys)
         parts.append(f'<section><h2>Best buys</h2><ul class="buys">{tiles}</ul></section>')
     if season and aisle == "produce":
         chips = "".join(f'<li><span><a class="sname" href="@/grocery/{i["slug"]}/">{esc(i["short"])}</a>{qual(i)}</span>'
@@ -163,11 +181,7 @@ def page(today, items, aisle="produce"):
                      f'<ul class="season-list">{chips}</ul></section>')
     if pricey:
         rows = "".join(
-            f'<li><div><b>{link(i)}</b>{qual(i)}<span>{money(i["price"])}{esc(i["unit"])}, '
-            f'<b class="bad">{i["vs_usual"]}% above usual</b></span></div>'
-            + (f'<p class="cause">{esc(i["why"])}</p>' if i.get("why") else "")
-            + (f'<p class="ahead">{ahead(i)}</p>' if ahead(i) else "")
-            + "</li>"
+            f'<li><h3>{link(i)}<span class="pprice">{money(i["price"])}{esc(i["unit"])}</span></h3>{row_lines(i, today)}</li>'
             for i in pricey[:8])
         parts.append(f'<section><h2>Pricey right now</h2><ul class="pricey">{rows}</ul></section>')
     rows = "".join(
@@ -369,8 +383,7 @@ def faq(i, today):
         qa.append((f"When {verb(i)} {name} cheapest?",
                    f"In past years, supermarket prices for {name} were lowest in "
                    f"{grocery.month_list(i['cheapest_months'])}"
-                   + (f", and stores featured {'them' if plural(i) else 'it'} most in {grocery.month_list(i['peak_months'])}."
-                      if i["peak_months"] else ".")))
+                   + "."))
     return qa
 
 
@@ -385,10 +398,8 @@ def item_page(i, today, all_items):
              f'<p class="answer">{answer(i, today)}</p></section>']
     if i["this_week"]:
         word, tone = STATUS[i["status"]]
-        parts.append(f'<section class="gquote">{tag(i)}<div><p class="gword {tone}">{esc(word)}</p>{qual(i)}'
-                     f'<p class="buy-why">{why_line(i, today) or esc(i["name"])}</p>'
+        parts.append(f'<section class="gquote">{tag(i)}<div><p class="gword {tone}">{esc(word)}</p>{row_lines(i, today)}'
                      + (f'<p class="cause">{esc(i["why"])}</p>' if i.get("why") else "")
-                     + (f'<p class="ahead">{ahead(i)}</p>' if ahead(i) else "")
                      + f'{price_bar(i, today)}</div></section>')
         if i["stores"] < grocery.MIN_STORES:
             parts.append(f'<p class="fine">Only {i["stores"]:,} stores listed {"them" if plural(i) else "it"} this '
@@ -404,8 +415,6 @@ def item_page(i, today, all_items):
         when_bits.append(f"<li><b>Best quality</b><span>{grocery.month_list(quality.best_months(i['commodity']))}</span></li>")
     if i["cheapest_months"]:
         when_bits.append(f"<li><b>Usually cheapest</b><span>{grocery.month_list(i['cheapest_months'])}</span></li>")
-    if i["peak_months"]:
-        when_bits.append(f"<li><b>Stores feature it most</b><span>{grocery.month_list(i['peak_months'])}</span></li>")
     cal = calendar(i, today)
     if when_bits or cal:
         parts.append(f'<section><h2>When to buy</h2>{cal}<ul class="facts">{"".join(when_bits)}</ul></section>')
