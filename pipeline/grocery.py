@@ -175,6 +175,13 @@ def load(rows):
     return out
 
 
+def main_pack(packs, since=None):
+    """The item's main pack: most store-weeks of ads in the year before `since` (default: its last year)."""
+    if since is None:
+        since = (dt.date.fromisoformat(max(d for days in packs.values() for d in days)) - dt.timedelta(days=365)).isoformat()
+    return max(packs, key=lambda k: sum(s for d, xs in packs[k].items() if d >= since for _, s in xs))
+
+
 def build(rows, deflator=None, live=None):
     """live: this week's conditions per commodity (pipeline/conditions.py); computed from the reports when None."""
     deflator = deflator or cpi.Deflator({})
@@ -188,7 +195,7 @@ def build(rows, deflator=None, live=None):
     items = []
     for commodity, packs in data.items():
         # the item's main pack: most store-weeks of ads in the last year
-        key = max(packs, key=lambda k: sum(s for d, xs in packs[k].items() if d >= year_ago for _, s in xs))
+        key = main_pack(packs, year_ago)
         days = packs[key]
         if max(days) < year_ago:
             continue  # not advertised in the last year
@@ -266,6 +273,12 @@ def build(rows, deflator=None, live=None):
             level = LEVELS[max(0, LEVELS.index(level) - 1)]
         i["quality"] = (level, f"{reason} {' '.join(c['notes'])}".strip())
         i["conditions"] = c["notes"]
+    # two-week outlook (pipeline/grocery_forecast.py): only moves of 10%+ are shown
+    from . import grocery_forecast
+    ahead, _ = grocery_forecast.outlook(data, deflator, lambda p: main_pack(p, year_ago), today)
+    for i in items:
+        ch = ahead.get(i["commodity"]) if i["this_week"] else None
+        i["outlook"] = round(ch, 3) if ch is not None and abs(ch) >= grocery_forecast.CALL else None
     by_c = {i["commodity"]: i for i in items if i["this_week"]}
     for i in items:
         if i["status"] == "high":

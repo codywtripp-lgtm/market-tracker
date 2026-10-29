@@ -121,6 +121,8 @@ main.wrap > section:first-child { margin-top: 0; }
 .shelf-unit { display: block; font-size: 14px; line-height: 18px; font-weight: 600; padding-left: 4px; }
 .buy-why { color: var(--ink-2); font-size: 16px; line-height: 23px; margin: 0; }
 .buy .ql { display: inline-block; margin: 2px 0 0; }
+.ahead { font-size: 16px; line-height: 23px; font-weight: 600; margin: 2px 0 0; }
+.ahead.big { font-size: 18px; line-height: 26px; margin: 8px 0 12px; }
 
 /* price check bar: low / typical / high */
 .pbar { max-width: 340px; }
@@ -134,7 +136,7 @@ main.wrap > section:first-child { margin-top: 0; }
 
 /* quality: one word; the reason on hover or tap */
 .ql { position: relative; display: inline-block; margin: 2px 0 6px; }
-.ql-btn { border: 0; background: none; padding: 0; font: inherit; font-size: 15px; font-weight: 600; cursor: help;
+.ql-btn { border: 0; background: none; padding: 0; font: inherit; font-size: 15px; font-weight: 600; cursor: help; white-space: nowrap;
   text-decoration: underline dotted 1px; text-underline-offset: 4px; }
 .q-excellent { color: var(--good); } .q-good { color: var(--ink-2); } .q-fair { color: var(--fair); } .q-poor { color: var(--bad); }
 .ql-tip { display: none; position: absolute; left: 0; top: calc(100% + 6px); z-index: 5; width: max-content; max-width: 280px;
@@ -191,10 +193,10 @@ a.sname:hover, .buy h3 a:hover, .pricey b a:hover, .all th a:hover { text-decora
 
 /* pricey + swap */
 .pricey { list-style: none; margin: 0; padding: 0; max-width: 760px; }
-.pricey li { display: flex; justify-content: space-between; align-items: baseline; gap: 8px 24px; flex-wrap: wrap; padding: 16px 0; border-bottom: 1px solid var(--line); }
-.pricey li:first-child { border-top: 1px solid var(--line); }
-.pricey b:first-child { display: block; font-size: 21px; }
-.pricey span { color: var(--ink-2); font-size: 17px; }
+.pricey li { padding: 14px 0; border-bottom: 1px solid var(--line); }
+.pricey li:first-child { border-top: 1px solid var(--line-2); }
+.pricey li > div > b { display: block; font-size: 19px; }
+.pricey li > div > span:not(.ql) { display: block; color: var(--ink-2); font-size: 16px; }
 .pricey span b { white-space: nowrap; }
 .swap { margin: 0; font-weight: 700; color: var(--good); }
 
