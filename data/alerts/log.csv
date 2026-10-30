@@ -56,3 +56,5 @@ usda_tone|Limes|New York|up|2026-10-19,2026-10-22,usda_tone,Limes,New York,up,"L
 usda_tone|Broccoli|New York|down|2026-10-19,2026-10-23,usda_tone,Broccoli,New York,down,Broccoli: USDA reporters in New York call the market lower (“Market slightly lower”).
 "usda_tone|Lettuce, Iceberg|Los Angeles|down|2026-10-26",2026-10-28,usda_tone,"Lettuce, Iceberg",Los Angeles,down,"Lettuce, Iceberg: USDA reporters in Los Angeles call the market lower (“Market slightly lower”)."
 "usda_tone|Lettuce, Iceberg|New York|down|2026-10-26",2026-10-29,usda_tone,"Lettuce, Iceberg",New York,down,"Lettuce, Iceberg: USDA reporters in New York call the market lower (“Market slightly lower”)."
+"sp_lead|Tomatoes, Plum Type|New York|up|2026-10-26",2026-10-30,sp_lead,"Tomatoes, Plum Type",New York,up,"Tomatoes, Plum Type: shipping point up 12% this week; New York hasn't followed yet (-3% this week)."
+"sp_lead|Lettuce, Iceberg|Chicago|down|2026-10-26",2026-10-30,sp_lead,"Lettuce, Iceberg",Chicago,down,"Lettuce, Iceberg: shipping point down 11% this week; Chicago hasn't followed yet (+3% this week)."

@@ -1,6 +1,32 @@
 {
- "asOf": "2026-10-29",
+ "asOf": "2026-10-30",
  "alerts": [
+  {
+   "signal": "sp_lead",
+   "commodity": "Tomatoes, Plum Type",
+   "market": "New York",
+   "direction": "up",
+   "headline": "Tomatoes, Plum Type: shipping point up 12% this week; New York hasn't followed yet (-3% this week).",
+   "expect": "Expect New York prices to rise within ~2 weeks.",
+   "record": "New York followed 23 of the last 28 times (normally 37%).",
+   "hit_rate": 0.821,
+   "sp_change": 11.7,
+   "terminal_change": -3.4,
+   "id": "sp_lead|Tomatoes, Plum Type|New York|up|2026-10-26"
+  },
+  {
+   "signal": "sp_lead",
+   "commodity": "Lettuce, Iceberg",
+   "market": "Chicago",
+   "direction": "down",
+   "headline": "Lettuce, Iceberg: shipping point down 11% this week; Chicago hasn't followed yet (+3% this week).",
+   "expect": "Expect Chicago prices to fall within ~2 weeks.",
+   "record": "Chicago followed 29 of the last 37 times (normally 40%).",
+   "hit_rate": 0.784,
+   "sp_change": -11.4,
+   "terminal_change": 2.6,
+   "id": "sp_lead|Lettuce, Iceberg|Chicago|down|2026-10-26"
+  },
   {
    "signal": "usda_tone",
    "commodity": "Lettuce, Iceberg",

@@ -20,7 +20,7 @@ Tomatoes,Chicago,24.0,22.9,model,5.0
 Bananas,Los Angeles,0.9,1.1,no change,-22.0
 Carrots,Los Angeles,3.1,3.3,no change,-6.0
 Potatoes,Los Angeles,4.7,4.9,no change,-4.0
-"Onions, Dry",Los Angeles,5.3,5.6,no change,-6.0
+"Onions, Dry",Los Angeles,5.4,5.7,no change,-6.0
 Lemons,Los Angeles,7.0,7.2,no change,-3.0
 Avocados,Los Angeles,8.3,8.6,no change,-4.0
 "Lettuce, Romaine",Los Angeles,13.3,11.6,model,13.0
@@ -32,7 +32,7 @@ Broccoli,Los Angeles,18.0,14.5,model,19.0
 "Peppers, Bell Type",Los Angeles,16.2,16.3,model,-1.0
 "Tomatoes, Plum Type",Los Angeles,18.4,17.3,model,6.0
 Blueberries,Los Angeles,19.0,17.4,model,8.0
-Tomatoes,Los Angeles,18.1,19.0,no change,-5.0
+Tomatoes,Los Angeles,18.2,19.0,no change,-4.0
 "Lettuce, Iceberg",Los Angeles,26.0,22.8,model,12.0
 Bananas,New York,1.6,1.8,no change,-12.0
 "Onions, Dry",New York,3.6,3.9,no change,-8.0
@@ -51,4 +51,4 @@ Cucumbers,New York,21.3,17.0,model,20.0
 Tomatoes,New York,24.4,21.7,model,11.0
 "Peppers, Bell Type",New York,24.1,22.2,model,8.0
 Blueberries,New York,26.6,22.9,model,14.0
-Strawberries,New York,41.3,34.7,model,16.0
+Strawberries,New York,41.4,34.7,model,16.0
