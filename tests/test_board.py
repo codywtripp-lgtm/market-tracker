@@ -60,3 +60,22 @@ def test_normal_items_show_the_usual_range_not_a_percent():
     assert board.usual_range(i) == "$33 to $58"
     assert "usually $33 to $58" in board.season(i) and "29%" not in board.season(i)
     assert board.usual_range({"status": "cheap", "usual_low": 33.0, "usual_high": 58.0}) == ""
+
+
+def test_supply_news_leads_with_the_areas_shipping_the_most():
+    shipped = {"MEXICO CROSSINGS THROUGH PHARR TEXAS": 84.0, "MEXICO CROSSINGS THROUGH LAREDO TEXAS": 61.0, "SOUTH FLORIDA": 1.5}
+    areas = {"MEXICO CROSSINGS THROUGH TEXAS", "SOUTH FLORIDA", "CARIBBEAN IMPORTS - PORTS OF ENTRY SOUTH FLORIDA"}
+    assert board.main_areas(areas, shipped)[0] == "MEXICO CROSSINGS THROUGH TEXAS"
+    assert "SOUTH FLORIDA" not in board.main_areas(areas, shipped)
+    # no shipments on record for an area: USDA leaves it out, so it can't be ruled out
+    lemons = {"CENTRAL AND SOUTHERN CALIFORNIA AND ARIZONA", "MEXICO CROSSINGS THROUGH TEXAS"}
+    assert board.main_areas(lemons, {"MEXICO CROSSINGS THROUGH PHARR TEXAS": 6.0}) == [
+        "MEXICO CROSSINGS THROUGH TEXAS", "CENTRAL AND SOUTHERN CALIFORNIA AND ARIZONA"]
+    assert board._ships_from("FLORIDA WEST AND GEORGIA DISTRICT", "FLORIDA")
+    assert not board._ships_from("SOUTH FLORIDA", "FLORIDA WEST")
+
+
+def test_usda_ratings_lose_their_side_remarks():
+    assert board._rating("Shippers First Grade light.") == "light"
+    assert board._rating("Very Light and in few hands. Too few quote.") == "very light and in few hands"
+    assert board._rating("VERY LIGHT") == "very light"

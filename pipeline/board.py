@@ -406,6 +406,7 @@ def short_place(district):
     t = t.replace(" district", "")
     for st, ab in ABBR.items():
         t = re.sub(rf", {st}$", f", {ab}", t)
+    t = re.sub(r"^((?:South and )?Central), CA$", r" California", t)
     return t.replace("via South, FL", "via South Florida")
 
 
@@ -448,6 +449,53 @@ def _simple_tone(t):
     return "mixed" if up and down else f"higher{some}" if up else f"lower{some}" if down else "steady"
 
 
+def _rating(t):
+    """USDA's supply or demand rating without its side remarks: "Shippers First Grade light." -> "light"."""
+    t = re.sub(r"^shippers first grade\s+", "", (t or "").strip(), flags=re.I)
+    return _tone_words(t.split(". ")[0])
+
+
+def shipments_by_place(as_of):
+    """commodity -> {movement report place: pounds shipped in the last 4 weeks}."""
+    since = (as_of - dt.timedelta(days=28)).isoformat()
+    rows = []
+    for d in {as_of, as_of.replace(day=1) - dt.timedelta(days=1)}:
+        rows += store.read_partition(store.partition_path("movement", d.isoformat())).values()
+    same = {}  # the same shipment can be in two reports: count it once, as pipeline/volumes.py does
+    for r in rows:
+        if r["report_date"] >= since:
+            key = (r["report_date"], r["commodity"], r["variety"], r["organic"], r["market"], r["origin"], r["other_attributes"])
+            same[key] = max(same.get(key, 0), brief._num(r["volume"]) or 0)
+    out = {}
+    for key, lb in same.items():
+        places = out.setdefault(key[1], {})
+        places[key[4]] = places.get(key[4], 0) + lb
+    return out
+
+
+def _ships_from(area, place):
+    """Does a movement report place belong to a shipping-point area? They name places differently: 'MEXICO CROSSINGS
+    THROUGH PHARR TEXAS' is in 'MEXICO CROSSINGS THROUGH TEXAS', 'FLORIDA' is in 'FLORIDA WEST AND GEORGIA DISTRICT'."""
+    a = set(re.findall(r"[A-Z]+", area.upper()))
+    p = set(re.findall(r"[A-Z]+", place.upper())) - {"DISTRICT", "AND", "THROUGH"}
+    if "MEXICO" in p:
+        return "MEXICO" in a and place.upper().split()[-1] in a
+    if "IMPORTS" in p:
+        return "IMPORTS" in a
+    return "IMPORTS" not in a and "MEXICO" not in a and p <= a
+
+
+def main_areas(areas, shipped, floor=0.25):
+    """The areas that matter for an item, biggest first: each with 25%+ of the shipments matched to an area. USDA's
+    movement reports leave some areas out (no California lemons), so an area with none on record stays in, last."""
+    pounds = {a: sum(lb for place, lb in shipped.items() if _ships_from(a, place)) for a in areas}
+    total = sum(pounds.values())
+    if not total:
+        return sorted(areas)
+    keep = [a for a in areas if pounds[a] >= floor * total or not pounds[a]]
+    return sorted(keep, key=lambda a: (not pounds[a], -pounds[a], a))
+
+
 def supply_notes(as_of):
     """commodity -> (how notable, size of shipment change, one or two plain sentences)."""
     since = (as_of - dt.timedelta(days=7)).isoformat()
@@ -459,12 +507,15 @@ def supply_notes(as_of):
         if r["report_date"] >= since and r["commodity"] in PAGES and r.get("organic", "") not in ("Y", "Yes"):
             by_c.setdefault(r["commodity"], []).append(r)
     ship = {r["commodity"]: (brief._num(r["vs_last_year_pct"]), r["week"]) for r in brief._read("supply.csv")}
+    shipped = shipments_by_place(as_of)
     notes = {}
     for c in PAGES:
         bits, flag = [], 0
         rs = by_c.get(c, [])
         if rs:
-            last = max(r["report_date"] for r in rs)
+            main = main_areas({r["market"] for r in rs if r["market"]}, shipped.get(c, {}))
+            rs = [r for r in rs if r["market"] in main]
+            last = max((r["report_date"] for r in rs), default="")
             day_rows = [r for r in rs if r["report_date"] == last]
             moving = {}
             for r in day_rows:
@@ -473,19 +524,23 @@ def supply_notes(as_of):
                     moving.setdefault(tone, set()).add(short_place(r["market"]))
             short = sorted({short_place(r["market"]) for r in day_rows
                             if re.search(r"insufficient|too few hands", r["reporter_comment"], re.I) and r["market"]})
-            supply = sorted({(_tone_words(r.get("supply_tone", "")), _tone_words(r.get("demand_tone", "")))
-                             for r in day_rows if r.get("supply_tone")})
-            d = dt.date.fromisoformat(last)
+            rated = {}  # each area's latest rating this week: USDA doesn't repeat it every day
+            recent = (as_of - dt.timedelta(days=3)).isoformat()  # an older rating may be from an area that has finished
+            for r in sorted(rs, key=lambda r: r["report_date"]):
+                if r.get("supply_tone") and r["report_date"] >= recent:
+                    rated[r["market"]] = (_rating(r["supply_tone"]), _rating(r.get("demand_tone", "")))
             if moving:
+                d = dt.date.fromisoformat(last)
                 tone, where = max(moving.items(), key=lambda kv: len(kv[1]))
                 where = sorted(where)
                 w = where[0] if len(where) == 1 else ", ".join(where[:-1]) + " and " + where[-1]
                 bits.append(f"Shipping points {tone} in {w} ({d:%b} {d.day}).")
                 flag += 1
-            if supply:
-                s_, d_ = supply[0]
-                bits.append(f"Supplies {s_}" + (f", demand {d_}." if d_ else "."))
-                flag += bool(re.search(r"light|short|limited", s_))
+            for area in [a for a in main if a in rated][:2]:
+                s_, d_ = rated[area]
+                bits.append(f"{short_place(area)}: supplies {s_}" + (f", demand {d_}." if d_ else "."))
+            flag += any(re.search(r"light|short|limited", s_) for s_, _ in rated.values())
+            short = [a for a in short if a not in {short_place(m) for m in rated}]
             if short:
                 bits.append(f"{short[0]}: too little supply to quote.")
                 flag += 1
