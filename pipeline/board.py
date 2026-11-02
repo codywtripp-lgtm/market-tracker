@@ -57,6 +57,7 @@ MASS = {"Lettuce, Iceberg", "Lettuce, Romaine", "Broccoli", "Celery"}  # "romain
 DIR = {  # direction over the next two weeks: (arrow, word, tone)
     "firming": ("▲", "Firming", "up"), "softening": ("▼", "Softening", "down"), "steady": ("", "Steady", "flat"),
     "topping": ("▲▼", "Topping out", "up"), "bottoming": ("▼▲", "Bottoming out", "down"),
+    "unsettled": ("", "Unsettled", "flat"),
 }
 SEASON = {"expensive": ("High for the season", "up"), "cheap": ("Low for the season", "down"),
           "normal": ("Normal for the season", "flat")}
@@ -278,19 +279,23 @@ def lede(rows, market):
     soft = sorted((i for i in rows if i["dir"] == "softening"), key=lambda i: i["change"] or 0)[:3]
     top = [i for i in rows if i["dir"] == "topping"][:3]
     high = [i for i in rows if i["status"] == "expensive" and i["dir"] == "steady"][:3]
+    open_ = [i for i in rows if i["dir"] == "unsettled"][:3]
     bits = []
     if firm and soft:
         bits.append(f"{cap(name_list(firm))} {verb(firm)} firming {AT[market]}, while {name_list(soft)} {verb(soft)} softening.")
     elif firm or soft:
         g, word = (firm, "firming") if firm else (soft, "softening")
-        bits.append(f"{cap(name_list(g))} {verb(g)} {word} {AT[market]}; the rest look steady.")
+        bits.append(f"{cap(name_list(g))} {verb(g)} {word} {AT[market]}{"." if open_ else "; the rest look steady."}")
     else:
-        bits.append(f"Prices {AT[market]} look steady across the board for the next two weeks.")
+        bits.append(f"No clear moves {AT[market]} for the next two weeks." if open_ else
+                    f"Prices {AT[market]} look steady across the board for the next two weeks.")
     if top:
         bits.append(f"{cap(name_list(top))} {verb(top)} still firm this week but likely topping out, with relief "
                     "in two to four weeks.")
     if high:
         bits.append(f"{cap(name_list(high))} {verb(high)} high for the season with no relief in sight.")
+    if open_:
+        bits.append(f"{cap(name_list(open_))} {verb(open_)} unsettled.")
     return " ".join(bits)
 
 
@@ -302,6 +307,8 @@ ACTIONS = [  # (key, title, what to do, tone)
     ("high", "High for the season", "No relief in sight. Price quotes to cover it and look at other counts or packs.",
      "up"),
     ("value", "Good value", "Cheaper than most years at this time. A good item to feature on specials.", "down"),
+    ("unsettled", "Unsettled", "Recent prices and shipping points disagree on direction, so there's no call. "
+                               "Stay close to your supplier on price.", "flat"),
 ]
 
 
@@ -310,7 +317,8 @@ def actions(rows, market):
         "firming": sorted((i for i in rows if i["dir"] in ("firming", "bottoming")), key=lambda i: -(i["change"] or 0)),
         "softening": sorted((i for i in rows if i["dir"] in ("softening", "topping")), key=lambda i: i["change"] or 0),
         "high": [i for i in rows if i["status"] == "expensive" and i["dir"] == "steady"],
-        "value": [i for i in rows if i["status"] == "cheap" and i["dir"] != "firming"],
+        "value": [i for i in rows if i["status"] == "cheap" and i["dir"] not in ("firming", "unsettled")],
+        "unsettled": [i for i in rows if i["dir"] == "unsettled"],
     }
     cards = []
     for key, title, todo, tone in ACTIONS:
@@ -544,7 +552,9 @@ def answer(i, as_of):
     if i["vs_norm"] is not None:
         s += f", {esc(brief.vs_usual(i['vs_norm']))}{' the usual price' if abs(i['vs_norm']) >= 5 else ''} for this time of year"
     s += "."
-    if i["range"]:
+    if i["dir"] == "unsettled":
+        s += " The market is <strong>unsettled</strong>: recent prices and shipping points disagree on direction."
+    elif i["range"]:
         word = {"firming": "is <strong>firming</strong>", "softening": "is <strong>softening</strong>",
                 "topping": "is <strong>topping out</strong> (still firm this week)",
                 "bottoming": "is <strong>bottoming out</strong> (still easing this week)"}.get(
@@ -591,8 +601,10 @@ def faq(commodity, rows):
         word = {"firming": "go up", "softening": "come down", "topping": "hold firm this week, then come down",
                 "bottoming": "ease a little more this week, then go up"}.get(ny["dir"], "stay about the same")
         qa.append((f"Will {single} prices go up or down?",
-                   f"The two-week forecast for {ny['market']} says prices should {word}: {expect_text(ny)}. "
-                   "When it calls a firming or softening market, it was right about 7 times in 10 in testing (2021 to 2026)."))
+                   ("The market is unsettled: recent prices and shipping points disagree, so there's no two-week call. "
+                    if ny["dir"] == "unsettled" else
+                    f"The two-week forecast for {ny['market']} says prices should {word}: {expect_text(ny)}. ")
+                   + "When it calls a firming or softening market, it was right about 3 times in 4 in testing (2021 to 2026)."))
     return qa
 
 

@@ -24,7 +24,7 @@ CALL = 0.05
 
 
 def replay():
-    panel = fc.add_seasonal(fc.add_drivers(fc.weekly_panel()))
+    panel = fc.add_hold_inputs(fc.add_seasonal(fc.add_drivers(fc.weekly_panel())))
     usable = panel.dropna(subset=["lp"])
     fit_fn, pred_fn = fc.METHODS[fc.MODEL]
     out = []
@@ -34,7 +34,7 @@ def replay():
         test = usable[usable["year"] == Y].dropna(subset=[f"y{H}"])
         if len(train) < 500 or test.empty:
             continue
-        out.append(test[["series_id", "commodity", "market", "week", "year", "compare_price", f"y{H}"]]
+        out.append(test[["series_id", "commodity", "market", "week", "year", "compare_price", "sp2", "below8", f"y{H}"]]
                    .assign(pred=pred_fn(fit_fn(train, H), test, H)))
     r = pd.concat(out, ignore_index=True).rename(columns={f"y{H}": "y"})
     r["ape_model"] = np.abs(np.expm1(r["pred"]) - np.expm1(r["y"]))
@@ -46,17 +46,20 @@ def replay():
         ok = {k: row["ape_model"] <= row["ape_naive"] for k, row in prior.iterrows()}
         use.append(pd.Series([ok.get(k, True) for k in zip(cur["commodity"], cur["market"])], index=cur.index))
     r["final"] = np.where(pd.concat(use).sort_index(), r["pred"], 0.0)
+    r["called"] = (np.abs(np.expm1(r["final"])) >= CALL) & ~fc.held(r["final"], r["sp2"], r["below8"].fillna(False))
     return r
 
 
-def fc_call(pred):
+def fc_call(pred, called):
     change = float(np.expm1(pred))
-    return "steady" if abs(change) < CALL else ("firming" if change > 0 else "softening")
+    if abs(change) < CALL:
+        return "steady"
+    return ("firming" if change > 0 else "softening") if called else "unsettled"
 
 
 def main():
     r = replay()
-    calls = r[np.abs(np.expm1(r["final"])) >= CALL].copy()
+    calls = r[r["called"]].copy()
     calls["move"] = np.expm1(calls["y"])
     calls["right"] = np.sign(calls["final"]) == np.sign(calls["move"])
     calls["dollars"] = np.sign(calls["final"]) * calls["move"] * calls["compare_price"]  # $/case in the called direction
@@ -85,10 +88,9 @@ def main():
     # Of ALL 10%+ two-week moves (not just the ones we called), how many did the brief call in advance?
     r["move"] = np.expm1(r["y"])
     moved = r[r["move"].abs() >= 0.10]
-    called = (np.abs(np.expm1(moved["final"])) >= CALL) & (np.sign(moved["final"]) == np.sign(moved["move"]))
+    called = moved["called"] & (np.sign(moved["final"]) == np.sign(moved["move"]))
     value["big_moves_called_ahead_pct"] = round(100 * called.mean(), 1)
-    value["big_moves_called_wrong_way_pct"] = round(100 * ((np.abs(np.expm1(moved["final"])) >= CALL)
-                                                            & ~called).mean(), 1)
+    value["big_moves_called_wrong_way_pct"] = round(100 * (moved["called"] & ~called).mean(), 1)
     # Examples: the biggest New York moves of the last 12 months, one per item, hits AND misses,
     # on the headline packs the brief shows (main trade pack per item and market).
     series = pd.read_csv(fc.EXPORT / "series.csv")
@@ -102,7 +104,7 @@ def main():
         "week": x["week"].date().isoformat(), "commodity": x["commodity"], "market": x["market"],
         "price": round(float(x["compare_price"]), 2), "price_after": round(float(x["compare_price"] * (1 + x["move"])), 2),
         "move_pct": round(100 * float(x["move"]), 1),
-        "call": fc_call(x["final"]),
+        "call": fc_call(x["final"], x["called"]),
     } for _, x in recent.iterrows()]
     (fc.EXPORT / "value.json").write_text(json.dumps(value, indent=1))
     print(json.dumps(value, indent=1))

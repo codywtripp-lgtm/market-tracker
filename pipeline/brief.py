@@ -115,9 +115,16 @@ def direction(change, stable, change1=None):
     return "firming" if change > 0 else "softening"
 
 
-def call(status, change, stable, commodity="", change1=None):
-    """(market direction, what to do about it) in trade terms."""
+UNSETTLED = ("Recent prices and shipping points disagree on direction, so there's no call. "
+             "Stay close to your supplier on price.")
+
+
+def call(status, change, stable, commodity="", change1=None, unsettled=False):
+    """(market direction, what to do about it) in trade terms. Unsettled (the USDA term for no agreement on
+    whether prices go higher or lower) replaces a call the signals disagree on (forecast.held)."""
     d = direction(change, stable, change1)
+    if unsettled and d in ("firming", "softening", "topping", "bottoming"):
+        return "unsettled", UNSETTLED
     if d == "topping":
         return d, ("Still firm this week, then easing. Buy to need, don't lock price at the top, and expect "
                    "relief in two to four weeks.")
@@ -163,17 +170,18 @@ def headline_items(latest, series, forecasts, card):
         stable = card.get((commodity, market), {}).get("uses") == "no change"
         change = (point["mid"] / price - 1) if point and price else None
         change1 = (nxt["mid"] / price - 1) if nxt and price and not stable else None
+        d_, act_ = call(r["status"], change, stable, commodity, change1, fc.get("unsettled", False)) if point else ("", "")
+        no_call = d_ == "unsettled"
         items.append({
             "series_id": r["series_id"], "commodity": commodity, "name": PRODUCE_NAMES[commodity], "market": market, "pack": pack(s),
             "price": price, "vs_norm": _num(r["pct_vs_norm"]), "status": r["status"],
             "pctile": _num(r["percentile"]), "week": week, "points": fc.get("points", []),
             "vs_4w": _num(r["pct_vs_4_weeks_ago"]), "range": (point["lo"], point["hi"]) if point else None,
-            "change": 0.0 if stable and point else change, "stable": stable,
+            "change": None if no_call else 0.0 if stable and point else change, "stable": stable,
             "vs_year": _num(r.get("pct_vs_last_year")),
             # expected price by weeks ahead of the last full week (1 = the coming week)
-            "path": {} if stable else {p["h"]: p["mid"] for p in fc.get("points", [])},
-            **(dict(zip(("dir", "action"), call(r["status"], change, stable, commodity, change1)))
-               if point else {"dir": "", "action": ""}),
+            "path": {} if stable or no_call else {p["h"]: p["mid"] for p in fc.get("points", [])},
+            "dir": d_, "action": act_,
         })
     return items
 
