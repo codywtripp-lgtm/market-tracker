@@ -237,13 +237,17 @@ def seasonal_status(weekly, week, value):
             history.append(v)
             years.add(y)
     if len(years) < MIN_NORM_YEARS:
-        return {"seasonal_norm": "", "pct_vs_norm": "", "percentile": "", "status": "not enough history",
+        return {"seasonal_norm": "", "usual_low": "", "usual_high": "", "pct_vs_norm": "", "percentile": "",
+                "status": "not enough history",
                 "years_of_history": len(years)}
     norm = statistics.median(history)
     # mid-rank percentile: ties count half, so a flat history reads as 50th, not 0th
     pct = (sum(1 for h in history if h < value) + 0.5 * sum(1 for h in history if h == value)) / len(history)
     status = "cheap" if pct <= 0.25 else "expensive" if pct >= 0.75 else "normal"
-    return {"seasonal_norm": round(norm, 4), "pct_vs_norm": round((value / norm - 1) * 100, 1) if norm else "",
+    ranked = sorted(history)
+    # the usual range: the middle half of past years, the same cutoffs that decide cheap / normal / expensive
+    low, high = ranked[round(0.25 * (len(ranked) - 1))], ranked[round(0.75 * (len(ranked) - 1))]
+    return {"seasonal_norm": round(norm, 4), "usual_low": round(low, 2), "usual_high": round(high, 2), "pct_vs_norm": round((value / norm - 1) * 100, 1) if norm else "",
             "percentile": round(pct * 100), "status": status, "years_of_history": len(years)}
 
 
@@ -317,7 +321,7 @@ def build(rows, today=None, deflator=None):
     write_csv(EXPORT / "prices_weekly.csv", base_f + ["week_start", "compare_price", "real_compare_price",
               "compare_unit", "days"], weekly_rows)
     write_csv(EXPORT / "latest.csv", base_f + ["label", "week_start", "compare_price", "compare_unit",
-              "seasonal_norm", "pct_vs_norm", "percentile", "status", "years_of_history",
+              "seasonal_norm", "usual_low", "usual_high", "pct_vs_norm", "percentile", "status", "years_of_history",
               "pct_vs_4_weeks_ago", "pct_vs_last_year"],
               sorted(latest_rows, key=lambda r: (r["pct_vs_norm"] == "", r["pct_vs_norm"] or 0)))
     return {"series": len(series_rows), "daily": len(daily_rows), "weekly": len(weekly_rows),

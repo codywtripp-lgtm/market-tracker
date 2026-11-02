@@ -106,3 +106,4 @@ Research: body 16-18px, line height ~1.5, 45-75 characters a line, a modular sca
 - **Contact** (researched 2026-10-30): the standard label "Contact" with the address visible as a mailto link; no qualifiers ("wrong number?") that invite doubt. Footer line "Contact: hello@..."; About section "Email us at hello@...".
 - **Research before any new copy or UI element**, even small ones (owner rule).
 - **Charts** (dataviz guidance, 2026-11-02): bars start at zero, label only key values (cheapest month, this month), mark the current month with a bold label and a darker bar rather than a box, and keep every value reachable in text.
+- **Price labels** (researched 2026-11-02, Google Flights low / typical / high; National Academy of Medicine on consistent labels with numbers): three labels only. Low and high show the percent from usual; normal or typical shows the usual range, because a percent beside "Normal" reads as a contradiction for items that swing widely.
