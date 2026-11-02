@@ -167,17 +167,23 @@ main.wrap > section:first-child { margin-top: 0; }
 .cq.q-fair, .sw.q-fair { background: #efd28f; }
 .cq.q-poor, .sw.q-poor { background: #eba59d; }
 .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: -2px; }
-.cal .cp { padding-top: 8px; vertical-align: bottom; }
-.cal .cw { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 84px; border-bottom: 1px solid var(--line-2); }
-.cal .val { font-size: 14px; line-height: 20px; color: var(--ink); white-space: nowrap; }
-.cal .bar { display: block; width: 70%; max-width: 24px; border-radius: 4px 4px 0 0; background: var(--line-2); }
-.cal .bar.cheap, .sw.cheap { background: var(--good); }
-.cal .bar.now, .sw.now { background: var(--ink-2); }
-.cal.one-row table { border-spacing: 2px 0; }
-.cal.one-row th[scope="row"], .cal.one-row thead td { display: none; }
-.cal .legend { display: block; margin-top: 12px; }
-.cal .legend div { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-bottom: 4px; }
-.cal .legend b { color: var(--ink); min-width: 58px; }
+.cal .legend { margin-top: 0; }
+/* typical price by month: a labeled line, aligned with the month columns */
+.cal .lc-row td, .cal .lc-row th { padding: 30px 0 26px; }
+.lc { position: relative; height: 112px; }
+.lc svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.lc polyline { fill: none; stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
+.lc-axis { position: relative; display: block; height: 112px; }
+.lc-tick { position: absolute; left: 0; right: 8px; text-align: right; transform: translateY(-50%); font-size: 14px; line-height: 16px;
+  font-weight: 400; color: var(--ink-3); }
+.lc-grid { position: absolute; left: 0; right: 0; border-top: 1px solid var(--line); }
+.lc-dot { position: absolute; width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: var(--ink); }
+.lc-dot.now, .lc-dot.low { width: 12px; height: 12px; margin: -6px 0 0 -6px; box-shadow: 0 0 0 2px var(--page); }
+.lc-dot.low { background: var(--good); }
+.lc-val { position: absolute; transform: translateX(-50%); font-size: 14px; line-height: 16px; font-weight: 700; color: var(--ink);
+  white-space: nowrap; padding: 0 3px; background: var(--page); }
+.lc-val.above { margin-top: -28px; } .lc-val.below { margin-top: 12px; }
+.lc-val.start { transform: none; margin-left: -12px; } .lc-val.end { transform: translateX(-100%); margin-left: 12px; }
 .cal thead td:first-child { width: 84px; padding: 0; }
 .cal-note { max-width: 760px; margin: 0 0 8px; }
 .cal-all { max-width: 420px; margin: 0 0 32px; font-size: 16px; }
@@ -504,8 +510,6 @@ main.dash { min-width: 0; }
   .cal .mfull { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .cal .mone { display: inline; }
   .cal .cq { height: 26px; }
-  .cal .val { display: none; }  /* 12 columns are too narrow for labels; the sentence and list below carry the prices */
-  .cal .cw { height: 64px; }
   .gquote { grid-template-columns: 1fr; gap: 12px; }
   .gquote .shelf { justify-self: start; min-width: 112px; }
   .quote { grid-template-columns: 1fr; gap: 24px; }
