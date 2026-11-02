@@ -279,38 +279,54 @@ def calendar(i, today):
     show_price = len(prices) >= 6
     if not any(q.values()) and not show_price:
         return ""
-    lo, hi = (min(prices.values()), max(prices.values())) if show_price else (0, 1)
-    cheap = set(i["cheapest_months"])
+    hi = max(prices.values()) if show_price else 1
+    cheap = set(i["cheapest_months"]) if show_price else set()
     now = today.month
+    low = min(prices, key=prices.get) if show_price else None
+    two_rows = bool(any(q.values()) and show_price)
     head = "".join(f'<th scope="col"{" class=now" if m == now else ""}><span class="mfull">{grocery.MONTHS[m - 1][:3]}</span>'
                    f'<span class="mone" aria-hidden="true">{grocery.MONTHS[m - 1][0]}</span></th>' for m in range(1, 13))
     rows = ""
     if any(q.values()):
         cells = "".join(
-            f'<td class="cq{" now" if m == now else ""}{" q-" + q[m][0].lower() if q[m] else ""}" '
+            f'<td class="cq{" q-" + q[m][0].lower() if q[m] else ""}" '
             f'title="{grocery.MONTHS[m - 1]}: {esc(q[m][0] + " quality. " + q[m][1]) if q[m] else "no rating"}">'
             f'<span class="vh">{q[m][0] if q[m] else "No rating"}</span></td>' for m in range(1, 13))
         rows += f'<tr><th scope="row">Quality</th>{cells}</tr>'
     if show_price:
         cells = ""
         for m in range(1, 13):
-            if m in prices:
-                h = 25 + 75 * (prices[m] - lo) / ((hi - lo) or 1)
-                cells += (f'<td class="cp{" now" if m == now else ""}" title="{grocery.MONTHS[m - 1]}: usually '
-                          f'{money(prices[m])}{esc(i["unit"])}"><span class="bar{" cheap" if m in cheap else ""}" '
-                          f'style="height:{h:.0f}%"></span><span class="vh">{money(prices[m])}</span></td>')
+            if m in prices:  # bars start at zero, so their heights compare fairly; only the key months get a label
+                kind = "cheap" if m in cheap else "now" if m == now else ""
+                label = f'<span class="val">{money(prices[m])}</span>' if m in (low, now) else ""
+                cells += (f'<td class="cp" title="{grocery.MONTHS[m - 1]}: usually {money(prices[m])}{esc(i["unit"])}">'
+                          f'<div class="cw">{label}<span class="bar {kind}" style="height:{56 * prices[m] / hi:.0f}px"></span></div></td>')
             else:
-                cells += f'<td class="cp{" now" if m == now else ""}"><span class="vh">No price</span></td>'
+                cells += '<td class="cp"><div class="cw"></div></td>'
         rows += f'<tr><th scope="row">Price</th>{cells}</tr>'
     legend = ""
     if any(q.values()):
-        legend += ("".join(f'<span><i class="sw q-{lv.lower()}"></i>{lv}</span>' for lv in reversed(quality.LEVELS)
-                           if any(v and v[0] == lv for v in q.values())))
+        legend += ('<div>' + ("<b>Quality</b>" if two_rows else "") + "".join(
+            f'<span><i class="sw q-{lv.lower()}"></i>{lv}</span>' for lv in reversed(quality.LEVELS)
+            if any(v and v[0] == lv for v in q.values())) + "</div>")
+    note, all_months = "", ""
     if show_price:
-        legend += '<span><i class="sw bar-key"></i>Taller bar: higher typical price</span><span><i class="sw bar-key cheap"></i>Cheapest months</span>'
-    return (f'<figure class="cal"><table><caption class="vh">{esc(i["short"])}: quality and typical supermarket price '
-            f'by month</caption><thead><tr><td></td>{head}</tr></thead><tbody>{rows}</tbody></table>'
-            f'<figcaption class="legend">{legend}<span class="nowkey">Outlined: this month</span></figcaption></figure>')
+        legend += ('<div>' + ("<b>Price</b>" if two_rows else "")
+                   + '<span><i class="sw cheap"></i>Usually cheapest</span><span><i class="sw now"></i>This month</span></div>')
+        unit = esc(i["unit"])
+        name = grocery.MONTHS[now - 1]
+        if now == low:
+            note = f"{name} is usually the cheapest month, at {money(prices[low])}{unit}."
+        else:
+            note = (f"{name} usually runs {money(prices[now])}{unit}. " if now in prices else "") +                    f"{grocery.MONTHS[low - 1]} is usually cheapest, at {money(prices[low])}{unit}."
+        note = f'<p class="cal-note">{note}</p>'
+        all_months = ('<details class="cal-all"><summary>Typical price by month</summary><ul>' + "".join(
+            f"<li><span>{grocery.MONTHS[m - 1]}</span><span>{money(prices[m])}{unit}</span></li>" for m in sorted(prices))
+            + "</ul></details>")
+    corner = "<td></td>" if two_rows else '<td class="vh"></td>'
+    return (f'<figure class="cal{"" if two_rows else " one-row"}"><table><caption class="vh">{esc(i["short"])}: quality and '
+            f'typical supermarket price by month</caption><thead><tr>{corner}{head}</tr></thead><tbody>{rows}</tbody></table>'
+            f'<figcaption class="legend">{legend}</figcaption></figure>{note}{all_months}')
 
 
 def answer(i, today):
@@ -413,11 +429,9 @@ def item_page(i, today, all_items):
                          "(USDA seasonal produce guide)</span></li>")
     if quality.best_months(i["commodity"]):
         when_bits.append(f"<li><b>Best quality</b><span>{grocery.month_list(quality.best_months(i['commodity']))}</span></li>")
-    if i["cheapest_months"]:
-        when_bits.append(f"<li><b>Usually cheapest</b><span>{grocery.month_list(i['cheapest_months'])}</span></li>")
     cal = calendar(i, today)
     if when_bits or cal:
-        parts.append(f'<section><h2>When to buy</h2>{cal}<ul class="facts">{"".join(when_bits)}</ul></section>')
+        parts.append(f'<section><h2>When to buy</h2>{cal}' + (f'<ul class="facts">{"".join(when_bits)}</ul>' if when_bits else "") + "</section>")
     c = chart(i, today)
     if c:
         parts.append(f"<section><h2>The past year</h2>{c}</section>")

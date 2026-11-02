@@ -105,3 +105,4 @@ Research: body 16-18px, line height ~1.5, 45-75 characters a line, a modular sca
 - **Every item row says the same things, in the same order** (owner, 2026-10-30): line 1 how the price compares with usual; line 2 quality and season (produce only); line 3 "Next 2 weeks". Causes live on the item page. No store-ad counts: not useful to shoppers.
 - **Contact** (researched 2026-10-30): the standard label "Contact" with the address visible as a mailto link; no qualifiers ("wrong number?") that invite doubt. Footer line "Contact: hello@..."; About section "Email us at hello@...".
 - **Research before any new copy or UI element**, even small ones (owner rule).
+- **Charts** (dataviz guidance, 2026-11-02): bars start at zero, label only key values (cheapest month, this month), mark the current month with a bold label and a darker bar rather than a box, and keep every value reachable in text.
