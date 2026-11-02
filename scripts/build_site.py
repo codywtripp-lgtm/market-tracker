@@ -579,7 +579,7 @@ What they don't tell you is what it means for your next order.</p>
 
 <h2>The limits</h2>
 <p>These are USDA-reported terminal prices; your supplier's quote can differ. About one price in five lands outside
-its forecast range, and about half of big swings come with no call at all.</p>
+its forecast range, and about {round(100 - v['big_moves_called_ahead_pct'] - v['big_moves_called_wrong_way_pct'])}% of big swings come with no call at all.</p>
 {live_line}
 <p><a class="cta" href="../">See today's prices</a></p>"""
     desc = ("How often the wholesale produce price forecasts were right: direction calls, big swings flagged two weeks "

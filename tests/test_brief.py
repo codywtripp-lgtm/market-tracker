@@ -40,3 +40,13 @@ def test_turning_markets_are_called_as_turns():
     assert brief.direction(-0.09, False, -0.02) == "softening"
     d, action = brief.call("normal", -0.09, False, "Strawberries", 0.03)
     assert d == "topping" and "don't lock price at the top" in action
+
+
+def test_signals_that_disagree_make_the_market_unsettled_not_a_call():
+    from pipeline import forecast as fc
+    assert fc.held(-0.1, 0.06, False) and fc.held(0.1, -0.06, False)  # forecast against shipping points
+    assert fc.held(0.1, 0.0, True)                                   # a rise after 8 weeks below usual
+    assert not fc.held(-0.1, -0.06, False) and not fc.held(0.1, 0.06, False) and not fc.held(-0.1, 0.0, True)
+    d, action = brief.call("normal", 0.12, False, "Limes", None, unsettled=True)
+    assert d == "unsettled" and "no call" in action
+    assert brief.call("normal", 0.01, False, "Limes", None, unsettled=True)[0] == "steady"  # nothing to hold back

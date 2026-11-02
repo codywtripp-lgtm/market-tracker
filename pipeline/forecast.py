@@ -157,6 +157,30 @@ WEATHER = BASE + WEATHER_COLS
 PRIOR_ROWS = 1000
 
 
+# When the signals disagree, make no two-week call. Tested on 2021-2023, checked on 2024-2026 (scripts/value_stats.py):
+# calls right 72% -> 76%, big swings called the wrong way 8.3% -> 4.5%, at the cost of a third fewer calls.
+HOLD_SP = 0.05          # shipping-point prices moved 5%+ against the call over the last two weeks
+HOLD_RUN, HOLD_GAP = 8, 0.10  # or a "firming" call after 8 weeks below usual, 10%+ below on average
+
+
+def add_hold_inputs(panel):
+    """sp2: two-week shipping-point change. below8: below usual all of the prior 8 weeks, 10%+ on average."""
+    panel = panel.sort_values(["series_id", "week"]).reset_index(drop=True)
+    panel["sp2"] = panel.groupby("series_id")["sp"].transform(lambda s: s.rolling(2, min_periods=1).sum())
+    least = int(HOLD_RUN * 0.75)
+    panel["below8"] = panel.groupby("series_id")["gap"].transform(
+        lambda s: ((s.shift(1) < 0).rolling(HOLD_RUN, min_periods=least).mean() == 1)
+        & (s.shift(1).rolling(HOLD_RUN, min_periods=least).mean() <= -np.log(1 + HOLD_GAP)))
+    return panel
+
+
+def held(pred, sp2, below8):
+    """True where a two-week forecast (log change) goes against shipping points, or is a rise after a long low."""
+    pred, sp2 = np.asarray(pred, dtype=float), np.asarray(sp2, dtype=float)
+    below8 = np.asarray(below8, dtype=bool)
+    return ((pred < 0) & (sp2 > HOLD_SP)) | ((pred > 0) & (sp2 < -HOLD_SP)) | ((pred > 0) & below8)
+
+
 def design(df, h, cols):
     X = df[[f"seasonal{h}" if c == "seasonal" else c for c in cols]].fillna(0.0)  # missing driver = no info
     return np.column_stack([np.ones(len(X)), X.to_numpy()])
@@ -324,7 +348,7 @@ def _choices(r):
 
 
 def main():
-    panel = add_seasonal(add_drivers(weekly_panel()))
+    panel = add_hold_inputs(add_seasonal(add_drivers(weekly_panel())))
     last_year = int(panel["year"].max())
     scores, resid = backtest(panel, last_year)
     summary = scores.groupby(["horizon", "method"]).apply(
@@ -382,6 +406,8 @@ def main():
             wk = (r["week"] + pd.Timedelta(weeks=h)).date().isoformat()
             out.setdefault(r["series_id"], {"from_week": r["week"].date().isoformat(),
                                              "from_price": round(float(r["compare_price"]), 2), "points": []})
+            if h == 2:
+                out[r["series_id"]]["unsettled"] = bool(held(p, r["sp2"], r["below8"]))
             out[r["series_id"]]["points"].append({
                 "week": wk, "h": h, "mid": round(float(np.exp(r["lp"] + p)), 2),
                 "lo": round(float(np.exp(r["lp"] + p + lo)), 2), "hi": round(float(np.exp(r["lp"] + p + hi)), 2)})
