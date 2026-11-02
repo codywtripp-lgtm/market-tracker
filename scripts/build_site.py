@@ -148,8 +148,9 @@ ICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0
         "%3Cpath d='M17 25c.4-7.2 5-11.4 12-12-.6 7-5.2 11.6-12 12z' fill='%23ffd84d'/%3E%3C/svg%3E")
 # cache-buster so a design change shows up right away instead of after the browser's cache expires
 ASSET_V = hashlib.sha1(b"".join((ROOT / "site" / f).read_bytes() for f in ("style.css", "tabs.js", "search.js"))).hexdigest()[:8]
-ICONS = ('<link rel="icon" href="/favicon.svg" type="image/svg+xml">'
+ICONS = ('<link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">'  # Google: larger than 48px; no SVG on its list
          '<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">'
+         '<link rel="icon" href="/favicon.svg" type="image/svg+xml">'
          '<link rel="apple-touch-icon" href="/apple-touch-icon.png">')
 NAV = (("grocery", "", "Grocery prices"), ("wholesale", "wholesale/", "Wholesale prices"), ("about", "about/", "About"))
 WHOLESALE_NAV = (("wholesale/", "Today"), ("charts/", "Price history"), ("why/", "Track record"))
@@ -332,10 +333,11 @@ def board_pages():
         "isBasedOn": "https://www.ams.usda.gov/market-news", "temporalCoverage": f"2016-01-01/{as_of.isoformat()}",
         "spatialCoverage": ["New York, NY", "Los Angeles, CA", "Chicago, IL"]})
     if (BOARD / "grocery.html").exists():
-        site = json.dumps([{"@context": "https://schema.org", "@type": "WebSite", "name": SITE_NAME, "url": SITE_URL},
+        site = json.dumps([{"@context": "https://schema.org", "@type": "WebSite", "name": SITE_NAME,
+                            "alternateName": ["producepricetracker.com"], "url": SITE_URL},
                            {"@context": "https://schema.org", "@type": "Organization", "name": SITE_NAME, "url": SITE_URL,
                             "logo": f"{SITE_URL}apple-touch-icon.png"}])
-        emit("", "grocery", "Produce Prices This Week: Best Buys at the Grocery Store", 0,
+        emit("", "grocery", f"{SITE_NAME}: This Week's Best Buys at the Grocery Store", 0,
              og_key="home", view="grocery", day=g_day, head=f'<script type="application/ld+json">{site}</script>',
              find={"name": "Produce", "status": "This week’s best buys", "aka": "fruit vegetables"}, aisle="")
     for key, rel, title, find in (
