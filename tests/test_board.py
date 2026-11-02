@@ -52,3 +52,11 @@ def test_usda_supply_words_read_as_plain_sentences():
     assert _tone_words("Very Light and in few hands.") == "very light and in few hands"
     assert _tone_words("Carton 40-80s exceeds supply , others moderate.") == "carton 40-80s exceeds supply, others moderate"
     assert _tone_words("Mexico crossings light") == "Mexico crossings light"
+
+
+def test_a_price_far_from_typical_is_not_plain_normal():
+    from pipeline import board
+    assert board.season_word({"status": "normal", "vs_norm": -29.2})[0] == "Low side of normal"
+    assert board.season_word({"status": "normal", "vs_norm": 35.5})[0] == "High side of normal"
+    assert board.season_word({"status": "normal", "vs_norm": 4.0})[0] == "Normal for the season"
+    assert board.season_word({"status": "expensive", "vs_norm": 6.3})[0] == "High for the season"
