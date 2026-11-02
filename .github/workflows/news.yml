@@ -1,10 +1,9 @@
 name: News history
 
+# Manual only: GDELT's API refused every request in Oct-Nov 2026, so the 2-hour schedule was turned off.
 # Fills data/raw/news with daily news counts per grocery topic from GDELT (pipeline/news.py), a few requests per
 # run so GDELT's rate limit isn't tripped. Once the history is complete, each run just tops up the last days.
 on:
-  schedule:
-    - cron: "15 */2 * * *"   # every 2 hours
   workflow_dispatch:
 
 permissions:
