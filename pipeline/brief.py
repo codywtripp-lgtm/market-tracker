@@ -175,6 +175,7 @@ def headline_items(latest, series, forecasts, card):
         items.append({
             "series_id": r["series_id"], "commodity": commodity, "name": PRODUCE_NAMES[commodity], "market": market, "pack": pack(s),
             "price": price, "vs_norm": _num(r["pct_vs_norm"]), "status": r["status"],
+            "usual_low": _num(r.get("usual_low")), "usual_high": _num(r.get("usual_high")),
             "pctile": _num(r["percentile"]), "week": week, "points": fc.get("points", []),
             "vs_4w": _num(r["pct_vs_4_weeks_ago"]), "range": (point["lo"], point["hi"]) if point else None,
             "change": None if no_call else 0.0 if stable and point else change, "stable": stable,

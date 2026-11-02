@@ -54,15 +54,6 @@ def verb(i):
 IN_SEASON = ' <span class="insea">In season</span>'
 
 
-def status_word(i):
-    """(label, tone). Far from the typical price but still inside the middle half of past years: say which side."""
-    word, tone = STATUS[i["status"]]
-    v = i.get("vs_usual")
-    if i["status"] == "typical" and v is not None and abs(v) >= 15:
-        word = "Low side of typical" if v < 0 else "High side of typical"
-    return word, tone
-
-
 def when(today):
     part = "early" if today.day <= 10 else "mid" if today.day <= 20 else "late"
     return f"{part} {today:%B}"
@@ -73,7 +64,7 @@ def price_bar(i, today):
     if i["pctile"] is None:
         return ""
     pos = min(max(i["pctile"], 3), 97)
-    word, tone = status_word(i)
+    word, tone = STATUS[i["status"]]
     return (f'<div class="pbar" role="img" aria-label="{esc(word)}: {esc(money(i["price"]))}; usually '
             f'{esc(money(i["low"]))} to {esc(money(i["high"]))} in {esc(when(today))}">'
             f'<div class="pbar-track"><span class="z-low"></span><span class="z-typ"></span><span class="z-high"></span>'
@@ -87,6 +78,8 @@ def vs_line(i, today):
     v = i["vs_usual"]
     if v is None:
         return "New this year: no past prices to compare yet."
+    if i["status"] == "typical" and i.get("low") and i.get("high"):  # inside the usual range: show the range, not a percent
+        return f"Usually {money(i['low'])}–{money(i['high'])} in {when(today)}"
     if abs(v) >= 3:
         return (f'<b class="{"good" if v < 0 else "bad"}">{abs(v)}% {"below" if v < 0 else "above"} usual</b> '
                 f"for {when(today)}")
@@ -183,7 +176,7 @@ def page(today, items, aisle="produce"):
         parts.append(f'<section><h2>Best buys</h2><ul class="buys">{tiles}</ul></section>')
     if season and aisle == "produce":
         chips = "".join(f'<li><span><a class="sname" href="@/grocery/{i["slug"]}/">{esc(i["short"])}</a>{qual(i)}</span>'
-                        f'<span class="sword {status_word(i)[1]}">{esc(status_word(i)[0])}</span></li>'
+                        f'<span class="sword {STATUS[i["status"]][1]}">{esc(STATUS[i["status"]][0])}</span></li>'
                         for i in season)
         parts.append(f'<section class="band"><h2>In season now</h2><p class="sub">Peak flavor and supply this '
                      f'{grocery.season_of(today)}, per USDA’s seasonal produce guide, and how each is priced this week.</p>'
@@ -198,8 +191,9 @@ def page(today, items, aisle="produce"):
         f'data-q="{grocery.q_rank(i) if i.get("quality") else -1}"><th scope="row">{link(i)}'
         f'{IN_SEASON if i["in_season"] else ""}</th>'
         f'<td class="n">{money(i["price"])}<small>{esc(i["unit"].strip())}</small></td>'
-        f'<td><span class="word {status_word(i)[1]}">{esc(status_word(i)[0])}</span>'
-        + (f'<small>{abs(i["vs_usual"])}% {"below" if i["vs_usual"] < 0 else "above"} usual</small>'
+        f'<td><span class="word {STATUS[i["status"]][1]}">{esc(STATUS[i["status"]][0])}</span>'
+        + (f'<small>Usually {money(i["low"])}–{money(i["high"])}</small>' if i["status"] == "typical" and i.get("low") else
+           f'<small>{abs(i["vs_usual"])}% {"below" if i["vs_usual"] < 0 else "above"} usual</small>'
            if i["vs_usual"] is not None and abs(i["vs_usual"]) >= 3 else "") + f"</td><td>{qual(i)}</td></tr>"
         for i in items)
     parts.append('<section><h2>All prices this week</h2>'
@@ -422,7 +416,7 @@ def item_page(i, today, all_items):
              'checked against the same week in past years.</p>'
              f'<p class="answer">{answer(i, today)}</p></section>']
     if i["this_week"]:
-        word, tone = status_word(i)
+        word, tone = STATUS[i["status"]]
         parts.append(f'<section class="gquote">{tag(i)}<div><p class="gword {tone}">{esc(word)}</p>{row_lines(i, today)}'
                      + (f'<p class="cause">{esc(i["why"])}</p>' if i.get("why") else "")
                      + f'{price_bar(i, today)}</div></section>')
