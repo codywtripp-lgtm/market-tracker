@@ -7,7 +7,9 @@ pricey and what to buy instead, then every item. Data from pipeline/grocery.py.
 import datetime as dt
 import html
 import json
+import math
 import re
+import statistics
 
 from . import grocery, quality
 
@@ -282,11 +284,7 @@ def calendar(i, today):
     show_price = len(prices) >= 6
     if not any(q.values()) and not show_price:
         return ""
-    hi = max(prices.values()) if show_price else 1
-    cheap = set(i["cheapest_months"]) if show_price else set()
     now = today.month
-    low = min(prices, key=prices.get) if show_price else None
-    two_rows = bool(any(q.values()) and show_price)
     head = "".join(f'<th scope="col"{" class=now" if m == now else ""}><span class="mfull">{grocery.MONTHS[m - 1][:3]}</span>'
                    f'<span class="mone" aria-hidden="true">{grocery.MONTHS[m - 1][0]}</span></th>' for m in range(1, 13))
     rows = ""
@@ -297,39 +295,88 @@ def calendar(i, today):
             f'<span class="vh">{q[m][0] if q[m] else "No rating"}</span></td>' for m in range(1, 13))
         rows += f'<tr><th scope="row">Quality</th>{cells}</tr>'
     if show_price:
-        cells = ""
-        for m in range(1, 13):
-            if m in prices:  # bars start at zero, so their heights compare fairly; only the key months get a label
-                kind = "cheap" if m in cheap else "now" if m == now else ""
-                label = f'<span class="val">{money(prices[m])}</span>' if m in (low, now) else ""
-                cells += (f'<td class="cp" title="{grocery.MONTHS[m - 1]}: usually {money(prices[m])}{esc(i["unit"])}">'
-                          f'<div class="cw">{label}<span class="bar {kind}" style="height:{56 * prices[m] / hi:.0f}px"></span></div></td>')
-            else:
-                cells += '<td class="cp"><div class="cw"></div></td>'
-        rows += f'<tr><th scope="row">Price</th>{cells}</tr>'
+        rows += price_line(prices, now)
     legend = ""
     if any(q.values()):
-        legend += ('<div>' + ("<b>Quality</b>" if two_rows else "") + "".join(
-            f'<span><i class="sw q-{lv.lower()}"></i>{lv}</span>' for lv in reversed(quality.LEVELS)
-            if any(v and v[0] == lv for v in q.values())) + "</div>")
+        legend = '<figcaption class="legend">' + "".join(
+            f'<span><i class="sw q-{lv.lower()}"></i>{lv} quality</span>' for lv in reversed(quality.LEVELS)
+            if any(v and v[0] == lv for v in q.values())) + "</figcaption>"
     note, all_months = "", ""
     if show_price:
-        legend += ('<div>' + ("<b>Price</b>" if two_rows else "")
-                   + '<span><i class="sw cheap"></i>Usually cheapest</span><span><i class="sw now"></i>This month</span></div>')
-        unit = esc(i["unit"])
-        name = grocery.MONTHS[now - 1]
-        if now == low:
-            note = f"{name} is usually the cheapest month, at {money(prices[low])}{unit}."
-        else:
-            note = (f"{name} usually runs {money(prices[now])}{unit}. " if now in prices else "") +                    f"{grocery.MONTHS[low - 1]} is usually cheapest, at {money(prices[low])}{unit}."
-        note = f'<p class="cal-note">{note}</p>'
+        note = f'<p class="cal-note">{price_note(prices, now, esc(i["unit"]))}</p>'
         all_months = ('<details class="cal-all"><summary>Typical price by month</summary><ul>' + "".join(
-            f"<li><span>{grocery.MONTHS[m - 1]}</span><span>{money(prices[m])}{unit}</span></li>" for m in sorted(prices))
+            f'<li><span>{grocery.MONTHS[m - 1]}</span><span>{money(prices[m])}{esc(i["unit"])}</span></li>' for m in sorted(prices))
             + "</ul></details>")
-    corner = "<td></td>" if two_rows else '<td class="vh"></td>'
-    return (f'<figure class="cal{"" if two_rows else " one-row"}"><table><caption class="vh">{esc(i["short"])}: quality and '
-            f'typical supermarket price by month</caption><thead><tr>{corner}{head}</tr></thead><tbody>{rows}</tbody></table>'
-            f'<figcaption class="legend">{legend}</figcaption></figure>{note}{all_months}')
+    return (f'<figure class="cal"><table><caption class="vh">{esc(i["short"])}: quality and typical supermarket price '
+            f'by month</caption><thead><tr><td></td>{head}</tr></thead><tbody>{rows}</tbody></table>{legend}</figure>'
+            f'{note}{all_months}')
+
+
+def _ticks(lo, hi):
+    """Round price labels for the axis: a step that gives 2 to 4 of them inside the range."""
+    for step in (0.05, 0.1, 0.25, 0.5, 1, 2, 5, 10, 20, 50):
+        first = math.ceil(lo / step)
+        values = [n * step for n in range(first, math.floor(hi / step) + 1)]
+        if len(values) <= 4:
+            return values
+    return [lo, hi]
+
+
+def price_line(prices, now):
+    """Typical price by month as a line: a line can use a narrower axis than a bar, which needs zero, as long as the
+    axis is labeled. The axis spans at least 25% of the typical price, so differences of pennies stay small."""
+    lo, hi = min(prices.values()), max(prices.values())
+    mid = statistics.median(prices.values())
+    span = max((hi - lo) * 1.3, 0.25 * mid)
+    bottom = max(0.0, (lo + hi) / 2 - span / 2)
+    top = bottom + span
+
+    def y(v):
+        return 100 * (top - v) / (top - bottom)
+
+    def x(m):
+        return 100 * (m - 0.5) / 12
+
+    ticks = _ticks(bottom, top)
+    grid = "".join(f'<i class="lc-grid" style="top:{y(t):.1f}%"></i>' for t in ticks)
+    labels = "".join(f'<span class="lc-tick" style="top:{y(t):.1f}%">{money(t)}</span>' for t in ticks)
+    runs, run = [], []  # no line across months with no price
+    for m in range(1, 13):
+        if m in prices:
+            run.append(f"{x(m) * 12:.1f},{y(prices[m]):.1f}")
+        elif run:
+            runs.append(run)
+            run = []
+    if run:
+        runs.append(run)
+    lines = "".join(f'<polyline points="{" ".join(r)}" vector-effect="non-scaling-stroke"/>' for r in runs)
+    low = min(prices, key=prices.get)
+    dots, tags = "", ""
+    for m, v in sorted(prices.items()):
+        kind = " now" if m == now else " low" if m == low else ""
+        dots += (f'<i class="lc-dot{kind}" style="left:{x(m):.2f}%;top:{y(v):.1f}%" '
+                 f'title="{grocery.MONTHS[m - 1]}: usually {money(v)}"></i>')
+    for m, place in ((now, "above"), (low, "below")):
+        if m in prices and not (place == "below" and low == now):
+            edge = " start" if m <= 1 else " end" if m >= 12 else ""
+            tags += (f'<span class="lc-val {place}{edge}" style="left:{x(m):.2f}%;top:{y(prices[m]):.1f}%">'
+                     f"{'Low' if m == low else grocery.MONTHS[m - 1][:3]}: {money(prices[m])}</span>")
+    return (f'<tr class="lc-row"><th scope="row"><span class="vh">Typical price</span><span class="lc-axis" aria-hidden="true">{labels}'
+            f'</span></th><td colspan="12"><div class="lc" aria-hidden="true">{grid}<svg viewBox="0 0 1200 100" '
+            f'preserveAspectRatio="none">{lines}</svg>{dots}{tags}</div></td></tr>')
+
+
+def price_note(prices, now, unit):
+    """The chart in words."""
+    lo, hi = min(prices, key=prices.get), max(prices, key=prices.get)
+    if (prices[hi] - prices[lo]) / statistics.median(prices.values()) < 0.10:
+        return (f"The price barely changes through the year: usually {money(prices[lo])} to "
+                f"{money(prices[hi])}{unit}.")
+    text = (f"Usually cheapest in {grocery.MONTHS[lo - 1]}, at {money(prices[lo])}{unit}, and highest in "
+            f"{grocery.MONTHS[hi - 1]}, at {money(prices[hi])}.")
+    if now in prices and now not in (lo, hi):
+        text += f" {grocery.MONTHS[now - 1]} usually runs {money(prices[now])}."
+    return text
 
 
 def answer(i, today):

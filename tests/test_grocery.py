@@ -123,3 +123,14 @@ def test_weekly_email_lists_best_buys_and_pricey_with_outlook():
     assert subject == "Best buys this week: apples" and "blueberries" in preview.lower()
     assert "Best buys" in body and "Pricey right now" in body and "Next 2 weeks" in body
     assert "grocery/apples/?ref=email" in body
+
+
+def test_when_to_buy_chart_is_a_labeled_line_that_doesnt_exaggerate_pennies():
+    from pipeline import grocery_view as gv
+    flat = {m: 3.00 + m / 100 for m in range(1, 13)}
+    html = gv.price_line(flat, 10)
+    assert "<polyline" in html and "Low: $3.01" in html and "Oct: $3.10" in html and 'class="bar' not in html
+    assert "barely changes" in gv.price_note(flat, 10, "/lb")
+    swing = {**flat, 7: 1.50}
+    assert gv.price_note(swing, 7, "/lb").startswith("Usually cheapest in July, at $1.50/lb")
+    assert "Low: $1.50" in gv.price_line(swing, 7)
