@@ -4,7 +4,9 @@ Tested walk-forward in scripts/backtest_grocery.py before it went on the site (2
 of a "no change" guess by about 15%, and when it called a move of 10% or more, the price moved at least 5% that way
 about 7 times in 10, against a base rate of about 1 in 3.
 
-Model: ridge regression on the log change over the next HORIZON weeks, fit on every item's history, from
+Model: regression on the log change over the next HORIZON weeks, one per item shrunk toward the shared fit and fit so
+a few sale-price swings pull it around less (Huber). Tested 2026-11-02 in scripts/backtest_grocery_methods.py: miss
+9.48% -> 9.36%, calls right 77.3% -> 77.7%. Inputs:
   seasonal  median change over the same calendar window in earlier years
   gap       log(price / usual), usual = median of the same weeks (+-15 days) in earlier years: sales end and
             spikes ease, so prices far from usual tend to come back
@@ -17,12 +19,16 @@ import datetime as dt
 import math
 import statistics
 
+import numpy as np
+
 HORIZON = 2  # weeks
 MIN_STORES = 200
 CALL, HIT = 0.10, 0.05  # call a move of 10%+; it counts as right if the price then moved 5%+ that way
 RUN, RUN_WEEKS = 0.15, 3  # a price 15%+ from usual for each of the last 3 weeks has a lasting cause: don't call it back
 LAST_WEEKS, LAST_MEAN = 8, 0.10  # or on the same side of usual all of the last 8 weeks, 10%+ away on average
 FEATS = ("seasonal", "gap", "mom")
+HUBER_K = 0.10  # errors beyond about 10% count linearly
+PRIOR_ROWS = 500  # pull toward the shared fit, worth this many rows of an item's own data
 RECORD = {"calls": 0, "right": 0, "since": None}  # walk-forward track record, set by outlook()
 
 
@@ -155,22 +161,51 @@ def predict(w, r, feats=FEATS):
     return w[0] + sum(wi * r[f] for wi, f in zip(w[1:], feats))
 
 
+def _design(rows):
+    return np.array([[1.0] + [r[f] for f in FEATS] for r in rows])
+
+
+def _huber(X, y, lam, prior):
+    w = np.ones(len(y))
+    for _ in range(12):
+        XW = X * w[:, None]
+        b = np.linalg.solve(XW.T @ X + lam + 1e-9 * np.eye(X.shape[1]), XW.T @ y + lam @ prior)
+        w = np.minimum(1.0, HUBER_K / np.maximum(np.abs(y - X @ b), 1e-6))
+        w = w / w.mean()
+    return b
+
+
+def fit_items(rows_by_item):
+    """(shared coefficients, {item: its own, shrunk toward the shared ones})."""
+    every = [r for rs in rows_by_item.values() for r in rs]
+    X, y = _design(every), np.array([r["y"] for r in every])
+    zero = np.zeros(X.shape[1])
+    shared = _huber(X, y, np.zeros((X.shape[1], X.shape[1])), zero)
+    lam = np.diag(np.diag(X.T @ X) / len(X) * PRIOR_ROWS + 1e-9)
+    return shared, {c: _huber(_design(rs), np.array([r["y"] for r in rs]), lam, shared) for c, rs in rows_by_item.items() if rs}
+
+
+def predict_item(model, item, r):
+    shared, per = model
+    return float(per.get(item, shared) @ np.array([1.0] + [r[f] for f in FEATS]))
+
+
 def track_record(rows_by_item, first_year=2022):
     """Walk-forward share of calls that came true, so the site states the number the data supports today."""
-    rows = [r for rs in rows_by_item.values() for r in rs]
     calls = right = 0
-    for year in sorted({r["date"].year for r in rows}):
+    for year in sorted({r["date"].year for rs in rows_by_item.values() for r in rs}):
         if year < first_year:
             continue
-        train = [r for r in rows if r["date"].year < year]
-        if len(train) < 500:
+        train = {c: [r for r in rs if r["date"].year < year] for c, rs in rows_by_item.items()}
+        if sum(len(rs) for rs in train.values()) < 500:
             continue
-        w = fit(train)
-        for r in (r for r in rows if r["date"].year == year):
-            p = call(predict(w, r), r)
-            if p is not None:
-                calls += 1
-                right += r["y"] >= HIT if p > 0 else r["y"] <= -HIT
+        model = fit_items(train)
+        for c, rs in rows_by_item.items():
+            for r in (r for r in rs if r["date"].year == year):
+                p = call(predict_item(model, c, r), r)
+                if p is not None:
+                    calls += 1
+                    right += r["y"] >= HIT if p > 0 else r["y"] <= -HIT
     return {"calls": calls, "right": right, "since": first_year}
 
 
@@ -184,7 +219,7 @@ def outlook(data, deflator, main_pack, today):
     if len(every) < 500:
         RECORD = {"calls": 0, "right": 0, "since": None}
         return {}, RECORD
-    w = fit(every)
+    model = fit_items(rows)
     out = {}
     for c, p in pts.items():
         dates, logp = [x[0] for x in p], [x[1] for x in p]
@@ -192,7 +227,7 @@ def outlook(data, deflator, main_pack, today):
         if (today - dates[k]).days > 6 or p[k][2] < MIN_STORES:
             continue
         f = features(dates, logp, k)
-        p = call(predict(w, f), f) if f else None
+        p = call(predict_item(model, c, f), f) if f else None
         if p is not None:
             out[c] = math.exp(p) - 1
     RECORD = track_record(rows)

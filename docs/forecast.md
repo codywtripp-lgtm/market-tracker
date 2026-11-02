@@ -70,3 +70,6 @@ Limits: the Monday-Wednesday test still uses the full week's shipping-point move
 ### Hold rule
 A call is held as Unsettled when shipping points moved 10%+ against it over two weeks, or it is a rise after 8 weeks 10%+ below usual and USDA does not call the market firm. Picked on 2021-2023, checked on 2024-2026, against the old 5% rule on the new model: calls 3,531 -> 4,083, right 77.9% -> 77.5%, big swings called ahead 36.5% -> 41.5%, called the wrong way 4.6% -> 5.4%. Full replay (`scripts/value_stats.py`): 78.9% of 7,971 calls right, 43.5% of big moves called ahead, 5.0% wrong way (was 75.9% of 6,645, 35.4%, 4.7%).
 
+## 2026-11-02: grocery outlook
+Tested in `scripts/backtest_grocery_methods.py`, walk-forward 2022-2026. Live now: per-item regression shrunk toward the shared one, fit with Huber loss. Miss 9.48% -> 9.36%, calls right 77.3% -> 77.7%, better in every year. An average with gradient boosting reached 9.28% with no better calls, under the 1% bar over the simpler model, so it stays off. Absolute-error fit alone and shrinking toward no change: smaller gains.
+
