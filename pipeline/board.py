@@ -580,7 +580,7 @@ def quote(i, hist, today, opts, note=""):
     arrow, word, tone = DIR[i["dir"] or "steady"]
     sz = ""
     if opts:
-        sz = ('<h3>Other counts today</h3><table class="t sizes"><thead><tr><th>Count</th><th>Case price</th></tr></thead><tbody>'
+        sz = ('<h2 class="sh">Other counts today</h2><table class="t sizes"><thead><tr><th>Count</th><th>Case price</th></tr></thead><tbody>'
               + "".join(f"<tr><td>{esc(o[1])}</td><td>{money(o[2] * o[0])}</td></tr>" for o in opts) + "</tbody></table>")
     return (f'<div class="quote"><div class="q-main"><span class="q-price">{money(i["price"])}</span>'
             f'<span class="q-unit">a case</span><span class="q-pack">{esc(i["pack"])}</span></div>'

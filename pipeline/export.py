@@ -34,6 +34,8 @@ TOP_CHICKEN = 8        # by volume
 
 MIN_COVERAGE = 0.5     # share of report days in the last year a series must appear on
 MIN_COVERAGE_SHIPPING = 0.3  # shipping-point districts are seasonal (e.g. Salinas lettuce ~8 months)
+FRESH_DAYS = 21        # a terminal headline must have been quoted this recently, if anything else has
+MIN_COVERAGE_FRESH = 0.25  # a pack that replaced a stopped one has less than a year behind it
 NORM_WEEK_WINDOW = 2   # seasonal norm uses the same ISO week +/- this many weeks
 MIN_NORM_YEARS = 3     # need this many prior years for a seasonal norm
 
@@ -54,6 +56,19 @@ MAIN_PACK = {
     "Lettuce, Iceberg": {"item_size": r"24s"},
     "Carrots": {"variety": r"^(|TOPPED)$", "pack_size": r"^(25|50) lb sacks loose$", "item_size": r"^jumbo$"},
     "Blueberries": {"pack_size": r"1-pint"},
+    "Avocados": {"pack_size": r"^cartons 2 layer$", "item_size": r"^48s$"},  # owner
+    # 140s: quoted about daily in all three markets, and the size Sunkist's foodservice costing uses
+    "Lemons": {"pack_size": r"^7/10 bushel cartons$", "item_size": r"^140s$"},
+    # 200s: quoted daily in all three markets, the most lots overall, and the case foodservice sellers list
+    "Limes": {"pack_size": r"^40 lb cartons$", "item_size": r"^200s$"},
+    "Grapes": {"variety": r"^WHITE SEEDLESS", "pack_size": r"^(18|19) lb containers bagged$"},
+}
+# Where a market trades something else. LA quotes mature greens under 4 months a year; vine ripes in 2-layer cartons
+# are quoted daily. LA quotes 6-oz blueberries daily, pints about a quarter of the time.
+MAIN_PACK_MARKET = {
+    ("Tomatoes", "Los Angeles"): {"variety": r"^VINE RIPES$", "pack_size": r"^cartons 2 layer$", "item_size": r"^5x5s$",
+                                  "properties": r"^Light Red-red$"},
+    ("Blueberries", "Los Angeles"): {"pack_size": r"6-oz", "item_size": r"^medium-large$"},
 }
 # USDA splits these by type as growing areas rotate through the season (yellow onions: Hybrid / Spanish /
 # Grano / Globe; russets: Norkotah / Burbank; mature greens: Light Red / Light Red-red). The trade quotes
@@ -98,10 +113,10 @@ def label(key):
 
 def is_main_pack(key):
     """Terminal series that is the trade's main pack for its commodity (conventional only)."""
-    _, _, commodity, variety, pack, size, prop, organic = key
+    _, market, commodity, variety, pack, size, prop, organic = key
     if organic in ("Y", "Yes"):
         return False
-    spec = MAIN_PACK.get(commodity, {})
+    spec = MAIN_PACK_MARKET.get((commodity, market), MAIN_PACK.get(commodity, {}))
     fields = {"variety": variety, "pack_size": pack, "item_size": size, "properties": prop}
     return all(re.search(rx, fields[f] or "", re.I) for f, rx in spec.items())
 
@@ -155,6 +170,11 @@ def select(grouped, today):
         total = len(report_days[calendar(key)]) or 1
         return days / total
 
+    fresh_from = (today - dt.timedelta(days=FRESH_DAYS)).isoformat()
+
+    def stale(key):
+        return max(grouped[key]) < fresh_from
+
     def weight(key, field):
         return sum(fnum(r[field]) or 0 for d, rs in grouped[key].items() if d >= year_ago for r in rs)
 
@@ -175,10 +195,13 @@ def select(grouped, today):
             top = TOP_TERMINAL if mt == "terminal" else TOP_SHIPPING
             floor = MIN_COVERAGE if mt == "terminal" else MIN_COVERAGE_SHIPPING
             if mt == "terminal":  # main pack first, then conventional, then coverage
-                ranked = sorted(keys, key=lambda k: (not is_main_pack(k), k[7] in ("Y", "Yes"), -coverage(k)))
+                ranked = sorted(keys, key=lambda k: (not is_main_pack(k), k[7] in ("Y", "Yes"), stale(k), -coverage(k)))
             else:
                 ranked = sorted(keys, key=lambda k: -coverage(k))
             picks = [k for k in ranked if coverage(k) >= floor][:top]
+            if mt == "terminal" and (not picks or stale(picks[0])):  # USDA stopped quoting that pack
+                fresh = [k for k in ranked if not stale(k) and k[7] not in ("Y", "Yes") and coverage(k) >= MIN_COVERAGE_FRESH]
+                picks = (fresh[:1] + picks)[:top]
         elif mt == "retail":
             ranked = sorted(keys, key=lambda k: -weight(k, "store_count"))
             picks = [k for k in ranked if coverage(k) >= MIN_COVERAGE][:TOP_RETAIL]
@@ -296,7 +319,7 @@ def build(rows, today=None, deflator=None):
         # Same prices in today's dollars (CPI food at home), for fair multi-year comparisons.
         weekly_real = {w: round(v * deflator.factor(w.isoformat()), 4) for w, v in weekly_avg.items()}
         for w, v in sorted(weekly_avg.items()):
-            weekly_rows.append({**base, "week_start": w.isoformat(), "compare_price": v,
+            weekly_rows.append({**base, "week_start": w.isoformat(), "compare_price": v, "last_price": weekly[w][-1],
                                 "real_compare_price": weekly_real[w], "compare_unit": unit,
                                 "days": len(weekly[w])})
 
@@ -318,7 +341,7 @@ def build(rows, today=None, deflator=None):
     write_csv(EXPORT / "prices_daily_365.csv", base_f + ["date", "price", "price_unit", "compare_price",
               "compare_unit", "low", "high", "normalized_price", "normalized_unit", "origins", "quotes", "market_tone"],
               daily_rows)
-    write_csv(EXPORT / "prices_weekly.csv", base_f + ["week_start", "compare_price", "real_compare_price",
+    write_csv(EXPORT / "prices_weekly.csv", base_f + ["week_start", "compare_price", "last_price", "real_compare_price",
               "compare_unit", "days"], weekly_rows)
     write_csv(EXPORT / "latest.csv", base_f + ["label", "week_start", "compare_price", "compare_unit",
               "seasonal_norm", "usual_low", "usual_high", "pct_vs_norm", "percentile", "status", "years_of_history",

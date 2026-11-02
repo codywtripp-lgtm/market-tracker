@@ -34,7 +34,7 @@ def replay():
         test = usable[usable["year"] == Y].dropna(subset=[f"y{H}"])
         if len(train) < 500 or test.empty:
             continue
-        out.append(test[["series_id", "commodity", "market", "week", "year", "compare_price", "sp2", "below8", f"y{H}"]]
+        out.append(test[["series_id", "commodity", "market", "week", "year", "compare_price", "sp2", "below8", "tone", f"y{H}"]]
                    .assign(pred=pred_fn(fit_fn(train, H), test, H)))
     r = pd.concat(out, ignore_index=True).rename(columns={f"y{H}": "y"})
     r["ape_model"] = np.abs(np.expm1(r["pred"]) - np.expm1(r["y"]))
@@ -46,7 +46,7 @@ def replay():
         ok = {k: row["ape_model"] <= row["ape_naive"] for k, row in prior.iterrows()}
         use.append(pd.Series([ok.get(k, True) for k in zip(cur["commodity"], cur["market"])], index=cur.index))
     r["final"] = np.where(pd.concat(use).sort_index(), r["pred"], 0.0)
-    r["called"] = (np.abs(np.expm1(r["final"])) >= CALL) & ~fc.held(r["final"], r["sp2"], r["below8"].fillna(False))
+    r["called"] = (np.abs(np.expm1(r["final"])) >= CALL) & ~fc.held(r["final"], r["sp2"], r["below8"].fillna(False), r["tone"])
     return r
 
 

@@ -13,6 +13,7 @@ Features (all known at the time of the forecast; nothing from the future):
   sp         this week's shipping-point price change for the commodity
   tone       USDA reporters' market call at this terminal this week (-1..1)
 
+  last       latest day's price vs the week's average: a weekly average hides a move late in the week
   sp_prev    last week's shipping-point change
 
 Methods compared by walk-forward testing (train on years before Y, test on year Y):
@@ -22,7 +23,8 @@ Methods compared by walk-forward testing (train on years before Y, test on year 
   pooled+sp_prev  the same plus last week's shipping-point change
   by_commodity    per-commodity regression, shrunk toward the pooled one
   gbm             gradient boosting (learns interactions; also sees week-of-year, commodity, market)
-The live forecast uses whichever method had the smallest average miss for each horizon.
+  blend           plain average of a per-item regression fit for absolute error (Huber) and gradient boosting (live)
+The live forecast uses the blend, or "no change" for items where the blend hasn't beaten it.
 
 Writes data/export/forecasts.json (live) and data/export/forecast_backtest.csv (scores).
 Details: docs/forecast.md
@@ -56,7 +58,7 @@ def weekly_panel():
     wk["week"] = pd.to_datetime(wk["week_start"])
     frames = []
     for sid, g in wk.groupby("series_id"):
-        g = g.set_index("week").sort_index()[["compare_price", "real_compare_price"]]
+        g = g.set_index("week").sort_index()[["compare_price", "real_compare_price", "last_price"]]
         g = g.asfreq("7D")
         g["series_id"] = sid
         frames.append(g.reset_index())
@@ -69,6 +71,7 @@ def weekly_panel():
     g = panel.groupby("series_id")["lp"]
     panel["mom1"] = panel["lp"] - g.shift(1)
     panel["mom4"] = panel["lp"] - g.shift(4)
+    panel["last"] = np.log(panel["last_price"] / panel["compare_price"])
     for h in HORIZONS:
         panel[f"y{h}"] = g.shift(-h) - panel["lp"]
     return panel
@@ -147,6 +150,7 @@ def add_seasonal(panel):
 
 
 BASE = ["seasonal", "gap", "mom1", "mom4", "sp", "tone"]
+INPUTS = BASE + ["last"]
 EXTENDED = BASE + ["sp_prev"]
 SUPPLY = BASE + ["supply_gap", "supply_chg"]  # + shipment volumes vs usual, and their recent change
 WEATHER_COLS = ["freeze_days", "heat_days", "rain_days", "precip_anom",
@@ -155,12 +159,13 @@ WEATHER = BASE + WEATHER_COLS
 # Pull toward the pooled coefficients, expressed as "worth this many rows of data": a commodity
 # with far more rows than this mostly follows its own data; a thin one stays near the pooled fit.
 PRIOR_ROWS = 1000
+HUBER_K = 0.05          # log errors beyond about 5% count linearly
 
 
-# When the signals disagree, make no two-week call. Tested on 2021-2023, checked on 2024-2026 (scripts/value_stats.py):
-# calls right 72% -> 76%, big swings called the wrong way 8.3% -> 4.5%, at the cost of a third fewer calls.
-HOLD_SP = 0.05          # shipping-point prices moved 5%+ against the call over the last two weeks
-HOLD_RUN, HOLD_GAP = 8, 0.10  # or a "firming" call after 8 weeks below usual, 10%+ below on average
+# When the signals disagree, make no two-week call. Picked on 2021-2023, checked on 2024-2026 (scripts/backtest_hold_rule.py):
+# same accuracy as the earlier 5% rule, 16% more calls, big swings called ahead 36.5% -> 41.5%, wrong way 4.6% -> 5.4%.
+HOLD_SP = 0.10          # shipping-point prices moved 10%+ against the call over the last two weeks
+HOLD_RUN, HOLD_GAP = 8, 0.10  # or a "firming" call after 8 weeks below usual, 10%+ below on average, unless USDA calls the market firm
 
 
 def add_hold_inputs(panel):
@@ -174,11 +179,12 @@ def add_hold_inputs(panel):
     return panel
 
 
-def held(pred, sp2, below8):
-    """True where a two-week forecast (log change) goes against shipping points, or is a rise after a long low."""
-    pred, sp2 = np.asarray(pred, dtype=float), np.asarray(sp2, dtype=float)
+def held(pred, sp2, below8, tone=0.0):
+    """True where a two-week forecast (log change) goes against shipping points, or is a rise after a long low that
+    USDA's market reporters don't back up."""
+    pred, sp2, tone = np.asarray(pred, dtype=float), np.asarray(sp2, dtype=float), np.nan_to_num(np.asarray(tone, dtype=float))
     below8 = np.asarray(below8, dtype=bool)
-    return ((pred < 0) & (sp2 > HOLD_SP)) | ((pred > 0) & (sp2 < -HOLD_SP)) | ((pred > 0) & below8)
+    return ((pred < 0) & (sp2 > HOLD_SP)) | ((pred > 0) & (sp2 < -HOLD_SP)) | ((pred > 0) & below8 & (tone <= 0))
 
 
 def design(df, h, cols):
@@ -203,6 +209,48 @@ def _pooled(cols):
     def fit(train, h):
         return ols(design(train, h, cols), train[f"y{h}"].to_numpy())
     return fit, (lambda coef, rows, h: design(rows, h, cols) @ coef)
+
+
+def _huber_solve(X, y, lam, prior, k=HUBER_K):
+    """Ridge toward `prior`, reweighted so errors beyond k count linearly: a few price spikes pull it around less."""
+    w = np.ones(len(y))
+    for _ in range(12):
+        XW = X * w[:, None]
+        b = np.linalg.solve(XW.T @ X + lam + 1e-9 * np.eye(X.shape[1]), XW.T @ y + lam @ prior)
+        w = np.minimum(1.0, k / np.maximum(np.abs(y - X @ b), 1e-6))
+        w = w / w.mean()
+    return b
+
+
+def _huber_group(cols, keys=("commodity", "market"), prior_rows=PRIOR_ROWS):
+    """The same shrink-to-pooled regression as _by_group, for absolute error rather than squared error."""
+    keys = list(keys)
+
+    def group(df):
+        return df[keys].astype(str).agg("|".join, axis=1).to_numpy()
+
+    def fit(train, h):
+        X, y = design(train, h, cols), train[f"y{h}"].to_numpy()
+        zero = np.zeros(X.shape[1])
+        pooled = _huber_solve(X, y, np.zeros((X.shape[1], X.shape[1])), zero)
+        lam = np.diag(np.diag(X.T @ X) / len(X) * prior_rows + 1e-9)
+        gs = group(train)
+        return pooled, {g: _huber_solve(X[gs == g], y[gs == g], lam, pooled) for g in np.unique(gs)}
+
+    def predict(model, rows, h):
+        pooled, per = model
+        return np.einsum("ij,ij->i", design(rows, h, cols), np.stack([per.get(g, pooled) for g in group(rows)]))
+    return fit, predict
+
+
+def _blend(*methods):
+    """Plain average of the methods' forecasts. Simple averages are hard to beat (Timmermann 2006)."""
+    def fit(train, h):
+        return [f(train, h) for f, _ in methods]
+
+    def predict(models, rows, h):
+        return np.mean([p(m, rows, h) for m, (_, p) in zip(models, methods)], axis=0)
+    return fit, predict
 
 
 def _by_group(cols, keys=("commodity",), prior_rows=PRIOR_ROWS):
@@ -247,9 +295,8 @@ def _gbm(cols):
     def fit(train, h):
         X = frame(train, h)
         cats = {c: X[c].cat.categories for c in ("commodity", "market")}
-        m = HistGradientBoostingRegressor(max_iter=300, learning_rate=0.05, max_leaf_nodes=31,
-                                          min_samples_leaf=100, l2_regularization=1.0,
-                                          categorical_features="from_dtype", random_state=0)
+        m = HistGradientBoostingRegressor(loss="absolute_error", max_iter=200, learning_rate=0.05, max_leaf_nodes=15,
+                                          min_samples_leaf=100, categorical_features="from_dtype", random_state=0)
         m.fit(X, train[f"y{h}"].to_numpy())
         return m, cats
 
@@ -275,11 +322,11 @@ METHODS = {
 # Tested 2026-09-26: adding shipment volumes (SUPPLY) did not help (avg miss 13.24% vs 13.23%),
 # so it's off. Add "by_commodity_market+supply": _by_group(SUPPLY, keys=("commodity", "market"))
 # here and to MODEL_CANDIDATES to re-test.
-METHODS["by_commodity_market+weather"] = _by_group(WEATHER, keys=("commodity", "market"))
-METHODS["pooled+weather"] = _pooled(WEATHER)  # weather effects shared across items (more data per effect)
-# Weather variant dropped from the candidates 2026-10-28: it never won, and the Open-Meteo feed
-# is non-commercial only, so it is no longer fetched nightly.
-MODEL_CANDIDATES = ["by_commodity_market"]  # first = base
+# Tested 2026-11-02 (scripts/backtest_methods.py, backtest_methods2.py), walk-forward 2021-2026, with the per-item choice:
+# average miss 13.15% -> 12.60%, 2-week calls right 72.2% -> 77.3%, better in every year; with only Monday-Wednesday
+# known 13.68% -> 13.33%. Median-based seasonals, recency weights, shrinking toward no change: no better.
+METHODS["blend"] = _blend(_huber_group(INPUTS), _gbm(INPUTS))
+MODEL_CANDIDATES = ["blend"]  # first = base
 MIN_GAIN = 0.01
 # Tested 2026-09-26: weather gave 13.222% vs 13.229% avg miss (noise), so the base model stays.
 
@@ -336,7 +383,7 @@ def coverage(resid):
     return hits / total if total else float("nan")
 
 
-MODEL = "by_commodity_market"  # replaced in main() by the best of MODEL_CANDIDATES
+MODEL = "blend"  # replaced in main() by the best of MODEL_CANDIDATES
 
 
 def _choices(r):
@@ -407,7 +454,7 @@ def main():
             out.setdefault(r["series_id"], {"from_week": r["week"].date().isoformat(),
                                              "from_price": round(float(r["compare_price"]), 2), "points": []})
             if h == 2:
-                out[r["series_id"]]["unsettled"] = bool(held(p, r["sp2"], r["below8"]))
+                out[r["series_id"]]["unsettled"] = bool(held(p, r["sp2"], r["below8"], r["tone"]))
             out[r["series_id"]]["points"].append({
                 "week": wk, "h": h, "mid": round(float(np.exp(r["lp"] + p)), 2),
                 "lo": round(float(np.exp(r["lp"] + p + lo)), 2), "hi": round(float(np.exp(r["lp"] + p + hi)), 2)})

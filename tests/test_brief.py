@@ -44,9 +44,11 @@ def test_turning_markets_are_called_as_turns():
 
 def test_signals_that_disagree_make_the_market_unsettled_not_a_call():
     from pipeline import forecast as fc
-    assert fc.held(-0.1, 0.06, False) and fc.held(0.1, -0.06, False)  # forecast against shipping points
+    assert fc.held(-0.1, 0.11, False) and fc.held(0.1, -0.11, False)  # forecast against shipping points
     assert fc.held(0.1, 0.0, True)                                   # a rise after 8 weeks below usual
-    assert not fc.held(-0.1, -0.06, False) and not fc.held(0.1, 0.06, False) and not fc.held(-0.1, 0.0, True)
+    assert not fc.held(0.1, 0.0, True, 0.5)                          # unless USDA calls the market firm
+    assert not fc.held(-0.1, -0.11, False) and not fc.held(0.1, 0.11, False) and not fc.held(-0.1, 0.0, True)
+    assert not fc.held(0.1, -0.06, False)                            # a small shipping-point move doesn't hold it
     d, action = brief.call("normal", 0.12, False, "Limes", None, unsettled=True)
     assert d == "unsettled" and "no call" in action
     assert brief.call("normal", 0.01, False, "Limes", None, unsettled=True)[0] == "steady"  # nothing to hold back

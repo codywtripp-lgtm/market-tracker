@@ -310,7 +310,7 @@ a.sname:hover, .buy h3 a:hover, .pricey h3 a:hover, .all th a:hover { text-decor
 .q-pack { color: var(--ink-2); font-size: 16px; }
 .q-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin: 0; }
 .q-facts dt { font-size: 16px; color: var(--ink-2); margin-bottom: 4px; }
-.q-facts dd { margin: 0; }
+.q-facts dd { margin: 0; overflow-wrap: anywhere; }
 .q-facts .chg, .q-facts .season b, .q-facts .out b { font-size: 22px; }
 .q-facts .path { grid-column: 1 / -1; }
 .q-facts .path dd { color: var(--ink-2); }
@@ -512,9 +512,9 @@ main.dash { min-width: 0; }
   .cal .cq { height: 26px; }
   .gquote { grid-template-columns: 1fr; gap: 12px; }
   .gquote .shelf { justify-self: start; min-width: 112px; }
-  .quote { grid-template-columns: 1fr; gap: 24px; }
+  .quote { grid-template-columns: minmax(0, 1fr); gap: 24px; }
   .q-price { font-size: 44px; line-height: 46px; }
-  .q-facts { grid-template-columns: 1fr 1fr; }
+  .q-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .todo { padding: 20px; }
   .chart .ylab, .chart .xlab { font-size: 24px; }
   .chart .xlab.odd { display: none; }
@@ -531,3 +531,11 @@ main.dash { min-width: 0; }
 }
 @media (prefers-reduced-motion: reduce) { .filters { transition: none; } }
 @media print { .top, .tabs, .filters, .filters-btn, .cta { display: none; } }
+
+.skip { position: absolute; left: 16px; top: -48px; z-index: 10; padding: 8px 12px; background: var(--page); color: var(--ink); border: 1px solid var(--ink); }
+.skip:focus { top: 8px; }
+@media (max-width: 360px) {
+  .t th, .data th, .t td, .data td { padding-right: 8px; }
+  .data .num { white-space: normal; }
+}
+.q-facts .season b { white-space: normal; }

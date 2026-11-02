@@ -89,3 +89,19 @@ def test_organic_is_not_the_headline():
     org = ("terminal", "Chicago", "Lettuce, Iceberg", "", "cartons", "24s film wrapped", "", "Y")
     conv = org[:7] + ("N",)
     assert export.is_main_pack(conv) and not export.is_main_pack(org)
+
+
+def test_market_can_have_its_own_main_pack():
+    la = ("terminal", "Los Angeles", "Tomatoes", "VINE RIPES", "cartons 2 layer", "5x5s", "Light Red-red", "No")
+    ny = ("terminal", "New York", "Tomatoes", "VINE RIPES", "cartons 2 layer", "5x5s", "Light Red-red", "No")
+    assert export.is_main_pack(la) and not export.is_main_pack(ny)
+
+
+def test_a_pack_usda_stopped_quoting_is_not_the_headline():
+    today = dt.date(2026, 11, 1)
+    days = [(today - dt.timedelta(days=d)).isoformat() for d in range(1, 300)]
+    old = ("terminal", "Los Angeles", "Bananas", "", "40 lb cartons containerized", "", "", "No")
+    new = ("terminal", "Los Angeles", "Bananas", "", "40 lb cartons", "", "", "No")
+    baby = ("terminal", "Los Angeles", "Bananas", "BABY", "15 lb cartons", "", "", "No")
+    grouped = {old: {d: [{}] for d in days[100:]}, new: {d: [{}] for d in days[:120]}, baby: {d: [{}] for d in days}}
+    assert next(iter(export.select(grouped, today))) == new
