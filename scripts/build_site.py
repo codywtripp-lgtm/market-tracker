@@ -182,7 +182,7 @@ def topbar(up, active=None, view="wholesale", aisle=None):
     elif view == "wholesale" and active != "about/":
         sub = ('<nav class="aisles" aria-label="Wholesale">' + "".join(
             f'<a href="{up}{href}"{cur if href == active else ""}>{label}</a>' for href, label in WHOLESALE_NAV) + "</nav>")
-    return (f'<header class="top"><div class="wrap"><a class="logo" href="{up}">{MARK}<span>{SITE_NAME}</span></a>'
+    return (f'<a class="skip" href="#main">Skip to main content</a><header class="top"><div class="wrap"><a class="logo" href="{up}">{MARK}<span>{SITE_NAME}</span></a>'
             f'<nav class="primary" aria-label="Main">{main}</nav>{search}</div></header>'
             f'<div class="wrap">{sub}</div>')
 
@@ -249,7 +249,7 @@ def page(title, desc, canonical, up, body, active=None, head="", og=None, main_c
 <script data-goatcounter="{GOATCOUNTER}" async src="https://gc.zgo.at/count.js"></script></head>
 <body>
 {topbar(up, active, view, aisle)}
-<main class="{main_class}">
+<main id="main" class="{main_class}">
 {body}
 {signup(up) if view == "grocery" and active != "about/" else ""}
 </main>

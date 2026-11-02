@@ -1,110 +1,122 @@
 {
  "years": "2021-2026",
- "weeks_scored": 24525,
- "calls": 6645,
- "calls_right_pct": 75.9,
- "big_moves": 4275,
- "big_moves_right_pct": 88.3,
- "avg_dollars_per_case": 4.87,
- "avg_dollars_when_right": 7.28,
+ "weeks_scored": 24470,
+ "calls": 7971,
+ "calls_right_pct": 78.9,
+ "big_moves": 5186,
+ "big_moves_right_pct": 89.6,
+ "avg_dollars_per_case": 4.94,
+ "avg_dollars_when_right": 7.0,
  "by_commodity": [
   {
+   "commodity": "Potatoes",
+   "calls": 188,
+   "right_pct": 86.2,
+   "avg_dollars": 3.83
+  },
+  {
    "commodity": "Limes",
-   "calls": 750,
-   "right_pct": 84.3,
-   "avg_dollars": 7.03
-  },
-  {
-   "commodity": "Strawberries",
-   "calls": 297,
-   "right_pct": 82.5,
-   "avg_dollars": 4.94
-  },
-  {
-   "commodity": "Lettuce, Romaine",
-   "calls": 678,
-   "right_pct": 81.3,
-   "avg_dollars": 6.38
-  },
-  {
-   "commodity": "Lettuce, Iceberg",
-   "calls": 472,
-   "right_pct": 80.7,
-   "avg_dollars": 7.49
+   "calls": 795,
+   "right_pct": 85.0,
+   "avg_dollars": 6.89
   },
   {
    "commodity": "Celery",
-   "calls": 841,
-   "right_pct": 80.0,
-   "avg_dollars": 5.65
+   "calls": 794,
+   "right_pct": 84.1,
+   "avg_dollars": 6.18
   },
   {
-   "commodity": "Broccoli",
-   "calls": 746,
-   "right_pct": 77.9,
-   "avg_dollars": 4.03
+   "commodity": "Lettuce, Romaine",
+   "calls": 724,
+   "right_pct": 82.3,
+   "avg_dollars": 6.49
   },
   {
-   "commodity": "Blueberries",
-   "calls": 355,
-   "right_pct": 75.8,
-   "avg_dollars": 4.89
-  },
-  {
-   "commodity": "Cucumbers",
-   "calls": 636,
-   "right_pct": 74.1,
-   "avg_dollars": 4.12
-  },
-  {
-   "commodity": "Potatoes",
-   "calls": 44,
-   "right_pct": 70.5,
-   "avg_dollars": 1.06
-  },
-  {
-   "commodity": "Tomatoes",
-   "calls": 409,
-   "right_pct": 69.9,
-   "avg_dollars": 3.06
-  },
-  {
-   "commodity": "Tomatoes, Plum Type",
-   "calls": 294,
-   "right_pct": 68.4,
-   "avg_dollars": 2.29
-  },
-  {
-   "commodity": "Peppers, Bell Type",
-   "calls": 638,
-   "right_pct": 67.2,
-   "avg_dollars": 3.51
-  },
-  {
-   "commodity": "Avocados",
-   "calls": 306,
-   "right_pct": 67.0,
-   "avg_dollars": 4.03
-  },
-  {
-   "commodity": "Lemons",
-   "calls": 83,
-   "right_pct": 54.2,
-   "avg_dollars": 1.43
+   "commodity": "Lettuce, Iceberg",
+   "calls": 559,
+   "right_pct": 82.1,
+   "avg_dollars": 7.62
   },
   {
    "commodity": "Onions, Dry",
-   "calls": 51,
-   "right_pct": 35.3,
-   "avg_dollars": 0.05
+   "calls": 106,
+   "right_pct": 82.1,
+   "avg_dollars": 1.87
+  },
+  {
+   "commodity": "Carrots",
+   "calls": 78,
+   "right_pct": 82.1,
+   "avg_dollars": 1.87
+  },
+  {
+   "commodity": "Broccoli",
+   "calls": 844,
+   "right_pct": 80.9,
+   "avg_dollars": 4.07
+  },
+  {
+   "commodity": "Strawberries",
+   "calls": 306,
+   "right_pct": 79.1,
+   "avg_dollars": 4.85
+  },
+  {
+   "commodity": "Avocados",
+   "calls": 429,
+   "right_pct": 77.9,
+   "avg_dollars": 5.84
+  },
+  {
+   "commodity": "Blueberries",
+   "calls": 394,
+   "right_pct": 77.4,
+   "avg_dollars": 5.02
+  },
+  {
+   "commodity": "Cucumbers",
+   "calls": 757,
+   "right_pct": 76.1,
+   "avg_dollars": 4.18
+  },
+  {
+   "commodity": "Tomatoes",
+   "calls": 543,
+   "right_pct": 73.1,
+   "avg_dollars": 3.25
+  },
+  {
+   "commodity": "Tomatoes, Plum Type",
+   "calls": 397,
+   "right_pct": 73.0,
+   "avg_dollars": 2.45
+  },
+  {
+   "commodity": "Peppers, Bell Type",
+   "calls": 863,
+   "right_pct": 71.0,
+   "avg_dollars": 3.7
+  },
+  {
+   "commodity": "Lemons",
+   "calls": 106,
+   "right_pct": 70.8,
+   "avg_dollars": 2.21
+  },
+  {
+   "commodity": "Grapes",
+   "calls": 64,
+   "right_pct": 64.1,
+   "avg_dollars": 3.32
   }
  ],
  "alert_rules": 67,
  "alert_cases": 2327,
  "alert_hit_pct": 74.8,
  "alert_base_pct": 33.3,
- "big_moves_called_ahead_pct": 35.4,
- "big_moves_called_wrong_way_pct": 4.7,
+ "big_moves_called_ahead_pct": 43.5,
+ "big_moves_called_wrong_way_pct": 5.0,
  "examples": [
   {
    "week": "2026-10-12",

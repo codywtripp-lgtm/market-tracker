@@ -48,3 +48,25 @@ Honest read: produce prices are volatile (a typical 4-week move is ~20%), so the
 - A public track record on the site (past forecasts vs. what happened).
 
 **USDA notes, peso and government events (tested 2026-11-02, not used):** added one at a time to the live wholesale model, walk-forward 2021-2026 (average miss 13.37% and 69.4% of calls right without them). Short-supply notes, disruption mentions, reporters' tone notes, growing areas starting or finishing, and the peso: 13.37-13.47%, no gain (`scripts/backtest_wholesale_signals.py`). FDA recalls, Federal Register trade documents, and NOAA crop damage (an upper bound, since NOAA publishes months late): 13.36-13.38%, 69.3-69.4% right (`scripts/backtest_event_signals.py`). These records are frequent and mostly minor (a recall in 27% of item-weeks, crop damage in 39%), so as simple counts they don't separate the rare shock from the routine. USDA's bird flu site refused automated requests, so bird flu is untested. What did help is holding back calls when signals disagree (`forecast.held`).
+
+## 2026-11-02: blended model (live)
+Tested in `scripts/backtest_methods.py`, `backtest_methods2.py`, `backtest_hold_rule.py`. Walk-forward 2021-2026, with the per-item choice vs no change.
+
+| | Old | New |
+|---|---|---|
+| Average miss, 1-4 weeks | 13.15% | 12.60% |
+| Two-week miss | 11.99% | 11.50% |
+| Calls right (5%+ moves, before the hold rule) | 72.2% | 77.3% |
+| Average miss with only Monday-Wednesday known | 13.68% | 13.33% |
+
+Better in every test year. The live model is a plain average of two forecasts: a per-item regression fit for absolute error (Huber) and gradient boosting on absolute error. New input: the latest day's price vs the week's average (`last_price` in prices_weekly.csv).
+
+Why these: the score is absolute error, and the best forecast for absolute error is the median, not the mean (Gneiting 2011). Simple averages of forecasts are hard to beat (Timmermann 2006). Gradient boosting is the family that won M5 (Makridakis et al. 2022). A weekly average hides a move late in the week (Working 1960).
+
+No better: median-based seasonals, weighting recent years, shrinking toward no change.
+
+Limits: the Monday-Wednesday test still uses the full week's shipping-point move and USDA tone, so it flatters both models somewhat.
+
+### Hold rule
+A call is held as Unsettled when shipping points moved 10%+ against it over two weeks, or it is a rise after 8 weeks 10%+ below usual and USDA does not call the market firm. Picked on 2021-2023, checked on 2024-2026, against the old 5% rule on the new model: calls 3,531 -> 4,083, right 77.9% -> 77.5%, big swings called ahead 36.5% -> 41.5%, called the wrong way 4.6% -> 5.4%. Full replay (`scripts/value_stats.py`): 78.9% of 7,971 calls right, 43.5% of big moves called ahead, 5.0% wrong way (was 75.9% of 6,645, 35.4%, 4.7%).
+
