@@ -154,6 +154,16 @@ def outlook(i):
             f'<small>{"about " + whole(expected(i)[0]) if expected(i)[0] is not None else ""}</small></span>')
 
 
+def season_word(i):
+    """The label for the season. A price can be far from the typical one yet still rank inside the middle half of
+    past years (a wide-swinging item): that's the low or high side of normal, not plain normal."""
+    word, tone = SEASON.get(i["status"], ("Not enough history", "flat"))
+    vs = i["vs_norm"]
+    if i["status"] == "normal" and vs is not None and abs(vs) >= 15:
+        word = "Low side of normal" if vs < 0 else "High side of normal"
+    return word, tone
+
+
 def season(i):
     if i["status"] not in SEASON:  # pack too new to USDA for a seasonal norm: compare with a year ago
         v = i.get("vs_year")
@@ -162,7 +172,7 @@ def season(i):
         word = "about last year's price" if abs(v) < 5 else f"{abs(round(v))}% {'above' if v > 0 else 'below'} last year"
         tone = "flat" if abs(v) < 5 else ("up" if v > 0 else "down")
         return f'<span class="season {tone}"><b>{cap(word)}</b><small>same week, last year</small></span>'
-    word, tone = SEASON.get(i["status"], ("Not enough history", "flat"))
+    word, tone = season_word(i)
     vs = i["vs_norm"]
     sub = brief.vs_usual(vs) + (" usual" if vs is not None and abs(vs) >= 5 else "") if vs is not None else ""
     return f'<span class="season {tone}"><b>{word}</b>{f"<small>{esc(sub)}</small>" if sub else ""}</span>'
@@ -596,7 +606,7 @@ def faq(commodity, rows):
         qa.append((f"Are {single} prices high right now?",
                    f"In {ny['market']}, {lower} {v} {brief.vs_usual(ny['vs_norm'])}"
                    f"{' the usual price' if abs(ny['vs_norm']) >= 5 else ''} for this time of year, "
-                   f"{SEASON.get(ny['status'], ('normal for the season',))[0].lower()}."))
+                   f"{season_word(ny)[0].lower() if ny['status'] in SEASON else 'normal for the season'}."))
     if ny["range"]:
         word = {"firming": "go up", "softening": "come down", "topping": "hold firm this week, then come down",
                 "bottoming": "ease a little more this week, then go up"}.get(ny["dir"], "stay about the same")
@@ -687,7 +697,7 @@ def build():
                                                                        as_of, notes, only=i["market"])
     og = og_data(items, hist, as_of)
     for gi in g_items:
-        word = grocery_view.STATUS[gi["status"]][0]
+        word = grocery_view.status_word(gi)[0]
         og[f"g-{gi['slug']}"] = {"title": f"{gi['short']} prices this week", "price": f"${gi['price']:.2f}",
                                  "aisle": {"meat": "meat-prices/", "dairy": "dairy-and-egg-prices/"}.get(gi["aisle"], ""),
                                  "sub": f"U.S. supermarket prices · week of {g_day:%B} {g_day.day}, {g_day.year}",
