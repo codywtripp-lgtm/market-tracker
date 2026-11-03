@@ -1,31 +1,55 @@
 {
- "asOf": "2026-11-01",
+ "asOf": "2026-11-03",
  "alerts": [
   {
    "signal": "sp_lead",
    "commodity": "Tomatoes, Plum Type",
    "market": "New York",
    "direction": "up",
-   "headline": "Tomatoes, Plum Type: shipping point up 14% this week; New York hasn't followed yet (-3% this week).",
+   "headline": "Tomatoes, Plum Type: shipping point up 14% this week; New York hasn't followed yet (-2% this week).",
    "expect": "Expect New York prices to rise within ~2 weeks.",
    "record": "New York followed 23 of the last 28 times (normally 37%).",
    "hit_rate": 0.821,
    "sp_change": 13.6,
-   "terminal_change": -3.4,
-   "id": "sp_lead|Tomatoes, Plum Type|New York|up|2026-10-26"
+   "terminal_change": -1.8,
+   "id": "sp_lead|Tomatoes, Plum Type|New York|up|2026-11-02"
   },
   {
    "signal": "sp_lead",
    "commodity": "Lettuce, Iceberg",
    "market": "Chicago",
    "direction": "down",
-   "headline": "Lettuce, Iceberg: shipping point down 14% this week; Chicago hasn't followed yet (+3% this week).",
+   "headline": "Lettuce, Iceberg: shipping point down 22% this week; Chicago hasn't followed yet (+5% this week).",
    "expect": "Expect Chicago prices to fall within ~2 weeks.",
    "record": "Chicago followed 29 of the last 37 times (normally 40%).",
    "hit_rate": 0.784,
-   "sp_change": -13.9,
-   "terminal_change": 2.7,
-   "id": "sp_lead|Lettuce, Iceberg|Chicago|down|2026-10-26"
+   "sp_change": -22.1,
+   "terminal_change": 4.8,
+   "id": "sp_lead|Lettuce, Iceberg|Chicago|down|2026-11-02"
+  },
+  {
+   "signal": "sp_lead",
+   "commodity": "Strawberries",
+   "market": "Chicago",
+   "direction": "up",
+   "headline": "Strawberries: shipping point up 23% this week; Chicago hasn't followed yet (+2% this week).",
+   "expect": "Expect Chicago prices to rise within ~2 weeks.",
+   "record": "Chicago followed 29 of the last 37 times (normally 43%).",
+   "hit_rate": 0.784,
+   "sp_change": 23.0,
+   "terminal_change": 1.7,
+   "id": "sp_lead|Strawberries|Chicago|up|2026-11-02"
+  },
+  {
+   "signal": "usda_tone",
+   "commodity": "Tomatoes",
+   "market": "Los Angeles",
+   "direction": "up",
+   "headline": "Tomatoes: USDA reporters in Los Angeles call the market higher (\u201cMarket san diego county and mexico higher; oxnard about steady\u201d).",
+   "expect": "Expect Los Angeles prices to rise next week.",
+   "record": "That happened 19 of the last 25 times (normally 20%).",
+   "hit_rate": 0.76,
+   "id": "usda_tone|Tomatoes|Los Angeles|up|2026-11-02"
   },
   {
    "signal": "usda_tone",
@@ -36,7 +60,31 @@
    "expect": "Expect Los Angeles prices to fall next week.",
    "record": "That happened 46 of the last 61 times (normally 32%).",
    "hit_rate": 0.754,
-   "id": "usda_tone|Lettuce, Iceberg|Los Angeles|down|2026-10-26"
+   "id": "usda_tone|Lettuce, Iceberg|Los Angeles|down|2026-11-02"
+  },
+  {
+   "signal": "usda_tone",
+   "commodity": "Limes",
+   "market": "New York",
+   "direction": "up",
+   "headline": "Limes: USDA reporters in New York call the market higher (\u201cMarket slightly higher\u201d).",
+   "expect": "Expect New York prices to rise next week.",
+   "record": "That happened 40 of the last 56 times (normally 28%).",
+   "hit_rate": 0.714,
+   "id": "usda_tone|Limes|New York|up|2026-11-02"
+  },
+  {
+   "signal": "sp_lead",
+   "commodity": "Lettuce, Iceberg",
+   "market": "New York",
+   "direction": "down",
+   "headline": "Lettuce, Iceberg: shipping point down 22% this week; New York hasn't followed yet (+0% this week).",
+   "expect": "Expect New York prices to fall within ~2 weeks.",
+   "record": "New York followed 19 of the last 27 times (normally 42%).",
+   "hit_rate": 0.704,
+   "sp_change": -22.1,
+   "terminal_change": 0.0,
+   "id": "sp_lead|Lettuce, Iceberg|New York|down|2026-11-02"
   },
   {
    "signal": "usda_tone",
@@ -47,7 +95,7 @@
    "expect": "Expect New York prices to fall next week.",
    "record": "That happened 38 of the last 57 times (normally 37%).",
    "hit_rate": 0.667,
-   "id": "usda_tone|Lettuce, Iceberg|New York|down|2026-10-26"
+   "id": "usda_tone|Lettuce, Iceberg|New York|down|2026-11-02"
   }
  ]
 }
