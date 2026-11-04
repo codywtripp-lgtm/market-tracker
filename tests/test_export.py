@@ -181,3 +181,21 @@ def test_cauliflower_with_no_color_stated_is_white_but_colors_stay_apart():
     white = dict(commodity="Cauliflower", pack_size="flat cartons film wrapped", item_size="12s film wrapped")
     assert export.series_key(_terminal(**white)) == export.series_key(_terminal(**white, properties="White"))
     assert export.series_key(_terminal(**white, properties="Purple")) != export.series_key(_terminal(**white))
+
+
+def _graded(grade, price, day="2026-11-03"):
+    return {"origin": "California", "grade": grade, "properties": "", "origin_detail": "", "unit_price": str(price), "report_date": day}
+
+
+def test_two_grades_the_same_day_price_the_main_one_not_the_midpoint():
+    by_day = {"2026-10-30": [_graded("Shippers First Grade", 39)], "2026-11-02": [_graded("Shippers First Grade", 39)],
+              "2026-11-03": [_graded("Shippers First Grade", 39), _graded("Shippers Choice", 32)]}
+    lots = export.main_lots(by_day, dict.fromkeys(by_day, "California"))
+    assert lots["2026-11-03"][0] == "Shippers First Grade"
+
+
+def test_the_standard_grade_wins_even_when_the_lower_one_is_quoted_more():
+    by_day = {"2026-10-30": [_graded("Shippers Choice", 32)], "2026-11-02": [_graded("Shippers Choice", 32)],
+              "2026-11-03": [_graded("Shippers Choice", 32), _graded("Shippers First Grade", 39)]}
+    lots = export.main_lots(by_day, dict.fromkeys(by_day, "California"))
+    assert lots["2026-11-02"][0] == "Shippers Choice" and lots["2026-11-03"][0] == "Shippers First Grade"

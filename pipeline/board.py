@@ -138,7 +138,8 @@ def latest_quotes(items):
         if r["series_id"] in want and brief._num(r["compare_price"]) is not None and (
                 r["series_id"] not in out or day >= out[r["series_id"]]["date"]):
             out[r["series_id"]] = {"date": day, "price": brief._num(r["compare_price"]),
-                                   "area": r.get("area", ""), "areas": area_list(r.get("areas")),
+                                   "area": r.get("area", ""), "areas": area_list(r.get("areas")), "lot": r.get("lot", ""),
+                                   "other_lots": area_list(r.get("other_lots")),
                                    **{k: brief._num(r.get(k)) for k in ("low", "high", "mostly_low", "mostly_high")}}
     return out
 
@@ -148,8 +149,8 @@ def price_range(low, high):
 
 
 def quote_text(q):
-    """USDA's latest day in the trade's words: 'California, USDA on Nov 3: $62.00 to $68.00, mostly $64.00 to $66.00'."""
-    s = f"{q['area']}, USDA" if q.get("area") else "USDA"
+    """USDA's latest day in the trade's words: 'California, Shippers First Grade, USDA on Nov 3: $38.00 to $40.00, mostly ...'."""
+    s = ", ".join(x for x in (q.get("area"), q.get("lot"), "USDA") if x)
     s += f" on {q['date']:%b} {q['date'].day}: {price_range(q['low'] or q['price'], q['high'])}"
     if q["mostly_low"] and q["mostly_high"] and q["mostly_low"] < q["mostly_high"]:
         s += f", mostly {money(q['mostly_low'])} to {money(q['mostly_high'])}"
@@ -157,10 +158,10 @@ def quote_text(q):
 
 
 def other_areas(q):
-    rows = [a for a in q.get("areas", []) if a[0] != q.get("area")]
+    rows = q.get("other_lots", []) + [a for a in q.get("areas", []) if a[0] != q.get("area")]
     if not rows:
         return ""
-    return ('<div class="q-areas"><p>Other growing areas that day</p><ul>'
+    return ('<div class="q-areas"><p>Also quoted that day</p><ul>'
             + "".join(f"<li>{esc(a or 'Not stated')} <b>{price_range(low, high)}</b></li>" for a, low, high in rows) + "</ul></div>")
 
 

@@ -118,6 +118,10 @@ RELABEL = {
 COLOR_IN_VARIETY = {"Cauliflower", "Corn, Sweet"}  # until 2021 USDA put the color under variety
 COLORS = {"white", "yellow", "bi-color", "green", "orange", "purple"}
 
+# Below the grade the trade buys as standard: used only on days the standard grade isn't quoted, so markets compare like for like.
+LOWER_GRADES = {"Shippers Choice", "Marked Choice", "Marked Combination", "Marked Standard", "Texas Choice", "U.S. Combination",
+                "U.S. Two", "U.S. Utility", "Class II", "Canada No. 2", "CD Two", "Unclassified (Standard)"}
+
 # Rows describing off-grade or premium product are excluded from headline prices.
 NON_STANDARD = re.compile(r"fair|poor|ordinary|holdover|decay|damage|scar|fine|mixed condition", re.I)
 
@@ -333,6 +337,58 @@ def main_areas(by_day, shipped=None):
     return out
 
 
+def lot(r):
+    """What can tell quotes for one pack from one area apart: grade (First Grade $38, Choice $32), type (Burbank $44,
+    Norkotah $39), district (Salinas $79, Santa Maria $73)."""
+    return (r.get("grade") or "").strip(), canon(r.get("properties")), canon(r.get("origin_detail"))
+
+
+def main_lots(by_day, leads):
+    """date -> the main area's main lot: of the lots quoted that day, the standard grade over LOWER_GRADES, then the one
+    quoted on the most of the previous MAIN_AREA_DAYS days, ties to yesterday's lot, then the higher price. Halfway
+    between two lots is a price nobody quoted, and it reads as a move on days USDA quotes only one."""
+    out, seen, cur = {}, [], None
+    for d, rows in sorted(by_day.items()):
+        day = dt.date.fromisoformat(d)
+        seen = [(q, lots) for q, lots in seen if (day - q).days <= MAIN_AREA_DAYS]
+        counts = defaultdict(int)
+        for _, lots in seen:
+            for x in lots:
+                counts[x] += 1
+        prices = defaultdict(list)
+        for r in rows:
+            if r["origin"] == leads[d]:
+                prices[lot(r)].append(fnum(r["unit_price"]))
+        cur = min(prices, key=lambda x: (x[0] in LOWER_GRADES, -counts[x], x != cur, -statistics.median(prices[x])))
+        out[d] = cur
+        seen.append((day, set(prices)))
+    return out
+
+
+def lot_name(chosen, rows):
+    """How the site names a lot: the grade when USDA states one, type and district only where that day's quotes differ."""
+    parts = []
+    for i, part in enumerate(chosen):
+        if not part or part in ("No Grade Marks", "No Grade Marked"):
+            continue
+        if i == 0 or len({lot(r)[i] for r in rows}) > 1:
+            parts.append(part.title() if i == 2 else part)
+    return ", ".join(parts)
+
+
+def lots_text(chosen, rows):
+    """'Shippers choice:30:34': the other lots from the main area that day, for the site."""
+    by_lot = defaultdict(list)
+    for r in rows:
+        by_lot[lot(r)].append(r)
+    parts = []
+    for x, rs in sorted(by_lot.items()):
+        if x != chosen:
+            lows, highs = quote_range(rs)
+            parts.append(f"{lot_name(x, rows)}:{min(lows)}:{max(highs)}")
+    return ";".join(parts)
+
+
 def quote_range(rows):
     """Every row's low and high; USDA leaves the high blank on a one-price quote, and that price still counts."""
     lows = [fnum(r["low_price"]) if fnum(r["low_price"]) is not None else fnum(r["unit_price"]) for r in rows]
@@ -352,11 +408,13 @@ def areas_text(rows):
     return ";".join(parts)
 
 
-def daily_value(rows, area=None):
-    """One value per series per day: the median quote from `area`, or across all rows without one."""
-    every = rows
+def daily_value(rows, area=None, chosen=None):
+    """One value per series per day: the median quote of lot `chosen` from `area`, or across all rows without one."""
+    every, in_area = rows, rows
     if area is not None:
-        rows = [r for r in rows if r["origin"] == area]
+        rows = in_area = [r for r in rows if r["origin"] == area]
+    if chosen is not None:
+        rows = [r for r in rows if lot(r) == chosen]
     price = statistics.median(fnum(r["unit_price"]) for r in rows)
     norms = [fnum(r["normalized_price"]) for r in rows if fnum(r["normalized_price"]) is not None]
     lows, highs = quote_range(rows)
@@ -375,6 +433,8 @@ def daily_value(rows, area=None):
         "origins": "; ".join(origins),
         "area": area or "",
         "areas": areas_text(every) if area is not None else "",
+        "lot": lot_name(chosen, in_area) if chosen is not None else "",
+        "other_lots": lots_text(chosen, in_area) if chosen is not None else "",
         "quotes": len(every),
         "market_tone": max(tones, key=tones.count) if tones else "",
     }
@@ -438,7 +498,8 @@ def build(rows, today=None, deflator=None, shipments=None):
 
         shipped = (lambda area, day, c=commodity: shipped_before(shipments, c, area, day)) if shipments else None
         leads = main_areas(grouped[key], shipped) if mt == "terminal" else {}
-        by_day = {d: daily_value(rs, leads.get(d)) for d, rs in sorted(grouped[key].items())}
+        lots = main_lots(grouped[key], leads) if leads else {}
+        by_day = {d: daily_value(rs, leads.get(d), lots.get(d)) for d, rs in sorted(grouped[key].items())}
         # Compare in the trade's own unit (per case/package, $/cwt, ...): a series is one pack and
         # count, so per-lb conversion adds nothing and depends on assumed weights.
         unit = any_row["price_unit"]
@@ -457,7 +518,7 @@ def build(rows, today=None, deflator=None, shipments=None):
                 daily_rows.append({**base, "date": d, "price": v["price"], "price_unit": any_row["price_unit"],
                                    "compare_price": value, "compare_unit": unit, "low": v["low"],
                                    "high": v["high"], "mostly_low": v["mostly_low"], "mostly_high": v["mostly_high"],
-                                   "area": v["area"], "areas": v["areas"],
+                                   "area": v["area"], "areas": v["areas"], "lot": v["lot"], "other_lots": v["other_lots"],
                                    "normalized_price": v["normalized_price"],
                                    "normalized_unit": any_row["normalized_unit"],
                                    "origins": v["origins"], "quotes": v["quotes"],
@@ -489,7 +550,7 @@ def build(rows, today=None, deflator=None, shipments=None):
               "organic", "price_unit", "compare_unit", "coverage_last_year", "headline", "first_date", "last_date"],
               series_rows)
     write_csv(EXPORT / "prices_daily_365.csv", base_f + ["date", "price", "price_unit", "compare_price",
-              "compare_unit", "low", "high", "mostly_low", "mostly_high", "area", "areas", "normalized_price", "normalized_unit", "origins", "quotes", "market_tone"],
+              "compare_unit", "low", "high", "mostly_low", "mostly_high", "area", "areas", "lot", "other_lots", "normalized_price", "normalized_unit", "origins", "quotes", "market_tone"],
               daily_rows)
     write_csv(EXPORT / "prices_weekly.csv", base_f + ["week_start", "compare_price", "last_price", "real_compare_price",
               "compare_unit", "days"], weekly_rows)

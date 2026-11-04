@@ -27,7 +27,7 @@ def _headlines(latest):
     return [r for r in latest if r["market_type"] == "terminal" and series.get(r["series_id"], {}).get("headline") == "Y"]
 
 
-def test_each_headline_price_is_the_median_usda_row_from_its_main_area():
+def test_each_headline_price_is_a_usda_quote_from_its_main_area():
     latest = _headlines(_latest())
     grouped = export.load(_recent_rows())
     by_id = {export.series_id(k): v for k, v in grouped.items()}
@@ -38,7 +38,10 @@ def test_each_headline_price_is_the_median_usda_row_from_its_main_area():
             continue
         rows = [x for x in days[r["last_date"]] if x["origin"] == r["area"]]
         assert rows, (r["series_id"], r["area"], r["last_date"])
-        assert float(r["last_price"]) == pytest.approx(statistics.median(float(x["unit_price"]) for x in rows))
+        lots = {}
+        for x in rows:
+            lots.setdefault(export.lot(x), []).append(float(x["unit_price"]))
+        assert any(float(r["last_price"]) == pytest.approx(statistics.median(v)) for v in lots.values()), r["series_id"]
         checked += 1
     assert checked >= 40
 
