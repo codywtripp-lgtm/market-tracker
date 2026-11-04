@@ -540,7 +540,7 @@ before, using only data available at the time. It called {len(hits)} of these {l
     else:
         opener = ""
     body = f"""<h1>How accurate are the forecasts?</h1>
-<p class="lede">{_esc(opener)}Below is how the forecasts did from 2021 to 2026, predicting each year with only the
+<p class="lede">{_esc(opener)}Built by a former analytics manager at a major New York produce distributor. Below is how the forecasts did from 2021 to 2026, predicting each year with only the
 data a buyer had at the time.</p>
 
 <h2>The record, 2021 to 2026</h2>
@@ -604,7 +604,8 @@ def about_page():
     body = """<section class="intro"><h1>How this site works</h1>
 <p class="lede">Produce Price Tracker shows what produce, meat, dairy and eggs cost at U.S. supermarkets this week,
 whether that’s cheap or pricey for the time of year, and where wholesale produce prices are likely to go next. It’s free,
-has no ads and needs no sign-up.</p></section>
+has no ads and needs no sign-up.</p>
+<p>It was built by a former analytics manager at a major New York produce distributor.</p></section>
 <section><h2>Where the numbers come from</h2>
 <ul>
 <li><b>Grocery prices:</b> USDA’s weekly National Retail Reports for produce, meat, poultry, dairy and eggs: the
