@@ -162,3 +162,22 @@ def test_18_and_19_lb_grape_containers_are_one_series():
     keys = {export.series_key({**row, "pack_size": f"{n} lb containers bagged"}) for n in (18, 19)}
     assert len(keys) == 1 and export.is_main_pack(next(iter(keys)))
     assert export.series_key({**row, "pack_size": "19 lb lugs bagged"}) not in keys
+
+
+def _terminal(**kw):
+    row = {"market_type": "terminal", "market": "New York", "commodity": "Corn, Sweet", "variety": "", "pack_size": "wirebound crates",
+           "item_size": "4 dozen", "properties": "", "organic": "N"}
+    return {**row, **kw}
+
+
+def test_usda_label_changes_stay_one_series():
+    old = _terminal(variety="YELLOW", item_size="4 dozen minimum")
+    new = _terminal(properties="YELLOW", pack_size="cartons/crates")
+    assert export.series_key(old) == export.series_key(new)
+    assert export.is_main_pack(export.series_key(new))
+
+
+def test_cauliflower_with_no_color_stated_is_white_but_colors_stay_apart():
+    white = dict(commodity="Cauliflower", pack_size="flat cartons film wrapped", item_size="12s film wrapped")
+    assert export.series_key(_terminal(**white)) == export.series_key(_terminal(**white, properties="White"))
+    assert export.series_key(_terminal(**white, properties="Purple")) != export.series_key(_terminal(**white))

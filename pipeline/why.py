@@ -14,7 +14,7 @@ import csv
 
 from . import store
 
-TO_RETAIL = {"Lettuce, Iceberg": "Lettuce", "Lettuce, Romaine": "Lettuce", "Tomatoes, Plum Type": None}
+TO_RETAIL = {"Lettuce, Iceberg": "Lettuce", "Lettuce, Romaine": "Lettuce", "Tomatoes, Plum Type": None, "Corn, Sweet": "Corn-Sweet"}
 SHIP, WHOLE, TREND = 15, 15, 10  # percent: what counts as a real difference worth naming
 
 

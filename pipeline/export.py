@@ -34,6 +34,8 @@ TOP_CHICKEN = 8        # by volume
 
 MIN_COVERAGE = 0.5     # share of report days in the last year a series must appear on
 MIN_COVERAGE_SHIPPING = 0.3  # shipping-point districts are seasonal (e.g. Salinas lettuce ~8 months)
+# LA has quoted only 36 lb tight-fill pears since July: too new to compare with past years, and the older packs stopped.
+NO_HEADLINE = {("Pears", "Los Angeles")}
 FRESH_DAYS = 21        # a terminal headline must have been quoted this recently, if anything else has
 MIN_COVERAGE_FRESH = 0.25  # a pack that replaced a stopped one has less than a year behind it
 NORM_WEEK_WINDOW = 2   # seasonal norm uses the same ISO week +/- this many weeks
@@ -63,6 +65,19 @@ MAIN_PACK = {
     # 200s: quoted daily in all three markets, the most lots overall, and the case foodservice sellers list
     "Limes": {"pack_size": r"^40 lb cartons$", "item_size": r"^200s$"},
     "Grapes": {"variety": r"^WHITE SEEDLESS", "pack_size": r"^18-19 lb containers bagged$"},
+    # Added 2026-11-04. Quoted daily for years in these packs; USDA publishes no volume by pack.
+    "Apples": {"variety": r"^Gala$", "pack_size": r"^cartons tray pack$", "item_size": r"^72s$"},
+    "Watermelons": {"variety": r"^Red flesh seedless type$", "pack_size": r"^cartons$", "item_size": r"^4s$"},
+    "Pineapples": {"variety": r"^$", "pack_size": r"^cartons 1 layer$", "item_size": r"^7s$"},
+    "Cantaloupes": {"variety": r"^$", "pack_size": r"^1/2 cartons$", "item_size": r"^9s$"},
+    "Mangoes": {"variety": r"^Tommy atkins$", "pack_size": r"^flats 1 layer$", "item_size": r"^8s$"},
+    "Pears": {"variety": r"^D'anjou$", "pack_size": r"^4/5 bushel cartons wrapped$", "item_size": r"^80s$"},
+    "Cabbage": {"variety": r"^Round green type$", "pack_size": r"^50 lb cartons$", "item_size": r"^medium$"},
+    "Oranges": {"variety": r"^Navel$", "pack_size": r"^7/10 bushel cartons$", "item_size": r"^56s$", "properties": r"^$"},
+    "Corn, Sweet": {"pack_size": r"^cartons/crates$", "item_size": r"^4 dozen$", "properties": r"^Bi-color$"},
+    "Cauliflower": {"variety": r"^$", "pack_size": r"^cartons film wrapped$", "item_size": r"^12s$", "properties": r"^White$"},
+    "Sweet Potatoes": {"variety": r"^Orange types$", "pack_size": r"^40 lb cartons$", "item_size": r"^$"},
+    "Mushrooms": {"variety": r"^White$", "pack_size": r"^10 lb cartons$", "item_size": r"^medium$", "properties": r"^$"},
 }
 # Where a market trades something else. LA quotes mature greens under 4 months a year; vine ripes in 2-layer cartons
 # are quoted daily. LA quotes 6-oz blueberries daily, pints about a quarter of the time.
@@ -70,13 +85,38 @@ MAIN_PACK_MARKET = {
     ("Tomatoes", "Los Angeles"): {"variety": r"^VINE RIPES$", "pack_size": r"^cartons 2 layer$", "item_size": r"^5x5s$",
                                   "properties": r"^Light Red-red$"},
     ("Blueberries", "Los Angeles"): {"pack_size": r"6-oz", "item_size": r"^medium-large$"},
+    ("Apples", "New York"): {"variety": r"^Gala$", "pack_size": r"^cartons tray pack$", "item_size": r"^80s$"},
+    # USDA has quoted LA galas only as "Fine Appearance" since July, a premium grade ($54 against $44 in May)
+    ("Apples", "Los Angeles"): {"variety": r"^Granny smith$", "pack_size": r"^cartons tray pack$", "item_size": r"^72s$"},
+    ("Pears", "New York"): {"variety": r"^D'anjou$", "pack_size": r"^4/5 bushel cartons wrapped$", "item_size": r"^70s$"},
+    ("Watermelons", "New York"): {"variety": r"^Red flesh seedless type$", "pack_size": r"^cartons 4s$", "item_size": r"^65-69 lb$"},
+    ("Watermelons", "Los Angeles"): {"variety": r"^Red flesh seedless type$", "pack_size": r"^cartons$", "item_size": r"^5s$"},
+    ("Mangoes", "New York"): {"variety": r"^Tommy atkins$", "pack_size": r"^4 kg containers$", "item_size": r"^8s$"},
+    ("Pears", "Los Angeles"): {"variety": r"^D'anjou$", "pack_size": r"^4/5 bushel cartons wrapped$", "item_size": r"^70s$"},
+    ("Cabbage", "New York"): {"variety": r"^Round green type$", "pack_size": r"^50 lb cartons$", "item_size": r"^large$"},
+    ("Corn, Sweet", "New York"): {"pack_size": r"^cartons/crates$", "item_size": r"^4 dozen$", "properties": r"^Yellow$"},
+    ("Corn, Sweet", "Los Angeles"): {"pack_size": r"^cartons$", "item_size": r"^4 dozen$", "properties": r"^White$"},
+    ("Cauliflower", "New York"): {"variety": r"^$", "pack_size": r"^flat cartons film wrapped$", "item_size": r"^12s$", "properties": r"^White$"},
 }
 # USDA splits these by type as growing areas rotate through the season (yellow onions: Hybrid / Spanish /
 # Grano / Globe; russets: Norkotah / Burbank; mature greens: Light Red / Light Red-red). The trade quotes
 # them as one item, so the type is dropped from the series and same-day quotes are combined (median).
 # USDA's 18 lb (imports) and 19 lb (California) grape containers are one trade pack; split, each sits idle half the year.
 MERGE_PACKS = {"Grapes": (r"^(18|19) lb containers bagged$", "18-19 lb containers bagged")}
-MERGE_TYPES = {"Onions, Dry": r"^YELLOW$", "Potatoes": r"^RUSSET$", "Tomatoes": r"^MATURE GREENS$"}
+MERGE_TYPES = {"Onions, Dry": r"^YELLOW$", "Potatoes": r"^RUSSET$", "Tomatoes": r"^MATURE GREENS$",
+               "Watermelons": r"^Red flesh seedless type$", "Pineapples": r"^$"}
+# The same pack under a label USDA later changed, which would cut a series' history in two. Checked by price on the days
+# either side of the change (LA sweet potatoes: orange types $40-42, then jewels $38-40).
+RELABEL = {
+    "Cabbage": [("pack_size", r"^(1 3/4 bushel crates and 50 lb cartons|1 3/4 bushel cartons)$", "50 lb cartons")],
+    "Cauliflower": [("item_size", r"^(\d+s) film wrapped$", r"\1")],
+    "Corn, Sweet": [("pack_size", r"^wirebound crates$", "cartons/crates"),
+                    ("item_size", r"^(4 dozen minimum|4-4 1/2 dozen)$", "4 dozen")],
+    "Sweet Potatoes": [("variety", r"^JEWELS$", "ORANGE TYPES")],
+    "Watermelons": [("item_size", r"^65-69 lb.*$", "65-69 lb")],
+}
+COLOR_IN_VARIETY = {"Cauliflower", "Corn, Sweet"}  # until 2021 USDA put the color under variety
+COLORS = {"white", "yellow", "bi-color", "green", "orange", "purple"}
 
 # Rows describing off-grade or premium product are excluded from headline prices.
 NON_STANDARD = re.compile(r"fair|poor|ordinary|holdover|decay|damage|scar|fine|mixed condition", re.I)
@@ -89,10 +129,24 @@ def canon(v):
     return v[:1].upper() + v[1:].lower()
 
 
+def relabeled(r):
+    """The terminal row's label fields with USDA's changes of wording undone."""
+    out = {f: r[f] for f in ("variety", "pack_size", "item_size", "properties")}
+    for field, rx, new in RELABEL.get(r["commodity"], ()):
+        out[field] = re.sub(rx, new, out[field], flags=re.I)
+    if r["commodity"] in COLOR_IN_VARIETY and out["variety"].lower() in COLORS and not out["properties"]:
+        out["properties"], out["variety"] = out["variety"], ""
+    if r["commodity"] == "Cauliflower" and not out["variety"] and not out["properties"]:  # 2024-25: white, unstated
+        out["properties"] = "White"
+    return out
+
+
 def series_key(r):
     """Identity of a price series. Origin is deliberately NOT part of it (it rotates by season)."""
     mt = r["market_type"]
     if mt in ("terminal", "shipping point"):
+        if mt == "terminal" and r["commodity"] in RELABEL:
+            r = {**r, **relabeled(r)}
         variety = canon(r["variety"])
         merge = mt == "terminal" and re.search(MERGE_TYPES.get(r["commodity"], "(?!)"), variety, re.I)
         rx, merged = MERGE_PACKS.get(r["commodity"], ("(?!)", ""))
@@ -196,6 +250,8 @@ def select(grouped, today):
 
     for bucket, keys in buckets.items():
         mt, commodity = bucket[0], bucket[-1]
+        if mt == "terminal" and (commodity, bucket[1]) in NO_HEADLINE:
+            continue
         if mt in ("terminal", "shipping point"):
             top = TOP_TERMINAL if mt == "terminal" else TOP_SHIPPING
             floor = MIN_COVERAGE if mt == "terminal" else MIN_COVERAGE_SHIPPING
