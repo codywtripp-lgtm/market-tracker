@@ -3,7 +3,7 @@
    like shelf signage), yellow shelf tags. Colour has one meaning each: green = good price / easing,
    red = pricey / rising, grey = typical, tag yellow = great price only. Light only, on purpose. */
 
-@font-face { font-family: "Archivo"; font-style: normal; font-weight: 400 800; font-stretch: 62% 125%; font-display: swap;
+@font-face { font-family: "Archivo"; font-style: normal; font-weight: 400 800; font-stretch: 78% 100%; font-display: swap;
   src: url("fonts/archivo-latin.woff2") format("woff2"); }
 
 :root {
