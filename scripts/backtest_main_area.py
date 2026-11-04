@@ -1,7 +1,7 @@
 """Should a wholesale price follow one growing area instead of blending every area quoted that day? 2021-2026.
 
-Main area, chosen with no look-ahead: of the areas USDA quotes today, the one quoted on the most of the previous 28 days;
-a tie keeps yesterday's area, then the lower price. Compared with the live blend (median of all quotes that day):
+Main area, chosen with no look-ahead as export.main_areas does it: quoted most over the previous 28 days, ties to the most
+pounds shipped in the four weeks before. Compared with the live blend (median of all quotes that day):
   1. how much the price jumps week to week
   2. two-week forecast miss and calls, each scored on its own series
   3. both sets of calls scored on the main-area price, the one a buyer would be quoted
@@ -29,36 +29,17 @@ CALL, H = np.log(1.05), 2
 DAYS = 28
 
 
-def main_area_prices(by_day):
-    """{date: price} following the main area, plus how often it isn't the blend's price."""
-    quoted = []
-    out = {}
-    lead = None
-    for d, rs in sorted(by_day.items()):
-        areas = defaultdict(list)
-        for r in rs:
-            p = export.fnum(r["unit_price"])
-            if p is not None:
-                areas[r["origin"] or "?"].append(p)
-        if not areas:
-            continue
-        day = pd.Timestamp(d)
-        quoted = [(q, a) for q, a in quoted if (day - q).days <= DAYS]
-        counts = defaultdict(int)
-        for _, seen in quoted:
-            for a in seen:
-                counts[a] += 1
-        prices = {a: statistics.median(v) for a, v in areas.items()}
-        lead = min(prices, key=lambda a: (-counts[a], a != lead, prices[a]))
-        out[d] = prices[lead]
-        quoted.append((day, set(prices)))
-    return out
+def main_area_prices(by_day, shipped):
+    """{date: price} following the main area, as live."""
+    leads = export.main_areas(by_day, shipped)
+    return {d: export.daily_value(rs, leads[d])["price"] for d, rs in by_day.items()}
 
 
 def rebuild(tmp):
     """prices_weekly.csv on main-area prices, same columns and series as the live file."""
     deflator = cpi.Deflator(cpi.load())
     grouped = export.load(r for r in store.iter_all() if r["market_type"] == "terminal")
+    shipments = export.load_shipments()
     rows = list(csv.DictReader(open(fc.EXPORT / "prices_weekly.csv", encoding="utf-8")))
     base = {}
     for r in rows:
@@ -69,7 +50,7 @@ def rebuild(tmp):
         if sid not in base:
             continue
         weeks = defaultdict(list)
-        for d, p in sorted(main_area_prices(by_day).items()):
+        for d, p in sorted(main_area_prices(by_day, lambda a, d, c=key[2]: export.shipped_before(shipments, c, a, d)).items()):
             weeks[export.iso_week_start(pd.Timestamp(d).date())].append(p)
         for w, ps in sorted(weeks.items()):
             v = round(statistics.mean(ps), 4)

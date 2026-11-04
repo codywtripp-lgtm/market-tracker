@@ -131,3 +131,12 @@ def test_a_one_price_quote_with_no_high_still_counts_in_the_range():
     one = dict(_quote("California", 36), high_price="")
     v = export.daily_value([one, dict(_quote("California", 25.5), low_price="25", high_price="26")], "California")
     assert (v["low"], v["high"], v["price"]) == (25, 36, 30.75)
+
+
+def test_areas_quoted_equally_go_to_the_most_pounds_shipped():
+    day = "2026-11-03"
+    days = {day: [_quote("California", 25), _quote("Idaho-Oregon", 24), _quote("Washington", 23)]}
+    shipments = {("Onions", dt.date(2026, 10, 26), "Washington"): 900, ("Onions", dt.date(2026, 10, 26), "Idaho"): 600,
+                 ("Onions", dt.date(2026, 10, 26), "Oregon"): 500, ("Onions", dt.date(2026, 11, 2), "California"): 9999}
+    shipped = lambda area, d: export.shipped_before(shipments, "Onions", area, d)  # noqa: E731
+    assert export.main_areas(days, shipped)[day] == "Idaho-Oregon"  # this week's California pounds aren't known yet
