@@ -140,3 +140,25 @@ def test_areas_quoted_equally_go_to_the_most_pounds_shipped():
                  ("Onions", dt.date(2026, 10, 26), "Oregon"): 500, ("Onions", dt.date(2026, 11, 2), "California"): 9999}
     shipped = lambda area, d: export.shipped_before(shipments, "Onions", area, d)  # noqa: E731
     assert export.main_areas(days, shipped)[day] == "Idaho-Oregon"  # this week's California pounds aren't known yet
+
+
+def test_tied_area_missing_from_movement_reports_wins_when_quoted_most_over_the_year():
+    days = {f"2026-01-{d:02d}": [_quote("California", 22)] for d in range(1, 11)}
+    days.update({f"2026-10-{d:02d}": [_quote("California", 22), _quote("Canada", 13)] for d in range(1, 11)})
+    shipped = lambda area, d: {"Canada": 900}.get(area, 0)  # noqa: E731
+    assert export.main_areas(days, shipped)["2026-10-10"] == "California"
+
+
+def test_tied_area_with_no_pounds_stays_out_when_not_quoted_most_over_the_year():
+    days = {f"2026-01-{d:02d}": [_quote("Idaho", 24)] for d in range(1, 11)}
+    days.update({f"2026-10-{d:02d}": [_quote("Idaho", 24), _quote("Nevada", 19)] for d in range(1, 11)})
+    shipped = lambda area, d: {"Idaho": 900}.get(area, 0)  # noqa: E731
+    assert export.main_areas(days, shipped)["2026-10-10"] == "Idaho"
+
+
+def test_18_and_19_lb_grape_containers_are_one_series():
+    row = {"market_type": "terminal", "market": "New York", "commodity": "Grapes", "variety": "WHITE SEEDLESS TYPE",
+           "item_size": "extra large", "properties": "", "organic": "N"}
+    keys = {export.series_key({**row, "pack_size": f"{n} lb containers bagged"}) for n in (18, 19)}
+    assert len(keys) == 1 and export.is_main_pack(next(iter(keys)))
+    assert export.series_key({**row, "pack_size": "19 lb lugs bagged"}) not in keys

@@ -499,6 +499,10 @@ NICE = {"Lettuce, Romaine": "Romaine", "Lettuce, Iceberg": "Iceberg", "Tomatoes,
 
 # Changes that move a number people see, newest first, with the numbers as they stood that day. Add one with every such change.
 CHANGES = (
+    ("November 3, 2026", "Grapes now follow USDA’s 18 and 19 lb containers as one pack, so New York and Chicago show California "
+     "grapes in season, not a Peru pack USDA quotes a few days a month. Carrots follow California in New York and Chicago. "
+     "USDA’s shipment reports leave California carrots out, and that had put Canada first. The record moved from 75% to "
+     "74% of calls right, and big swings flagged ahead from 35% to 34%."),
     ("November 3, 2026", "The main case price is now a real USDA quote: the latest one from the item’s main growing area, "
      "with the other areas listed. It was a week’s average across every area quoted, which could be a price nobody "
      "traded. Forecasts now run from the price on the page. That’s a stricter test, so the record went down: calls right "

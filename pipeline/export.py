@@ -62,7 +62,7 @@ MAIN_PACK = {
     "Lemons": {"pack_size": r"^7/10 bushel cartons$", "item_size": r"^140s$"},
     # 200s: quoted daily in all three markets, the most lots overall, and the case foodservice sellers list
     "Limes": {"pack_size": r"^40 lb cartons$", "item_size": r"^200s$"},
-    "Grapes": {"variety": r"^WHITE SEEDLESS", "pack_size": r"^(18|19) lb containers bagged$"},
+    "Grapes": {"variety": r"^WHITE SEEDLESS", "pack_size": r"^18-19 lb containers bagged$"},
 }
 # Where a market trades something else. LA quotes mature greens under 4 months a year; vine ripes in 2-layer cartons
 # are quoted daily. LA quotes 6-oz blueberries daily, pints about a quarter of the time.
@@ -74,6 +74,8 @@ MAIN_PACK_MARKET = {
 # USDA splits these by type as growing areas rotate through the season (yellow onions: Hybrid / Spanish /
 # Grano / Globe; russets: Norkotah / Burbank; mature greens: Light Red / Light Red-red). The trade quotes
 # them as one item, so the type is dropped from the series and same-day quotes are combined (median).
+# USDA's 18 lb (imports) and 19 lb (California) grape containers are one trade pack; split, each sits idle half the year.
+MERGE_PACKS = {"Grapes": (r"^(18|19) lb containers bagged$", "18-19 lb containers bagged")}
 MERGE_TYPES = {"Onions, Dry": r"^YELLOW$", "Potatoes": r"^RUSSET$", "Tomatoes": r"^MATURE GREENS$"}
 
 # Rows describing off-grade or premium product are excluded from headline prices.
@@ -93,7 +95,9 @@ def series_key(r):
     if mt in ("terminal", "shipping point"):
         variety = canon(r["variety"])
         merge = mt == "terminal" and re.search(MERGE_TYPES.get(r["commodity"], "(?!)"), variety, re.I)
-        return (mt, r["market"], r["commodity"], variety, r["pack_size"], r["item_size"],
+        rx, merged = MERGE_PACKS.get(r["commodity"], ("(?!)", ""))
+        pack = merged if mt == "terminal" and re.search(rx, r["pack_size"]) else r["pack_size"]
+        return (mt, r["market"], r["commodity"], variety, pack, r["item_size"],
                 "" if merge else canon(r["properties"]), r["organic"])
     if mt == "retail":
         return (mt, r["market"], r["commodity"], r["variety"], r["pack_size"], "", r["other_attributes"], r["organic"])
@@ -203,6 +207,9 @@ def select(grouped, today):
             if mt == "terminal" and (not picks or stale(picks[0])):  # USDA stopped quoting that pack
                 fresh = [k for k in ranked if not stale(k) and k[7] not in ("Y", "Yes") and coverage(k) >= MIN_COVERAGE_FRESH]
                 picks = (fresh[:1] + picks)[:top]
+            if mt == "terminal":  # a current main pack beats a better-covered other pack (LA white seedless grapes vs red)
+                main = [k for k in ranked if is_main_pack(k) and not stale(k) and k[7] not in ("Y", "Yes") and coverage(k) >= MIN_COVERAGE_FRESH]
+                picks = (main[:1] + [k for k in picks if k not in main[:1]])[:top]
         elif mt == "retail":
             ranked = sorted(keys, key=lambda k: -weight(k, "store_count"))
             picks = [k for k in ranked if coverage(k) >= MIN_COVERAGE][:TOP_RETAIL]
@@ -243,13 +250,15 @@ def shipped_before(shipments, commodity, area, day):
 def main_areas(by_day, shipped=None):
     """date -> the day's main growing area: of the areas quoted that day, the one quoted on the most of the previous
     MAIN_AREA_DAYS days. USDA often quotes several every day, so ties go to the most pounds shipped (shipped(area, day)),
-    then yesterday's area, then the lower price. Areas can sit far apart (New York romaine on 2026-11-03: California $60,
+    then yesterday's area, then the lower price. The movement reports leave some areas out (California carrots), so a
+    tied area with no pounds wins if it was quoted the most over the past year. Areas can sit far apart (New York romaine on 2026-11-03: California $60,
     New Jersey $41), so a median across them is a price nobody quoted.
     scripts/backtest_main_area.py: forecasts are as accurate on this price as on the median."""
-    out, seen, lead = {}, [], None
+    out, seen, year, lead = {}, [], [], None
     for d, rows in sorted(by_day.items()):
         day = dt.date.fromisoformat(d)
         seen = [(q, areas) for q, areas in seen if (day - q).days <= MAIN_AREA_DAYS]
+        year = [(q, areas) for q, areas in year if (day - q).days <= 365]
         counts = defaultdict(int)
         for _, areas in seen:
             for a in areas:
@@ -257,9 +266,14 @@ def main_areas(by_day, shipped=None):
         prices = defaultdict(list)
         for r in rows:
             prices[r["origin"]].append(fnum(r["unit_price"]))
-        lead = min(prices, key=lambda a: (-counts[a], -(shipped(a, day) if shipped else 0), a != lead, statistics.median(prices[a])))
+        tied = [a for a in prices if counts[a] == max(counts[b] for b in prices)]
+        quoted = {a: sum(a in areas for _, areas in year) for a in tied}
+        unlisted = {a for a in tied if shipped and not shipped(a, day) and quoted[a] and quoted[a] == max(quoted.values())}
+        lead = min(prices, key=lambda a: (-counts[a], a not in unlisted, -(shipped(a, day) if shipped else 0), a != lead,
+                                          statistics.median(prices[a])))
         out[d] = lead
         seen.append((day, set(prices)))
+        year.append((day, set(prices)))
     return out
 
 
