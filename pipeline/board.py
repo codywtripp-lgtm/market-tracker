@@ -151,7 +151,7 @@ def other_areas(q):
     rows = [a for a in q.get("areas", []) if a[0] != q.get("area")]
     if not rows:
         return ""
-    return ('<div class="q-areas"><h3>Other growing areas that day</h3><ul>'
+    return ('<div class="q-areas"><p>Other growing areas that day</p><ul>'
             + "".join(f"<li>{esc(a or 'Not stated')} <b>{price_range(low, high)}</b></li>" for a, low, high in rows) + "</ul></div>")
 
 

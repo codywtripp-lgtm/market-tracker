@@ -207,8 +207,8 @@ def footer(up):
     markets = "".join(f'<a href="{up}{slug}/">{"Hunts Point" if m == "New York" else m} produce prices</a>'
                       for m, slug in board.MARKET_PAGES.items())
     return ('<footer class="foot"><div class="wrap"><p>Grocery prices are the average of what U.S. supermarkets advertised each week, from USDA’s '
-            "National Retail Report. Wholesale prices are the USDA “mostly” price per case at the terminal markets, from "
-            "USDA AMS Market News. “Usual” means the same weeks of the year in past years, adjusted for food inflation. "
+            "National Retail Report. Wholesale prices are USDA’s latest quote per case at the terminal markets: the “mostly” price, or the middle "
+            "of the range when USDA gives none, from USDA AMS Market News. “Usual” means the same weeks of the year in past years, adjusted for food inflation. "
             f'<a href="{up}about/">How this site works</a>.</p>'
             f'<p>Contact: <a href="mailto:{CONTACT}">{CONTACT}</a></p>'
             f'<nav aria-label="Wholesale markets">{markets}</nav><nav aria-label="Wholesale prices by item">{items}</nav></div></footer>')
@@ -279,8 +279,11 @@ def crumbs_ld(*trail):
 
 
 def singular(name):
-    """'Strawberries' -> 'Strawberry' for titles; multi-word names ('Green beans') stay as they are."""
-    if " " in name or name in ("Asparagus", "Lettuce", "Broccoli", "Celery", "Garlic", "Cilantro"):
+    """'Strawberries' -> 'Strawberry', 'Snow peas' -> 'Snow pea' for titles; other multi-word names stay as they are."""
+    head, _, last = name.rpartition(" ")
+    if head and last in ("peppers", "peas", "beans", "onions", "potatoes", "breasts", "thighs", "drumsticks", "chops"):
+        return f"{head} {singular(last)}"
+    if " " in name or name in ("Asparagus", "Lettuce", "Broccoli", "Celery", "Garlic", "Cilantro", "Nopales"):
         return name
     if name.endswith("ies"):
         return name[:-3] + "y"
@@ -329,7 +332,7 @@ def board_pages():
         "description": "Daily wholesale case prices for 18 produce items at the New York (Hunts Point), Los Angeles "
                        "and Chicago terminal markets, compared with the usual price for the time of year, with a "
                        "two-week outlook.",
-        "url": SITE_URL, "creator": {"@type": "Organization", "name": SITE_NAME},
+        "url": f"{SITE_URL}wholesale/", "creator": {"@type": "Organization", "name": SITE_NAME},
         "isBasedOn": "https://www.ams.usda.gov/market-news", "temporalCoverage": f"2016-01-01/{as_of.isoformat()}",
         "spatialCoverage": ["New York, NY", "Los Angeles, CA", "Chicago, IL"]})
     if (BOARD / "grocery.html").exists():
@@ -363,7 +366,7 @@ def board_pages():
         name = og.get(key, {}).get("title", f.stem.replace("-", " ").capitalize() + " prices this week")
         short = name.replace(" prices this week", "")
         card = og.get(key, {})
-        emit(f"grocery/{f.stem}/", f"grocery/{f.stem}", f"{singular(short).title()} Prices This Week at the Grocery Store",
+        emit(f"grocery/{f.stem}/", f"grocery/{f.stem}", f"{singular(short).title().replace(' Of ', ' of ')} Prices This Week at the Grocery Store",
              2, og_key=key, view="grocery", day=g_day, aisle=card.get("aisle", ""),
              find={"name": short, "price": "" if card.get("tone") == "flat" and card.get("out", "").startswith("No price")
                    else (card.get("price", "") + ("" if card.get("unit", "").startswith("/") else " ") + card.get("unit", "")).strip(),
@@ -477,7 +480,7 @@ def seo_files(urls):
 > USDA AMS Market News. Each item shows today's case price for the main pack the trade buys, how it compares with
 > the same weeks in the last 10 years (adjusted for inflation), and a tested two-week forecast range.
 
-Updated every market evening (Monday to Saturday). Prices are USDA "mostly" prices per case, not supplier quotes.
+Updated every market evening (Monday to Saturday). Prices are USDA's latest quote per case from each item's main growing area (the "mostly" price, or the middle of the range when USDA gives none), not supplier quotes.
 
 ## Pages
 - [Grocery prices this week]({SITE_URL}): this week's best buys at U.S. supermarkets, what's in season, what's pricey
@@ -658,7 +661,7 @@ email has an unsubscribe link.</p></section>
 <p>Grocery prices are what supermarkets advertise; your store’s shelf price can differ. Wholesale prices are USDA
 market reports, so a supplier’s quote can differ too. About one forecast in four is wrong.</p></section>"""
     write(OUT / "about" / "index.html", page("How Produce Price Tracker Works: Sources and Methods",
-                                             "Where the prices come from (USDA) and how the pages are made.",
+                                             "Where the prices come from (USDA), how great price, pricey and the forecasts are worked out, and who built the site.",
                                              f"{SITE_URL}about/", "../", body, active="about/", main_class="wrap landing",
                                              view="grocery"))
     return [(f"{SITE_URL}about/", dt.date.today().isoformat())]
