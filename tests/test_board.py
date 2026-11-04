@@ -98,8 +98,15 @@ def test_signs_only_show_when_the_forecast_agrees():
 
 def test_quote_text_uses_the_trades_words():
     day = dt.date(2026, 11, 3)
-    q = {"date": day, "price": 66.0, "low": 62.0, "high": 68.0, "mostly_low": None, "mostly_high": None}
-    assert board.quote_text(q) == "USDA on Nov 3: $62.00 to $68.00"
-    assert board.quote_text(q | {"mostly_low": 64.0, "mostly_high": 66.0}) == "USDA on Nov 3: $62.00 to $68.00, mostly $64.00 to $66.00"
-    assert board.quote_text(q | {"low": 46.0, "high": None}) == "USDA on Nov 3: $46.00"
-    assert board.quote_text(q | {"low": 46.0, "high": 46.0}) == "USDA on Nov 3: $46.00"
+    q = {"date": day, "price": 66.0, "low": 62.0, "high": 68.0, "mostly_low": None, "mostly_high": None, "area": "Florida"}
+    assert board.quote_text(q) == "Florida, USDA on Nov 3: $62.00 to $68.00"
+    assert board.quote_text(q | {"mostly_low": 64.0, "mostly_high": 66.0}) == "Florida, USDA on Nov 3: $62.00 to $68.00, mostly $64.00 to $66.00"
+    assert board.quote_text(q | {"low": 46.0, "high": None}) == "Florida, USDA on Nov 3: $46.00"
+    assert board.quote_text(q | {"low": 46.0, "high": 46.0, "area": ""}) == "USDA on Nov 3: $46.00"
+
+
+def test_other_areas_leaves_out_the_main_one():
+    q = {"area": "California", "areas": [("California", 60.0, 60.0), ("New Jersey", 40.0, 42.0)]}
+    html = board.other_areas(q)
+    assert "New Jersey <b>$40.00 to $42.00</b>" in html and "California" not in html
+    assert board.other_areas({"area": "California", "areas": [("California", 60.0, 60.0)]}) == ""

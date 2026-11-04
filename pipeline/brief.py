@@ -160,7 +160,7 @@ def headline_items(latest, series, forecasts, card):
             best[key] = (cov, r, s)
     items = []
     for (commodity, market), (_, r, s) in best.items():
-        price = _num(r["compare_price"])
+        price = _num(r.get("last_price")) or _num(r["compare_price"])  # USDA's latest quote from the main growing area
         fc = forecasts.get(r["series_id"], {})
         week = dt.date.fromisoformat(r["week_start"])
         # "next two weeks" = the forecast for the week after the coming one (2 weeks past the last full week)
@@ -237,7 +237,7 @@ def size_options(latest, series):
     groups = {}
     for r in latest:
         s_ = series.get(r["series_id"], {})
-        size, price = s_.get("item_size", ""), _num(r["compare_price"])
+        size, price = s_.get("item_size", ""), _num(r.get("last_price")) or _num(r["compare_price"])
         m = re.search(r"(\d+)s\b", size) or re.search(r"(\d+) dozen", size)
         if r["market_type"] != "terminal" or not m or not price:
             continue

@@ -38,6 +38,7 @@ FRESH_DAYS = 21        # a terminal headline must have been quoted this recently
 MIN_COVERAGE_FRESH = 0.25  # a pack that replaced a stopped one has less than a year behind it
 NORM_WEEK_WINDOW = 2   # seasonal norm uses the same ISO week +/- this many weeks
 MIN_NORM_YEARS = 3     # need this many prior years for a seasonal norm
+MAIN_AREA_DAYS = 28    # how far back to look when choosing a series' main growing area
 
 # The pack the trade actually prices each item by (owner: "use the stuff with
 # the big volume"). Field -> regex on the terminal row; the best-covered matching series in each market is
@@ -217,12 +218,55 @@ def select(grouped, today):
     return chosen
 
 
-def daily_value(rows):
-    """One value per series per day: median across quotes (several origins can quote the same pack)."""
+def main_areas(by_day):
+    """date -> the day's main growing area: of the areas quoted that day, the one quoted on the most of the previous
+    MAIN_AREA_DAYS days, a tie keeping yesterday's area, then the lower price. Areas can sit far apart (New York romaine
+    on 2026-11-03: California $60, New Jersey $41), so a median across them is a price nobody quoted.
+    scripts/backtest_main_area.py: forecasts are as accurate on this price as on the median."""
+    out, seen, lead = {}, [], None
+    for d, rows in sorted(by_day.items()):
+        day = dt.date.fromisoformat(d)
+        seen = [(q, areas) for q, areas in seen if (day - q).days <= MAIN_AREA_DAYS]
+        counts = defaultdict(int)
+        for _, areas in seen:
+            for a in areas:
+                counts[a] += 1
+        prices = defaultdict(list)
+        for r in rows:
+            prices[r["origin"]].append(fnum(r["unit_price"]))
+        lead = min(prices, key=lambda a: (-counts[a], a != lead, statistics.median(prices[a])))
+        out[d] = lead
+        seen.append((day, set(prices)))
+    return out
+
+
+def quote_range(rows):
+    """Every row's low and high; USDA leaves the high blank on a one-price quote, and that price still counts."""
+    lows = [fnum(r["low_price"]) if fnum(r["low_price"]) is not None else fnum(r["unit_price"]) for r in rows]
+    highs = [fnum(r["high_price"]) if fnum(r["high_price"]) is not None else low for r, low in zip(rows, lows)]
+    return lows, highs
+
+
+def areas_text(rows):
+    """'California:60:60;New Jersey:40:42': each area's low and high that day, for the site."""
+    by_area = defaultdict(list)
+    for r in rows:
+        by_area[r["origin"]].append(r)
+    parts = []
+    for area, rs in sorted(by_area.items()):
+        lows, highs = quote_range(rs)
+        parts.append(f"{area}:{min(lows)}:{max(highs)}")
+    return ";".join(parts)
+
+
+def daily_value(rows, area=None):
+    """One value per series per day: the median quote from `area`, or across all rows without one."""
+    every = rows
+    if area is not None:
+        rows = [r for r in rows if r["origin"] == area]
     price = statistics.median(fnum(r["unit_price"]) for r in rows)
     norms = [fnum(r["normalized_price"]) for r in rows if fnum(r["normalized_price"]) is not None]
-    lows = [fnum(r["low_price"]) for r in rows if fnum(r["low_price"]) is not None]
-    highs = [fnum(r["high_price"]) for r in rows if fnum(r["high_price"]) is not None]
+    lows, highs = quote_range(rows)
     mostly_lows = [fnum(r["mostly_low_price"]) for r in rows if fnum(r["mostly_low_price"]) is not None]
     mostly_highs = [fnum(r["mostly_high_price"]) for r in rows if fnum(r["mostly_high_price"]) is not None]
     origins = sorted({r["origin"] for r in rows if r["origin"]})
@@ -236,7 +280,9 @@ def daily_value(rows):
         "mostly_low": min(mostly_lows) if mostly_lows else "",
         "mostly_high": max(mostly_highs) if mostly_highs else "",
         "origins": "; ".join(origins),
-        "quotes": len(rows),
+        "area": area or "",
+        "areas": areas_text(every) if area is not None else "",
+        "quotes": len(every),
         "market_tone": max(tones, key=tones.count) if tones else "",
     }
 
@@ -297,7 +343,8 @@ def build(rows, today=None, deflator=None):
         any_row = next(iter(next(iter(grouped[key].values()))))
         base = {"series_id": sid, "commodity": commodity, "market": market, "market_type": mt}
 
-        by_day = {d: daily_value(rs) for d, rs in sorted(grouped[key].items())}
+        leads = main_areas(grouped[key]) if mt == "terminal" else {}
+        by_day = {d: daily_value(rs, leads.get(d)) for d, rs in sorted(grouped[key].items())}
         # Compare in the trade's own unit (per case/package, $/cwt, ...): a series is one pack and
         # count, so per-lb conversion adds nothing and depends on assumed weights.
         unit = any_row["price_unit"]
@@ -316,6 +363,7 @@ def build(rows, today=None, deflator=None):
                 daily_rows.append({**base, "date": d, "price": v["price"], "price_unit": any_row["price_unit"],
                                    "compare_price": value, "compare_unit": unit, "low": v["low"],
                                    "high": v["high"], "mostly_low": v["mostly_low"], "mostly_high": v["mostly_high"],
+                                   "area": v["area"], "areas": v["areas"],
                                    "normalized_price": v["normalized_price"],
                                    "normalized_unit": any_row["normalized_unit"],
                                    "origins": v["origins"], "quotes": v["quotes"],
@@ -331,24 +379,27 @@ def build(rows, today=None, deflator=None):
         last_week = max(weekly_avg)
         if (today - last_week).days <= 14:  # skip series that stopped reporting
             value = weekly_avg[last_week]
+            last_day = max(by_day)
+            last_price = by_day[last_day]["price"]
             prev = weekly_avg.get(last_week - dt.timedelta(weeks=4))
             yago = weekly_avg.get(last_week - dt.timedelta(weeks=52))
             latest_rows.append({**base, "label": label(key), "week_start": last_week.isoformat(),
-                                "compare_price": value, "compare_unit": unit,
+                                "compare_price": value, "compare_unit": unit, "last_price": last_price,
+                                "last_date": last_day, "area": by_day[last_day]["area"],
                                 "pct_vs_4_weeks_ago": round((value / prev - 1) * 100, 1) if prev else "",
                                 "pct_vs_last_year": round((value / yago - 1) * 100, 1) if yago else "",
-                                **seasonal_status(weekly_real, last_week, weekly_real[last_week])})
+                                **seasonal_status(weekly_real, last_week, last_price * deflator.factor(last_day))})
 
     base_f = ["series_id", "commodity", "market", "market_type"]
     write_csv(EXPORT / "series.csv", base_f + ["label", "variety", "pack_size", "item_size", "properties",
               "organic", "price_unit", "compare_unit", "coverage_last_year", "headline", "first_date", "last_date"],
               series_rows)
     write_csv(EXPORT / "prices_daily_365.csv", base_f + ["date", "price", "price_unit", "compare_price",
-              "compare_unit", "low", "high", "mostly_low", "mostly_high", "normalized_price", "normalized_unit", "origins", "quotes", "market_tone"],
+              "compare_unit", "low", "high", "mostly_low", "mostly_high", "area", "areas", "normalized_price", "normalized_unit", "origins", "quotes", "market_tone"],
               daily_rows)
     write_csv(EXPORT / "prices_weekly.csv", base_f + ["week_start", "compare_price", "last_price", "real_compare_price",
               "compare_unit", "days"], weekly_rows)
-    write_csv(EXPORT / "latest.csv", base_f + ["label", "week_start", "compare_price", "compare_unit",
+    write_csv(EXPORT / "latest.csv", base_f + ["label", "week_start", "compare_price", "compare_unit", "last_price", "last_date", "area",
               "seasonal_norm", "usual_low", "usual_high", "pct_vs_norm", "percentile", "status", "years_of_history",
               "pct_vs_4_weeks_ago", "pct_vs_last_year"],
               sorted(latest_rows, key=lambda r: (r["pct_vs_norm"] == "", r["pct_vs_norm"] or 0)))

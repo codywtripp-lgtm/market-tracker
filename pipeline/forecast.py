@@ -454,7 +454,7 @@ def main():
             out.setdefault(r["series_id"], {"from_week": r["week"].date().isoformat(),
                                              "from_price": round(float(r["compare_price"]), 2), "points": []})
             if h == 2:
-                out[r["series_id"]]["unsettled"] = bool(held(p, r["sp2"], r["below8"], r["tone"]))
+                out[r["series_id"]]["unsettled"] = bool(held(p - (0 if pd.isna(r["last"]) else r["last"]), r["sp2"], r["below8"], r["tone"]))  # from the latest quote
             out[r["series_id"]]["points"].append({
                 "week": wk, "h": h, "mid": round(float(np.exp(r["lp"] + p)), 2),
                 "lo": round(float(np.exp(r["lp"] + p + lo)), 2), "hi": round(float(np.exp(r["lp"] + p + hi)), 2)})
