@@ -308,6 +308,8 @@ a.sname:hover, .buy h3 a:hover, .pricey h3 a:hover, .all th a:hover { text-decor
 .q-price { font-size: 56px; line-height: 58px; font-weight: 800; letter-spacing: -0.03em; }
 .q-unit { color: var(--ink-2); font-size: 16px; margin-top: 8px; }
 .q-pack { color: var(--ink-2); font-size: 16px; }
+.q-range { font-size: 16px; font-weight: 600; margin-top: 8px; }
+.markets td small { display: block; color: var(--ink-2); font-size: 16px; }
 .q-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin: 0; }
 .q-facts dt { font-size: 16px; color: var(--ink-2); margin-bottom: 4px; }
 .q-facts dd { margin: 0; overflow-wrap: anywhere; }

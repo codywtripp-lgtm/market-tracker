@@ -1,3 +1,5 @@
+import datetime as dt
+
 from pipeline import board
 
 
@@ -92,3 +94,12 @@ def test_signs_only_show_when_the_forecast_agrees():
               {"commodity": "Celery", "market": "New York", "direction": "down"},
               {"commodity": "Grapes", "market": "New York", "direction": "up"}]
     assert board.backed(alerts, items) == [alerts[1]]
+
+
+def test_quote_text_uses_the_trades_words():
+    day = dt.date(2026, 11, 3)
+    q = {"date": day, "price": 66.0, "low": 62.0, "high": 68.0, "mostly_low": None, "mostly_high": None}
+    assert board.quote_text(q) == "USDA on Nov 3: $62.00 to $68.00"
+    assert board.quote_text(q | {"mostly_low": 64.0, "mostly_high": 66.0}) == "USDA on Nov 3: $62.00 to $68.00, mostly $64.00 to $66.00"
+    assert board.quote_text(q | {"low": 46.0, "high": None}) == "USDA on Nov 3: $46.00"
+    assert board.quote_text(q | {"low": 46.0, "high": 46.0}) == "USDA on Nov 3: $46.00"
