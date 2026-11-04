@@ -499,15 +499,15 @@ NICE = {"Lettuce, Romaine": "Romaine", "Lettuce, Iceberg": "Iceberg", "Tomatoes,
 
 # Changes that move a number people see, newest first, with the numbers as they stood that day. Add one with every such change.
 CHANGES = (
-    ("November 4, 2026", "The main case price is now a real USDA quote: the latest one from the item’s main growing area, "
+    ("November 3, 2026", "The main case price is now a real USDA quote: the latest one from the item’s main growing area, "
      "with the other areas listed. It was a week’s average across every area quoted, which could be a price nobody "
      "traded. Forecasts now run from the price on the page. That’s a stricter test, so the record went down: calls right "
      "from 79% to 75%, big swings flagged ahead from 44% to 35%. Wrong-way calls on big swings stayed about 5%."),
-    ("November 4, 2026", "Signs of a move now show only when the forecast agrees. In past years, signs that agreed came "
+    ("November 3, 2026", "Signs of a move now show only when the forecast agrees. In past years, signs that agreed came "
      "true 79% to 84% of the time, and the others 46% to 59%."),
     ("November 2, 2026", "The forecast became an average of two models, and uses the latest day’s price as an input. The "
      "typical two-week miss went from 12.0% to 11.5% on the week’s-average measure then in use."),
-    ("November 2, 2026", "Added “Unsettled”: no call when recent prices and shipping points disagree on direction."),
+    ("November 2, 2026", "Added “Unsettled”: no call when the forecast goes against a big move at shipping points, or calls for a rise after a long stretch of low prices that USDA’s market reporters don’t back up."),
 )
 
 
@@ -521,6 +521,7 @@ def why_page():
     best = [c for c in v["by_commodity"] if c["right_pct"] >= 65][:8]
     rows = "".join(f"<tr><td>{_esc(NICE.get(c['commodity'], c['commodity']))}</td><td class=\"num\">{c['right_pct']:.0f}%</td>"
                    f"<td class=\"num\">{c['calls']:,}</td><td class=\"num\">${c['avg_dollars']:.2f}</td></tr>" for c in best)
+    outside = round(100 - live.get("in_range_pct", rec["forecasts_backtest"]["range_coverage_pct"]))
     live_line = (f"<p>Live since {_esc(live['since'])}: {live['in_range_pct']:.0f}% of {live['scored']:,} scored "
                  f"forecasts have landed inside their range. The running score is on the "
                  f"<a href=\"../charts/\">price history page</a>.</p>") if live.get("scored") else ""
@@ -594,8 +595,8 @@ What they don't tell you is what it means for your next order.</p>
 <p class="fine">Items that hold steady, such as onions and potatoes, rarely move enough to call. When there's no signal the report says steady rather than guess.</p>
 
 <h2>The limits</h2>
-<p>These are USDA-reported terminal prices; your supplier's quote can differ. About one price in five lands outside
-its forecast range, and about {round(100 - v['big_moves_called_ahead_pct'] - v['big_moves_called_wrong_way_pct'])}% of big swings come with no call at all.</p>
+<p>These are USDA-reported terminal prices; your supplier's quote can differ. About {outside}% of prices land outside
+their forecast range, and about {round(100 - v['big_moves_called_ahead_pct'] - v['big_moves_called_wrong_way_pct'])}% of big swings come with no call at all.</p>
 {live_line}
 
 <h2>What’s changed</h2>
