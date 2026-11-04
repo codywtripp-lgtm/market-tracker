@@ -48,7 +48,7 @@ jobs:
             end="$year-12-31"
             today=$(date -u +%F)
             if [[ "$end" > "$today" ]]; then end="$today"; fi
-            python -m pipeline.run --start "$year-01-01" --end "$end" --sources $SOURCES || echo "Year $year had failures"
+            python -m pipeline.run --start "$year-01-01" --end "$end" --sources $SOURCES --added-only || echo "Year $year had failures"
             git add data
             if ! git diff --cached --quiet; then
               git commit -m "Data: backfill $year"

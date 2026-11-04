@@ -29,11 +29,28 @@ PRODUCE_COMMODITIES = {
     "Grapes",
 }
 
+# Added 2026-11-04: the biggest items by pounds shipped that weren't on the list, plus mushrooms (owner approved).
+ITEMS_ADDED = {
+    "Apples",
+    "Watermelons",
+    "Pineapples",
+    "Cantaloupes",
+    "Mangoes",
+    "Pears",
+    "Cabbage",
+    "Oranges",
+    "Corn, Sweet",
+    "Cauliflower",
+    "Sweet Potatoes",
+    "Mushrooms",
+}
+
 # Retail report 3324 (supermarket ads, weekly): all regions for the wholesale items above, national
 # ads only for every other item (the grocery view covers the whole produce aisle).
 # Retail report 3324 uses its own commodity names (a single "Lettuce", "Peppers (Bell Type)").
 # normalize.RETAIL_NAMES maps them back to the wholesale names where they differ.
 RETAIL_COMMODITIES = PRODUCE_COMMODITIES | {"Lettuce", "Peppers (Bell Type)"}
+PRODUCE_COMMODITIES = PRODUCE_COMMODITIES | ITEMS_ADDED
 
 TERMINAL_REPORTS = {
     # slug: market name
@@ -54,6 +71,18 @@ SHIPPING_POINT_REPORTS = [
     "2410",  # Thomasville SP veg: Georgia peppers
     "2387",  # Benton Harbor SP veg: Michigan peppers
     "2388",  # Benton Harbor SP onions
+]
+
+# Shipping-point reports kept for ITEMS_ADDED only, so forecasts for the older items keep their inputs.
+SHIPPING_POINT_ADDED_ONLY = [
+    "2412",  # Yakima SP fruit: Washington apples, pears
+    "2394",  # Inwood SP fruit: eastern apples
+    "2386",  # Benton Harbor SP fruit: Michigan apples
+    "2392",  # Idaho Falls SP fruit: Idaho apples
+    "2401",  # Orlando SP fruit imports: oranges, pears
+    "2399",  # Orlando SP fruit: Florida watermelons
+    "2405",  # Raleigh SP veg: Carolina sweet potatoes
+    "2411",  # Thomasville SP veg: sweet potatoes
 ]
 
 RETAIL_REPORTS = ["3324"]
