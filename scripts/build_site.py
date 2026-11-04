@@ -502,6 +502,9 @@ NICE = {"Lettuce, Romaine": "Romaine", "Lettuce, Iceberg": "Iceberg", "Tomatoes,
 
 # Changes that move a number people see, newest first, with the numbers as they stood that day. Add one with every such change.
 CHANGES = (
+    ("November 4, 2026", "When USDA quotes two grades, types or districts for one pack on the same day, the price is now one real quote, "
+     "with the grade named, instead of the point halfway between them. New York oranges read $35.50 before; USDA quoted First Grade at "
+     "$38 to $40 and Choice at $30 to $34. Calls right moved from 73.7% to 73.8%."),
     ("November 4, 2026", "Added 12 items: apples, watermelons, pineapples, cantaloupes, mangoes, pears, cabbage, oranges, "
      "sweet corn, cauliflower, sweet potatoes and mushrooms. Their calls count in the record, which moved a little: calls "
      "right from 74.4% to 73.7%, big swings flagged ahead from 34.3% to 32.6%, wrong-way calls on big swings from 4.9% to "
