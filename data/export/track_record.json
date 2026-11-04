@@ -3,31 +3,31 @@
  "forecasts_live": {
   "scored": 872,
   "since": "2026-09-21",
-  "in_range_pct": 81.1,
-  "miss_pct": 12.8,
-  "no_change_miss_pct": 14.8
+  "in_range_pct": 74.3,
+  "miss_pct": 14.6,
+  "no_change_miss_pct": 16.5
  },
  "forecasts_backtest": {
   "years": "2021-2026",
   "by_horizon": {
    "1": {
-    "miss_pct": 6.6,
-    "no_change_miss_pct": 8.1
+    "miss_pct": 6.7,
+    "no_change_miss_pct": 8.3
    },
    "2": {
-    "miss_pct": 11.5,
-    "no_change_miss_pct": 13.6
+    "miss_pct": 11.8,
+    "no_change_miss_pct": 13.8
    },
    "3": {
-    "miss_pct": 15.0,
-    "no_change_miss_pct": 17.5
+    "miss_pct": 15.3,
+    "no_change_miss_pct": 17.8
    },
    "4": {
-    "miss_pct": 17.4,
-    "no_change_miss_pct": 20.3
+    "miss_pct": 17.9,
+    "no_change_miss_pct": 20.8
    }
   },
-  "range_coverage_pct": 80.6
+  "range_coverage_pct": 80.8
  },
  "alerts": {
   "issued": 71,
