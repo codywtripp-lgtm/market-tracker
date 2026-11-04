@@ -502,6 +502,9 @@ NICE = {"Lettuce, Romaine": "Romaine", "Lettuce, Iceberg": "Iceberg", "Tomatoes,
 
 # Changes that move a number people see, newest first, with the numbers as they stood that day. Add one with every such change.
 CHANGES = (
+    ("November 4, 2026", "Added Philadelphia, Boston, Atlanta, Detroit and Miami, with prices back to 2021. Their calls count in the "
+     "record. Stopped making calls on grapes in New York, Los Angeles and Detroit and cucumbers in Detroit, right under 55% of the time. "
+     "Calls right moved from 73.8% to 75.5%, big swings flagged ahead from 32.5% to 33.1%, wrong-way calls on big swings from 4.5% to 3.8%."),
     ("November 4, 2026", "When USDA quotes two grades, types or districts for one pack on the same day, the price is now one real quote, "
      "with the grade named, instead of the point halfway between them. New York oranges read $35.50 before; USDA quoted First Grade at "
      "$38 to $40 and Choice at $30 to $34. Calls right moved from 73.7% to 73.8%."),
