@@ -247,6 +247,10 @@ a.sname:hover, .buy h3 a:hover, .pricey h3 a:hover, .all th a:hover { text-decor
 .tabs a { padding: 2px 0 12px; color: var(--ink-2); text-decoration: none; font-weight: 700; font-size: 18px; white-space: nowrap; border-bottom: 3px solid transparent; margin-bottom: -1px; }
 .tabs a:hover { color: var(--ink); }
 .tabs a[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
+.mkts { display: flex; flex-wrap: wrap; gap: 0 24px; margin: 24px 0 0; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+.mkts a { padding: 8px 0; color: var(--ink-2); font-size: 18px; font-weight: 700; text-decoration: none; white-space: nowrap; }
+.mkts a:hover { color: var(--ink); text-decoration: underline; }
+.mkts a[aria-current] { color: var(--ink); text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; }
 .panel .lede { margin-top: 32px; max-width: 40ch; }
 .note { color: var(--ink-2); margin: -16px 0 24px; max-width: 60ch; }
 .up { --tone: var(--bad); --tone-bg: var(--bad-bg); --tone-line: var(--up-line); }
@@ -536,7 +540,7 @@ main.dash { min-width: 0; }
   .stack td[data-label]::before { content: attr(data-label) ": "; color: var(--ink-2); font-weight: 400; }
 }
 @media (prefers-reduced-motion: reduce) { .filters { transition: none; } }
-@media print { .top, .tabs, .filters, .filters-btn, .cta { display: none; } }
+@media print { .top, .tabs, .mkts, .filters, .filters-btn, .cta { display: none; } }
 
 .skip { position: absolute; left: 16px; top: -48px; z-index: 10; padding: 8px 12px; background: var(--page); color: var(--ink); border: 1px solid var(--ink); }
 .skip:focus { top: 8px; }

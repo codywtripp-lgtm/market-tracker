@@ -26,7 +26,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from . import store
+from . import config, store
 
 RULES = store.DATA / "signals" / "rules.csv"
 LOG = store.DATA / "alerts" / "log.csv"
@@ -40,7 +40,7 @@ MIN_CASES = 15
 MIN_HIT_RATE = 0.65
 MIN_LIFT = 1.5
 
-TERMINALS = ["New York", "Los Angeles", "Chicago"]
+TERMINALS = config.MARKETS
 NON_STANDARD = re.compile(r"fair|poor|ordinary|holdover|decay|damage|scar|fine|mixed condition", re.I)
 UP_WORDS = re.compile(r"\b(higher|firmer|stronger|advanc|increas)", re.I)
 DOWN_WORDS = re.compile(r"\b(lower|weaker|declin|decreas)", re.I)

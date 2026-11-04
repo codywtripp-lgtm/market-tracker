@@ -12,11 +12,11 @@ import json
 import math
 import re
 
-from . import store
+from . import config, store
 
 EXPORT = store.DATA / "export"
 
-MARKETS = ["New York", "Los Angeles", "Chicago"]
+MARKETS = config.MARKETS
 MOVE = 0.05  # forecast change that counts as "rising" / "falling"
 SUPPLY_NOTE = 15  # shipments vs. last year worth mentioning, %
 

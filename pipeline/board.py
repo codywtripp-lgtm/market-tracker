@@ -21,13 +21,13 @@ from .usual import with_usual
 
 OUT = store.DATA / "board"
 MARKETS = brief.MARKETS
-MKEY = {"New York": "ny", "Los Angeles": "la", "Chicago": "chi"}
-AT = {"New York": "at Hunts Point", "Los Angeles": "in Los Angeles", "Chicago": "in Chicago"}
-MARKET_LONG = {"New York": "New York (Hunts Point)", "Los Angeles": "Los Angeles", "Chicago": "Chicago"}
+MKEY = {"New York": "ny", "Los Angeles": "la", "Chicago": "chi", "Philadelphia": "phl", "Boston": "bos", "Atlanta": "atl",
+        "Detroit": "det", "Miami": "mia"}
+AT = {m: "at Hunts Point" if m == "New York" else f"in {m}" for m in MARKETS}
+MARKET_LONG = {m: "New York (Hunts Point)" if m == "New York" else m for m in MARKETS}
 # market landing pages for search ("hunts point produce prices") and per-market item page suffixes
-MARKET_PAGES = {"New York": "hunts-point-produce-prices", "Los Angeles": "los-angeles-produce-prices",
-                "Chicago": "chicago-produce-prices"}
-MARKET_SLUG = {"New York": "new-york", "Los Angeles": "los-angeles", "Chicago": "chicago"}
+MARKET_SLUG = {m: m.lower().replace(" ", "-") for m in MARKETS}
+MARKET_PAGES = {m: "hunts-point-produce-prices" if m == "New York" else f"{MARKET_SLUG[m]}-produce-prices" for m in MARKETS}
 
 # commodity -> (url slug, singular name used in titles); same slugs as scripts/build_site.py (tested)
 PAGES = {
@@ -638,10 +638,9 @@ def notes_section(notes, limit=5):
             f'<ul class="notes">{lis}</ul>')
 
 
-def market_panel(market, rows, hist, today, alerts, notes, hidden=False):
+def market_panel(market, rows, hist, today, alerts, notes):
     k = MKEY[market]
-    return (f'<section class="panel" id="m-{k}" data-market="{k}" role="tabpanel" aria-labelledby="tab-{k}"'
-            f'{" hidden" if hidden else ""}>'
+    return (f'<section class="panel" id="m-{k}">'
             f'<p class="lede">{esc(lede(rows, market))}</p>'
             f'<h2>What to do today</h2>{actions(rows, market)}'
             + notes_section(notes)
@@ -652,12 +651,14 @@ def market_panel(market, rows, hist, today, alerts, notes, hidden=False):
             "</section>")
 
 
-def tabs(markets, base=""):
-    """Market switch. Buttons work with tabs.js; each is also a link to that market's own page."""
-    return ('<div class="tabs" role="tablist" aria-label="Market">' + "".join(
-        f'<a role="tab" id="tab-{MKEY[m]}" href="{base}{MARKET_PAGES[m] if base == "@/" else MARKET_SLUG[m]}/" '
-        f'data-tab="{MKEY[m]}" aria-selected="{"true" if n == 0 else "false"}">{m}</a>'
-        for n, m in enumerate(markets)) + "</div>")
+def market_links(markets, current, href, remember=False):
+    """Eight markets are too many for a row of tabs on a phone, so plain links that wrap. `remember`: the page is
+    the unmarked default, and tabs.js sends a returning buyer to the market they last chose."""
+    links = []
+    for m in markets:
+        mark = ' aria-current="page"' if m == current else ""
+        links.append(f'<a href="{href(m)}" data-m="{MKEY[m]}"{mark}>{m}</a>')
+    return f'<nav class="mkts" aria-label="Market"{" data-remember" if remember else ""}>{"".join(links)}</nav>'
 
 
 def dateline(as_of):
@@ -665,13 +666,12 @@ def dateline(as_of):
 
 
 def home(items, hist, today, alerts, as_of, record, notes, only=None):
-    markets = [only] if only else MARKETS
+    market = only or MARKETS[0]
     h1 = ("Wholesale produce prices today" if not only else
           f"{'Hunts Point' if only == 'New York' else only} wholesale produce prices today")
     parts = [f'<div class="pagehead"><h1>{h1}</h1>{dateline(as_of)}'
-             + (tabs(markets, "@/") if not only else "") + "</div>"]
-    for n, m in enumerate(markets):
-        parts.append(market_panel(m, [i for i in items if i["market"] == m], hist, today, alerts, notes, hidden=n > 0))
+             + market_links(MARKETS, market, lambda m: f"@/{MARKET_PAGES[m]}/", remember=not only) + "</div>",
+             market_panel(market, [i for i in items if i["market"] == market], hist, today, alerts, notes)]
     live = record.get("forecasts_live", {})
     if live.get("scored"):
         parts.append(f'<p class="record">Since going live, {live["in_range_pct"]:.0f}% of {live["scored"]:,} price '
@@ -761,8 +761,7 @@ def faq(commodity, rows):
 def item_page(commodity, rows, hist, today, sizes, alerts, as_of, notes, only=None):
     """rows: this item's headline row per market (New York first)."""
     title = name(commodity)
-    shown = [r for r in rows if r["market"] == only] if only else rows
-    lead = shown[0]
+    lead = next(r for r in rows if r["market"] == only) if only else rows[0]
     h1 = f"{PAGES[commodity][1]} prices today" + (f", {only}" if only else "")  # "Strawberry prices today"
     parts = [f'<nav class="crumbs" aria-label="Breadcrumb"><a href="@/wholesale/">Wholesale prices</a><span>/</span>'
              + (f'<a href="@/{PAGES[commodity][0]}/">{esc(title)}</a><span>/</span>{esc(only)}' if only else esc(title))
@@ -770,17 +769,16 @@ def item_page(commodity, rows, hist, today, sizes, alerts, as_of, notes, only=No
              f'<div class="pagehead"><h1>{esc(h1)}</h1>'
              f'<p class="date">Wholesale price per case, updated {as_of:%A}, {as_of:%B} {as_of.day}, {as_of.year}</p>'
              f'<p class="answer">{answer(lead)}</p>'
-             + (tabs([r["market"] for r in rows], "") if len(shown) > 1 else "") + "</div>"]
-    for n, i in enumerate(shown):
-        k = MKEY[i["market"]]
-        parts.append(f'<section class="panel" id="m-{k}" data-market="{k}" role="tabpanel"{" hidden" if n else ""}>'
-                     + quote(i, hist, today, sizes.get((commodity, i["market"])), notes.get(commodity, (0, 0, ""))[2])
-                     + warnings(alerts, i["market"], commodity) + "</section>")
+             + (market_links([r["market"] for r in rows], lead["market"], lambda m: item_link(commodity, m), remember=not only)
+                if len(rows) > 1 else "") + "</div>",
+             f'<section class="panel" id="m-{MKEY[lead["market"]]}">'
+             + quote(lead, hist, today, sizes.get((commodity, lead["market"])), notes.get(commodity, (0, 0, ""))[2])
+             + warnings(alerts, lead["market"], commodity) + "</section>"]
     if len(rows) > 1:
         body = "".join(
             f'<tr><td><a href="{item_link(commodity, i["market"])}">{esc(MARKET_LONG[i["market"]])}</a><small>{esc(i["pack"])}{esc(", " + i["quote"]["area"]) if i.get("quote") and i["quote"].get("area") else ""}</small></td>'
             f'<td class="n">{money(i["price"])}</td><td>{season(i)}</td><td>{outlook(i)}</td></tr>' for i in rows)
-        parts.append('<h2>The three markets</h2><p class="note">USDA’s latest quote. Each market shows its own main pack and growing area.</p><table class="t markets"><thead><tr><th>Market</th>'
+        parts.append('<h2>All markets</h2><p class="note">USDA’s latest quote. Each market shows its own main pack and growing area.</p><table class="t markets"><thead><tr><th>Market</th>'
                      f'<th class="n">Case</th><th>For the season</th><th>Next 2 weeks</th></tr></thead><tbody>{body}</tbody></table>')
     qa = faq(commodity, rows)
     parts.append('<h2>Questions buyers ask</h2><div class="faq">'

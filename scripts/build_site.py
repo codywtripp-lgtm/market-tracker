@@ -329,12 +329,12 @@ def board_pages():
 
     dataset = json.dumps({
         "@context": "https://schema.org", "@type": "Dataset", "name": "Wholesale produce terminal market prices",
-        "description": "Daily wholesale case prices for 30 produce items at the New York (Hunts Point), Los Angeles "
-                       "and Chicago terminal markets, compared with the usual price for the time of year, with a "
+        "description": "Daily wholesale case prices for 30 produce items at eight U.S. terminal markets, including "
+                       "New York (Hunts Point), Los Angeles and Chicago, compared with the usual price for the time of year, with a "
                        "two-week outlook.",
         "url": f"{SITE_URL}wholesale/", "creator": {"@type": "Organization", "name": SITE_NAME},
         "isBasedOn": "https://www.ams.usda.gov/market-news", "temporalCoverage": f"2016-01-01/{as_of.isoformat()}",
-        "spatialCoverage": ["New York, NY", "Los Angeles, CA", "Chicago, IL"]})
+        "spatialCoverage": ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Philadelphia, PA", "Boston, MA", "Atlanta, GA", "Detroit, MI", "Miami, FL"]})
     if (BOARD / "grocery.html").exists():
         site = json.dumps([{"@context": "https://schema.org", "@type": "WebSite", "name": SITE_NAME,
                             "alternateName": ["producepricetracker.com"], "url": SITE_URL},
@@ -352,11 +352,11 @@ def board_pages():
             emit(rel, key, title, 1, view="grocery", day=g_day, aisle=rel,
                  find={"name": AISLE_NAME[rel], "status": "This week’s best buys", "aka": find[3]},
                  head=crumbs_ld(("Grocery prices", SITE_URL), (AISLE_NAME[rel], f"{SITE_URL}{rel}")))
-    emit("wholesale/", "home", "Wholesale Produce Prices Today: Hunts Point, LA, Chicago", 1, active="wholesale/",
-         desc="Wholesale produce prices today at Hunts Point (New York), Los Angeles and Chicago: what’s firming, "
+    emit("wholesale/", "home", "Wholesale Produce Prices Today at 8 U.S. Terminal Markets", 1, active="wholesale/",
+         desc="Wholesale produce prices today at Hunts Point, Los Angeles, Chicago, Philadelphia, Boston, Atlanta, Detroit and Miami: what’s firming, "
               "what’s softening, and a two-week outlook, per case.",
          og_key="wholesale", head=f'<script type="application/ld+json">{dataset}</script>',
-         find={"name": "All wholesale prices", "status": "New York, Los Angeles, Chicago", "aka": "terminal market"})
+         find={"name": "All wholesale prices", "status": ", ".join(board.MARKETS), "aka": "terminal market"})
     for m, slug in board.MARKET_PAGES.items():
         place = "Hunts Point (New York)" if m == "New York" else m
         emit(f"{slug}/", f"market-{board.MKEY[m]}", f"{place} Wholesale Produce Prices Today", 1,
@@ -471,12 +471,12 @@ def seo_files(urls):
                                  'Try <a href="/">this week’s grocery prices</a> or <a href="/wholesale/">wholesale '
                                  'market prices</a>.</p></section>', noindex=True, view="grocery"))
     # plain-text guide for AI search tools (llmstxt.org)
-    items = "\n".join(f"- [{board.name(c)} prices]({SITE_URL}{slug}/): today's wholesale case price in New York, "
-                      "Los Angeles and Chicago, against the usual for the season, with a two-week outlook"
+    items = "\n".join(f"- [{board.name(c)} prices]({SITE_URL}{slug}/): today's wholesale case price at eight terminal "
+                      "markets, against the usual for the season, with a two-week outlook"
                       for c, (slug, _) in board.PAGES.items())
     write(OUT / "llms.txt", f"""# {SITE_NAME}
 
-> Free daily wholesale produce prices at the New York (Hunts Point), Los Angeles and Chicago terminal markets, from
+> Free daily wholesale produce prices at the New York (Hunts Point), Los Angeles, Chicago, Philadelphia, Boston, Atlanta, Detroit and Miami terminal markets, from
 > USDA AMS Market News. Each item shows today's case price for the main pack the trade buys, how it compares with
 > the same weeks in the last 10 years (adjusted for inflation), and a tested two-week forecast range.
 
@@ -484,7 +484,7 @@ Updated every market evening (Monday to Saturday). Prices are USDA's latest quot
 
 ## Pages
 - [Grocery prices this week]({SITE_URL}): this week's best buys at U.S. supermarkets, what's in season, what's pricey
-- [Wholesale prices today]({SITE_URL}wholesale/): every item, all three terminal markets, firming or softening
+- [Wholesale prices today]({SITE_URL}wholesale/): every item, all eight terminal markets, firming or softening
 - [Track record]({SITE_URL}why/): how accurate the forecasts have been, 2021 to 2026
 - [Price history]({SITE_URL}charts/): 10 years of weekly prices per item
 
@@ -586,7 +586,7 @@ data a buyer had at the time.</p>
 <p>Every price here comes from USDA Market News, and those reports are the right place to see what traded today.
 What they don't tell you is what it means for your next order.</p>
 <table class="data stack"><thead><tr><th></th><th>USDA market reports</th><th>This report</th></tr></thead><tbody>
-<tr><td>Coverage</td><td data-label="USDA">One report per market per day, often hundreds of lines</td><td data-label="Here">Three terminals and the shipping points on one page</td></tr>
+<tr><td>Coverage</td><td data-label="USDA">One report per market per day, often hundreds of lines</td><td data-label="Here">Eight terminals and the shipping points in one place</td></tr>
 <tr><td>Is the price high?</td><td data-label="USDA">Today's price only</td><td data-label="Here">Against the same weeks of the last 10 years, adjusted for inflation</td></tr>
 <tr><td>Where is it going?</td><td data-label="USDA">Not covered</td><td data-label="Here">A two-week price range for each item, tested on five years of data</td></tr>
 <tr><td>Early warning</td><td data-label="USDA">You spot shipping-point moves yourself, if you have time</td><td data-label="Here">Flagged when a signal has called the next move at least 65% of the time</td></tr>
@@ -642,8 +642,8 @@ has no ads and needs no sign-up. It was built by a former analytics manager at a
 <ul>
 <li><b>Grocery prices:</b> USDA’s weekly National Retail Reports for produce, meat, poultry, dairy and eggs: the
 prices supermarkets advertise each week and how many stores advertised them, nationwide.</li>
-<li><b>Wholesale prices:</b> USDA AMS Market News terminal market reports for New York (Hunts Point), Los Angeles and
-Chicago, plus shipping-point reports and shipment volumes.</li>
+<li><b>Wholesale prices:</b> USDA AMS Market News terminal market reports for New York (Hunts Point), Los Angeles,
+Chicago, Philadelphia, Boston, Atlanta, Detroit and Miami, plus shipping-point reports and shipment volumes.</li>
 <li><b>In season:</b> USDA SNAP-Ed’s Seasonal Produce Guide.</li>
 <li><b>Inflation:</b> the U.S. Bureau of Labor Statistics consumer price index for food at home, so prices from
 earlier years compare fairly.</li>

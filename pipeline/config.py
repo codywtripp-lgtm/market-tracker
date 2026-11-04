@@ -63,6 +63,7 @@ TERMINAL_REPORTS = {
     "2302": "Detroit", "2303": "Detroit", "2304": "Detroit",
     "2310": "Miami", "2311": "Miami", "2312": "Miami",
 }
+MARKETS = ["New York", "Los Angeles", "Chicago", "Philadelphia", "Boston", "Atlanta", "Detroit", "Miami"]
 MARKETS_ADDED = {"Philadelphia", "Boston", "Atlanta", "Detroit", "Miami"}  # history from 2021
 
 SHIPPING_POINT_REPORTS = [

@@ -80,7 +80,7 @@ not read as AI-generated. Check new work against the "Never" list before it ship
 
 ## Navigation (from NN/g research, 2026-10-29)
 - Tabs are for parallel content of the same kind (the aisles). Anything that cuts across aisles is a plain link, never a tab.
-- One row of tabs that fits a 375px phone; no overflow.
+- One row of tabs that fits a 375px phone; no overflow. Too many for one row means it isn't tabs: the eight wholesale markets are plain links that wrap, each its own page.
 - Header links are scoped to the side of the site the reader is on.
 - Seasonal promos are text links next to related content, not ad-like boxes (banner blindness).
 - Lists of ideas (meals) are scannable rows: at most three short lines each (name + cost, one-line description, a tap-to-open detail). No filler like "Serves 4" for things we don't publish.

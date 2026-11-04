@@ -5,6 +5,11 @@ const MARKETS = [
   { key: "ny", label: "New York", match: (i) => i.type === "terminal" && i.market === "New York" },
   { key: "la", label: "Los Angeles", match: (i) => i.type === "terminal" && i.market === "Los Angeles" },
   { key: "chi", label: "Chicago", match: (i) => i.type === "terminal" && i.market === "Chicago" },
+  { key: "phl", label: "Philadelphia", match: (i) => i.type === "terminal" && i.market === "Philadelphia" },
+  { key: "bos", label: "Boston", match: (i) => i.type === "terminal" && i.market === "Boston" },
+  { key: "atl", label: "Atlanta", match: (i) => i.type === "terminal" && i.market === "Atlanta" },
+  { key: "det", label: "Detroit", match: (i) => i.type === "terminal" && i.market === "Detroit" },
+  { key: "mia", label: "Miami", match: (i) => i.type === "terminal" && i.market === "Miami" },
   { key: "sp", label: "Shipping point", match: (i) => i.type === "shipping point" },
   { key: "retail", label: "Grocery ads", match: (i) => i.type === "retail" },
   { key: "meat", label: "Beef & chicken", match: (i) => i.type === "wholesale" },
@@ -137,11 +142,11 @@ function renderFilters() {
 }
 
 // ---------- alerts (backtested early warnings) ----------
-const MARKET_KEY = { "New York": "ny", "Los Angeles": "la", "Chicago": "chi" };
+const MARKET_KEY = { "New York": "ny", "Los Angeles": "la", "Chicago": "chi", "Philadelphia": "phl", "Boston": "bos", "Atlanta": "atl", "Detroit": "det", "Miami": "mia" };
 function renderAlerts() {
   if (!$("alerts-list")) return;  // signs of a move live on the home page now
   const here = market().label;
-  const terminal = ["ny", "la", "chi"].includes(state.market);
+  const terminal = Object.values(MARKET_KEY).includes(state.market);
   const mine = terminal ? state.alerts.filter((a) => a.market === here) : state.alerts;
   const elsewhere = terminal ? state.alerts.length - mine.length : 0;
   $("alerts-h").textContent = terminal ? `Early warnings, ${here}` : "Early warnings";

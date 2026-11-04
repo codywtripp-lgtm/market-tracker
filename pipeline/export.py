@@ -19,11 +19,11 @@ import statistics
 from collections import defaultdict
 from pathlib import Path
 
-from . import cpi, store
+from . import config, cpi, store
 
 EXPORT = store.DATA / "export"
 
-TERMINAL_MARKETS = {"New York", "Los Angeles", "Chicago"}
+TERMINAL_MARKETS = set(config.MARKETS)
 
 # How many headline series to keep per group.
 TOP_TERMINAL = 2       # per commodity x market
@@ -35,7 +35,8 @@ TOP_CHICKEN = 8        # by volume
 MIN_COVERAGE = 0.5     # share of report days in the last year a series must appear on
 MIN_COVERAGE_SHIPPING = 0.3  # shipping-point districts are seasonal (e.g. Salinas lettuce ~8 months)
 # LA has quoted only 36 lb tight-fill pears since July: too new to compare with past years, and the older packs stopped.
-NO_HEADLINE = {("Pears", "Los Angeles")}
+# Miami quotes seedless watermelons by the melon out of bins, with no case to show.
+NO_HEADLINE = {("Pears", "Los Angeles"), ("Watermelons", "Miami")}
 FRESH_DAYS = 21        # a terminal headline must have been quoted this recently, if anything else has
 MIN_COVERAGE_FRESH = 0.25  # a pack that replaced a stopped one has less than a year behind it
 NORM_WEEK_WINDOW = 2   # seasonal norm uses the same ISO week +/- this many weeks
@@ -97,6 +98,42 @@ MAIN_PACK_MARKET = {
     ("Corn, Sweet", "New York"): {"pack_size": r"^cartons/crates$", "item_size": r"^4 dozen$", "properties": r"^Yellow$"},
     ("Corn, Sweet", "Los Angeles"): {"pack_size": r"^cartons$", "item_size": r"^4 dozen$", "properties": r"^White$"},
     ("Cauliflower", "New York"): {"variety": r"^$", "pack_size": r"^flat cartons film wrapped$", "item_size": r"^12s$", "properties": r"^White$"},
+    # Added markets. Same pack as the others where the market quotes it daily; otherwise the closest pack it does.
+    ("Apples", "Philadelphia"): {"variety": r"^Gala$", "pack_size": r"^cartons tray pack$", "item_size": r"^88s$"},
+    ("Apples", "Atlanta"): {"variety": r"^Gala$", "pack_size": r"^cartons tray pack$", "item_size": r"^125s$"},
+    ("Apples", "Miami"): {"variety": r"^Red delicious$", "pack_size": r"^cartons tray pack$", "item_size": r"^72s$"},
+    ("Avocados", "Miami"): {"variety": r"^Hass$", "pack_size": r"^cartons 2 layer$", "item_size": r"^60s$"},
+    ("Bananas", "Detroit"): {"variety": r"^$", "pack_size": r"^40 lb cartons", "properties": r"^Green$"},
+    ("Blueberries", "Miami"): {"pack_size": r"6-oz"},
+    ("Broccoli", "Miami"): {"variety": r"^Crown cut$", "pack_size": r"^20 lb cartons loose$"},
+    ("Cabbage", "Detroit"): {"variety": r"^Round green type$", "pack_size": r"^50 lb cartons$", "item_size": r"^large$"},
+    ("Cantaloupes", "Detroit"): {"variety": r"^$", "pack_size": r"^oversized 1/2 cartons$", "item_size": r"^9s"},
+    ("Carrots", "Detroit"): {"variety": r"^TOPPED$", "pack_size": r"^50 lb sacks loose$", "item_size": r"^jumbo$"},
+    ("Cauliflower", "Philadelphia"): {"variety": r"^$", "pack_size": r"^flat cartons film wrapped$", "item_size": r"^12s$", "properties": r"^White$"},
+    **{("Celery", m): {"variety": r"^$", "pack_size": r"^cartons$", "item_size": r"^film bags 30s$"}
+       for m in ("Philadelphia", "Boston", "Atlanta", "Detroit", "Miami")},
+    ("Corn, Sweet", "Detroit"): {"pack_size": r"^cartons/crates$", "item_size": r"^4 dozen$", "properties": r"^Bi-color"},
+    ("Cucumbers", "Boston"): {"variety": r"^$", "pack_size": r"^1 1/9 bushel cartons/crates$", "item_size": r"^medium$"},
+    ("Cucumbers", "Detroit"): {"variety": r"^Long seedless$", "pack_size": r"^cartons film wrapped$", "item_size": r"^12s medium$"},
+    ("Lemons", "Miami"): {"pack_size": r"^7/10 bushel cartons$", "item_size": r"^(140|165)s$"},
+    ("Lettuce, Romaine", "Philadelphia"): {"variety": r"^$", "pack_size": r"^cartons film lined$", "item_size": r"^24s$"},
+    ("Lettuce, Romaine", "Atlanta"): {"variety": r"^$", "pack_size": r"^cartons$", "item_size": r"^24s$"},
+    ("Lettuce, Romaine", "Detroit"): {"variety": r"^$", "pack_size": r"^cartons film lined$", "item_size": r"^24s$"},
+    ("Limes", "Miami"): {"pack_size": r"^40 lb cartons$", "item_size": r"^150s$"},
+    ("Mangoes", "Boston"): {"variety": r"^Tommy atkins$", "pack_size": r"^cartons 1 layer$", "item_size": r"^9s$"},
+    ("Mangoes", "Atlanta"): {"variety": r"^Tommy atkins$", "pack_size": r"^flats 1 layer$", "item_size": r"^10s$"},
+    ("Mangoes", "Detroit"): {"variety": r"^Tommy atkins$", "pack_size": r"^flats/cartons 1 layer$", "item_size": r"^10s$"},
+    ("Mangoes", "Miami"): {"variety": r"^Tommy atkins$", "pack_size": r"^flats 1 layer$", "item_size": r"^6s$"},
+    ("Pears", "Detroit"): {"variety": r"^D'anjou$", "pack_size": r"^4/5 bushel cartons wrapped$", "item_size": r"^70s$"},
+    ("Pears", "Miami"): {"variety": r"^D'anjou$", "pack_size": r"^4/5 bushel cartons wrapped$", "item_size": r"^70s$"},
+    ("Peppers, Bell Type", "Detroit"): {"pack_size": r"^1 1/9 bushel cartons/crates$", "item_size": r"^extra large$", "properties": r"^Green$"},
+    ("Sweet Potatoes", "Boston"): {"variety": r"^Orange types$", "pack_size": r"^40 lb cartons$", "item_size": r"^jumbo$"},
+    ("Sweet Potatoes", "Detroit"): {"variety": r"^Orange types$", "pack_size": r"^40 lb cartons$", "item_size": r"^medium-large$"},
+    ("Sweet Potatoes", "Miami"): {"variety": r"^Orange types$", "pack_size": r"^40 lb cartons$", "item_size": r"^medium-large$"},
+    ("Tomatoes", "Miami"): {"variety": r"^Vine ripes$", "pack_size": r"^25 lb cartons loose$", "item_size": r"^5x6 size$", "properties": r"^Light red-red$"},
+    ("Tomatoes, Plum Type", "Miami"): {"variety": r"^Roma$", "pack_size": r"^25 lb cartons loose$", "item_size": r"^extra large$", "properties": r"^Light red-red$"},
+    ("Watermelons", "Atlanta"): {"variety": r"^Red flesh seedless type$", "pack_size": r"^cartons$", "item_size": r"^5s$"},
+    ("Watermelons", "Detroit"): {"variety": r"^Red flesh seedless type$", "pack_size": r"^flat cartons$", "item_size": r"^4s$"},
 }
 # USDA splits these by type as growing areas rotate through the season (yellow onions: Hybrid / Spanish /
 # Grano / Globe; russets: Norkotah / Burbank; mature greens: Light Red / Light Red-red). The trade quotes
@@ -260,7 +297,8 @@ def select(grouped, today):
             top = TOP_TERMINAL if mt == "terminal" else TOP_SHIPPING
             floor = MIN_COVERAGE if mt == "terminal" else MIN_COVERAGE_SHIPPING
             if mt == "terminal":  # main pack first, then conventional, then coverage
-                ranked = sorted(keys, key=lambda k: (not is_main_pack(k), k[7] in ("Y", "Yes"), stale(k), -coverage(k)))
+                # bins are priced per bin or per melon, never a case
+                ranked = sorted(keys, key=lambda k: (not is_main_pack(k), "bins" in k[4], k[7] in ("Y", "Yes"), stale(k), -coverage(k)))
             else:
                 ranked = sorted(keys, key=lambda k: -coverage(k))
             picks = [k for k in ranked if coverage(k) >= floor][:top]

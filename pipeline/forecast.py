@@ -36,11 +36,11 @@ import json
 import numpy as np
 import pandas as pd
 
-from . import signals, store, volumes, weather
+from . import config, signals, store, volumes, weather
 
 EXPORT = store.DATA / "export"
 HORIZONS = [1, 2, 3, 4]
-TERMINALS = ["New York", "Los Angeles", "Chicago"]
+TERMINALS = config.MARKETS
 FIRST_TEST_YEAR = 2021
 # 80% range. Plain 10th/90th error percentiles covered only 77% out of sample (errors in a
 # new year run a bit bigger than in past years), so the quantiles are set slightly wider.
@@ -385,6 +385,7 @@ def coverage(resid):
 
 MODEL = "blend"  # replaced in main() by the best of MODEL_CANDIDATES
 NO_CALLS = {"Apples"}  # a coin flip on the rare calls made, 2021-2026 (15 of 30): always "no change"
+NO_CALLS_AT = {("Grapes", "New York"), ("Grapes", "Los Angeles"), ("Grapes", "Detroit"), ("Cucumbers", "Detroit")}  # same: under 55% right
 
 
 def _choices(r):
@@ -392,7 +393,7 @@ def _choices(r):
     if r.empty:
         return {}
     means = r.groupby(["commodity", "market", "method"])["ape"].mean().unstack("method")
-    return {k: (MODEL if row.get(MODEL, np.inf) <= row.get("naive", np.inf) and k[0] not in NO_CALLS else "naive")
+    return {k: (MODEL if row.get(MODEL, np.inf) <= row.get("naive", np.inf) and k[0] not in NO_CALLS and k not in NO_CALLS_AT else "naive")
             for k, row in means.iterrows()}
 
 
