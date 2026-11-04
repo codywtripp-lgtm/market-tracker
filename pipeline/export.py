@@ -218,10 +218,33 @@ def select(grouped, today):
     return chosen
 
 
-def main_areas(by_day):
+def load_shipments():
+    """(commodity, Monday, origin) -> pounds shipped that week, from USDA movement reports. The same shipment can be in
+    two reports, so it counts once, as in pipeline/volumes.py."""
+    same = {}
+    for r in store.iter_all("movement"):
+        lb = fnum(r["volume"])
+        if lb and r["origin"]:
+            key = (r["report_date"], r["commodity"], r["variety"], r["organic"], r["market"], r["origin"], r["other_attributes"])
+            same[key] = max(same.get(key, 0), lb)
+    out = defaultdict(float)
+    for (d, commodity, _, _, _, origin, _), lb in same.items():
+        out[commodity, iso_week_start(dt.date.fromisoformat(d)), origin.split("-")[0]] += lb
+    return out
+
+
+def shipped_before(shipments, commodity, area, day):
+    """Pounds from `area` in the four full weeks before `day`. 'Idaho-Oregon' counts both; 'California' covers the
+    reports' California-South and California-Central. Areas the reports leave out read zero."""
+    week = iso_week_start(day)
+    return sum(shipments.get((commodity, week - dt.timedelta(weeks=n), part), 0) for part in area.split("-") for n in range(1, 5))
+
+
+def main_areas(by_day, shipped=None):
     """date -> the day's main growing area: of the areas quoted that day, the one quoted on the most of the previous
-    MAIN_AREA_DAYS days, a tie keeping yesterday's area, then the lower price. Areas can sit far apart (New York romaine
-    on 2026-11-03: California $60, New Jersey $41), so a median across them is a price nobody quoted.
+    MAIN_AREA_DAYS days. USDA often quotes several every day, so ties go to the most pounds shipped (shipped(area, day)),
+    then yesterday's area, then the lower price. Areas can sit far apart (New York romaine on 2026-11-03: California $60,
+    New Jersey $41), so a median across them is a price nobody quoted.
     scripts/backtest_main_area.py: forecasts are as accurate on this price as on the median."""
     out, seen, lead = {}, [], None
     for d, rows in sorted(by_day.items()):
@@ -234,7 +257,7 @@ def main_areas(by_day):
         prices = defaultdict(list)
         for r in rows:
             prices[r["origin"]].append(fnum(r["unit_price"]))
-        lead = min(prices, key=lambda a: (-counts[a], a != lead, statistics.median(prices[a])))
+        lead = min(prices, key=lambda a: (-counts[a], -(shipped(a, day) if shipped else 0), a != lead, statistics.median(prices[a])))
         out[d] = lead
         seen.append((day, set(prices)))
     return out
@@ -324,7 +347,7 @@ def seasonal_status(weekly, week, value):
             "percentile": round(pct * 100), "status": status, "years_of_history": len(years)}
 
 
-def build(rows, today=None, deflator=None):
+def build(rows, today=None, deflator=None, shipments=None):
     today = today or dt.date.today()
     deflator = deflator or cpi.Deflator({})
     grouped = load(rows)
@@ -343,7 +366,8 @@ def build(rows, today=None, deflator=None):
         any_row = next(iter(next(iter(grouped[key].values()))))
         base = {"series_id": sid, "commodity": commodity, "market": market, "market_type": mt}
 
-        leads = main_areas(grouped[key]) if mt == "terminal" else {}
+        shipped = (lambda area, day, c=commodity: shipped_before(shipments, c, area, day)) if shipments else None
+        leads = main_areas(grouped[key], shipped) if mt == "terminal" else {}
         by_day = {d: daily_value(rs, leads.get(d)) for d, rs in sorted(grouped[key].items())}
         # Compare in the trade's own unit (per case/package, $/cwt, ...): a series is one pack and
         # count, so per-lb conversion adds nothing and depends on assumed weights.
@@ -408,7 +432,7 @@ def build(rows, today=None, deflator=None):
 
 
 def main():
-    counts = build(store.iter_all(), deflator=cpi.Deflator(cpi.load()))
+    counts = build(store.iter_all(), deflator=cpi.Deflator(cpi.load()), shipments=load_shipments())
     print("export:", counts)
 
 

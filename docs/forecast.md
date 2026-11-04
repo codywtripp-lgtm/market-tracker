@@ -79,3 +79,6 @@ The site's big price was the week's average, a median across every growing area 
 Walk-forward 2021-2026, `scripts/backtest_main_area.py`, headline series. On the main-area price: main-area model miss 12.08%, wrong way on big moves 5.3%; blended model 12.12%, 5.7%. Week-to-week noise is about the same either way.
 
 Calls now run from the latest quote, since that is the number on the page. The published record fell with this stricter, truer measure (`scripts/value_stats.py`): 78.9% of 7,971 calls right -> 74.6% of 6,362; big moves called ahead 43.5% -> 34.7%; wrong way stays 5.0%; average move $4.94 -> $4.61 a case. The test assumes the whole week is known; the site also forecasts midweek.
+
+Same day: USDA often quotes several areas every day, and the tie went to the lowest price (Chicago onions read California; Washington and Idaho ship the most). Ties now go to the most pounds shipped in the four full weeks before, from the movement reports (`export.load_shipments`). Areas the reports leave out read zero, so California lemons and carrots can lose a tie they might deserve. Record: 75.0% of 6,450 calls right, big moves called ahead 35.2%, wrong way 4.7%, average move $4.64 a case. `scripts/backtest_main_area.py` compares against whatever `prices_weekly.csv` holds, so its blend side only means the blend on an export from before 2026-11-04.
+
