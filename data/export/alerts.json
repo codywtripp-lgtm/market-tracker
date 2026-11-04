@@ -1,30 +1,56 @@
 {
- "asOf": "2026-11-03",
+ "asOf": "2026-11-04",
  "alerts": [
+  {
+   "signal": "sp_lead",
+   "commodity": "Lettuce, Romaine",
+   "market": "Chicago",
+   "direction": "down",
+   "headline": "Lettuce, Romaine: shipping point down 10% this week; Chicago hasn't followed yet (+10% this week).",
+   "expect": "Expect Chicago prices to fall within ~2 weeks.",
+   "record": "Chicago followed 23 of the last 25 times (normally 35%).",
+   "hit_rate": 0.92,
+   "sp_change": -10.0,
+   "terminal_change": 10.3,
+   "id": "sp_lead|Lettuce, Romaine|Chicago|down|2026-11-02"
+  },
   {
    "signal": "sp_lead",
    "commodity": "Tomatoes, Plum Type",
    "market": "New York",
    "direction": "up",
-   "headline": "Tomatoes, Plum Type: shipping point up 14% this week; New York hasn't followed yet (-2% this week).",
+   "headline": "Tomatoes, Plum Type: shipping point up 15% this week; New York hasn't followed yet (+2% this week).",
    "expect": "Expect New York prices to rise within ~2 weeks.",
    "record": "New York followed 23 of the last 28 times (normally 37%).",
    "hit_rate": 0.821,
-   "sp_change": 13.6,
-   "terminal_change": -1.8,
+   "sp_change": 15.3,
+   "terminal_change": 2.5,
    "id": "sp_lead|Tomatoes, Plum Type|New York|up|2026-11-02"
+  },
+  {
+   "signal": "sp_lead",
+   "commodity": "Lettuce, Romaine",
+   "market": "Los Angeles",
+   "direction": "down",
+   "headline": "Lettuce, Romaine: shipping point down 10% this week; Los Angeles hasn't followed yet (-1% this week).",
+   "expect": "Expect Los Angeles prices to fall within ~2 weeks.",
+   "record": "Los Angeles followed 19 of the last 24 times (normally 29%).",
+   "hit_rate": 0.792,
+   "sp_change": -10.0,
+   "terminal_change": -1.2,
+   "id": "sp_lead|Lettuce, Romaine|Los Angeles|down|2026-11-02"
   },
   {
    "signal": "sp_lead",
    "commodity": "Lettuce, Iceberg",
    "market": "Chicago",
    "direction": "down",
-   "headline": "Lettuce, Iceberg: shipping point down 22% this week; Chicago hasn't followed yet (+5% this week).",
+   "headline": "Lettuce, Iceberg: shipping point down 19% this week; Chicago hasn't followed yet (+5% this week).",
    "expect": "Expect Chicago prices to fall within ~2 weeks.",
    "record": "Chicago followed 29 of the last 37 times (normally 40%).",
    "hit_rate": 0.784,
-   "sp_change": -22.1,
-   "terminal_change": 4.8,
+   "sp_change": -19.4,
+   "terminal_change": 4.9,
    "id": "sp_lead|Lettuce, Iceberg|Chicago|down|2026-11-02"
   },
   {
@@ -32,24 +58,24 @@
    "commodity": "Strawberries",
    "market": "Chicago",
    "direction": "up",
-   "headline": "Strawberries: shipping point up 23% this week; Chicago hasn't followed yet (+2% this week).",
+   "headline": "Strawberries: shipping point up 22% this week; Chicago hasn't followed yet (+2% this week).",
    "expect": "Expect Chicago prices to rise within ~2 weeks.",
    "record": "Chicago followed 29 of the last 37 times (normally 43%).",
    "hit_rate": 0.784,
-   "sp_change": 23.0,
-   "terminal_change": 1.7,
+   "sp_change": 21.8,
+   "terminal_change": 2.4,
    "id": "sp_lead|Strawberries|Chicago|up|2026-11-02"
   },
   {
    "signal": "usda_tone",
-   "commodity": "Tomatoes",
-   "market": "Los Angeles",
+   "commodity": "Tomatoes, Plum Type",
+   "market": "New York",
    "direction": "up",
-   "headline": "Tomatoes: USDA reporters in Los Angeles call the market higher (\u201cMarket san diego county and mexico higher; oxnard about steady\u201d).",
-   "expect": "Expect Los Angeles prices to rise next week.",
-   "record": "That happened 19 of the last 25 times (normally 20%).",
-   "hit_rate": 0.76,
-   "id": "usda_tone|Tomatoes|Los Angeles|up|2026-11-02"
+   "headline": "Tomatoes, Plum Type: USDA reporters in New York call the market higher (\u201cMarket slightly higher\u201d).",
+   "expect": "Expect New York prices to rise next week.",
+   "record": "That happened 35 of the last 46 times (normally 31%).",
+   "hit_rate": 0.761,
+   "id": "usda_tone|Tomatoes, Plum Type|New York|up|2026-11-02"
   },
   {
    "signal": "usda_tone",
@@ -63,6 +89,19 @@
    "id": "usda_tone|Lettuce, Iceberg|Los Angeles|down|2026-11-02"
   },
   {
+   "signal": "sp_lead",
+   "commodity": "Peppers, Bell Type",
+   "market": "Chicago",
+   "direction": "up",
+   "headline": "Peppers, Bell Type: shipping point up 15% this week; Chicago hasn't followed yet (-1% this week).",
+   "expect": "Expect Chicago prices to rise within ~2 weeks.",
+   "record": "Chicago followed 32 of the last 43 times (normally 32%).",
+   "hit_rate": 0.744,
+   "sp_change": 15.1,
+   "terminal_change": -0.8,
+   "id": "sp_lead|Peppers, Bell Type|Chicago|up|2026-11-02"
+  },
+  {
    "signal": "usda_tone",
    "commodity": "Limes",
    "market": "New York",
@@ -72,30 +111,6 @@
    "record": "That happened 40 of the last 56 times (normally 28%).",
    "hit_rate": 0.714,
    "id": "usda_tone|Limes|New York|up|2026-11-02"
-  },
-  {
-   "signal": "sp_lead",
-   "commodity": "Lettuce, Iceberg",
-   "market": "New York",
-   "direction": "down",
-   "headline": "Lettuce, Iceberg: shipping point down 22% this week; New York hasn't followed yet (+0% this week).",
-   "expect": "Expect New York prices to fall within ~2 weeks.",
-   "record": "New York followed 19 of the last 27 times (normally 42%).",
-   "hit_rate": 0.704,
-   "sp_change": -22.1,
-   "terminal_change": 0.0,
-   "id": "sp_lead|Lettuce, Iceberg|New York|down|2026-11-02"
-  },
-  {
-   "signal": "usda_tone",
-   "commodity": "Lettuce, Iceberg",
-   "market": "New York",
-   "direction": "down",
-   "headline": "Lettuce, Iceberg: USDA reporters in New York call the market lower (\u201cMarket slightly lower\u201d).",
-   "expect": "Expect New York prices to fall next week.",
-   "record": "That happened 38 of the last 57 times (normally 37%).",
-   "hit_rate": 0.667,
-   "id": "usda_tone|Lettuce, Iceberg|New York|down|2026-11-02"
   }
  ]
 }

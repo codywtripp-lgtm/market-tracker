@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-03",
+ "asOf": "2026-11-04",
  "forecasts_live": {
   "scored": 872,
   "since": "2026-09-21",
@@ -11,8 +11,8 @@
   "years": "2021-2026",
   "by_horizon": {
    "1": {
-    "miss_pct": 6.5,
-    "no_change_miss_pct": 8.2
+    "miss_pct": 6.6,
+    "no_change_miss_pct": 8.1
    },
    "2": {
     "miss_pct": 11.5,
@@ -24,17 +24,57 @@
    },
    "4": {
     "miss_pct": 17.4,
-    "no_change_miss_pct": 20.4
+    "no_change_miss_pct": 20.3
    }
   },
-  "range_coverage_pct": 80.4
+  "range_coverage_pct": 80.6
  },
  "alerts": {
-  "issued": 67,
+  "issued": 71,
   "decided": 49,
   "came_true": 35,
-  "pending": 17,
+  "pending": 21,
   "recent": [
+   {
+    "first_seen": "2026-11-04",
+    "commodity": "Peppers, Bell Type",
+    "market": "Chicago",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Peppers, Bell Type: shipping point up 15% this week; Chicago hasn't followed yet (-1% this week).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
+   {
+    "first_seen": "2026-11-04",
+    "commodity": "Tomatoes, Plum Type",
+    "market": "New York",
+    "direction": "up",
+    "signal": "usda_tone",
+    "headline": "Tomatoes, Plum Type: USDA reporters in New York call the market higher (\u201cMarket slightly higher\u201d).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
+   {
+    "first_seen": "2026-11-04",
+    "commodity": "Lettuce, Romaine",
+    "market": "Los Angeles",
+    "direction": "down",
+    "signal": "sp_lead",
+    "headline": "Lettuce, Romaine: shipping point down 10% this week; Los Angeles hasn't followed yet (-1% this week).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
+   {
+    "first_seen": "2026-11-04",
+    "commodity": "Lettuce, Romaine",
+    "market": "Chicago",
+    "direction": "down",
+    "signal": "sp_lead",
+    "headline": "Lettuce, Romaine: shipping point down 10% this week; Chicago hasn't followed yet (+10% this week).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
    {
     "first_seen": "2026-11-03",
     "commodity": "Lettuce, Iceberg",
@@ -177,23 +217,13 @@
    },
    {
     "first_seen": "2026-10-21",
-    "commodity": "Lettuce, Romaine",
+    "commodity": "Lettuce, Iceberg",
     "market": "New York",
-    "direction": "up",
-    "signal": "sp_lead",
-    "headline": "Lettuce, Romaine: shipping point up 15% this week; New York hasn't followed yet (+0% this week).",
-    "status": "pending",
-    "moved_pct": NaN
-   },
-   {
-    "first_seen": "2026-10-21",
-    "commodity": "Tomatoes, Plum Type",
-    "market": "New York",
-    "direction": "up",
-    "signal": "sp_lead",
-    "headline": "Tomatoes, Plum Type: shipping point up 19% this week; New York hasn't followed yet (+0% this week).",
-    "status": "pending",
-    "moved_pct": NaN
+    "direction": "down",
+    "signal": "usda_tone",
+    "headline": "Lettuce, Iceberg: USDA reporters in New York call the market lower (\u201cMarket slightly lower\u201d).",
+    "status": "came true",
+    "moved_pct": -17.4
    },
    {
     "first_seen": "2026-10-21",
@@ -204,36 +234,6 @@
     "headline": "Tomatoes, Plum Type: USDA reporters in New York call the market higher (\u201cMarket slightly higher\u201d).",
     "status": "did not happen",
     "moved_pct": -3.4
-   },
-   {
-    "first_seen": "2026-10-21",
-    "commodity": "Lettuce, Iceberg",
-    "market": "New York",
-    "direction": "down",
-    "signal": "usda_tone",
-    "headline": "Lettuce, Iceberg: USDA reporters in New York call the market lower (\u201cMarket slightly lower\u201d).",
-    "status": "came true",
-    "moved_pct": -17.4
-   },
-   {
-    "first_seen": "2026-10-20",
-    "commodity": "Lettuce, Iceberg",
-    "market": "Chicago",
-    "direction": "up",
-    "signal": "usda_tone",
-    "headline": "Lettuce, Iceberg: USDA reporters in Chicago call the market higher (\u201cMarket higher\u201d).",
-    "status": "did not happen",
-    "moved_pct": 2.7
-   },
-   {
-    "first_seen": "2026-10-20",
-    "commodity": "Tomatoes",
-    "market": "New York",
-    "direction": "up",
-    "signal": "usda_tone",
-    "headline": "Tomatoes: USDA reporters in New York call the market higher (\u201cMarket mature greens slightly higher, others about steady\u201d).",
-    "status": "did not happen",
-    "moved_pct": -12.4
    }
   ]
  }
