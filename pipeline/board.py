@@ -81,26 +81,47 @@ def pct(v, signed=True):
     return f"{'+' if signed and v > 0 else ''}{round(v)}%"
 
 
+NEW_AREA = "new area"
+
+
+def area_list(text):
+    """'California:60.0:60.0;New Jersey:40.0:42.0' -> [('California', 60.0, 60.0), ...]"""
+    out = []
+    for part in (text or "").split(";"):
+        if part.count(":") == 2:
+            area, low, high = part.split(":")
+            out.append((area, float(low), float(high)))
+    return out
+
+
 def day_changes(items):
-    """series_id -> (change vs the previous quote, date of today's quote); latest market day only."""
+    """series_id -> (change vs the previous quote from the same growing area, or NEW_AREA); latest market day only.
+    Comparing across areas would report a switch from California to New Jersey as a price move."""
     want = {i["series_id"] for i in items}
     days = {}
     for r in brief._read("prices_daily_365.csv"):
         if r["series_id"] in want and brief._num(r["compare_price"]) is not None:
-            days.setdefault(r["series_id"], []).append((r["date"], brief._num(r["compare_price"])))
+            days.setdefault(r["series_id"], []).append((r["date"], brief._num(r["compare_price"]), r.get("area", ""), r.get("areas", "")))
     if not days:
         return None, {}
     as_of = max(max(d)[0] for d in days.values())
     out = {}
     for sid, d in days.items():
         d.sort()
-        if len(d) >= 2 and d[-1][0] == as_of and d[-2][1]:
+        if len(d) < 2 or d[-1][0] != as_of or not d[-2][1]:
+            continue
+        before = {a: (low + high) / 2 for a, low, high in area_list(d[-2][3])}
+        if d[-1][2] == d[-2][2] or not d[-1][2]:
             out[sid] = d[-1][1] / d[-2][1] - 1
+        elif d[-1][2] in before:
+            out[sid] = d[-1][1] / before[d[-1][2]] - 1
+        else:
+            out[sid] = NEW_AREA
     return dt.date.fromisoformat(as_of), out
 
 
 def latest_quotes(items):
-    """series_id -> USDA's latest day: {date, price, low, high, mostly_low, mostly_high}; the board's price is the week's average."""
+    """series_id -> USDA's latest day from the main growing area, and the other areas quoted that day."""
     want = {i["series_id"] for i in items}
     out = {}
     for r in brief._read("prices_daily_365.csv"):
@@ -108,19 +129,30 @@ def latest_quotes(items):
         if r["series_id"] in want and brief._num(r["compare_price"]) is not None and (
                 r["series_id"] not in out or day >= out[r["series_id"]]["date"]):
             out[r["series_id"]] = {"date": day, "price": brief._num(r["compare_price"]),
+                                   "area": r.get("area", ""), "areas": area_list(r.get("areas")),
                                    **{k: brief._num(r.get(k)) for k in ("low", "high", "mostly_low", "mostly_high")}}
     return out
 
 
+def price_range(low, high):
+    return money(low) if not high or low >= high else f"{money(low)} to {money(high)}"
+
+
 def quote_text(q):
-    """USDA's latest day in the trade's words: 'USDA on Nov 3: $62.00 to $68.00, mostly $64.00 to $66.00'."""
-    day = f"USDA on {q['date']:%b} {q['date'].day}: "
-    if not q["low"] or not q["high"] or q["low"] >= q["high"]:
-        return day + money(q["low"] or q["price"])
-    s = f"{day}{money(q['low'])} to {money(q['high'])}"
+    """USDA's latest day in the trade's words: 'California, USDA on Nov 3: $62.00 to $68.00, mostly $64.00 to $66.00'."""
+    s = f"{q['area']}, USDA" if q.get("area") else "USDA"
+    s += f" on {q['date']:%b} {q['date'].day}: {price_range(q['low'] or q['price'], q['high'])}"
     if q["mostly_low"] and q["mostly_high"] and q["mostly_low"] < q["mostly_high"]:
         s += f", mostly {money(q['mostly_low'])} to {money(q['mostly_high'])}"
     return s
+
+
+def other_areas(q):
+    rows = [a for a in q.get("areas", []) if a[0] != q.get("area")]
+    if not rows:
+        return ""
+    return ('<div class="q-areas"><h3>Other growing areas that day</h3><ul>'
+            + "".join(f"<li>{esc(a or 'Not stated')} <b>{price_range(low, high)}</b></li>" for a, low, high in rows) + "</ul></div>")
 
 
 def history(items, weeks=56):
@@ -143,6 +175,8 @@ def history(items, weeks=56):
 def change(v, unit=""):
     if v is None:
         return '<span class="chg flat">Not quoted today</span>' if unit == "today" else ""
+    if v == NEW_AREA:
+        return '<span class="chg flat">New growing area</span>'
     if abs(v) < 0.005:
         return '<span class="chg flat">Unchanged</span>'
     tone, arrow = ("up", "▲") if v > 0 else ("down", "▼")
@@ -167,7 +201,7 @@ def expect_text(i, unit=" a case"):
 
 def day_note(v):
     """Under a row's price: today's move if there was one, else the unit."""
-    return change(v) if v is not None and abs(v) >= 0.005 else '<small class="unit">a case</small>'
+    return change(v) if v is not None and v != NEW_AREA and abs(v) >= 0.005 else '<small class="unit">a case</small>'
 
 
 def outlook(i):
@@ -604,7 +638,7 @@ def market_panel(market, rows, hist, today, alerts, notes, hidden=False):
             + (f'<h2>Signs of a move</h2><p class="note">Patterns that came before a price move at least two times in '
                f'three over the last 10 years. They only show here when the forecast agrees.</p>{warnings(alerts, market)}'
                if warnings(alerts, market) else "")
-            + f'<h2>All prices, {esc(MARKET_LONG[market])}</h2><p class="note">Case prices are this week’s average.</p>{board_rows(rows, hist, today, market)}'
+            + f'<h2>All prices, {esc(MARKET_LONG[market])}</h2><p class="note">USDA’s latest quote for each item’s main growing area.</p>{board_rows(rows, hist, today, market)}'
             "</section>")
 
 
@@ -644,8 +678,12 @@ def pack_in_sentence(pack):
 
 
 def answer(i):
-    s = (f"This week, wholesale {in_sentence(i['commodity'])} ({esc(pack_in_sentence(i['pack']))}) "
-         f"averaged <strong>{money(i['price'])} a case</strong> in {MARKET_LONG[i['market']]}")
+    q = i.get("quote") or {}
+    s = (("" if not q else f"On {q['date']:%B} {q['date'].day}, {q['date'].year}, ")
+         + f"wholesale {in_sentence(i['commodity'])} ({esc(pack_in_sentence(i['pack']))})"
+         + (f" from {esc(q['area'])}" if q.get("area") else "")
+         + f" traded at <strong>{money(i['price'])} a case</strong> in {MARKET_LONG[i['market']]}")
+    s = s[0].upper() + s[1:]
     if i["vs_norm"] is not None:
         s += (f", inside its usual range of {usual_range(i)} for this time of year" if usual_range(i) else
               f", {esc(brief.vs_usual(i['vs_norm']))}{' the usual price' if abs(i['vs_norm']) >= 5 else ''} for this time of year")
@@ -669,8 +707,8 @@ def quote(i, hist, today, opts, note=""):
         sz = ('<h2 class="sh">Other counts today</h2><table class="t sizes"><thead><tr><th>Count</th><th>Case price</th></tr></thead><tbody>'
               + "".join(f"<tr><td>{esc(o[1])}</td><td>{money(o[2] * o[0])}</td></tr>" for o in opts) + "</tbody></table>")
     return (f'<div class="quote"><div class="q-main"><span class="q-price">{money(i["price"])}</span>'
-            f'<span class="q-unit">a case, this week’s average</span><span class="q-pack">{esc(i["pack"])}</span>'
-            + (f'<span class="q-range">{quote_text(i["quote"])}</span>' if i.get("quote") else "") + '</div>'
+            f'<span class="q-unit">a case</span><span class="q-pack">{esc(i["pack"])}</span>'
+            + (f'<span class="q-range">{esc(quote_text(i["quote"]))}</span>{other_areas(i["quote"])}' if i.get("quote") else "") + '</div>'
             '<dl class="q-facts">'
             f'<div><dt>Today</dt><dd>{change(today.get(i["series_id"]), "today")}</dd></div>'
             f'<div><dt>For the season</dt><dd>{season(i)}</dd></div>'
@@ -690,7 +728,8 @@ def faq(commodity, rows):
     lower, single = in_sentence(commodity), PAGES[commodity][1].lower().replace("roma ", "Roma ")
     v = "is" if commodity in MASS else "are"
     qa = [(f"How much does a case of {lower} cost wholesale right now?",
-           "This week’s average: " + " ".join(f"{money(i['price'])} in {i['market']} ({pack_in_sentence(i['pack'])})." for i in rows))]
+           " ".join(f"{money(i['price'])} in {i['market']} ({pack_in_sentence(i['pack'])}"
+                    + (f", {i['quote']['area']}" if i.get("quote") and i["quote"].get("area") else "") + ")." for i in rows))]
     if ny["vs_norm"] is not None:
         qa.append((f"Are {single} prices high right now?",
                    f"In {ny['market']}, {lower} {v} inside the usual range of {usual_range(ny)} for this time of year."
@@ -729,9 +768,9 @@ def item_page(commodity, rows, hist, today, sizes, alerts, as_of, notes, only=No
                      + warnings(alerts, i["market"], commodity) + "</section>")
     if len(rows) > 1:
         body = "".join(
-            f'<tr><td><a href="{item_link(commodity, i["market"])}">{esc(MARKET_LONG[i["market"]])}</a><small>{esc(i["pack"])}</small></td>'
+            f'<tr><td><a href="{item_link(commodity, i["market"])}">{esc(MARKET_LONG[i["market"]])}</a><small>{esc(i["pack"])}{esc(", " + i["quote"]["area"]) if i.get("quote") and i["quote"].get("area") else ""}</small></td>'
             f'<td class="n">{money(i["price"])}</td><td>{season(i)}</td><td>{outlook(i)}</td></tr>' for i in rows)
-        parts.append('<h2>The three markets</h2><p class="note">Case prices are this week’s average. Each market shows its own main pack.</p><table class="t markets"><thead><tr><th>Market</th>'
+        parts.append('<h2>The three markets</h2><p class="note">USDA’s latest quote. Each market shows its own main pack and growing area.</p><table class="t markets"><thead><tr><th>Market</th>'
                      f'<th class="n">Case</th><th>For the season</th><th>Next 2 weeks</th></tr></thead><tbody>{body}</tbody></table>')
     qa = faq(commodity, rows)
     parts.append('<h2>Questions buyers ask</h2><div class="faq">'

@@ -34,7 +34,7 @@ def replay():
         test = usable[usable["year"] == Y].dropna(subset=[f"y{H}"])
         if len(train) < 500 or test.empty:
             continue
-        out.append(test[["series_id", "commodity", "market", "week", "year", "compare_price", "sp2", "below8", "tone", f"y{H}"]]
+        out.append(test[["series_id", "commodity", "market", "week", "year", "compare_price", "last", "sp2", "below8", "tone", f"y{H}"]]
                    .assign(pred=pred_fn(fit_fn(train, H), test, H)))
     r = pd.concat(out, ignore_index=True).rename(columns={f"y{H}": "y"})
     r["ape_model"] = np.abs(np.expm1(r["pred"]) - np.expm1(r["y"]))
@@ -45,7 +45,12 @@ def replay():
         prior = r[r["year"] < Y].groupby(["commodity", "market"])[["ape_model", "ape_naive"]].mean()
         ok = {k: row["ape_model"] <= row["ape_naive"] for k, row in prior.iterrows()}
         use.append(pd.Series([ok.get(k, True) for k in zip(cur["commodity"], cur["market"])], index=cur.index))
-    r["final"] = np.where(pd.concat(use).sort_index(), r["pred"], 0.0)
+    # the site shows USDA's latest quote, so calls and moves run from it: expected or actual week average two weeks on
+    # vs the latest day. An item left on "no change" stays steady.
+    gap = r["last"].fillna(0.0)
+    r["price"] = r["compare_price"] * np.exp(gap)
+    r["y"] = r["y"] - gap
+    r["final"] = np.where(pd.concat(use).sort_index(), r["pred"] - gap, 0.0)
     r["called"] = (np.abs(np.expm1(r["final"])) >= CALL) & ~fc.held(r["final"], r["sp2"], r["below8"].fillna(False), r["tone"])
     return r
 
@@ -62,7 +67,7 @@ def main():
     calls = r[r["called"]].copy()
     calls["move"] = np.expm1(calls["y"])
     calls["right"] = np.sign(calls["final"]) == np.sign(calls["move"])
-    calls["dollars"] = np.sign(calls["final"]) * calls["move"] * calls["compare_price"]  # $/case in the called direction
+    calls["dollars"] = np.sign(calls["final"]) * calls["move"] * calls["price"]  # $/case in the called direction
     big = calls[calls["move"].abs() >= 0.10]
     by_c = (calls.groupby("commodity").agg(calls=("right", "size"), right=("right", "mean"),
                                            avg_dollars=("dollars", "mean"))
@@ -102,7 +107,7 @@ def main():
     recent = recent[recent["move"].abs() >= 0.15].sort_values("move", key=abs, ascending=False).head(6)
     value["examples"] = [{
         "week": x["week"].date().isoformat(), "commodity": x["commodity"], "market": x["market"],
-        "price": round(float(x["compare_price"]), 2), "price_after": round(float(x["compare_price"] * (1 + x["move"])), 2),
+        "price": round(float(x["price"]), 2), "price_after": round(float(x["price"] * (1 + x["move"])), 2),
         "move_pct": round(100 * float(x["move"]), 1),
         "call": fc_call(x["final"], x["called"]),
     } for _, x in recent.iterrows()]

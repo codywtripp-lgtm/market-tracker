@@ -105,3 +105,29 @@ def test_a_pack_usda_stopped_quoting_is_not_the_headline():
     baby = ("terminal", "Los Angeles", "Bananas", "BABY", "15 lb cartons", "", "", "No")
     grouped = {old: {d: [{}] for d in days[100:]}, new: {d: [{}] for d in days[:120]}, baby: {d: [{}] for d in days}}
     assert next(iter(export.select(grouped, today))) == new
+
+
+def _quote(area, price):
+    return {"origin": area, "unit_price": str(price), "low_price": str(price), "high_price": str(price),
+            "normalized_price": "", "mostly_low_price": "", "mostly_high_price": "", "market_tone": ""}
+
+
+def test_price_follows_the_main_growing_area_not_a_median_across_areas():
+    days = {f"2026-10-{d:02d}": [_quote("California", 60)] for d in range(20, 31)}
+    days["2026-11-03"] = [_quote("California", 60), _quote("New Jersey", 41), _quote("Canada", 41)]
+    assert export.main_areas(days)["2026-11-03"] == "California"
+    v = export.daily_value(days["2026-11-03"], "California")
+    assert v["price"] == 60 and v["area"] == "California"
+    assert v["areas"] == "California:60.0:60.0;Canada:41.0:41.0;New Jersey:41.0:41.0"
+    assert export.daily_value(days["2026-11-03"])["price"] == 41  # what the blend used to say
+
+
+def test_a_new_area_takes_over_once_the_old_one_stops_quoting():
+    days = {"2026-10-01": [_quote("California", 60)], "2026-10-02": [_quote("Mexico", 40)]}
+    assert export.main_areas(days)["2026-10-02"] == "Mexico"
+
+
+def test_a_one_price_quote_with_no_high_still_counts_in_the_range():
+    one = dict(_quote("California", 36), high_price="")
+    v = export.daily_value([one, dict(_quote("California", 25.5), low_price="25", high_price="26")], "California")
+    assert (v["low"], v["high"], v["price"]) == (25, 36, 30.75)

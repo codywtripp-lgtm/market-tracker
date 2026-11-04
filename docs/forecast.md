@@ -73,3 +73,9 @@ A call is held as Unsettled when shipping points moved 10%+ against it over two 
 ## 2026-11-02: grocery outlook
 Tested in `scripts/backtest_grocery_methods.py`, walk-forward 2022-2026. Live now: per-item regression shrunk toward the shared one, fit with Huber loss. Miss 9.48% -> 9.36%, calls right 77.3% -> 77.7%, better in every year. An average with gradient boosting reached 9.28% with no better calls, under the 1% bar over the simpler model, so it stays off. Absolute-error fit alone and shrinking toward no change: smaller gains.
 
+## 2026-11-04: the price shown is a real quote
+The site's big price was the week's average, a median across every growing area quoted. New York romaine read $50.50 when USDA had California at $60 and New Jersey at $41. Areas sit 10%+ apart on 19% of headline days since 2021, up to 93% for Chicago carrots (`scripts/audit_origin_mix.py`). Now each terminal series follows its main growing area, the one quoted most over the previous 28 days, chosen with no look-ahead, and the site shows that area's latest quote.
+
+Walk-forward 2021-2026, `scripts/backtest_main_area.py`, headline series. On the main-area price: main-area model miss 12.08%, wrong way on big moves 5.3%; blended model 12.12%, 5.7%. Week-to-week noise is about the same either way.
+
+Calls now run from the latest quote, since that is the number on the page. The published record fell with this stricter, truer measure (`scripts/value_stats.py`): 78.9% of 7,971 calls right -> 74.6% of 6,362; big moves called ahead 43.5% -> 34.7%; wrong way stays 5.0%; average move $4.94 -> $4.61 a case. The test assumes the whole week is known; the site also forecasts midweek.
