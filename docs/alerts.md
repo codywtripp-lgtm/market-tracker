@@ -29,3 +29,6 @@ As of the first backtest, qualifying NY examples: Roma tomatoes (both directions
 ## Files
 - Rules (track records): `data/signals/rules.csv` — produced by `scripts/backtest_signals.py` (Actions → "Backtest signals"). Re-run the backtest every few months and review before replacing the file.
 - Code: `pipeline/alerts.py`; tests: `tests/test_alerts.py`.
+
+## 2026-11-04: shown only when the forecast agrees
+The site shows a sign only when the headline pack's two-week forecast calls the same direction. Replay 2021-2026 on the headline pack (`scripts/backtest_signs_vs_calls.py`), share that moved 5%+ the sign's way: shipping-point signs 78.7% when the forecast agreed (470 cases), 47.8% when it said steady (69), 59.4% when held as unsettled (64); USDA-tone signs 83.5% agreed (236), 59.4% steady (69), 45.8% held (24), 46.7% opposite (15). Every sign still goes in `data/alerts/log.csv` and the alert score. The rules were chosen on the same history, so these rates run somewhat high.

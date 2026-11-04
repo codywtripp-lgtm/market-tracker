@@ -79,3 +79,16 @@ def test_usda_ratings_lose_their_side_remarks():
     assert board._rating("Shippers First Grade light.") == "light"
     assert board._rating("Very Light and in few hands. Too few quote.") == "very light and in few hands"
     assert board._rating("VERY LIGHT") == "very light"
+
+
+def test_signs_only_show_when_the_forecast_agrees():
+    items = [{"commodity": "Limes", "market": "New York", "dir": "steady"},
+             {"commodity": "Limes", "market": "Chicago", "dir": "firming"},
+             {"commodity": "Tomatoes", "market": "New York", "dir": "softening"},
+             {"commodity": "Celery", "market": "New York", "dir": "unsettled"}]
+    alerts = [{"commodity": "Limes", "market": "New York", "direction": "up"},
+              {"commodity": "Limes", "market": "Chicago", "direction": "up"},
+              {"commodity": "Tomatoes", "market": "New York", "direction": "up"},
+              {"commodity": "Celery", "market": "New York", "direction": "down"},
+              {"commodity": "Grapes", "market": "New York", "direction": "up"}]
+    assert board.backed(alerts, items) == [alerts[1]]
