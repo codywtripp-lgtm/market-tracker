@@ -10,6 +10,7 @@ import pandas as pd
 
 from . import store
 
+IMPORTS_ONLY = {"Oranges", "Mushrooms"}  # USDA's movement reports leave out domestic shipments: no claim about supply
 COLS = ["report_date", "commodity", "variety", "organic", "market", "origin", "other_attributes", "volume"]
 
 
@@ -71,6 +72,7 @@ def main():
     latest = done.sort_values("week").groupby("commodity").tail(1).merge(vol, on=["commodity", "week"])
     latest["vs_last_year_pct"] = (np.expm1(latest["supply_gap"]) * 100).round(0)
     latest["vs_prior_2wk_pct"] = (np.expm1(latest["supply_chg"]) * 100).round(0)
+    latest = latest[~latest["commodity"].isin(IMPORTS_ONLY)]
     out = latest[["commodity", "week", "volume_lb", "vs_last_year_pct", "vs_prior_2wk_pct"]]
     out.to_csv(store.DATA / "export" / "supply.csv", index=False)
     print(out.to_string(index=False))

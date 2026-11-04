@@ -26,6 +26,9 @@ PRODUCE_NAMES = {
     "Lemons": "Lemons", "Lettuce, Iceberg": "Iceberg", "Lettuce, Romaine": "Romaine", "Limes": "Limes",
     "Onions, Dry": "Onions", "Peppers, Bell Type": "Bell peppers", "Potatoes": "Potatoes",
     "Strawberries": "Strawberries", "Tomatoes": "Tomatoes", "Tomatoes, Plum Type": "Roma tomatoes",
+    "Apples": "Apples", "Watermelons": "Watermelons", "Pineapples": "Pineapples", "Cantaloupes": "Cantaloupes",
+    "Mangoes": "Mangoes", "Pears": "Pears", "Cabbage": "Cabbage", "Oranges": "Oranges", "Corn, Sweet": "Sweet corn",
+    "Cauliflower": "Cauliflower", "Sweet Potatoes": "Sweet potatoes", "Mushrooms": "Mushrooms",
 }
 
 
@@ -92,6 +95,9 @@ STORAGE_LIFE = {  # commodity -> (low end in weeks, as printed)
     "Limes": (6, "6–8 weeks"), "Lettuce, Iceberg": (2, "2–3 weeks"), "Lettuce, Romaine": (2, "2–3 weeks"),
     "Onions, Dry": (4, "1–8 months"), "Peppers, Bell Type": (2, "2–3 weeks"), "Potatoes": (20, "5–10 months"),
     "Strawberries": (0.5, "3–7 days"), "Tomatoes": (0.5, "4–7 days ripe"), "Tomatoes, Plum Type": (0.5, "4–7 days ripe"),
+    "Apples": (4, "1–12 months"), "Pears": (8, "2–7 months"), "Sweet Potatoes": (16, "4–7 months"),
+    "Cabbage": (3, "3–6 weeks"), "Cauliflower": (3, "3–4 weeks"), "Corn, Sweet": (0.7, "5–8 days"),
+    "Mushrooms": (0.4, "3–4 days"),
 }
 STORES_WEEKS = 4
 

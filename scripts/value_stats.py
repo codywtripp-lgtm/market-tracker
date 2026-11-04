@@ -50,7 +50,7 @@ def replay():
     gap = r["last"].fillna(0.0)
     r["price"] = r["compare_price"] * np.exp(gap)
     r["y"] = r["y"] - gap
-    r["final"] = np.where(pd.concat(use).sort_index(), r["pred"] - gap, 0.0)
+    r["final"] = np.where(pd.concat(use).sort_index() & ~r["commodity"].isin(fc.NO_CALLS), r["pred"] - gap, 0.0)
     r["called"] = (np.abs(np.expm1(r["final"])) >= CALL) & ~fc.held(r["final"], r["sp2"], r["below8"].fillna(False), r["tone"])
     return r
 

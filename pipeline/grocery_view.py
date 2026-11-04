@@ -29,7 +29,11 @@ WHOLESALE = {"Avocados": "avocado-prices", "Strawberries": "strawberry-prices", 
              "Peppers, Bell Type": "bell-pepper-prices", "Onions, Dry": "onion-prices", "Potatoes": "potato-prices",
              "Lemons": "lemon-prices", "Limes": "lime-prices", "Cucumbers": "cucumber-prices", "Broccoli": "broccoli-prices",
              "Celery": "celery-prices", "Carrots": "carrot-prices", "Bananas": "banana-prices",
-             "Blueberries": "blueberry-prices", "Grapes": "grape-prices"}
+             "Blueberries": "blueberry-prices", "Grapes": "grape-prices", "Apples": "apple-prices",
+             "Watermelons": "watermelon-prices", "Pineapples": "pineapple-prices", "Cantaloupes": "cantaloupe-prices",
+             "Mangoes": "mango-prices", "Pears": "pear-prices", "Cabbage": "cabbage-prices", "Oranges": "orange-prices",
+             "Corn-Sweet": "sweet-corn-prices", "Cauliflower": "cauliflower-prices",
+             "Sweet Potatoes": "sweet-potato-prices", "Mushrooms": "mushroom-prices"}
 
 
 def qual(i):

@@ -40,19 +40,28 @@ PAGES = {
     "Cucumbers": ("cucumber-prices", "Cucumber"), "Broccoli": ("broccoli-prices", "Broccoli"),
     "Celery": ("celery-prices", "Celery"), "Carrots": ("carrot-prices", "Carrot"), "Bananas": ("banana-prices", "Banana"),
     "Blueberries": ("blueberry-prices", "Blueberry"), "Grapes": ("grape-prices", "Grape"),
+    "Apples": ("apple-prices", "Apple"), "Watermelons": ("watermelon-prices", "Watermelon"),
+    "Pineapples": ("pineapple-prices", "Pineapple"), "Cantaloupes": ("cantaloupe-prices", "Cantaloupe"),
+    "Mangoes": ("mango-prices", "Mango"), "Pears": ("pear-prices", "Pear"), "Cabbage": ("cabbage-prices", "Cabbage"),
+    "Oranges": ("orange-prices", "Orange"), "Corn, Sweet": ("sweet-corn-prices", "Sweet corn"),
+    "Cauliflower": ("cauliflower-prices", "Cauliflower"), "Sweet Potatoes": ("sweet-potato-prices", "Sweet potato"),
+    "Mushrooms": ("mushroom-prices", "Mushroom"),
 }
 GROCERY = {  # the grocery page for the same item (pipeline/grocery.py slugs)
     "Avocados": "avocados", "Strawberries": "strawberries", "Tomatoes": "tomatoes", "Tomatoes, Plum Type": "tomatoes",
     "Peppers, Bell Type": "bell-peppers", "Onions, Dry": "onions", "Potatoes": "potatoes", "Lemons": "lemons",
     "Limes": "limes", "Cucumbers": "cucumbers", "Broccoli": "broccoli", "Celery": "celery", "Carrots": "carrots",
     "Bananas": "bananas", "Blueberries": "blueberries", "Grapes": "grapes", "Lettuce, Iceberg": "lettuce",
-    "Lettuce, Romaine": "lettuce",
+    "Lettuce, Romaine": "lettuce", "Apples": "apples", "Watermelons": "watermelons", "Pineapples": "pineapples",
+    "Cantaloupes": "cantaloupes", "Mangoes": "mangoes", "Pears": "pears", "Cabbage": "cabbage", "Oranges": "oranges",
+    "Corn, Sweet": "sweet-corn", "Cauliflower": "cauliflower", "Sweet Potatoes": "sweet-potatoes", "Mushrooms": "mushrooms",
 }
 DISPLAY = {  # full names for rows and headings
     "Lettuce, Iceberg": "Iceberg lettuce", "Lettuce, Romaine": "Romaine lettuce", "Tomatoes": "Tomatoes",
     "Tomatoes, Plum Type": "Roma tomatoes", "Peppers, Bell Type": "Bell peppers", "Onions, Dry": "Onions",
+    "Corn, Sweet": "Sweet corn", "Sweet Potatoes": "Sweet potatoes",
 }
-MASS = {"Lettuce, Iceberg", "Lettuce, Romaine", "Broccoli", "Celery"}  # "romaine is", "limes are"
+MASS = {"Lettuce, Iceberg", "Lettuce, Romaine", "Broccoli", "Celery", "Cabbage", "Cauliflower", "Corn, Sweet"}  # "romaine is", "limes are"
 
 DIR = {  # direction over the next two weeks: (arrow, word, tone)
     "firming": ("▲", "Firming", "up"), "softening": ("▼", "Softening", "down"), "steady": ("", "Steady", "flat"),

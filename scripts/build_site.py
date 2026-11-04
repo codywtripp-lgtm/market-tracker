@@ -329,7 +329,7 @@ def board_pages():
 
     dataset = json.dumps({
         "@context": "https://schema.org", "@type": "Dataset", "name": "Wholesale produce terminal market prices",
-        "description": "Daily wholesale case prices for 18 produce items at the New York (Hunts Point), Los Angeles "
+        "description": "Daily wholesale case prices for 30 produce items at the New York (Hunts Point), Los Angeles "
                        "and Chicago terminal markets, compared with the usual price for the time of year, with a "
                        "two-week outlook.",
         "url": f"{SITE_URL}wholesale/", "creator": {"@type": "Organization", "name": SITE_NAME},
@@ -502,6 +502,10 @@ NICE = {"Lettuce, Romaine": "Romaine", "Lettuce, Iceberg": "Iceberg", "Tomatoes,
 
 # Changes that move a number people see, newest first, with the numbers as they stood that day. Add one with every such change.
 CHANGES = (
+    ("November 4, 2026", "Added 12 items: apples, watermelons, pineapples, cantaloupes, mangoes, pears, cabbage, oranges, "
+     "sweet corn, cauliflower, sweet potatoes and mushrooms. Their calls count in the record, which moved a little: calls "
+     "right from 74.4% to 73.7%, big swings flagged ahead from 34.3% to 32.6%, wrong-way calls on big swings from 4.9% to "
+     "4.6%. Apples show prices but no firming or softening calls, because past calls were right only half the time."),
     ("November 3, 2026", "Grapes now follow USDA’s 18 and 19 lb containers as one pack, so New York and Chicago show California "
      "grapes in season, not a Peru pack USDA quotes a few days a month. Carrots follow California in New York and Chicago. "
      "USDA’s shipment reports leave California carrots out, and that had put Canada first. The record moved from 75% to "

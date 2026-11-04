@@ -384,6 +384,7 @@ def coverage(resid):
 
 
 MODEL = "blend"  # replaced in main() by the best of MODEL_CANDIDATES
+NO_CALLS = {"Apples"}  # a coin flip on the rare calls made, 2021-2026 (15 of 30): always "no change"
 
 
 def _choices(r):
@@ -391,7 +392,8 @@ def _choices(r):
     if r.empty:
         return {}
     means = r.groupby(["commodity", "market", "method"])["ape"].mean().unstack("method")
-    return {k: (MODEL if row.get(MODEL, np.inf) <= row.get("naive", np.inf) else "naive") for k, row in means.iterrows()}
+    return {k: (MODEL if row.get(MODEL, np.inf) <= row.get("naive", np.inf) and k[0] not in NO_CALLS else "naive")
+            for k, row in means.iterrows()}
 
 
 def main():

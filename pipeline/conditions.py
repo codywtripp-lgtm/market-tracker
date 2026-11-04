@@ -22,7 +22,7 @@ DAYS = 14
 FLAGS = re.compile(r"fair appearance|fair quality|fair condition|holdover|ordinary condition", re.I)
 SHORT = re.compile(r"very light|few hands|insufficient|too few|very limited", re.I)
 # grocery (retail report) name -> wholesale names
-TO_RETAIL = {"Lettuce, Iceberg": "Lettuce", "Lettuce, Romaine": "Lettuce", "Tomatoes, Plum Type": "Tomatoes"}
+TO_RETAIL = {"Lettuce, Iceberg": "Lettuce", "Lettuce, Romaine": "Lettuce", "Tomatoes, Plum Type": "Tomatoes", "Corn, Sweet": "Corn-Sweet"}
 
 
 def _rows(source, start, end):
