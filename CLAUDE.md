@@ -3,7 +3,7 @@
 Tracks daily USDA produce prices (later meat/other commodities) to show what's cheap or expensive vs. historical norms. End state: free public website and/or Tableau Public dashboard; later seasonal + weather-driven forecasting.
 
 ## Owner
-- Background in data viz/reporting; former produce buyer at Baldor (NYC). Knows the industry (packs, counts, terminal markets); new to GitHub and Claude Code.
+- Background in data viz/reporting; former analytics manager at a major NYC produce distributor. Knows the industry (packs, counts, terminal markets); new to GitHub and Claude Code.
 - Works from phone. Keep updates short, lead with what matters, spell out any action needed (e.g., "merge PR #N").
 - Work in small reviewable steps; flag assumptions about USDA formats rather than guessing.
 
@@ -25,7 +25,7 @@ Also keep: low/high/mostly prices, appearance/condition/quality (needed for dedu
 ## Status / decisions
 - 2026-09-25: Exploration done from the MMN website; see `docs/usda-exploration.md` for report IDs, formats and gotchas.
 - 2026-09-26: Owner decisions:
-  - Commodities: avocados, tomatoes, bell peppers, onions, lettuce (iceberg + romaine), strawberries. Beef and poultry wanted too (high-volume at Baldor) — sources TBD (boxed beef is on the LMR datamart `mpr.datamart.ams.usda.gov`, not MARS; chicken via MARS weekly/retail reports).
+  - Commodities: avocados, tomatoes, bell peppers, onions, lettuce (iceberg + romaine), strawberries. Beef and poultry wanted too (high-volume in the trade) — sources TBD (boxed beef is on the LMR datamart `mpr.datamart.ams.usda.gov`, not MARS; chicken via MARS weekly/retail reports).
   - Terminal markets: New York (critical), Los Angeles, Chicago.
   - Backfill depth: 10 years.
   - `MARS_API_KEY` secret added to the GitHub repo. `scripts/probe_api.py` + `.github/workflows/probe.yml` is a throwaway exploration job (manual trigger) that verifies the API and measures reporting consistency.
@@ -66,6 +66,8 @@ Also keep: low/high/mostly prices, appearance/condition/quality (needed for dedu
 - 2026-11-02: **Pack picks**: USDA publishes no volume by pack and quote frequency is not a volume proxy, so picks rest on quotes + trade sources. Avocados 48s (owner), lemons 140s, limes 200s, LA tomatoes vine ripes 2-layer 5x5s (`MAIN_PACK_MARKET`), LA blueberries 6-oz. 5 kg peppers are colored only, so green 1 1/9 bu stays. Mature greens stay NY/Chicago (USDA ERS: foodservice). A pack USDA stopped quoting (21+ days) loses the headline to a current one.
 - 2026-11-02: **Grocery outlook** now per-item Huber regression (`grocery_forecast.fit_items`): miss 9.48% -> 9.36%, calls 77.3% -> 77.7% right. Gradient boosting blend not worth it.
 - 2026-11-02: **Supply news** names the areas shipping the most (`board.main_areas`: 25%+ of the last 4 weeks of movement-report shipments; areas USDA movement reports leave out, such as California lemons, stay in), each with its own USDA rating from the last 3 days.
+- 2026-11-04: **About and Track record say who built the site, no name** (owner reversed the earlier nothing-about-me rule): "former analytics manager at a major New York produce distributor". Don't name the company or call the owner a buyer. Google's helpful-content guidance: make it clear who created the content.
+- 2026-11-04: **About and Track record say who built the site, no name** (owner reversed the earlier nothing-about-me rule): "former analytics manager at a major New York produce distributor". Don't name the company or call the owner a buyer. Google's helpful-content guidance: make it clear who created the content.
 - Open items: owner review of the site on phone; BLS retail price layer; household view (nice-to-have); optional Google Search Console verification (owner action).
 - (older) Next: after backfill, backtest early-warning signals (shipping point → terminal lead, USDA tone text, shipment volume), then build alerts + front page.
 - 2026-09-26: PRs #1–#3 merged. Backfill started (2021–2026, then 2016–2020).

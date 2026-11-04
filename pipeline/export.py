@@ -39,7 +39,7 @@ MIN_COVERAGE_FRESH = 0.25  # a pack that replaced a stopped one has less than a 
 NORM_WEEK_WINDOW = 2   # seasonal norm uses the same ISO week +/- this many weeks
 MIN_NORM_YEARS = 3     # need this many prior years for a seasonal norm
 
-# The pack the trade actually prices each item by (owner, a former Hunts Point buyer: "use the stuff with
+# The pack the trade actually prices each item by (owner: "use the stuff with
 # the big volume"). Field -> regex on the terminal row; the best-covered matching series in each market is
 # the headline. Without a spec, or if no matching series is reported enough, the best-covered
 # conventional series is used. Owner can correct any of these.

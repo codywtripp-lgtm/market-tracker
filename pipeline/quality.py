@@ -6,7 +6,7 @@ October watermelon is imported and late. Shoppers see one word (Excellent / Good
 
 The calendar is U.S. supermarket timing: harvest seasons from the USDA SNAP-Ed Seasonal Produce Guide and
 trade timing (storage, import windows, growing-area transitions). Items not listed fall back to the USDA
-guide: in season = Good, out of season = Fair. Owner (former Hunts Point buyer) reviews this table.
+guide: in season = Good, out of season = Fair. Owner reviews this table.
 """
 
 LEVELS = ["Poor", "Fair", "Good", "Excellent"]
