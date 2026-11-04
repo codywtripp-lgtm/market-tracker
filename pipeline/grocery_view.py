@@ -93,6 +93,8 @@ def meta_line(i):
     if i["aisle"] != "produce":
         return ""
     season = "in season" if i["in_season"] else ("out of season" if i["seasons"] else "")
+    if season == "out of season" and "all year" in (i.get("quality") or ("", ""))[1]:  # beside "from Mexico all year" it contradicts
+        season = ""
     q = qual(i)
     if not q and not season:
         return ""

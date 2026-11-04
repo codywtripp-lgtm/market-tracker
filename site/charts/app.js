@@ -243,7 +243,7 @@ function renderNews() {
 }
 
 // ---------- chart ----------
-async function history(id) {
+async function seriesHistory(id) {
   if (!state.histories[id]) {
     state.histories[id] = fetch(`../data/s/${encodeURIComponent(id)}.json`).then((r) => r.json()).catch(() => []);
   }
@@ -267,7 +267,7 @@ async function renderChart() {
   $("chart-note").textContent = state.view === "price" && sel.length > 1 ? "Different items can't share a price scale, so several items are shown as % vs usual. Tap “only” to see one item's price." : "";
 
   const series = await Promise.all(sel.map(async (i) => {
-    const rows = (await history(i.id)).filter((r) => r[0] >= cutoff);
+    const rows = (await seriesHistory(i.id)).filter((r) => r[0] >= cutoff);
     return { item: i, rows };
   }));
   lastChart = { series, mode };
