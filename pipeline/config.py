@@ -57,7 +57,13 @@ TERMINAL_REPORTS = {
     "2314": "New York", "2315": "New York", "2316": "New York",
     "2306": "Los Angeles", "2307": "Los Angeles", "2308": "Los Angeles",
     "2290": "Chicago", "2291": "Chicago", "2292": "Chicago",
+    "2318": "Philadelphia", "2319": "Philadelphia", "2320": "Philadelphia",
+    "2285": "Boston", "2286": "Boston", "2287": "Boston",
+    "2277": "Atlanta", "2278": "Atlanta", "2279": "Atlanta",
+    "2302": "Detroit", "2303": "Detroit", "2304": "Detroit",
+    "2310": "Miami", "2311": "Miami", "2312": "Miami",
 }
+MARKETS_ADDED = {"Philadelphia", "Boston", "Atlanta", "Detroit", "Miami"}  # history from 2021
 
 SHIPPING_POINT_REPORTS = [
     "2390",  # Fresno SP fruit: Mexico avocados via Texas, CA avocados, CA strawberries, grapes
