@@ -364,6 +364,13 @@ def board_rows(rows, hist, today, market):
     return f'<div class="board">{head}{body}</div>'
 
 
+def backed(alerts, items):
+    """Signs the headline pack's two-week forecast agrees with. scripts/backtest_signs_vs_calls.py: 2021-2026, those
+    moved the called way 79-84% of the time, the rest about 46-59%, and a sign beside "Steady" reads as a contradiction."""
+    calls = {(i["commodity"], i["market"]): i["dir"] for i in items}
+    return [a for a in alerts if calls.get((a["commodity"], a["market"])) == ("firming" if a["direction"] == "up" else "softening")]
+
+
 def warnings(alerts, market=None, commodity=None):
     """Signs of a move, in plain words: what it is, why, and how often that sign has been right."""
     rows = [a for a in alerts if (market is None or a["market"] == market) and (commodity is None or a["commodity"] == commodity)]
@@ -571,7 +578,7 @@ def market_panel(market, rows, hist, today, alerts, notes, hidden=False):
             f'<h2>What to do today</h2>{actions(rows, market)}'
             + notes_section(notes)
             + (f'<h2>Signs of a move</h2><p class="note">Patterns that came before a price move at least two times in '
-               f'three over the last 10 years. They only show here when one appears.</p>{warnings(alerts, market)}'
+               f'three over the last 10 years. They only show here when the forecast agrees.</p>{warnings(alerts, market)}'
                if warnings(alerts, market) else "")
             + f'<h2>All prices, {esc(MARKET_LONG[market])}</h2>{board_rows(rows, hist, today, market)}'
             "</section>")
@@ -726,6 +733,7 @@ def build():
     items = [i for i in brief.headline_items(latest, series, forecasts, card) if i["commodity"] in PAGES]
     for i in items:
         i["dir"] = i["dir"] or ("steady" if i["range"] else "")
+    alerts = backed(alerts, items)
     hist = history(items)
     as_of, today = day_changes(items)
     as_of = as_of or max(dt.date.fromisoformat(r["week_start"]) for r in latest) + dt.timedelta(days=6)
