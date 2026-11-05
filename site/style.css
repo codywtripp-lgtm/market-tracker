@@ -303,7 +303,7 @@ a.sname:hover, .buy h3 a:hover, .pricey h3 a:hover, .all th a:hover { text-decor
 .record { color: var(--ink-2); margin-top: 48px; }
 
 /* ---------- wholesale item page ---------- */
-.crumbs { display: flex; gap: 8px; font-size: 16px; color: var(--ink-2); margin-bottom: 16px; }
+.crumbs { display: flex; flex-wrap: wrap; gap: 0 8px; font-size: 16px; color: var(--ink-2); margin-bottom: 16px; }
 .crumbs a { color: var(--ink-2); }
 .answer { font-size: 22px; line-height: 31px; color: var(--ink-2); max-width: 60ch; margin: 0; }
 .answer strong { color: var(--ink); }
@@ -484,7 +484,7 @@ main.dash { min-width: 0; }
   .logo { font-size: 20px; } .logo svg { width: 26px; height: 26px; }
   .primary { order: 2; flex-basis: 100%; gap: 20px; font-size: 16px; }
   .search { order: 3; flex-basis: 100%; margin: 4px 0 0; }
-  .aisles { gap: 22px; margin: 0 0 28px; padding-top: 12px; }
+  .aisles { gap: 2px 22px; flex-wrap: wrap; margin: 0 0 28px; padding-top: 12px; }
   .aisles a { font-size: 16px; }
   .lede { font-size: 20px; line-height: 28px; }
   .buy { grid-template-columns: 88px 1fr; gap: 14px; padding: 14px 0; }

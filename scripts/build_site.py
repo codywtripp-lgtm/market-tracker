@@ -153,7 +153,7 @@ ICONS = ('<link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/p
          '<link rel="icon" href="/favicon.svg" type="image/svg+xml">'
          '<link rel="apple-touch-icon" href="/apple-touch-icon.png">')
 NAV = (("grocery", "", "Grocery prices"), ("wholesale", "wholesale/", "Wholesale prices"), ("about", "about/", "About"))
-WHOLESALE_NAV = (("wholesale/", "Today"), ("charts/", "Price history"), ("why/", "Track record"))
+WHOLESALE_NAV = (("wholesale/", "Produce"), ("wholesale-meat-prices/", "Meat"), ("charts/", "Price history"), ("why/", "Track record"))
 # grocery aisles, the way a shopper walks the store (pages written by pipeline/board.py)
 AISLES = (("", "Produce"), ("meat-prices/", "Meat & poultry"), ("dairy-and-egg-prices/", "Dairy & eggs"))
 SEARCH = []  # dicts for /search.json and the A to Z page (see emit)
@@ -211,7 +211,7 @@ def footer(up):
             "of the range when USDA gives none, from USDA AMS Market News. “Usual” means the same weeks of the year in past years, adjusted for food inflation. "
             f'<a href="{up}about/">How this site works</a>.</p>'
             f'<p>Contact: <a href="mailto:{CONTACT}">{CONTACT}</a></p>'
-            f'<nav aria-label="Wholesale markets">{markets}</nav><nav aria-label="Wholesale prices by item">{items}</nav></div></footer>')
+            f'<nav aria-label="Wholesale markets"><a href="{up}wholesale-meat-prices/">Wholesale meat prices</a>{markets}</nav><nav aria-label="Wholesale prices by item">{items}</nav></div></footer>')
 
 
 def snippet(text, limit=155):
@@ -373,6 +373,19 @@ def board_pages():
                    "status": card.get("out", ""), "tone": card.get("tone", ""),
                    "where": AISLE_NAME.get(card.get("aisle", ""), "Produce")},
              head=crumbs_ld(("Grocery prices", SITE_URL), (short, f"{SITE_URL}grocery/{f.stem}/")))
+    if (BOARD / "meat.html").exists():
+        emit("wholesale-meat-prices/", "meat", "Wholesale Meat Prices Today: Boxed Beef and Chicken", 1, active="wholesale-meat-prices/",
+             desc="Today's USDA boxed beef cutout and cut prices per hundredweight and wholesale chicken prices per pound: how they "
+                  "compare with the same weeks in past years, and where they're likely to go in the next two weeks.",
+             find={"name": "All wholesale meat prices", "status": "Boxed beef and chicken", "aka": "boxed beef cutout wholesale chicken"})
+        for i in json.loads((ROOT / "data" / "export" / "meat.json").read_text(encoding="utf-8"))["items"]:
+            slug, n = i["slug"], i["name"]
+            kind = "per cwt" if i["kind"] == "Beef" else "per lb"
+            emit(f"wholesale-meat-prices/{slug}/", f"meat/{slug}", f"{n.title().replace('Wog', 'WOG')} Wholesale Price Today", 2, active="wholesale-meat-prices/",
+                 head=crumbs_ld(("Wholesale prices", f"{SITE_URL}wholesale/"), ("Meat", f"{SITE_URL}wholesale-meat-prices/"),
+                                (n, f"{SITE_URL}wholesale-meat-prices/{slug}/")),
+                 find={"name": f"{n}, wholesale", "price": f"${i['price']:,.2f} {kind}", "status": board.SEASON.get(i["status"], ("", ""))[0],
+                       "aka": "boxed beef" if kind == "per cwt" else "chicken"})
     for c, (slug, _) in board.PAGES.items():
         if not (BOARD / "items" / f"{slug}.html").exists():
             continue
@@ -485,6 +498,7 @@ Updated every market evening (Monday to Saturday). Prices are USDA's latest quot
 ## Pages
 - [Grocery prices this week]({SITE_URL}): this week's best buys at U.S. supermarkets, what's in season, what's pricey
 - [Wholesale prices today]({SITE_URL}wholesale/): every item, all eight terminal markets, firming or softening
+- [Wholesale meat prices today]({SITE_URL}wholesale-meat-prices/): USDA boxed beef cutout and cuts per hundredweight, ground beef and chicken, firming or softening
 - [Track record]({SITE_URL}why/): how accurate the forecasts have been, 2021 to 2026
 - [Price history]({SITE_URL}charts/): 10 years of weekly prices per item
 
@@ -502,6 +516,9 @@ NICE = {"Lettuce, Romaine": "Romaine", "Lettuce, Iceberg": "Iceberg", "Tomatoes,
 
 # Changes that move a number people see, newest first, with the numbers as they stood that day. Add one with every such change.
 CHANGES = (
+    ("November 5, 2026", "Added wholesale meat: 22 boxed beef and ground beef prices and 8 chicken prices, with two-week calls. They don't change "
+     "the produce record. In testing, beef calls since 2021 were right 82.5% of the time (559 calls). Chicken calls were right 109 of 111 "
+     "times, but chicken history starts in 2022, so that covers only 2025 and 2026 and about 31 separate moves; expect it to come down."),
     ("November 4, 2026", "Added Philadelphia, Boston, Atlanta, Detroit and Miami, with prices back to 2021. Their calls count in the "
      "record. Stopped making calls on grapes in New York, Los Angeles and Detroit and cucumbers in Detroit, right under 55% of the time. "
      "Calls right moved from 73.8% to 75.5%, big swings flagged ahead from 32.5% to 33.1%, wrong-way calls on big swings from 4.5% to 3.8%."),
