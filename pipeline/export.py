@@ -158,6 +158,11 @@ COLORS = {"white", "yellow", "bi-color", "green", "orange", "purple"}
 # Below the grade the trade buys as standard: used only on days the standard grade isn't quoted, so markets compare like for like.
 LOWER_GRADES = {"Shippers Choice", "Marked Choice", "Marked Combination", "Marked Standard", "Texas Choice", "U.S. Combination",
                 "U.S. Two", "U.S. Utility", "Class II", "Canada No. 2", "CD Two", "Unclassified (Standard)"}
+# Apples: Extra Fancy is the grade the trade buys. Fancy (U.S., Washington, Canada) and Fancy/Extra Fancy combination
+# packs run about a third cheaper (Philadelphia galas 88s, October 2026: $26-28 against $36-44): a different product,
+# not a stand-in, so they're left out like off-condition lots. Pears keep Fancy: New York quotes d'Anjou mostly as
+# Oregon Fancy and never as Extra Fancy.
+LOWER_FANCY = re.compile(r"^((U\.S\.|WA|CD|CA)\s+Fancy|Combination U\.S\. Extra Fancy-U\.S\. Fancy)$")
 
 # Rows describing off-grade or premium product are excluded from headline prices.
 NON_STANDARD = re.compile(r"fair|poor|ordinary|holdover|decay|damage|scar|fine|mixed condition", re.I)
@@ -222,7 +227,8 @@ def is_main_pack(key):
 
 
 def is_standard(r):
-    return not any(NON_STANDARD.search(r[f]) for f in ("appearance", "condition", "quality"))
+    return not any(NON_STANDARD.search(r[f]) for f in ("appearance", "condition", "quality")) and not (
+        r["commodity"] == "Apples" and LOWER_FANCY.match((r.get("grade") or "").strip()))
 
 
 def fnum(s):
