@@ -106,7 +106,7 @@ def main():
     for sid, rows in weekly.items():
         rows.sort()
         (OUT / "data" / "s" / f"{sid}.json").write_text(json.dumps(with_usual(rows), separators=(",", ":")))
-    urls = board_pages() + why_page() + charts_page() + about_page()
+    urls = board_pages() + why_page() + charts_page() + about_page() + updates_page()
     redirect("brief", "../")
     if KIT_FORM_ACTION:
         write(OUT / "thanks" / "index.html", page(
@@ -116,6 +116,9 @@ def main():
             '<p><a href="../">Back to this week’s prices</a></p></section>', view="grocery", noindex=True))
     redirect("cook-this-week", "../")  # removed 2026-10-29
     redirect("thanksgiving-produce-prices", "../")  # removed 2026-10-29
+    for ms in board.MARKET_SLUG.values():  # apples split by variety 2026-11-05: city pages now live per variety
+        if ms != "new-york":
+            redirect(f"apple-prices/{ms}", "../")
     seo_files(urls)
     print(f"site: {len(latest)} items, {len(weekly)} series histories, {len(urls)} pages")
 
@@ -168,7 +171,7 @@ def topbar(up, active=None, view="wholesale", aisle=None):
     """Logo, the two sides of the site and About as plain links, search; then the sub-nav for the side you're on
     (grocery aisles, or wholesale today / price history / track record)."""
     cur = ' aria-current="page"'
-    side = "about" if active == "about/" else view
+    side = "about" if active in ("about/", "updates/") else view
     main = "".join(f'<a href="{up}{href}"{cur if key == side else ""}>{label}</a>' for key, href, label in NAV)
     search = (f'<form class="search" role="search" action="{up}search/" data-root="{up}" '
               f'data-view="{"g" if view == "grocery" else "w"}" data-ver="{ASSET_V}{dt.date.today():%m%d}">'
@@ -177,10 +180,10 @@ def topbar(up, active=None, view="wholesale", aisle=None):
               'role="combobox" aria-expanded="false" aria-controls="q-list" aria-autocomplete="list">'
               '<ul id="q-list" role="listbox" aria-label="Matching items" hidden></ul></form>')
     sub = ""
-    if view == "grocery" and active != "about/" and (BOARD / "aisle-meat.html").exists():
+    if view == "grocery" and active not in ("about/", "updates/") and (BOARD / "aisle-meat.html").exists():
         sub = ('<nav class="aisles" aria-label="Aisles">' + "".join(
             f'<a href="{up}{href}"{cur if href == aisle else ""}>{label}</a>' for href, label in AISLES) + "</nav>")
-    elif view == "wholesale" and active != "about/":
+    elif view == "wholesale" and active not in ("about/", "updates/"):
         sub = ('<nav class="aisles" aria-label="Wholesale">' + "".join(
             f'<a href="{up}{href}"{cur if href == active else ""}>{label}</a>' for href, label in WHOLESALE_NAV) + "</nav>")
     return (f'<a class="skip" href="#main">Skip to main content</a><header class="top"><div class="wrap"><a class="logo" href="{up}">{MARK}<span>{SITE_NAME}</span></a>'
@@ -209,7 +212,7 @@ def footer(up):
     return ('<footer class="foot"><div class="wrap"><p>Grocery prices are the average of what U.S. supermarkets advertised each week, from USDA’s '
             "National Retail Report. Wholesale prices are USDA’s latest quote per case at the terminal markets: the “mostly” price, or the middle "
             "of the range when USDA gives none, from USDA AMS Market News. “Usual” means the same weeks of the year in past years, adjusted for food inflation. "
-            f'<a href="{up}about/">How this site works</a>.</p>'
+            f'<a href="{up}about/">How this site works</a>. <a href="{up}updates/">Site updates</a>.</p>'
             f'<p>Contact: <a href="mailto:{CONTACT}">{CONTACT}</a></p>'
             f'<nav aria-label="Wholesale markets"><a href="{up}wholesale-meat-prices/">Wholesale meat prices</a>{markets}</nav><nav aria-label="Wholesale prices by item">{items}</nav></div></footer>')
 
@@ -252,7 +255,7 @@ def page(title, desc, canonical, up, body, active=None, head="", og=None, main_c
 {topbar(up, active, view, aisle)}
 <main id="main" class="{main_class}">
 {body}
-{signup(up) if view == "grocery" and active != "about/" else ""}
+{signup(up) if view == "grocery" and active not in ("about/", "updates/") else ""}
 </main>
 {footer(up)}
 </body></html>
@@ -340,7 +343,7 @@ def board_pages():
                             "alternateName": ["producepricetracker.com"], "url": SITE_URL},
                            {"@context": "https://schema.org", "@type": "Organization", "name": SITE_NAME, "url": SITE_URL,
                             "logo": f"{SITE_URL}apple-touch-icon.png"}])
-        emit("", "grocery", f"{SITE_NAME}: This Week's Best Buys at the Grocery Store", 0,
+        emit("", "grocery", f"{SITE_NAME}: This Week's Best Grocery Buys", 0,
              og_key="home", view="grocery", day=g_day, head=f'<script type="application/ld+json">{site}</script>',
              find={"name": "Produce", "status": "This week’s best buys", "aka": "fruit vegetables"}, aisle="")
     for key, rel, title, find in (
@@ -386,6 +389,12 @@ def board_pages():
                                 (n, f"{SITE_URL}wholesale-meat-prices/{slug}/")),
                  find={"name": f"{n}, wholesale", "price": f"${i['price']:,.2f} {kind}", "status": board.SEASON.get(i["status"], ("", ""))[0],
                        "aka": "boxed beef" if kind == "per cwt" else "chicken"})
+    hub = board.APPLE_HUB[0]
+    if (BOARD / "items" / f"{hub}.html").exists():
+        emit(f"{hub}/", f"items/{hub}", "Apple Prices Today, Wholesale per Case by Variety", 1,
+             head=crumbs_ld(("Wholesale prices", f"{SITE_URL}wholesale/"), ("Apple prices", f"{SITE_URL}{hub}/")),
+             find={"name": "Apples, wholesale, by variety", "status": "Gala, Honeycrisp, Granny Smith, Red Delicious, Fuji",
+                   "where": "Hunts Point", "aka": "apples"})
     for c, (slug, _) in board.PAGES.items():
         if not (BOARD / "items" / f"{slug}.html").exists():
             continue
@@ -516,6 +525,17 @@ NICE = {"Lettuce, Romaine": "Romaine", "Lettuce, Iceberg": "Iceberg", "Tomatoes,
 
 # Changes that move a number people see, newest first, with the numbers as they stood that day. Add one with every such change.
 CHANGES = (
+    ("November 5, 2026", "Wholesale apples are now priced by variety. Gala, Honeycrisp, Granny Smith, Red Delicious and Fuji "
+     "each have their own page and compare like for like across markets; before, each city showed one variety (Gala in New "
+     "York, Granny Smith in Los Angeles, Red Delicious in Miami). Apples still get no firming or softening calls: by variety, "
+     "past calls were right 41% to 64% of the time."),
+    ("November 5, 2026", "Fixed two ways a cheaper product could stand in for the usual one. Apple prices leave out the lower "
+     "Fancy grade: Philadelphia Galas had switched between Extra Fancy ($36 to $44) and Fancy ($22 to $28) from week to week. "
+     "And a lower grade such as Shippers Choice now takes over only after three market days in a row without the standard "
+     "grade: Philadelphia lemons had read $42.25 one day and $33 the next. Calls right moved from 75.5% to 75.6%, big swings "
+     "flagged ahead from 33.1% to 30.8%, wrong-way calls on big swings from 3.8% to 3.6%."),
+    ("November 5, 2026", "Grocery item pages show the organic price next to the regular one when at least 200 stores "
+     "advertised the same item and pack that week."),
     ("November 5, 2026", "Added wholesale meat: 22 boxed beef and ground beef prices and 8 chicken prices, with two-week calls. They don't change "
      "the produce record. In testing, beef calls since 2021 were right 82.5% of the time (559 calls). Chicken calls were right 109 of 111 "
      "times, but chicken history starts in 2022, so that covers only 2025 and 2026 and about 31 separate moves; expect it to come down."),
@@ -634,8 +654,8 @@ their forecast range, and about {round(100 - v['big_moves_called_ahead_pct'] - v
 {live_line}
 
 <h2>What’s changed</h2>
-<p>When a change moves the numbers on this site, it’s listed here, including when the record goes down.</p>
-<ul>{"".join(f"<li><b>{day}.</b> {text}</li>" for day, text in CHANGES)}</ul>
+<p>Every change that moves a number on this site, including when the record goes down, is on the
+<a href="../updates/">site updates</a> page.</p>
 <p><a class="cta" href="../">See today's prices</a></p>"""
     desc = ("How often the wholesale produce price forecasts were right: direction calls, big swings flagged two weeks "
             "ahead and early warnings, tested on USDA terminal market data 2021 to 2026.")
@@ -645,6 +665,24 @@ their forecast range, and about {round(100 - v['big_moves_called_ahead_pct'] - v
              main_class="wrap landing"),
         encoding="utf-8")
     return [(f"{SITE_URL}why/", dt.date.today().isoformat())]
+
+
+def updates_page():
+    """/updates/: one fixed place for every change that moves a number people see, newest first. News-site corrections
+    practice: a standing list, one click from any page (footer), nothing changed silently."""
+    body = ("""<section class="intro"><h1>Site updates</h1>
+<p class="lede">Every change that moves a number on this site, newest first, with the numbers as they stood that day.
+Fixes are listed too, including when they make the track record look worse.</p></section>
+<section><ul class="updates">"""
+            + "".join(f"<li><b>{day}.</b> {text}</li>" for day, text in CHANGES)
+            + """</ul></section>
+<p>See something that looks off? Email <a href="mailto:""" + CONTACT + """">""" + CONTACT + """</a>.</p>""")
+    write(OUT / "updates" / "index.html", page("Site Updates: What’s Changed on Produce Price Tracker",
+                                               "Every change that moves a number on Produce Price Tracker, newest first, "
+                                               "including fixes and changes that lowered the forecast track record.",
+                                               f"{SITE_URL}updates/", "../", body, active="updates/",
+                                               main_class="wrap landing", view="grocery"))
+    return [(f"{SITE_URL}updates/", dt.date.today().isoformat())]
 
 
 def about_page():
@@ -681,6 +719,8 @@ two weeks. It makes no call when supply reports point the other way.""" + outloo
 <li><b>Wholesale forecasts:</b> case prices one to four weeks out. Accuracy by item is on the
 <a href="../why/">track record page</a>.</li>
 </ul></section>
+<section><h2>Changes and fixes</h2>
+<p>Every change that moves a number on the site is listed on <a href="../updates/">site updates</a>.</p></section>
 <section><h2>Contact</h2>
 <p>Email us at <a href="mailto:""" + CONTACT + """">""" + CONTACT + """</a>.</p></section>
 <section><h2>Privacy</h2>

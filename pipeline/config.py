@@ -45,6 +45,26 @@ ITEMS_ADDED = {
     "Mushrooms",
 }
 
+# Wholesale apples are priced by variety: a Gala price says nothing about Granny Smiths, and each city quoted a
+# different one (owner, 2026-11-05). The five most-quoted varieties at the eight markets are items of their own;
+# other varieties stay under "Apples", which has no page.
+APPLE_VARIETIES = {"Gala": "Apples, Gala", "Honeycrisp": "Apples, Honeycrisp", "Granny smith": "Apples, Granny Smith",
+                   "Red delicious": "Apples, Red Delicious", "Fuji": "Apples, Fuji"}
+
+
+def item_of(commodity, variety):
+    """The wholesale item a terminal or shipping-point row belongs to ("Apples" + "GALA" -> "Apples, Gala")."""
+    if commodity == "Apples":
+        v = (variety or "").strip()
+        return APPLE_VARIETIES.get(v[:1].upper() + v[1:].lower(), commodity)
+    return commodity
+
+
+def base(commodity):
+    """The USDA commodity behind an item, for reports that don't split it (movement reports have no apple variety)."""
+    return "Apples" if commodity.startswith("Apples, ") else commodity
+
+
 # Retail report 3324 (supermarket ads, weekly): all regions for the wholesale items above, national
 # ads only for every other item (the grocery view covers the whole produce aisle).
 # Retail report 3324 uses its own commodity names (a single "Lettuce", "Peppers (Bell Type)").

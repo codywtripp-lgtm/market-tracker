@@ -67,7 +67,11 @@ MAIN_PACK = {
     "Limes": {"pack_size": r"^40 lb cartons$", "item_size": r"^200s$"},
     "Grapes": {"variety": r"^WHITE SEEDLESS", "pack_size": r"^18-19 lb containers bagged$"},
     # Added 2026-11-04. Quoted daily for years in these packs; USDA publishes no volume by pack.
-    "Apples": {"variety": r"^Gala$", "pack_size": r"^cartons tray pack$", "item_size": r"^72s$"},
+    "Apples, Gala": {"pack_size": r"^cartons tray pack$", "item_size": r"^(72s|80s|88s)$"},
+    "Apples, Honeycrisp": {"pack_size": r"^cartons tray pack$", "item_size": r"^(72s|80s|88s)$"},
+    "Apples, Granny Smith": {"pack_size": r"^cartons tray pack$", "item_size": r"^(72s|80s|88s)$"},
+    "Apples, Red Delicious": {"pack_size": r"^cartons tray pack$", "item_size": r"^(72s|80s|88s)$"},
+    "Apples, Fuji": {"pack_size": r"^cartons tray pack$", "item_size": r"^(72s|80s|88s)$"},
     "Watermelons": {"variety": r"^Red flesh seedless type$", "pack_size": r"^cartons$", "item_size": r"^4s$"},
     "Pineapples": {"variety": r"^$", "pack_size": r"^cartons 1 layer$", "item_size": r"^7s$"},
     "Cantaloupes": {"variety": r"^$", "pack_size": r"^1/2 cartons$", "item_size": r"^9s$"},
@@ -86,9 +90,6 @@ MAIN_PACK_MARKET = {
     ("Tomatoes", "Los Angeles"): {"variety": r"^VINE RIPES$", "pack_size": r"^cartons 2 layer$", "item_size": r"^5x5s$",
                                   "properties": r"^Light Red-red$"},
     ("Blueberries", "Los Angeles"): {"pack_size": r"6-oz", "item_size": r"^medium-large$"},
-    ("Apples", "New York"): {"variety": r"^Gala$", "pack_size": r"^cartons tray pack$", "item_size": r"^80s$"},
-    # USDA has quoted LA galas only as "Fine Appearance" since July, a premium grade ($54 against $44 in May)
-    ("Apples", "Los Angeles"): {"variety": r"^Granny smith$", "pack_size": r"^cartons tray pack$", "item_size": r"^72s$"},
     ("Pears", "New York"): {"variety": r"^D'anjou$", "pack_size": r"^4/5 bushel cartons wrapped$", "item_size": r"^70s$"},
     ("Watermelons", "New York"): {"variety": r"^Red flesh seedless type$", "pack_size": r"^cartons 4s$", "item_size": r"^65-69 lb$"},
     ("Watermelons", "Los Angeles"): {"variety": r"^Red flesh seedless type$", "pack_size": r"^cartons$", "item_size": r"^5s$"},
@@ -99,9 +100,6 @@ MAIN_PACK_MARKET = {
     ("Corn, Sweet", "Los Angeles"): {"pack_size": r"^cartons$", "item_size": r"^4 dozen$", "properties": r"^White$"},
     ("Cauliflower", "New York"): {"variety": r"^$", "pack_size": r"^flat cartons film wrapped$", "item_size": r"^12s$", "properties": r"^White$"},
     # Added markets. Same pack as the others where the market quotes it daily; otherwise the closest pack it does.
-    ("Apples", "Philadelphia"): {"variety": r"^Gala$", "pack_size": r"^cartons tray pack$", "item_size": r"^88s$"},
-    ("Apples", "Atlanta"): {"variety": r"^Gala$", "pack_size": r"^cartons tray pack$", "item_size": r"^125s$"},
-    ("Apples", "Miami"): {"variety": r"^Red delicious$", "pack_size": r"^cartons tray pack$", "item_size": r"^72s$"},
     ("Avocados", "Miami"): {"variety": r"^Hass$", "pack_size": r"^cartons 2 layer$", "item_size": r"^60s$"},
     ("Bananas", "Detroit"): {"variety": r"^$", "pack_size": r"^40 lb cartons", "properties": r"^Green$"},
     ("Blueberries", "Miami"): {"pack_size": r"6-oz"},
@@ -253,6 +251,8 @@ def load(rows):
             continue
         if r["commodity"] == "Chicken" and r["origin_detail"] not in ("", "Domestic"):
             continue
+        if mt in ("terminal", "shipping point") and r["commodity"] == "Apples":
+            r = {**r, "commodity": config.item_of("Apples", r["variety"])}
         out[series_key(r)][r["report_date"]].append(r)
     return out
 
@@ -385,6 +385,29 @@ def lot(r):
     """What can tell quotes for one pack from one area apart: grade (First Grade $38, Choice $32), type (Burbank $44,
     Norkotah $39), district (Salinas $79, Santa Maria $73)."""
     return (r.get("grade") or "").strip(), canon(r.get("properties")), canon(r.get("origin_detail"))
+
+
+STAND_IN_DAYS = 3  # lower grade only for this many quote days in a row: the market has switched (Boston lemons, Oct 2026)
+STAND_INS = {"Pears": {"U.S. One"}}  # Philadelphia d'Anjou: U.S. One $46-54 against WA/OR Fancy $24-42, flipping by day
+
+
+def drop_stand_ins(by_day, commodity=""):
+    """Lower-grade rows (LOWER_GRADES, STAND_INS) are left out on days the standard grade is quoted, from any area,
+    and on the first days it's missing: a cheaper product filling in for a day reads as a price move (Philadelphia
+    lemons 2026-11-02: first grade $42.25, the next day Shippers Choice $33). After STAND_IN_DAYS quote days in a row
+    with only the lower grade the market has switched, and the lower grade is the price (the page names the grade)."""
+    lower = LOWER_GRADES | STAND_INS.get(commodity, set())
+    out, run = {}, STAND_IN_DAYS
+    for d, rows in sorted(by_day.items()):
+        standard = [r for r in rows if (r.get("grade") or "").strip() not in lower]
+        if standard:
+            run = 0
+            out[d] = standard
+        else:
+            run += 1
+            if run >= STAND_IN_DAYS:
+                out[d] = rows
+    return out
 
 
 def main_lots(by_day, leads):
@@ -540,7 +563,9 @@ def build(rows, today=None, deflator=None, shipments=None):
         any_row = next(iter(next(iter(grouped[key].values()))))
         base = {"series_id": sid, "commodity": commodity, "market": market, "market_type": mt}
 
-        shipped = (lambda area, day, c=commodity: shipped_before(shipments, c, area, day)) if shipments else None
+        if mt == "terminal":
+            grouped[key] = drop_stand_ins(grouped[key], commodity)
+        shipped = (lambda area, day, c=commodity: shipped_before(shipments, config.base(c), area, day)) if shipments else None
         leads = main_areas(grouped[key], shipped) if mt == "terminal" else {}
         lots = main_lots(grouped[key], leads) if leads else {}
         by_day = {d: daily_value(rs, leads.get(d), lots.get(d)) for d, rs in sorted(grouped[key].items())}

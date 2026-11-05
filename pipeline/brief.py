@@ -26,7 +26,7 @@ PRODUCE_NAMES = {
     "Lemons": "Lemons", "Lettuce, Iceberg": "Iceberg", "Lettuce, Romaine": "Romaine", "Limes": "Limes",
     "Onions, Dry": "Onions", "Peppers, Bell Type": "Bell peppers", "Potatoes": "Potatoes",
     "Strawberries": "Strawberries", "Tomatoes": "Tomatoes", "Tomatoes, Plum Type": "Roma tomatoes",
-    "Apples": "Apples", "Watermelons": "Watermelons", "Pineapples": "Pineapples", "Cantaloupes": "Cantaloupes",
+"Apples, Gala": "Gala apples", "Apples, Honeycrisp": "Honeycrisp apples", "Apples, Granny Smith": "Granny Smith apples", "Apples, Red Delicious": "Red Delicious apples", "Apples, Fuji": "Fuji apples", "Watermelons": "Watermelons", "Pineapples": "Pineapples", "Cantaloupes": "Cantaloupes",
     "Mangoes": "Mangoes", "Pears": "Pears", "Cabbage": "Cabbage", "Oranges": "Oranges", "Corn, Sweet": "Sweet corn",
     "Cauliflower": "Cauliflower", "Sweet Potatoes": "Sweet potatoes", "Mushrooms": "Mushrooms",
 }
@@ -73,7 +73,10 @@ def day(d):
 
 def pack(s):
     """'Seedless, 40 lb cartons, 175s' from USDA's 'SEEDLESS TYPE' / '40 lb cartons' / '175s'."""
-    bits = [s.get("variety", ""), s.get("properties", ""), s.get("pack_size", ""), s.get("item_size", "")]
+    variety = s.get("variety", "")
+    if s.get("commodity", "").startswith("Apples, "):  # "Granny smith" is a name: "Granny Smith"
+        variety = s["commodity"].removeprefix("Apples, ")
+    bits = [variety, s.get("properties", ""), s.get("pack_size", ""), s.get("item_size", "")]
     bits = [re.sub(r"\s+type$", "", b, flags=re.I) for b in bits if b and b not in ("N/A", "NA")]
     bits = [bits[0]] + [b[:1].lower() + b[1:] if b[1:2].islower() else b for b in bits[1:]] if bits else bits
     text = ", ".join(bits)
@@ -103,7 +106,7 @@ STORES_WEEKS = 4
 
 
 def stores(commodity):
-    return STORAGE_LIFE.get(commodity, (0, ""))[0] >= STORES_WEEKS
+    return STORAGE_LIFE.get(config.base(commodity), (0, ""))[0] >= STORES_WEEKS
 
 
 TURN = 0.02  # next week still moving 2%+ the other way = the market is turning, not just moving
@@ -138,7 +141,7 @@ def call(status, change, stable, commodity="", change1=None, unsettled=False):
         return d, ("Still easing this week, then firming. Use the dip to lock price with your supplier for the "
                    "next few weeks.")
     if d == "firming":
-        first = (f"It stores ({STORAGE_LIFE[commodity][1]} cold): buy a few days deeper now," if stores(commodity)
+        first = (f"It stores ({STORAGE_LIFE[config.base(commodity)][1]} cold): buy a few days deeper now," if stores(commodity)
                  else "Buy to need (it won't hold), but")
         return d, (f"{first} lock price with your supplier where you can, and update customer quotes "
                    "before it moves.")

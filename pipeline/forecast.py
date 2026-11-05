@@ -384,7 +384,7 @@ def coverage(resid):
 
 
 MODEL = "blend"  # replaced in main() by the best of MODEL_CANDIDATES
-NO_CALLS = {"Apples"}  # a coin flip on the rare calls made, 2021-2026 (15 of 30): always "no change"
+NO_CALLS = {"Apples", *config.APPLE_VARIETIES.values()}  # by variety 2021-2026: 41% (Granny Smith) to 64% (Red Delicious) right, 54% together on 231 calls: always "no change"
 NO_CALLS_AT = {("Grapes", "New York"), ("Grapes", "Los Angeles"), ("Grapes", "Detroit"), ("Cucumbers", "Detroit")}  # same: under 55% right
 
 
