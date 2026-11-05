@@ -7,8 +7,8 @@ def test_home_puts_what_to_do_first():
     as_of, out = board.build()
     home = out["home"]
     assert home.index("What to do today") < home.index("All prices")
-    assert home.count('class="brow"') >= 45  # every item, three markets
-    assert 'role="tablist"' in home and '<svg class="spark"' in home
+    assert home.count('class="brow"') >= 15  # every item, one market a page
+    assert 'class="mkts"' in home and "data-remember" in home and '<svg class="spark"' in home
     for banned in ("Wait if you can", "Hold off", "Good time to buy", "Alerts only fire", " — "):
         assert banned not in home
 
@@ -21,7 +21,7 @@ def test_item_page_answers_the_search_and_shows_a_real_chart():
     assert "Will romaine lettuce prices go up or down?" in page
     assert '"@type": "FAQPage"' in page
     la = out["items/romaine-lettuce-prices--los-angeles"]
-    assert "Romaine lettuce prices today, Los Angeles" in la and 'role="tablist"' not in la
+    assert "Romaine lettuce prices today, Los Angeles" in la and "data-remember" not in la and 'aria-current="page">Los Angeles' in la
 
 
 def test_lede_agreement():

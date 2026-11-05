@@ -16,7 +16,7 @@ import datetime as dt
 import re
 from collections import defaultdict
 
-from . import store
+from . import config, store
 
 DAYS = 14
 FLAGS = re.compile(r"fair appearance|fair quality|fair condition|holdover|ordinary condition", re.I)
@@ -44,8 +44,8 @@ def flagged_shares(as_of, years=6):
         start = end - dt.timedelta(days=DAYS)
         lo, hi = start.isoformat(), end.isoformat()
         for r in _rows("terminal", start, end):
-            if not (lo < r["report_date"] <= hi) or r.get("organic", "") in ("Y", "Yes"):
-                continue
+            if not (lo < r["report_date"] <= hi) or r.get("organic", "") in ("Y", "Yes") or r["market"] in config.MARKETS_ADDED:
+                continue  # the added markets have no history before 2021, so they would skew the comparison
             c = TO_RETAIL.get(r["commodity"], r["commodity"])
             bucket = now if back == 0 else usual
             bucket[c][1] += 1

@@ -1,19 +1,16 @@
-// Market tabs (New York / Los Angeles / Chicago): show one market at a time and remember the choice.
-// Without JavaScript every tab is a plain link to that market's own page.
+// Market links: remember the market a buyer picks, and open it next time on pages that default to New York.
 (() => {
-  const tabs = [...document.querySelectorAll(".tabs [data-tab]")];
-  const panels = [...document.querySelectorAll(".panel[data-market]")];
-  if (tabs.length < 2 || panels.length < 2) return;
-  const show = (key, save) => {
-    if (!panels.some((p) => p.dataset.market === key)) return;
-    tabs.forEach((t) => t.setAttribute("aria-selected", String(t.dataset.tab === key)));
-    panels.forEach((p) => { p.hidden = p.dataset.market !== key; });
-    if (save) try { localStorage.setItem("market", key); } catch (e) { /* private mode */ }
-  };
-  tabs.forEach((t) => t.addEventListener("click", (e) => { e.preventDefault(); show(t.dataset.tab, true); }));
+  const nav = document.querySelector(".mkts");
+  if (!nav) return;
+  nav.addEventListener("click", (e) => {
+    const a = e.target.closest("a[data-m]");
+    if (a) try { localStorage.setItem("market", a.dataset.m); } catch (err) { /* private mode */ }
+  });
+  if (!("remember" in nav.dataset)) return;
   let saved = null;
   try { saved = localStorage.getItem("market"); } catch (e) { /* private mode */ }
-  if (saved) show(saved, false);
+  const link = saved && nav.querySelector(`a[data-m="${saved}"]:not([aria-current])`);
+  if (link) location.replace(link.href);
 })();
 
 // Quality ratings: the reason shows on hover (desktop, via CSS) or on tap (phones); tap elsewhere to close.

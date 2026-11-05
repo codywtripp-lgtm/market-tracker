@@ -35,7 +35,7 @@ def sum_duplicates(rows):
     return list(merged.values())
 
 
-def run(client, start, end, sources, added_only=False):
+def run(client, start, end, sources, added_only=False, new_markets=False):
     # added_only: backfill the newly added items without rewriting rows for the others
     produce = config.ITEMS_ADDED if added_only else config.PRODUCE_COMMODITIES
     fetched_at = dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat()
@@ -53,6 +53,8 @@ def run(client, start, end, sources, added_only=False):
 
     if "terminal" in sources:
         for slug, market in config.TERMINAL_REPORTS.items():
+            if new_markets and market not in config.MARKETS_ADDED:
+                continue
             job("terminal", f"{slug} {market}", lambda slug=slug, market=market: [
                 normalize.terminal(r, market, fetched_at)
                 for r in client.mars(slug, "Report Details", start, end)
@@ -126,12 +128,13 @@ def main(argv=None):
     p.add_argument("--end", type=dt.date.fromisoformat)
     p.add_argument("--sources", nargs="+", choices=SOURCES, default=SOURCES)
     p.add_argument("--added-only", action="store_true")
+    p.add_argument("--new-markets", action="store_true")
     a = p.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 
     end = a.end or dt.date.today()
     start = a.start or end - dt.timedelta(days=config.DAILY_LOOKBACK_DAYS)
-    results, failures = run(Client(), start, end, a.sources, a.added_only)
+    results, failures = run(Client(), start, end, a.sources, a.added_only, a.new_markets)
     write_summary(start, end, results, failures)
     if failures and not results:
         sys.exit(1)
