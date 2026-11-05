@@ -15,7 +15,7 @@ import datetime as dt
 import json
 import re
 
-from . import brief, store
+from . import brief, config, store
 from .brief import esc, money, whole
 from .usual import with_usual
 
@@ -40,7 +40,12 @@ PAGES = {
     "Cucumbers": ("cucumber-prices", "Cucumber"), "Broccoli": ("broccoli-prices", "Broccoli"),
     "Celery": ("celery-prices", "Celery"), "Carrots": ("carrot-prices", "Carrot"), "Bananas": ("banana-prices", "Banana"),
     "Blueberries": ("blueberry-prices", "Blueberry"), "Grapes": ("grape-prices", "Grape"),
-    "Apples": ("apple-prices", "Apple"), "Watermelons": ("watermelon-prices", "Watermelon"),
+    "Apples, Gala": ("gala-apple-prices", "Gala apple"),
+    "Apples, Honeycrisp": ("honeycrisp-apple-prices", "Honeycrisp apple"),
+    "Apples, Granny Smith": ("granny-smith-apple-prices", "Granny Smith apple"),
+    "Apples, Red Delicious": ("red-delicious-apple-prices", "Red Delicious apple"),
+    "Apples, Fuji": ("fuji-apple-prices", "Fuji apple"),
+    "Watermelons": ("watermelon-prices", "Watermelon"),
     "Pineapples": ("pineapple-prices", "Pineapple"), "Cantaloupes": ("cantaloupe-prices", "Cantaloupe"),
     "Mangoes": ("mango-prices", "Mango"), "Pears": ("pear-prices", "Pear"), "Cabbage": ("cabbage-prices", "Cabbage"),
     "Oranges": ("orange-prices", "Orange"), "Corn, Sweet": ("sweet-corn-prices", "Sweet corn"),
@@ -52,7 +57,7 @@ GROCERY = {  # the grocery page for the same item (pipeline/grocery.py slugs)
     "Peppers, Bell Type": "bell-peppers", "Onions, Dry": "onions", "Potatoes": "potatoes", "Lemons": "lemons",
     "Limes": "limes", "Cucumbers": "cucumbers", "Broccoli": "broccoli", "Celery": "celery", "Carrots": "carrots",
     "Bananas": "bananas", "Blueberries": "blueberries", "Grapes": "grapes", "Lettuce, Iceberg": "lettuce",
-    "Lettuce, Romaine": "lettuce", "Apples": "apples", "Watermelons": "watermelons", "Pineapples": "pineapples",
+    "Lettuce, Romaine": "lettuce", "Apples, Gala": "apples", "Apples, Honeycrisp": "apples", "Apples, Granny Smith": "apples", "Apples, Red Delicious": "apples", "Apples, Fuji": "apples", "Watermelons": "watermelons", "Pineapples": "pineapples",
     "Cantaloupes": "cantaloupes", "Mangoes": "mangoes", "Pears": "pears", "Cabbage": "cabbage", "Oranges": "oranges",
     "Corn, Sweet": "sweet-corn", "Cauliflower": "cauliflower", "Sweet Potatoes": "sweet-potatoes", "Mushrooms": "mushrooms",
 }
@@ -60,7 +65,13 @@ DISPLAY = {  # full names for rows and headings
     "Lettuce, Iceberg": "Iceberg lettuce", "Lettuce, Romaine": "Romaine lettuce", "Tomatoes": "Tomatoes",
     "Tomatoes, Plum Type": "Roma tomatoes", "Peppers, Bell Type": "Bell peppers", "Onions, Dry": "Onions",
     "Corn, Sweet": "Sweet corn", "Sweet Potatoes": "Sweet potatoes",
+    "Apples, Gala": "Gala apples",
+    "Apples, Honeycrisp": "Honeycrisp apples",
+    "Apples, Granny Smith": "Granny Smith apples",
+    "Apples, Red Delicious": "Red Delicious apples",
+    "Apples, Fuji": "Fuji apples",
 }
+APPLE_HUB = ("apple-prices", "Apple")  # /apple-prices/ lists the varieties (pipeline/board.apple_hub)
 MASS = {"Lettuce, Iceberg", "Lettuce, Romaine", "Broccoli", "Celery", "Cabbage", "Cauliflower", "Corn, Sweet"}  # "romaine is", "limes are"
 
 DIR = {  # direction over the next two weeks: (arrow, word, tone)
@@ -77,6 +88,8 @@ def name(commodity):
 
 
 def in_sentence(commodity):
+    if commodity.startswith("Apples, "):  # "Gala apples", "Granny Smith apples": varieties keep their capitals
+        return name(commodity)
     n = name(commodity).lower()
     return n.replace("roma ", "Roma ")
 
@@ -580,8 +593,9 @@ def supply_notes(as_of):
         rows += store.read_partition(store.partition_path("shipping_point", d.isoformat())).values()
     by_c = {}
     for r in rows:
-        if r["report_date"] >= since and r["commodity"] in PAGES and r.get("organic", "") not in ("Y", "Yes"):
-            by_c.setdefault(r["commodity"], []).append(r)
+        c = config.item_of(r["commodity"], r.get("variety"))
+        if r["report_date"] >= since and c in PAGES and r.get("organic", "") not in ("Y", "Yes"):
+            by_c.setdefault(c, []).append(r)
     ship = {r["commodity"]: (brief._num(r["vs_last_year_pct"]), r["week"]) for r in brief._read("supply.csv")}
     shipped = shipments_by_place(as_of)
     notes = {}
@@ -589,7 +603,7 @@ def supply_notes(as_of):
         bits, flag = [], 0
         rs = by_c.get(c, [])
         if rs:
-            main = main_areas({r["market"] for r in rs if r["market"]}, shipped.get(c, {}))
+            main = main_areas({r["market"] for r in rs if r["market"]}, shipped.get(config.base(c), {}))
             rs = [r for r in rs if r["market"] in main]
             last = max((r["report_date"] for r in rs), default="")
             day_rows = [r for r in rs if r["report_date"] == last]
@@ -620,7 +634,7 @@ def supply_notes(as_of):
             if short:
                 bits.append(f"{short[0]}: too little supply to quote.")
                 flag += 1
-        pct_, week = ship.get(c, (None, None))
+        pct_, week = ship.get(config.base(c), (None, None))
         if pct_ is not None and abs(pct_) >= 10:
             w = dt.date.fromisoformat(week)
             bits.append(f"Shipments {abs(round(pct_))}% {'below' if pct_ < 0 else 'above'} last year.")
@@ -736,7 +750,8 @@ def quote(i, hist, today, opts, note=""):
 
 def faq(commodity, rows):
     ny = rows[0]
-    lower, single = in_sentence(commodity), PAGES[commodity][1].lower().replace("roma ", "Roma ")
+    lower = in_sentence(commodity)
+    single = PAGES[commodity][1] if commodity.startswith("Apples, ") else PAGES[commodity][1].lower().replace("roma ", "Roma ")
     v = "is" if commodity in MASS else "are"
     qa = [(f"How much does a case of {lower} cost wholesale right now?",
            " ".join(f"{money(i['price'])} in {i['market']} ({pack_in_sentence(i['pack'])}"
@@ -793,6 +808,34 @@ def item_page(commodity, rows, hist, today, sizes, alerts, as_of, notes, only=No
     return "\n".join(parts) + "\n"
 
 
+def apple_hub(items, as_of):
+    """/apple-prices/: the trade prices apples by variety, so the page lists each with its New York price."""
+    rows = [next((i for i in items if i["commodity"] == c and i["market"] == "New York"), None)
+            for c in PAGES if c.startswith("Apples, ")]
+    rows = [i for i in rows if i]
+    if not rows:
+        return ""
+    body = "".join(
+        f'<tr><td><a href="{item_link(i["commodity"])}">{esc(name(i["commodity"]))}</a><small>{esc(i["pack"])}'
+        f'{esc(", " + i["quote"]["area"]) if i.get("quote") and i["quote"].get("area") else ""}</small></td>'
+        f'<td class="n">{money(i["price"])}</td><td>{season(i)}</td><td>{outlook(i)}</td></tr>' for i in rows)
+    low, high = min(i["price"] for i in rows), max(i["price"] for i in rows)
+    names = lambda p: name_list([i for i in rows if i["price"] == p])  # noqa: E731  ties are named together
+    return "\n".join([
+        '<nav class="crumbs" aria-label="Breadcrumb"><a href="@/wholesale/">Wholesale prices</a><span>/</span>Apples</nav>',
+        '<div class="pagehead"><h1>Apple prices today</h1>'
+        f'<p class="date">Wholesale price per case by variety, updated {as_of:%A}, {as_of:%B} {as_of.day}, {as_of.year}</p>'
+        f'<p class="answer">At Hunts Point (New York), {esc(names(low))} are the lowest-priced of the main varieties at '
+        f'<strong>{money(low)} a case</strong> and {esc(names(high))} the highest at <strong>{money(high)}</strong>. '
+        'The trade prices apples by variety, so each has its own page with all eight markets.</p></div>',
+        '<section class="panel"><table class="t markets"><thead><tr><th>Variety, New York</th><th class="n">Case</th>'
+        f'<th>For the season</th><th>Next 2 weeks</th></tr></thead><tbody>{body}</tbody></table>'
+        '<p class="note">USDA’s latest quote for U.S. Extra Fancy tray packs. Premium “fine appearance” and lower Fancy grade '
+        'lots are left out.</p></section>',
+        f'<p class="fine">Shopping for home? <a href="@/grocery/apples/">See what supermarkets are charging for apples this '
+        'week</a>.</p>']) + "\n"
+
+
 # ---------- build ----------
 def build():
     latest = brief._read("latest.csv")
@@ -838,6 +881,9 @@ def build():
         for i in rows if len(rows) > 1 else []:  # one market only: the item page already is that market's page
             out[f"items/{slug}--{MARKET_SLUG[i['market']]}"] = item_page(commodity, rows, hist, today, sizes, alerts,
                                                                        as_of, notes, only=i["market"])
+    hub = apple_hub(items, as_of)
+    if hub:
+        out[f"items/{APPLE_HUB[0]}"] = hub
     meat_items = meat_view.load().get("items", [])
     if meat_items:
         out["meat"] = meat_view.page(meat_items)

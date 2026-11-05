@@ -128,12 +128,21 @@ def _num(s):
 STAPLE_IDS = set(config.STAPLE_REPORTS)
 
 
-def load(rows):
+def load(rows, organic=None):
     """item -> {(variety, pack): {date: [(price, stores)]}} for national, conventional sale prices.
-    Meat, poultry, dairy and egg rows are mapped to shopper items (pipeline/staples.py)."""
+    Meat, poultry, dairy and egg rows are mapped to shopper items (pipeline/staples.py). Pass a dict as `organic` to
+    collect the organic ads the same way."""
     out = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
     for r in rows:
-        if r["market"] != "National" or r["organic"] not in ("No", "N") or r["commodity"] in SKIP:
+        if r["market"] != "National" or r["commodity"] in SKIP:
+            continue
+        if r["organic"] not in ("No", "N"):
+            if organic is not None and r["organic"] in ("Yes", "Y") and r.get("report_id") not in STAPLE_IDS:
+                price, stores = _num(r["unit_price"]), _num(r["store_count"])
+                v = (r["variety"] or "").strip()
+                if price is not None and stores:
+                    key = (v[:1].upper() + v[1:].lower(), r["pack_size"])
+                    organic.setdefault(r["commodity"], {}).setdefault(key, {}).setdefault(r["report_date"], []).append((price, stores))
             continue
         if r.get("report_id") in STAPLE_IDS:
             item = staples.match(r)
@@ -162,7 +171,8 @@ def main_pack(packs, since=None):
 def build(rows, deflator=None, live=None):
     """live: this week's conditions per commodity (pipeline/conditions.py); computed from the reports when None."""
     deflator = deflator or cpi.Deflator({})
-    data = load(rows)
+    organic = {}
+    data = load(rows, organic)
     if not data:
         return None, []
     latest = max(d for packs in data.values() for days in packs.values() for d in days)
@@ -222,6 +232,12 @@ def build(rows, deflator=None, live=None):
                 "chart": [(d, round(p, 2), band.get(d, (None, None)))
                           for d, (p, _) in sorted(week.items()) if d >= (today - dt.timedelta(days=371)).isoformat()]}
         item["quality"] = quality(commodity, today.month, item["in_season"] if item["seasons"] else None)
+        # organic: the same variety and pack, the same week, when as many stores advertised it as a headline price needs
+        ads = organic.get(commodity, {}).get(key, {}).get(last, [])
+        o_stores = sum(s for _, s in ads)
+        if this_week and o_stores >= MIN_STORES:
+            o_price = sum(p * s for p, s in ads) / o_stores
+            item["organic"] = {"price": round(o_price, 2), "stores": int(o_stores), "more": round(100 * (o_price / price - 1))}
         if len(years) >= MIN_YEARS and this_week:
             pool.sort()
             now = real[last]

@@ -436,6 +436,14 @@ def season_sentence(i, today):
     return s.strip()
 
 
+def organic_sentence(i):
+    o = i["organic"]
+    gap = (f"{o['more']}% more than regular" if o["more"] > 0 else f"{-o['more']}% less than regular" if o["more"] < 0
+           else "the same as regular")
+    return (f"Organic: ${o['price']:.2f}{i['unit']} in this week’s store flyers, {gap} "
+            f"({o['stores']:,} stores advertised it).")
+
+
 def faq(i, today):
     name = i["short"].lower()
     qa = [(f"How much {'do' if plural(i) else 'does'} {name} cost at the grocery store?",
@@ -451,6 +459,9 @@ def faq(i, today):
     if ahead(i):
         qa.append((f"Will {name} get {'cheaper' if i['outlook'] < 0 else 'more expensive'} soon?",
                    f"{ahead(i)} {record_sentence()}".strip()))
+    if i.get("organic"):
+        qa.append((f"How much more {'do' if plural(i) else 'does'} organic {name} cost?", organic_sentence(i)
+                   .replace("Organic: ", "Organic " + name + " averaged ", 1)))
     if i["cheapest_months"]:
         qa.append((f"When {verb(i)} {name} cheapest?",
                    f"In past years, supermarket prices for {name} were lowest in "
@@ -473,6 +484,8 @@ def item_page(i, today, all_items):
         parts.append(f'<section class="gquote">{tag(i)}<div><p class="gword {tone}">{esc(word)}</p>{row_lines(i, today)}'
                      + (f'<p class="cause">{esc(i["why"])}</p>' if i.get("why") else "")
                      + f'{price_bar(i, today)}</div></section>')
+        if i.get("organic"):
+            parts.append(f'<p class="organic">{esc(organic_sentence(i))}</p>')
         if i["stores"] < grocery.MIN_STORES:
             parts.append(f'<p class="fine">Only {i["stores"]:,} stores listed {"them" if plural(i) else "it"} this '
                          "week, often a single chain, so treat the comparison loosely.</p>")

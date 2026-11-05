@@ -193,6 +193,7 @@ main.wrap > section:first-child { margin-top: 0; }
 
 /* grocery item page */
 .gquote { display: grid; grid-template-columns: 132px 1fr; gap: 24px; align-items: start; margin-top: 40px; max-width: 640px; }
+.organic { max-width: 640px; margin: 16px 0 0; font-size: 16px; line-height: 24px; color: var(--ink-2); }
 .gword { font-size: 22px; line-height: 28px; font-weight: 800; margin: 0 0 4px; }
 .gword.good { color: var(--good); } .gword.bad { color: var(--bad); } .gword.flat { color: var(--ink); }
 .facts { list-style: none; margin: 0; padding: 0; max-width: 640px; border-top: 1px solid var(--line-2); }
