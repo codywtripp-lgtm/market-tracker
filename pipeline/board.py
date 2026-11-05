@@ -273,8 +273,9 @@ def spark(hist, i, w=120, h=36):
     return f'<svg class="spark" viewBox="0 0 {w} {h}" role="img" aria-label="{esc(label)}"><title>{esc(label)}</title>{out}</svg>'
 
 
-def chart(hist, i):
+def chart(hist, i, noun="case price", money_fn=None, label=None):
     """One year of weekly prices, the usual range for each week (25th-75th pct of past years) and the forecast."""
+    money_ = money_fn or money
     pts = [r for r in hist if r[1] is not None]
     if len(pts) < 8:
         return ""
@@ -287,7 +288,7 @@ def chart(hist, i):
     lo_v, hi_v = min(vals), max(vals)
     # round the scale to tidy steps
     raw = (hi_v - lo_v) / 4 or 1
-    mag = 10 ** len(str(int(raw))) / 10
+    mag = 10 ** len(str(int(raw))) / 10 if raw >= 1 else 0.1
     step = next(s * mag for s in (1, 2, 2.5, 5, 10) if s * mag >= raw)
     y0 = step * int(lo_v // step)
     y1 = step * (int(hi_v // step) + 1)
@@ -325,18 +326,18 @@ def chart(hist, i):
                  + "".join(f"L{x(dt.date.fromisoformat(p['week'])):.1f},{y(p['mid']):.1f}" for p in fut) + '"/>')
     g.append(f'<path class="price" d="M{line}"/>')
     g.append(f'<circle class="now" cx="{x(last):.1f}" cy="{y(pts[-1][1]):.1f}" r="4.5"/>')
-    label = (f"{name(i['commodity'])} in {i['market']}, weekly case price over the last year, "
-             f"from {money(pts[0][1])} to {money(pts[-1][1])}")
-    legend = ('<div class="legend"><span><i class="k-price"></i>Weekly case price</span>'
+    label = (label or f"{name(i['commodity'])} in {i['market']}, weekly case price over the last year") + (
+        f", from {money_(pts[0][1])} to {money_(pts[-1][1])}")
+    legend = (f'<div class="legend"><span><i class="k-price"></i>Weekly {noun}</span>'
               '<span><i class="k-usual"></i>Usual range for the time of year</span>'
               + (f'<span><i class="k-fc {DIR[i["dir"] or "steady"][2]}"></i>Forecast; shading is where 8 in 10 outcomes land</span>' if fut else "")
               + "</div>")
-    rows = "".join(f"<tr><td>{d:%b} {d.day}, {d.year}</td><td>{money(p)}</td>"
-                   f"<td>{(money(lo) + ' to ' + money(hi)) if lo is not None else ''}</td></tr>" for d, p, lo, hi in reversed(pts))
+    rows = "".join(f"<tr><td>{d:%b} {d.day}, {d.year}</td><td>{money_(p)}</td>"
+                   f"<td>{(money_(lo) + ' to ' + money_(hi)) if lo is not None else ''}</td></tr>" for d, p, lo, hi in reversed(pts))
     return (f'<figure class="chart"><svg viewBox="0 0 {W} {H}" role="img" aria-label="{esc(label)}">'
             f"<title>{esc(label)}</title>{''.join(g)}</svg>{legend}"
             f'<details class="numbers"><summary>Show the numbers</summary><table class="t"><thead><tr><th>Week of</th>'
-            f'<th>Case price</th><th>Usual range</th></tr></thead><tbody>{rows}</tbody></table></details></figure>')
+            f'<th>{noun.capitalize()}</th><th>Usual range</th></tr></thead><tbody>{rows}</tbody></table></details></figure>')
 
 
 # ---------- the market board (home) ----------
@@ -817,7 +818,7 @@ def build():
     notes = supply_notes(as_of)
     out = {"home": home(items, hist, today, alerts, as_of, record, notes)}
     # imported here: the site deploy imports this module for page names only, without the fetch libraries
-    from . import cpi, grocery, grocery_view
+    from . import cpi, grocery, grocery_view, meat_view
     g_day, g_items = grocery.build(grocery.rows(), cpi.Deflator(cpi.load()))
     if g_items:
         out["grocery"] = grocery_view.page(g_day, g_items)
@@ -837,6 +838,11 @@ def build():
         for i in rows if len(rows) > 1 else []:  # one market only: the item page already is that market's page
             out[f"items/{slug}--{MARKET_SLUG[i['market']]}"] = item_page(commodity, rows, hist, today, sizes, alerts,
                                                                        as_of, notes, only=i["market"])
+    meat_items = meat_view.load().get("items", [])
+    if meat_items:
+        out["meat"] = meat_view.page(meat_items)
+        for mi in meat_items:
+            out[f"meat/{mi['slug']}"] = meat_view.item_page(mi, meat_items)
     og = og_data(items, hist, as_of)
     for gi in g_items:
         word = grocery_view.STATUS[gi["status"]][0]
@@ -885,7 +891,7 @@ def og_data(items, hist, as_of):
 
 def main():
     as_of, pages = build()
-    for sub in ("items", "grocery", "recipes"):
+    for sub in ("items", "grocery", "recipes", "meat"):
         (OUT / sub).mkdir(parents=True, exist_ok=True)
         for old in (OUT / sub).glob("*.html"):
             old.unlink()

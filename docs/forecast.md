@@ -83,3 +83,21 @@ Calls now run from the latest quote, since that is the number on the page. The p
 Same day: USDA often quotes several areas every day, and the tie went to the lowest price (Chicago onions read California; Washington and Idaho ship the most). Ties now go to the most pounds shipped in the four full weeks before, from the movement reports (`export.load_shipments`). Areas the reports leave out read zero, so California lemons and carrots can lose a tie they might deserve. Record: 75.0% of 6,450 calls right, big moves called ahead 35.2%, wrong way 4.7%, average move $4.64 a case. `scripts/backtest_main_area.py` compares against whatever `prices_weekly.csv` holds, so its blend side only means the blend on an export from before 2026-11-04.
 
 Same day, grapes and carrots: USDA's 18 and 19 lb grape containers are one series (`MERGE_PACKS`), and a current main pack beats a better-covered other pack. A tied area with no pounds wins if quoted the most over the past year, since the movement reports leave out California carrots. Only grapes changed headline; only grapes and carrots changed price. Record: 74.4% of 6,409 calls right, big moves called ahead 34.3%, wrong way 4.9%, average move $4.58 a case.
+
+## 2026-11-05: wholesale meat
+
+`pipeline/meat.py`, test `scripts/backtest_meat.py`. Two-week calls on 22 boxed and ground beef prices and 8 chicken prices: the blend above without shipping-point or USDA tone inputs, fitted separately for beef and chicken, the same 5% call line, and the same per-item choice against "no change". Each year is fitted only on earlier years.
+
+| | Tested | Calls | Right | 10%+ swings called ahead | Average miss | No change |
+|---|---|---|---|---|---|---|
+| Beef | 2021-2026 | 559 | 82.5% | 23.8% | 4.01% | 4.33% |
+| Chicken | 2025-2026 | 111 | 98.2% | 53.6% | 3.21% | 3.98% |
+
+Read these with care:
+- Calls are measured from the latest quote, as the site shows them. One noisy beef quote can snap back, which flatters the score: against the week's average, beef is 78.5%.
+- Chicken history starts in August 2022, so only two years could be tested, and the 111 calls come from about 31 separate moves. Expect the live number to come down.
+- Beef moves little, so the 5% line makes calls on only about 8% of weeks and most prices read steady. The edge over "no change" is small.
+
+Tried and dropped: Huber regression alone (beef miss 4.18% vs the blend's 4.07% before the per-item choice), and the grocery rule of no call against an 8-week run (beef calls 83.6% -> 77.2% right).
+
+These calls don't count in the produce record. Live calls are logged to `data/forecasts/meat_log.csv`; scoring them on the site is still to do.
