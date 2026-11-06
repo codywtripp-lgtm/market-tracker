@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-05",
+ "asOf": "2026-11-06",
  "forecasts_live": {
   "scored": 871,
   "since": "2026-09-21",
@@ -11,23 +11,23 @@
   "years": "2021-2026",
   "by_horizon": {
    "1": {
-    "miss_pct": 5.4,
-    "no_change_miss_pct": 6.4
+    "miss_pct": 5.0,
+    "no_change_miss_pct": 5.9
    },
    "2": {
-    "miss_pct": 9.4,
-    "no_change_miss_pct": 10.8
+    "miss_pct": 8.7,
+    "no_change_miss_pct": 9.9
    },
    "3": {
-    "miss_pct": 12.3,
-    "no_change_miss_pct": 14.1
+    "miss_pct": 11.5,
+    "no_change_miss_pct": 13.0
    },
    "4": {
-    "miss_pct": 14.5,
-    "no_change_miss_pct": 16.6
+    "miss_pct": 13.5,
+    "no_change_miss_pct": 15.3
    }
   },
-  "range_coverage_pct": 82.5
+  "range_coverage_pct": 82.4
  },
  "alerts": {
   "issued": 71,
