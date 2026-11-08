@@ -65,11 +65,11 @@ DISPLAY = {  # full names for rows and headings
     "Lettuce, Iceberg": "Iceberg lettuce", "Lettuce, Romaine": "Romaine lettuce", "Tomatoes": "Tomatoes",
     "Tomatoes, Plum Type": "Roma tomatoes", "Peppers, Bell Type": "Bell peppers", "Onions, Dry": "Onions",
     "Corn, Sweet": "Sweet corn", "Sweet Potatoes": "Sweet potatoes",
-    "Apples, Gala": "Gala apples",
-    "Apples, Honeycrisp": "Honeycrisp apples",
-    "Apples, Granny Smith": "Granny Smith apples",
-    "Apples, Red Delicious": "Red Delicious apples",
-    "Apples, Fuji": "Fuji apples",
+    "Apples, Gala": "Apples, Gala",
+    "Apples, Honeycrisp": "Apples, Honeycrisp",
+    "Apples, Granny Smith": "Apples, Granny Smith",
+    "Apples, Red Delicious": "Apples, Red Delicious",
+    "Apples, Fuji": "Apples, Fuji",
 }
 APPLE_HUB = ("apple-prices", "Apple")  # /apple-prices/ lists the varieties (pipeline/board.apple_hub)
 MASS = {"Lettuce, Iceberg", "Lettuce, Romaine", "Broccoli", "Celery", "Cabbage", "Cauliflower", "Corn, Sweet"}  # "romaine is", "limes are"
@@ -88,8 +88,8 @@ def name(commodity):
 
 
 def in_sentence(commodity):
-    if commodity.startswith("Apples, "):  # "Gala apples", "Granny Smith apples": varieties keep their capitals
-        return name(commodity)
+    if commodity.startswith("Apples, "):  # lists say "Apples, Gala" (A to Z); sentences say "Gala apples"
+        return commodity.removeprefix("Apples, ") + " apples"
     n = name(commodity).lower()
     return n.replace("roma ", "Roma ")
 
@@ -803,7 +803,8 @@ def item_page(commodity, rows, hist, today, sizes, alerts, as_of, notes, only=No
     if commodity in GROCERY:
         parts.append(f'<p class="fine">Shopping for home? <a href="@/grocery/{GROCERY[commodity]}/">See what supermarkets are '
                      f'charging for {esc(in_sentence(commodity))} this week</a>.</p>')
-    others = "".join(f'<a href="@/{slug}/">{esc(name(c))}</a>' for c, (slug, _) in PAGES.items() if c != commodity)
+    others = "".join(f'<a href="@/{slug}/">{esc(name(c))}</a>' for c, (slug, _) in sorted(PAGES.items(), key=lambda cs: name(cs[0]))
+                     if c != commodity)
     parts.append(f'<h2>Other items</h2><nav class="others">{others}</nav>')
     return "\n".join(parts) + "\n"
 

@@ -206,7 +206,8 @@ def signup(up):
 
 
 def footer(up):
-    items = "".join(f'<a href="{up}{slug}/">{_esc(n)} prices</a>' for slug, n in board.PAGES.values())
+    items = "".join(f'<a href="{up}{slug}/">{_esc(board.name(c))}</a>'  # A to Z: "Apples, Fuji" ... "Avocados"
+                    for c, (slug, _) in sorted(board.PAGES.items(), key=lambda cs: board.name(cs[0])))
     markets = "".join(f'<a href="{up}{slug}/">{"Hunts Point" if m == "New York" else m} produce prices</a>'
                       for m, slug in board.MARKET_PAGES.items())
     return ('<footer class="foot"><div class="wrap"><p>Grocery prices are the average of what U.S. supermarkets advertised each week, from USDA’s '
@@ -332,10 +333,10 @@ def board_pages():
 
     dataset = json.dumps({
         "@context": "https://schema.org", "@type": "Dataset", "name": "Wholesale produce terminal market prices",
-        "description": "Daily wholesale case prices for 30 produce items at eight U.S. terminal markets, including "
+        "description": f"Daily wholesale case prices for {len(board.PAGES)} produce items at eight U.S. terminal markets, including "
                        "New York (Hunts Point), Los Angeles and Chicago, compared with the usual price for the time of year, with a "
                        "two-week outlook.",
-        "url": f"{SITE_URL}wholesale/", "creator": {"@type": "Organization", "name": SITE_NAME},
+        "url": f"{SITE_URL}wholesale/", "creator": {"@type": "Organization", "name": SITE_NAME}, "license": LICENSE,
         "isBasedOn": "https://www.ams.usda.gov/market-news", "temporalCoverage": f"2016-01-01/{as_of.isoformat()}",
         "spatialCoverage": ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Philadelphia, PA", "Boston, MA", "Atlanta, GA", "Detroit, MI", "Miami, FL"]})
     if (BOARD / "grocery.html").exists():
@@ -524,6 +525,10 @@ NICE = {"Lettuce, Romaine": "Romaine", "Lettuce, Iceberg": "Iceberg", "Tomatoes,
 
 
 # Changes that move a number people see, newest first, with the numbers as they stood that day. Add one with every such change.
+# Reuse terms for the site's numbers (Google's Dataset markup asks for one; the About page says the same in words).
+# USDA's own reports are public domain; CC BY asks anyone reusing these comparisons and forecasts to credit the site.
+LICENSE = "https://creativecommons.org/licenses/by/4.0/"
+
 CHANGES = (
     ("November 5, 2026", "Wholesale apples are now priced by variety. Gala, Honeycrisp, Granny Smith, Red Delicious and Fuji "
      "each have their own page and compare like for like across markets; before, each city showed one variety (Gala in New "
@@ -719,6 +724,10 @@ two weeks. It makes no call when supply reports point the other way.""" + outloo
 <li><b>Wholesale forecasts:</b> case prices one to four weeks out. Accuracy by item is on the
 <a href="../why/">track record page</a>.</li>
 </ul></section>
+<section><h2>Using these numbers</h2>
+<p>USDA’s reports are public domain. The comparisons, ratings and forecasts here may be reused under
+<a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0</a>: credit Produce Price
+Tracker with a link.</p></section>
 <section><h2>Changes and fixes</h2>
 <p>Every change that moves a number on the site is listed on <a href="../updates/">site updates</a>.</p></section>
 <section><h2>Contact</h2>
