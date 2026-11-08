@@ -65,11 +65,11 @@ DISPLAY = {  # full names for rows and headings
     "Lettuce, Iceberg": "Iceberg lettuce", "Lettuce, Romaine": "Romaine lettuce", "Tomatoes": "Tomatoes",
     "Tomatoes, Plum Type": "Roma tomatoes", "Peppers, Bell Type": "Bell peppers", "Onions, Dry": "Onions",
     "Corn, Sweet": "Sweet corn", "Sweet Potatoes": "Sweet potatoes",
-    "Apples, Gala": "Apples, Gala",
-    "Apples, Honeycrisp": "Apples, Honeycrisp",
-    "Apples, Granny Smith": "Apples, Granny Smith",
-    "Apples, Red Delicious": "Apples, Red Delicious",
-    "Apples, Fuji": "Apples, Fuji",
+    "Apples, Gala": "Apples (Gala)",
+    "Apples, Honeycrisp": "Apples (Honeycrisp)",
+    "Apples, Granny Smith": "Apples (Granny Smith)",
+    "Apples, Red Delicious": "Apples (Red Delicious)",
+    "Apples, Fuji": "Apples (Fuji)",
 }
 APPLE_HUB = ("apple-prices", "Apple")  # /apple-prices/ lists the varieties (pipeline/board.apple_hub)
 MASS = {"Lettuce, Iceberg", "Lettuce, Romaine", "Broccoli", "Celery", "Cabbage", "Cauliflower", "Corn, Sweet"}  # "romaine is", "limes are"
@@ -88,7 +88,7 @@ def name(commodity):
 
 
 def in_sentence(commodity):
-    if commodity.startswith("Apples, "):  # lists say "Apples, Gala" (A to Z); sentences say "Gala apples"
+    if commodity.startswith("Apples, "):  # lists say "Apples (Gala)" (A to Z, as the grocery side writes varieties); sentences say "Gala apples"
         return commodity.removeprefix("Apples, ") + " apples"
     n = name(commodity).lower()
     return n.replace("roma ", "Roma ")

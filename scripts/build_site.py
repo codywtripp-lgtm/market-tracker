@@ -206,7 +206,7 @@ def signup(up):
 
 
 def footer(up):
-    items = "".join(f'<a href="{up}{slug}/">{_esc(board.name(c))}</a>'  # A to Z: "Apples, Fuji" ... "Avocados"
+    items = "".join(f'<a href="{up}{slug}/">{_esc(board.name(c))}</a>'  # A to Z: "Apples (Fuji)" ... "Avocados"
                     for c, (slug, _) in sorted(board.PAGES.items(), key=lambda cs: board.name(cs[0])))
     markets = "".join(f'<a href="{up}{slug}/">{"Hunts Point" if m == "New York" else m} produce prices</a>'
                       for m, slug in board.MARKET_PAGES.items())
