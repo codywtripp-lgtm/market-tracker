@@ -237,7 +237,7 @@ a.sname:hover, .buy h3 a:hover, .pricey h3 a:hover, .all th a:hover { text-decor
 .all .n { text-align: right; white-space: nowrap; font-weight: 700; }
 .all small { display: block; color: var(--ink-2); font-weight: 400; }
 .word { font-weight: 700; } .word.good { color: var(--good); } .word.bad { color: var(--bad); } .word.flat { color: var(--ink-2); font-weight: 400; }
-.insea { display: inline-block; margin-left: 8px; font-size: 14px; line-height: 20px; font-weight: 700; color: var(--good); }
+.insea { display: block; margin: 0; font-size: 16px; line-height: 24px; font-weight: 600; color: var(--good); }  /* always its own line under the name, like the price and vs-usual columns */
 .how { max-width: 760px; color: var(--ink-2); }
 .how h2 { color: var(--ink); }
 
