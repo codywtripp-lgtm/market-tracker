@@ -1,308 +1,116 @@
 series_id,commodity,market,market_type,week_start,compare_price,last_price,real_compare_price,compare_unit,days
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-01-04,1.15,1.15,1.4677,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-01-11,1.18,1.18,1.506,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-01-18,1.61,1.61,2.0548,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-01-25,1.27,1.27,1.6209,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-02-01,1.27,1.27,1.617,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-02-08,1.29,1.29,1.6424,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-02-15,1.55,1.55,1.9735,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-02-22,1.38,1.38,1.757,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-03-01,1.03,1.03,1.3087,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-03-08,1.44,1.44,1.8297,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-03-15,1.4,1.4,1.7789,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-03-22,1.17,1.17,1.4866,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-03-29,1.53,1.53,1.944,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-04-05,1.51,1.51,1.9071,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-04-12,1.4,1.4,1.7682,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-04-19,1.46,1.46,1.844,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-04-26,1.5,1.5,1.8945,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-05-03,1.55,1.55,1.9518,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-05-10,1.58,1.58,1.9896,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-05-17,1.67,1.67,2.1029,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-05-24,0.97,0.97,1.2215,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-05-31,1.59,1.59,2.0022,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-06-07,1.65,1.65,2.0625,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-06-14,1.1,1.1,1.375,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-06-21,0.99,0.99,1.2375,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-06-28,1.69,1.69,2.1125,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-07-05,1.9,1.9,2.3602,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-07-12,1.94,1.94,2.4099,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-07-19,1.03,1.03,1.2795,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-07-26,1.96,1.96,2.4347,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-08-02,1.5,1.5,1.8575,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-08-09,2.49,2.49,3.0835,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-08-16,1.95,1.95,2.4148,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-08-23,1.32,1.32,1.6346,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-08-30,1.99,1.99,2.4643,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-09-06,1.51,1.51,1.8495,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-09-13,2.59,2.59,3.1723,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-09-20,1.17,1.17,1.4331,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-09-27,1.4,1.4,1.7148,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-10-04,1.14,1.14,1.3817,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-10-11,1.36,1.36,1.6483,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-10-18,1.81,1.81,2.1937,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-10-25,1.29,1.29,1.5635,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-11-01,1.78,1.78,2.15,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-11-08,1.34,1.34,1.6185,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-11-15,1.53,1.53,1.848,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-11-22,1.4,1.4,1.691,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-11-29,1.38,1.38,1.6669,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-12-06,1.34,1.34,1.6115,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-12-13,1.56,1.56,1.876,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-12-20,1.5,1.5,1.8039,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2021-12-27,2.11,2.11,2.5375,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-01-03,1.75,1.75,2.08,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-01-10,1.58,1.58,1.8779,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-01-17,1.61,1.61,1.9136,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-01-24,1.66,1.66,1.973,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-01-31,1.17,1.17,1.3906,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-02-07,1.73,1.73,2.0273,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-02-14,1.55,1.55,1.8164,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-02-21,1.4,1.4,1.6406,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-02-28,1.86,1.86,2.1797,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-03-07,1.92,1.92,2.2173,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-03-14,1.43,1.43,1.6515,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-03-21,1.59,1.59,1.8362,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-03-28,1.57,1.57,1.8131,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-04-04,1.79,1.79,2.0412,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-04-11,1.72,1.72,1.9614,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-04-18,1.43,1.43,1.6307,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-04-25,1.22,1.22,1.3912,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-05-02,1.55,1.55,1.7441,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-05-09,1.43,1.43,1.6091,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-05-16,1.25,1.25,1.4065,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-05-23,1.63,1.63,1.8341,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-05-30,1.54,1.54,1.7328,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-06-06,1.13,1.13,1.2586,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-06-13,1.42,1.42,1.5816,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-06-20,1.38,1.38,1.537,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-06-27,1.64,1.64,1.8266,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-07-04,1.86,1.86,2.0428,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-07-11,1.4,1.4,1.5376,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-07-18,1.53,1.53,1.6803,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-07-25,1.54,1.54,1.6913,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-08-01,1.68,1.68,1.8323,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-08-08,1.73,1.73,1.8869,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-08-15,1.77,1.77,1.9305,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-08-22,1.98,1.98,2.1595,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-08-29,1.88,1.88,2.0505,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-09-05,1.45,1.45,1.5721,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-09-12,1.66,1.66,1.7998,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-09-19,1.19,1.19,1.2902,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-09-26,1.48,1.48,1.6046,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-10-03,1.45,1.45,1.5635,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-10-10,1.43,1.43,1.5419,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-10-17,1.78,1.78,1.9193,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-10-24,1.38,1.38,1.488,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-10-31,1.72,1.72,1.8546,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-11-07,1.22,1.22,1.316,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-11-14,1.65,1.65,1.7798,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-11-21,1.66,1.66,1.7906,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-11-28,2.2,2.2,2.3731,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-12-05,1.27,1.27,1.3663,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-12-12,2.03,2.03,2.1839,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-12-19,1.91,1.91,2.0548,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2022-12-26,1.72,1.72,1.8504,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-01-02,1.36,1.36,1.4517,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-01-09,1.84,1.84,1.9641,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-01-16,1.28,1.28,1.3663,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-01-23,1.38,1.38,1.473,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-01-30,1.41,1.41,1.5051,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-02-06,1.99,1.99,2.1168,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-02-13,1.94,1.94,2.0636,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-02-20,1.28,1.28,1.3616,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-02-27,1.85,1.85,1.9679,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-03-06,1.88,1.88,2.0035,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-03-13,1.65,1.65,1.7584,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-03-20,1.86,1.86,1.9822,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-03-27,2.16,2.16,2.3019,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-04-03,1.69,1.69,1.7986,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-04-10,1.64,1.64,1.7454,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-04-17,1.75,1.75,1.8625,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-04-24,1.8,1.8,1.9157,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-05-01,2.26,2.26,2.4036,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-05-08,1.99,1.99,2.1164,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-05-15,1.29,1.29,1.372,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-05-22,1.86,1.86,1.9782,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-05-29,1.82,1.82,1.9356,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-06-05,1.86,1.86,1.9795,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-06-12,1.68,1.68,1.7879,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-06-19,1.91,1.91,2.0327,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-06-26,1.88,1.88,2.0008,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-07-03,1.98,1.98,2.0994,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-07-10,1.89,1.89,2.004,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-07-17,1.89,1.89,2.004,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-07-24,2.26,2.26,2.3963,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-07-31,1.99,1.99,2.11,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-08-07,1.99,1.99,2.1082,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-08-14,2.0,2.0,2.1188,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-08-21,1.99,1.99,2.1082,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-08-28,1.99,1.99,2.1082,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-09-04,1.89,1.89,2.0009,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-09-11,1.36,1.36,1.4398,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-09-18,1.74,1.74,1.8421,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-09-25,1.11,1.11,1.1751,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-10-02,1.59,1.59,1.6785,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-10-09,1.41,1.41,1.4885,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-10-16,1.3,1.3,1.3724,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-10-23,1.33,1.33,1.4041,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-10-30,1.54,1.54,1.6257,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-11-06,1.87,1.87,1.9843,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-11-13,1.51,1.51,1.6023,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-11-20,1.38,1.38,1.4643,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-11-27,1.55,1.55,1.6447,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-12-04,1.05,1.05,1.115,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-12-11,1.59,1.59,1.6884,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-12-18,1.45,1.45,1.5397,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2023-12-25,1.8,1.8,1.9114,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-01-01,1.43,1.43,1.5084,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-01-08,1.47,1.47,1.5506,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-01-15,1.23,1.23,1.2974,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-01-22,1.6,1.6,1.6877,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-01-29,1.29,1.29,1.3607,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-02-05,1.27,1.27,1.3377,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-02-12,1.4,1.4,1.4747,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-02-19,1.31,1.31,1.3799,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-02-26,1.77,1.77,1.8644,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-03-04,1.52,1.52,1.6013,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-03-11,1.53,1.53,1.6118,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-03-18,1.39,1.39,1.4643,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-03-25,1.58,1.58,1.6645,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-04-01,1.53,1.53,1.6103,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-04-08,1.48,1.48,1.5577,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-04-15,1.57,1.57,1.6524,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-04-22,1.59,1.59,1.6735,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-04-29,1.48,1.48,1.5577,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-05-06,1.67,1.67,1.7578,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-05-13,1.25,1.25,1.3158,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-05-20,1.57,1.57,1.6526,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-05-27,1.54,1.54,1.621,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-06-03,1.53,1.53,1.6101,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-06-10,1.54,1.54,1.6206,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-06-17,1.56,1.56,1.6417,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-06-24,1.78,1.78,1.8732,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-07-01,1.84,1.84,1.9307,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-07-08,1.85,1.85,1.9412,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-07-15,1.68,1.68,1.7628,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-07-22,1.44,1.44,1.511,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-07-29,1.59,1.59,1.6684,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-08-05,1.4,1.4,1.4702,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-08-12,1.58,1.58,1.6592,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-08-19,1.6,1.6,1.6802,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-08-26,1.56,1.56,1.6382,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-09-02,1.26,1.26,1.3173,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-09-09,1.11,1.11,1.1605,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-09-16,1.7,1.7,1.7773,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-09-23,1.4,1.4,1.4636,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-09-30,1.5,1.5,1.5682,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-10-07,1.53,1.53,1.5973,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-10-14,1.42,1.42,1.4825,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-10-21,1.46,1.46,1.5242,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-10-28,1.49,1.49,1.5555,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-11-04,1.68,1.68,1.7552,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-11-11,1.4,1.4,1.4627,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-11-18,1.53,1.53,1.5985,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-11-25,1.54,1.54,1.6089,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-12-02,1.57,1.57,1.6381,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-12-09,1.51,1.51,1.5755,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-12-16,1.74,1.74,1.8155,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2024-12-30,1.41,1.41,1.4712,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-01-06,1.48,1.48,1.5315,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-01-13,1.22,1.22,1.2625,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-01-20,1.39,1.39,1.4384,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-01-27,1.47,1.47,1.5212,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-02-03,1.4,1.4,1.4471,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-02-10,1.71,1.71,1.7675,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-02-17,1.26,1.26,1.3024,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-02-24,1.59,1.59,1.6435,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-03-03,1.81,1.81,1.8617,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-03-10,1.71,1.71,1.7589,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-03-17,1.42,1.42,1.4606,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-03-24,1.45,1.45,1.4915,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-03-31,1.71,1.71,1.7589,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-04-07,1.55,1.55,1.5993,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-04-14,1.38,1.38,1.4239,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-04-21,1.6,1.6,1.6509,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-04-28,1.87,1.87,1.9295,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-05-05,1.57,1.57,1.6166,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-05-12,1.72,1.72,1.771,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-05-19,1.5,1.5,1.5445,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-05-26,1.51,1.51,1.5548,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-06-02,1.49,1.49,1.5316,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-06-09,1.58,1.58,1.6241,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-06-16,1.81,1.81,1.8605,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-06-23,1.37,1.37,1.4082,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-06-30,1.91,1.91,1.9633,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-07-07,2.01,2.01,2.0645,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-07-14,1.52,1.52,1.5612,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-07-21,1.56,1.56,1.6023,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-07-28,1.53,1.53,1.5715,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-08-04,1.48,1.48,1.5136,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-08-11,2.03,2.03,2.0761,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-08-18,0.99,0.99,1.0125,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-08-25,1.68,1.68,1.7182,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-09-01,1.95,1.95,1.9853,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-09-08,1.84,1.84,1.8733,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-09-15,1.69,1.69,1.7206,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-09-22,1.78,1.78,1.8122,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-09-29,1.49,1.49,1.5169,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-10-06,1.17,1.17,1.1912,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-10-13,1.3,1.3,1.3235,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-10-20,1.62,1.62,1.6493,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-10-27,1.5,1.5,1.5271,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-11-03,1.73,1.73,1.773,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-11-10,1.63,1.63,1.6705,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-11-17,1.61,1.61,1.65,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-11-24,1.72,1.72,1.7628,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-12-01,1.7,1.7,1.7328,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-12-08,1.57,1.57,1.6003,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-12-15,1.74,1.74,1.7736,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-12-22,1.74,1.74,1.7736,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2025-12-29,2.14,2.14,2.1813,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-01-05,1.46,1.46,1.4799,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-01-12,1.86,1.86,1.8854,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-01-19,1.43,1.43,1.4495,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-01-26,1.56,1.56,1.5813,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-02-02,1.82,1.82,1.8363,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-02-09,1.77,1.77,1.7859,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-02-16,1.58,1.58,1.5942,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-02-23,1.48,1.48,1.4933,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-03-02,1.74,1.74,1.7564,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-03-09,1.64,1.64,1.6555,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-03-16,1.66,1.66,1.6756,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-03-23,1.39,1.39,1.4031,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-03-30,1.54,1.54,1.5545,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-04-06,1.72,1.72,1.7248,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-04-13,1.44,1.44,1.444,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-04-20,1.64,1.64,1.6446,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-04-27,1.18,1.18,1.1833,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-05-04,1.66,1.66,1.6637,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-05-11,1.68,1.68,1.6837,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-05-18,1.66,1.66,1.6637,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-05-25,1.98,1.98,1.9844,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-06-01,1.47,1.47,1.4706,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-06-08,1.9,1.9,1.9008,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-06-15,1.68,1.68,1.6807,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-06-22,1.49,1.49,1.4906,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-06-29,0.99,0.99,0.9904,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-07-06,1.9,1.9,1.9007,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-07-13,1.82,1.82,1.8207,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-07-20,1.98,1.98,1.9807,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-07-27,1.65,1.65,1.6506,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-08-03,1.48,1.48,1.4812,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-08-10,1.51,1.51,1.5112,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-08-17,1.29,1.29,1.291,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-08-24,1.82,1.82,1.8215,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-08-31,1.97,1.97,1.9716,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-09-07,1.71,1.71,1.71,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-09-14,1.53,1.53,1.53,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-09-21,1.59,1.59,1.59,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-09-28,1.24,1.24,1.24,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-10-05,1.33,1.33,1.33,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-10-12,1.76,1.76,1.76,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-10-19,1.63,1.63,1.63,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-10-26,1.38,1.38,1.38,$/per lb,1
-retail-national-apples-granny-smith-per-lb-no,Apples,National,retail,2026-11-02,1.68,1.68,1.68,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2024-09-09,1.01,1.01,1.0559,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2024-09-16,1.3,1.3,1.3591,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2024-09-23,1.34,1.34,1.4009,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2024-09-30,1.57,1.57,1.6414,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2024-10-07,1.48,1.48,1.5451,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2024-10-14,1.36,1.36,1.4198,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2024-10-21,1.58,1.58,1.6495,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2024-10-28,1.64,1.64,1.7121,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2024-11-04,1.34,1.34,1.4,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2024-11-11,1.45,1.45,1.5149,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2024-11-18,1.5,1.5,1.5671,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2024-11-25,1.75,1.75,1.8283,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2024-12-02,1.41,1.41,1.4712,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2024-12-09,1.34,1.34,1.3981,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2024-12-16,1.88,1.88,1.9616,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2024-12-30,1.54,1.54,1.6068,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-01-06,1.21,1.21,1.2521,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-01-13,1.66,1.66,1.7178,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-01-20,1.33,1.33,1.3763,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-01-27,1.64,1.64,1.6971,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-02-03,1.66,1.66,1.7159,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-02-10,1.56,1.56,1.6125,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-02-17,1.67,1.67,1.7262,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-02-24,1.57,1.57,1.6228,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-03-03,1.65,1.65,1.6972,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-03-10,1.51,1.51,1.5532,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-03-17,1.48,1.48,1.5223,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-03-24,1.59,1.59,1.6355,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-03-31,1.41,1.41,1.4503,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-04-07,1.58,1.58,1.6303,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-04-14,1.74,1.74,1.7953,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-04-21,1.49,1.49,1.5374,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-04-28,1.76,1.76,1.816,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-05-05,1.76,1.76,1.8122,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-05-12,1.81,1.81,1.8637,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-05-19,1.89,1.89,1.946,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-05-26,1.71,1.71,1.7607,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-06-02,1.53,1.53,1.5727,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-06-09,1.85,1.85,1.9016,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-06-16,1.52,1.52,1.5624,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-06-23,1.81,1.81,1.8605,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-06-30,2.0,2.0,2.0558,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-07-07,1.88,1.88,1.931,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-07-14,1.91,1.91,1.9618,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-07-21,1.44,1.44,1.479,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-07-28,1.32,1.32,1.3558,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-08-04,1.92,1.92,1.9636,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-08-11,1.66,1.66,1.6977,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-08-18,1.74,1.74,1.7795,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-08-25,1.93,1.93,1.9739,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-09-01,1.73,1.73,1.7613,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-09-08,1.78,1.78,1.8122,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-09-15,1.6,1.6,1.6289,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-09-22,1.27,1.27,1.293,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-09-29,1.99,1.99,2.026,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-10-06,1.17,1.17,1.1912,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-10-13,1.69,1.69,1.7206,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-10-20,1.65,1.65,1.6798,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-10-27,1.68,1.68,1.7104,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-11-03,1.82,1.82,1.8652,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-11-10,1.99,1.99,2.0395,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-11-17,1.55,1.55,1.5885,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-11-24,1.79,1.79,1.8345,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-12-01,1.67,1.67,1.7022,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-12-08,1.57,1.57,1.6003,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-12-15,1.69,1.69,1.7226,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-12-22,1.71,1.71,1.743,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2025-12-29,1.98,1.98,2.0182,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-01-05,1.59,1.59,1.6117,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-01-12,1.36,1.36,1.3785,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-01-19,1.88,1.88,1.9056,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-01-26,1.75,1.75,1.7739,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-02-02,1.76,1.76,1.7758,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-02-09,1.55,1.55,1.5639,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-02-16,1.46,1.46,1.4731,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-02-23,1.99,1.99,2.0078,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-03-02,1.78,1.78,1.7968,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-03-09,1.82,1.82,1.8371,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-03-16,1.62,1.62,1.6353,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-03-23,1.68,1.68,1.6958,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-03-30,1.86,1.86,1.8775,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-04-06,1.54,1.54,1.5443,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-04-13,1.91,1.91,1.9154,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-04-20,1.82,1.82,1.8251,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-04-27,1.89,1.89,1.8953,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-05-04,1.82,1.82,1.824,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-05-11,1.99,1.99,1.9944,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-05-18,1.83,1.83,1.8341,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-05-25,2.24,2.24,2.245,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-06-01,2.37,2.37,2.3709,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-06-08,1.84,1.84,1.8407,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-06-15,2.3,2.3,2.3009,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-06-22,1.85,1.85,1.8507,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-06-29,2.17,2.17,2.1709,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-07-06,2.42,2.42,2.4209,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-07-13,2.25,2.25,2.2508,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-07-20,2.35,2.35,2.3508,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-07-27,2.25,2.25,2.2508,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-08-03,1.95,1.95,1.9516,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-08-10,2.18,2.18,2.1817,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-08-17,1.64,1.64,1.6413,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-08-24,1.88,1.88,1.8815,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-08-31,2.15,2.15,2.1517,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-09-07,2.02,2.02,2.02,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-09-14,1.78,1.78,1.78,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-09-21,1.66,1.66,1.66,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-09-28,2.06,2.06,2.06,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-10-05,1.56,1.56,1.56,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-10-12,1.94,1.94,1.94,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-10-19,1.54,1.54,1.54,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-10-26,1.9,1.9,1.9,$/per lb,1
+retail-national-apples-cosmic-crisp-per-lb-no,Apples,National,retail,2026-11-02,1.97,1.97,1.97,$/per lb,1
 retail-national-apples-honeycrisp-per-lb-no,Apples,National,retail,2021-01-04,1.9,1.9,2.4249,$/per lb,1
 retail-national-apples-honeycrisp-per-lb-no,Apples,National,retail,2021-01-11,2.01,2.01,2.5653,$/per lb,1
 retail-national-apples-honeycrisp-per-lb-no,Apples,National,retail,2021-01-18,1.94,1.94,2.476,$/per lb,1
@@ -7079,6 +6887,258 @@ retail-national-cactus-leaf-nopales-1-1-5-lb-bags-no,Cactus Leaf (Nopales),Natio
 retail-national-cactus-leaf-nopales-1-1-5-lb-bags-no,Cactus Leaf (Nopales),National,retail,2026-10-12,2.49,2.49,2.49,$/1-1.5 lb bags,1
 retail-national-cactus-leaf-nopales-1-1-5-lb-bags-no,Cactus Leaf (Nopales),National,retail,2026-10-19,2.8,2.8,2.8,$/1-1.5 lb bags,1
 retail-national-cactus-leaf-nopales-1-1-5-lb-bags-no,Cactus Leaf (Nopales),National,retail,2026-10-26,3.29,3.29,3.29,$/1-1.5 lb bags,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-01-04,0.69,0.69,0.8806,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-01-11,0.76,0.76,0.97,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-01-18,1.07,1.07,1.3656,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-01-25,0.69,0.69,0.8806,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-02-01,0.57,0.57,0.7257,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-02-08,0.71,0.71,0.904,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-02-15,0.76,0.76,0.9676,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-02-22,0.71,0.71,0.904,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-03-01,0.91,0.91,1.1563,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-03-08,0.6,0.6,0.7624,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-03-15,0.66,0.66,0.8386,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-03-22,0.86,0.86,1.0927,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-03-29,0.55,0.55,0.6988,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-04-05,0.8,0.8,1.0104,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-04-12,0.69,0.69,0.8715,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-04-19,0.5,0.5,0.6315,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-04-26,1.07,1.07,1.3514,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-05-03,0.76,0.76,0.957,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-05-10,0.4,0.4,0.5037,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-05-17,0.83,0.83,1.0452,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-05-24,1.2,1.2,1.5111,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-05-31,0.98,0.98,1.2341,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-06-07,0.69,0.69,0.8625,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-06-14,0.68,0.68,0.85,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-06-21,0.5,0.5,0.625,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-06-28,0.49,0.49,0.6125,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-07-05,0.49,0.49,0.6087,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-07-12,0.53,0.53,0.6584,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-07-19,0.66,0.66,0.8199,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-07-26,0.64,0.64,0.795,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-08-02,0.3,0.3,0.3715,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-08-09,0.56,0.56,0.6935,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-08-16,0.54,0.54,0.6687,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-08-23,0.28,0.28,0.3467,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-08-30,0.95,0.95,1.1764,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-09-06,0.6,0.6,0.7349,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-09-13,0.77,0.77,0.9431,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-09-20,0.65,0.65,0.7961,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-09-27,0.68,0.68,0.8329,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-10-04,0.55,0.55,0.6666,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-10-11,0.69,0.69,0.8363,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-10-18,1.06,1.06,1.2847,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-10-25,0.57,0.57,0.6908,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-11-01,1.06,1.06,1.2803,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-11-08,0.79,0.79,0.9542,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-11-15,0.69,0.69,0.8334,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-11-29,0.7,0.7,0.8455,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-12-06,0.8,0.8,0.9621,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-12-13,0.76,0.76,0.914,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-12-20,0.89,0.89,1.0703,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2021-12-27,0.68,0.68,0.8178,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-01-03,0.9,0.9,1.0697,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-01-10,0.94,0.94,1.1173,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-01-17,1.12,1.12,1.3312,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-01-24,0.81,0.81,0.9627,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-01-31,0.71,0.71,0.8439,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-02-07,0.5,0.5,0.5859,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-02-14,0.84,0.84,0.9844,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-02-21,0.93,0.93,1.0898,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-02-28,0.78,0.78,0.9141,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-03-07,0.83,0.83,0.9585,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-03-14,0.73,0.73,0.843,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-03-21,0.73,0.73,0.843,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-03-28,0.71,0.71,0.82,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-04-04,0.73,0.73,0.8324,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-04-11,0.69,0.69,0.7868,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-04-18,0.84,0.84,0.9579,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-04-25,1.3,1.3,1.4824,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-05-02,1.06,1.06,1.1927,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-05-09,0.98,0.98,1.1027,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-05-16,0.57,0.57,0.6414,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-05-23,0.68,0.68,0.7651,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-05-30,0.84,0.84,0.9452,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-06-06,0.85,0.85,0.9467,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-06-13,0.7,0.7,0.7797,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-06-20,0.6,0.6,0.6683,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-06-27,0.68,0.68,0.7574,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-07-04,0.75,0.75,0.8237,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-07-11,0.77,0.77,0.8457,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-07-18,0.52,0.52,0.5711,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-07-25,0.84,0.84,0.9225,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-08-01,0.85,0.85,0.9271,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-08-08,1.76,1.76,1.9196,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-08-15,0.79,0.79,0.8616,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-08-22,1.13,1.13,1.2325,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-08-29,0.96,0.96,1.0471,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-09-05,0.58,0.58,0.6288,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-09-12,0.67,0.67,0.7264,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-09-19,0.97,0.97,1.0517,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-09-26,0.67,0.67,0.7264,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-10-03,0.72,0.72,0.7764,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-10-10,1.05,1.05,1.1322,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-10-17,0.84,0.84,0.9058,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-10-24,0.86,0.86,0.9273,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-10-31,1.19,1.19,1.2831,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-11-07,1.2,1.2,1.2944,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-11-14,1.29,1.29,1.3915,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-11-21,1.29,1.29,1.3915,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-11-28,0.84,0.84,0.9061,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-12-05,1.71,1.71,1.8396,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-12-12,1.0,1.0,1.0758,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-12-19,1.02,1.02,1.0973,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2022-12-26,1.29,1.29,1.3878,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-01-02,1.43,1.43,1.5264,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-01-09,1.13,1.13,1.2062,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-01-16,0.87,0.87,0.9287,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-01-23,0.75,0.75,0.8006,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-01-30,0.88,0.88,0.9393,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-02-06,0.79,0.79,0.8403,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-02-13,0.99,0.99,1.0531,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-02-20,0.83,0.83,0.8829,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-02-27,0.81,0.81,0.8616,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-03-06,0.81,0.81,0.8632,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-03-13,0.81,0.81,0.8632,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-03-20,0.56,0.56,0.5968,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-03-27,0.74,0.74,0.7886,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-04-03,0.74,0.74,0.7876,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-04-10,0.6,0.6,0.6386,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-04-17,0.73,0.73,0.7769,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-04-24,0.79,0.79,0.8408,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-05-01,0.88,0.88,0.9359,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-05-08,0.69,0.69,0.7338,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-05-15,1.09,1.09,1.1593,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-05-22,0.73,0.73,0.7764,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-05-29,1.25,1.25,1.3294,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-06-05,1.02,1.02,1.0855,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-06-12,0.81,0.81,0.862,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-06-19,1.21,1.21,1.2877,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-06-26,0.88,0.88,0.9365,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-07-03,1.36,1.36,1.442,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-07-10,0.99,0.99,1.0497,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-07-17,0.97,0.97,1.0285,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-07-31,1.35,1.35,1.4314,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-08-07,0.77,0.77,0.8157,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-08-14,1.09,1.09,1.1548,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-08-21,0.88,0.88,0.9323,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-08-28,0.81,0.81,0.8581,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-09-04,1.05,1.05,1.1116,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-09-11,1.02,1.02,1.0798,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-09-18,1.99,1.99,2.1068,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-09-25,1.18,1.18,1.2492,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-10-02,0.96,0.96,1.0135,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-10-09,0.77,0.77,0.8129,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-10-16,0.9,0.9,0.9501,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-10-23,0.78,0.78,0.8234,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-10-30,0.77,0.77,0.8129,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-11-06,0.77,0.77,0.8171,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-11-13,1.21,1.21,1.284,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-11-20,1.48,1.48,1.5705,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-11-27,0.77,0.77,0.8171,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-12-04,1.26,1.26,1.338,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-12-11,0.74,0.74,0.7858,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-12-18,0.75,0.75,0.7964,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2023-12-25,0.7,0.7,0.7433,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-01-01,0.83,0.83,0.8755,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-01-08,0.89,0.89,0.9388,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-01-15,0.88,0.88,0.9282,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-01-22,0.89,0.89,0.9388,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-01-29,0.89,0.89,0.9388,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-02-05,1.15,1.15,1.2113,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-02-12,1.06,1.06,1.1165,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-02-19,0.98,0.98,1.0323,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-02-26,1.03,1.03,1.0849,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-03-04,0.79,0.79,0.8322,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-03-11,0.64,0.64,0.6742,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-03-18,0.85,0.85,0.8955,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-03-25,0.77,0.77,0.8112,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-04-01,0.81,0.81,0.8525,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-04-08,0.61,0.61,0.642,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-04-15,0.82,0.82,0.8631,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-04-22,0.83,0.83,0.8736,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-04-29,0.89,0.89,0.9367,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-05-06,0.78,0.78,0.821,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-05-13,0.72,0.72,0.7579,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-05-27,0.81,0.81,0.8526,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-06-10,0.98,0.98,1.0313,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-06-17,0.33,0.33,0.3473,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-06-24,0.89,0.89,0.9366,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-07-01,0.95,0.95,0.9968,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-07-08,0.89,0.89,0.9339,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-07-15,0.81,0.81,0.8499,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-07-22,0.78,0.78,0.8184,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-07-29,0.77,0.77,0.808,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-08-05,0.89,0.89,0.9346,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-08-12,0.33,0.33,0.3465,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-08-19,0.74,0.74,0.7771,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-08-26,0.86,0.86,0.9031,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-09-02,0.71,0.71,0.7423,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-09-09,0.78,0.78,0.8155,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-09-16,0.79,0.79,0.8259,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-09-23,0.8,0.8,0.8364,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-09-30,0.88,0.88,0.92,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-10-07,0.87,0.87,0.9083,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-10-14,1.24,1.24,1.2945,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-10-28,0.98,0.98,1.0231,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-11-04,1.18,1.18,1.2328,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-11-11,1.49,1.49,1.5567,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-12-02,0.98,0.98,1.0225,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-12-16,0.83,0.83,0.866,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2024-12-30,1.12,1.12,1.1686,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-01-06,0.76,0.76,0.7865,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-01-13,0.91,0.91,0.9417,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-01-20,0.95,0.95,0.9831,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-01-27,0.99,0.99,1.0245,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-02-03,0.9,0.9,0.9303,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-02-10,0.84,0.84,0.8683,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-02-17,0.69,0.69,0.7132,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-02-24,0.91,0.91,0.9406,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-03-03,0.64,0.64,0.6583,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-03-10,0.64,0.64,0.6583,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-03-17,0.88,0.88,0.9052,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-03-24,0.86,0.86,0.8846,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-03-31,0.97,0.97,0.9977,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-04-07,0.86,0.86,0.8874,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-04-14,0.95,0.95,0.9802,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-04-21,0.97,0.97,1.0009,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-04-28,0.88,0.88,0.908,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-06-16,0.79,0.79,0.812,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-07-14,0.89,0.89,0.9141,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-08-18,0.91,0.91,0.9307,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-08-25,0.5,0.5,0.5114,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-09-15,0.99,0.99,1.0079,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-09-29,0.97,0.97,0.9875,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-10-06,0.97,0.97,0.9875,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-10-20,0.99,0.99,1.0079,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-10-27,0.99,0.99,1.0079,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-12-01,0.89,0.89,0.9072,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-12-15,0.99,0.99,1.0091,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2025-12-22,0.99,0.99,1.0091,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2026-01-05,0.97,0.97,0.9832,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2026-01-12,0.96,0.96,0.9731,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2026-01-19,0.89,0.89,0.9021,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2026-01-26,0.89,0.89,0.9021,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2026-02-02,0.89,0.89,0.898,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2026-02-16,0.88,0.88,0.8879,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2026-02-23,0.91,0.91,0.9182,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2026-03-02,0.87,0.87,0.8782,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2026-03-09,0.92,0.92,0.9287,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2026-03-16,1.1,1.1,1.1104,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2026-03-23,1.1,1.1,1.1104,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2026-03-30,0.92,0.92,0.9287,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2026-04-20,0.89,0.89,0.8925,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2026-05-18,0.69,0.69,0.6915,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2026-06-01,0.89,0.89,0.8904,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2026-06-15,0.89,0.89,0.8904,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2026-07-20,0.69,0.69,0.6902,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2026-07-27,0.89,0.89,0.8903,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2026-08-10,0.89,0.89,0.8907,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2026-09-14,0.97,0.97,0.97,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2026-09-21,0.96,0.96,0.96,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2026-09-28,0.89,0.89,0.89,$/per lb,1
+retail-national-cactus-leaf-nopales-per-lb-no,Cactus Leaf (Nopales),National,retail,2026-10-19,0.89,0.89,0.89,$/per lb,1
 retail-national-cantaloupes-each-no,Cantaloupes,National,retail,2021-01-04,2.79,2.79,3.5608,$/each,1
 retail-national-cantaloupes-each-no,Cantaloupes,National,retail,2021-01-11,2.48,2.48,3.1652,$/each,1
 retail-national-cantaloupes-each-no,Cantaloupes,National,retail,2021-01-18,2.83,2.83,3.6119,$/each,1
@@ -35389,6 +35449,38 @@ retail-national-serrano-peppers-per-lb-no,Serrano Peppers,National,retail,2026-0
 retail-national-serrano-peppers-per-lb-no,Serrano Peppers,National,retail,2026-10-12,1.93,1.93,1.93,$/per lb,1
 retail-national-serrano-peppers-per-lb-no,Serrano Peppers,National,retail,2026-10-26,1.05,1.05,1.05,$/per lb,1
 retail-national-serrano-peppers-per-lb-no,Serrano Peppers,National,retail,2026-11-02,1.97,1.97,1.97,$/per lb,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2025-08-11,3.5,3.5,3.5795,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2025-09-01,3.52,3.52,3.5837,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2025-09-08,3.5,3.5,3.5633,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2025-09-22,3.53,3.53,3.5938,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2025-09-29,2.5,2.5,2.5452,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2025-10-20,3.0,3.0,3.0543,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2025-12-08,3.11,3.11,3.17,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2025-12-29,3.35,3.35,3.4147,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-01-05,3.69,3.69,3.7403,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-01-26,3.0,3.0,3.0409,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-02-02,2.99,2.99,3.0168,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-03-02,3.09,3.09,3.1191,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-03-16,2.99,2.99,3.0182,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-03-30,3.33,3.33,3.3614,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-04-06,3.49,3.49,3.4998,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-04-13,3.05,3.05,3.0585,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-04-27,3.0,3.0,3.0084,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-05-04,3.49,3.49,3.4977,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-05-25,3.04,3.04,3.0467,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-06-22,3.0,3.0,3.0012,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-06-29,3.04,3.04,3.0412,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-07-13,3.69,3.69,3.6913,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-07-20,3.11,3.11,3.1111,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-07-27,3.0,3.0,3.0011,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-08-10,2.99,2.99,2.9924,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-08-17,2.99,2.99,2.9924,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-08-31,3.06,3.06,3.0625,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-09-14,4.0,4.0,4.0,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-09-21,3.0,3.0,3.0,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-09-28,2.99,2.99,2.99,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-10-12,3.48,3.48,3.48,$/6 oz bags,1
+retail-national-snow-peas-6-oz-bags-no,Snow Peas,National,retail,2026-10-26,2.99,2.99,2.99,$/6 oz bags,1
 retail-national-sour-cream-16-oz-no,Sour Cream,National,retail,2021-01-04,1.93,1.93,2.4632,$/16 oz,1
 retail-national-sour-cream-16-oz-no,Sour Cream,National,retail,2021-01-11,1.7,1.7,2.1697,$/16 oz,1
 retail-national-sour-cream-16-oz-no,Sour Cream,National,retail,2021-01-18,1.73,1.73,2.208,$/16 oz,1
@@ -69967,192 +70059,221 @@ terminal-atlanta-cucumbers-1-1-9-bushel-cartons-small-n,Cucumbers,Atlanta,termin
 terminal-atlanta-cucumbers-1-1-9-bushel-cartons-small-n,Cucumbers,Atlanta,terminal,2026-09-21,20.5,20.5,20.5,$/package,5
 terminal-atlanta-cucumbers-1-1-9-bushel-cartons-small-n,Cucumbers,Atlanta,terminal,2026-09-28,20.5,20.5,20.5,$/package,5
 terminal-atlanta-cucumbers-1-1-9-bushel-cartons-small-n,Cucumbers,Atlanta,terminal,2026-10-05,20.5,20.5,20.5,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-01-04,26.25,26.25,33.5022,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-01-11,31.125,31.125,39.7241,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-01-18,31.125,31.125,39.7241,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-01-25,30.725,30.625,39.2136,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-02-01,30.625,30.625,38.9917,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-02-08,30.325,30.25,38.6098,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-02-15,30.25,30.25,38.5143,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-02-22,30.25,30.25,38.5143,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-03-01,30.25,30.25,38.436,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-03-08,30.25,30.25,38.436,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-03-15,30.25,30.25,38.436,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-03-22,30.25,30.25,38.436,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-03-29,30.25,30.25,38.436,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-04-05,30.25,30.25,38.2053,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-04-12,30.7,30.75,38.7736,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-04-19,42.25,42.25,53.3611,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-04-26,42.25,42.25,53.3611,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-05-03,42.25,42.25,53.2032,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-05-10,42.25,42.25,53.2032,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-05-17,42.0,41.0,52.8884,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-05-24,41.0,41.0,51.6292,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-05-31,41.0,41.0,51.6292,$/package,2
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-01-17,44.0,44.0,52.2969,$/package,1
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-01-24,43.5,43.5,51.7026,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-01-31,43.5,43.5,51.7026,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-02-07,44.5,46.0,52.1482,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-02-14,46.0,46.0,53.906,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-02-21,40.75,40.75,47.7537,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-02-28,39.15,38.75,45.8787,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-03-07,38.75,38.75,44.7508,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-03-14,38.75,38.75,44.7508,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-03-21,37.45,35.5,43.2495,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-03-28,35.5,35.5,40.9975,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-04-04,35.5,35.5,40.4819,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-04-11,34.85,32.25,39.7407,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-04-18,32.0,32.0,36.4907,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-04-25,32.65,33.0,37.2319,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-05-02,32.375,31.375,36.4288,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-05-09,31.375,31.375,35.3036,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-05-16,32.125,32.625,36.1475,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-05-23,32.625,32.625,36.7101,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-05-30,32.625,32.625,36.7101,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-06-06,32.625,32.625,36.3376,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-06-13,30.5,30.5,33.9708,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-06-20,30.5,30.5,33.9708,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-06-27,30.5,30.5,33.9708,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-07-04,30.5,30.5,33.4968,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-07-11,30.5,30.5,33.4968,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-08-15,29.0,29.0,31.6297,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-08-22,28.5,28.5,31.0844,$/package,2
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-08-29,28.5,28.5,31.0844,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-09-05,28.5,28.5,30.8996,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-09-12,28.0,28.0,30.3575,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-09-19,28.0,28.0,30.3575,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-09-26,28.0,28.0,30.3575,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-10-03,28.0,28.0,30.1917,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-10-10,28.0,28.0,30.1917,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-10-17,28.2,28.5,30.4073,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-10-24,28.5,28.5,30.7308,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-10-31,28.5,28.5,30.7308,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-11-07,28.5,28.5,30.7429,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-11-14,29.7,30.0,32.0373,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-11-21,30.5,30.5,32.9003,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-11-28,30.1,28.5,32.4688,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-12-05,29.7,31.5,31.9511,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-12-12,31.5,31.5,33.8875,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-12-19,31.4,31.0,33.7799,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-12-26,31.5,31.5,33.8875,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-01-02,31.5,31.5,33.6238,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-01-09,31.5,31.5,33.6238,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-01-16,31.5,31.5,33.6238,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-01-23,31.5,31.5,33.6238,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-01-30,31.5,31.5,33.6238,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-02-06,31.7,32.0,33.72,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-02-13,32.25,32.25,34.3051,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-02-20,30.75,29.0,32.7095,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-02-27,28.2,27.0,29.997,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-03-06,27.0,27.0,28.7743,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-03-13,27.0,27.0,28.7743,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-03-20,27.0,27.0,28.7743,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-03-27,27.0,27.0,28.7743,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-04-03,27.0,27.0,28.7352,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-04-10,27.0,27.0,28.7352,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-04-17,32.85,33.0,34.9612,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-04-24,33.0,33.0,35.1208,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-05-01,35.05,35.25,37.2771,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-05-08,35.45,35.5,37.7025,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-05-15,35.5,35.5,37.7557,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-05-22,35.5,35.5,37.7557,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-05-29,49.1875,60.25,52.3129,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-06-05,55.9,53.75,59.4912,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-06-12,39.75,39.75,42.3037,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-06-19,40.6875,41.0,43.3014,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-06-26,31.4,29.0,33.4172,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-07-03,29.0,29.0,30.7491,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-07-10,23.95,23.75,25.3946,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-07-17,23.8,25.0,25.2355,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-07-24,21.4,20.5,22.6907,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-07-31,32.95,34.5,34.9374,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-08-07,26.4,34.5,27.9683,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-08-14,34.5,34.5,36.5494,$/package,3
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-11-13,35.0,35.0,37.1393,$/package,3
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-11-20,35.0,35.0,37.1393,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-11-27,35.15,35.25,37.2985,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-12-04,36.65,37.0,38.9183,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-12-11,36.25,36.25,38.4935,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-12-18,36.25,36.25,38.4935,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-12-25,36.25,36.25,38.4935,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-01-01,39.0,39.0,41.1378,$/package,2
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-01-08,39.0,39.0,41.1378,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-01-15,39.0,39.0,41.1378,$/package,3
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-06-10,27.2,28.5,28.6239,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-06-17,28.5,28.5,29.992,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-06-24,27.6,28.5,29.0448,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-07-01,32.9375,35.0,34.5611,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-07-08,35.0,35.0,36.7252,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-07-15,34.1,35.0,35.7809,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-07-22,35.0,35.0,36.7252,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-07-29,35.0,35.0,36.7252,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-08-05,37.0,41.0,38.8543,$/package,3
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-08-12,41.0,41.0,43.0548,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-08-19,31.275,32.125,32.8424,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-08-26,32.125,32.125,33.735,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-09-02,32.125,32.125,33.5854,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-09-09,32.025,31.625,33.4808,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-09-16,31.625,31.625,33.0627,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-09-23,31.625,31.625,33.0627,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-09-30,31.625,31.625,33.0627,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-10-07,31.625,31.625,33.0162,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-10-14,31.625,31.625,33.0162,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-10-21,33.925,34.5,35.4174,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-10-28,34.5,34.5,36.0177,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-11-04,34.5,34.5,36.0444,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-11-11,35.75,35.75,37.3503,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-11-18,35.75,35.75,37.3503,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-11-25,35.75,35.75,37.3503,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-12-02,45.2,53.0,47.1608,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-12-09,43.25,53.0,45.1263,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-12-16,54.2,54.5,56.5513,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-12-23,54.5,54.5,56.8643,$/package,3
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-12-30,54.5,54.5,56.8643,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-01-06,54.5,54.5,56.3969,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-01-13,54.5,54.5,56.3969,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-01-20,54.5,54.5,56.3969,$/package,3
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-01-27,50.1,42.5,51.8437,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-02-03,36.5,36.5,37.7281,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-02-10,36.5,36.5,37.7281,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-02-17,36.5,36.5,37.7281,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-02-24,30.0,30.0,31.0094,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-03-03,28.4,28.0,29.2119,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-03-10,28.0,28.0,28.8005,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-03-17,28.0,28.0,28.8005,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-03-24,30.0,30.0,30.8577,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-03-31,27.75,27.75,28.5433,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-04-07,28.0,28.0,28.8905,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-04-14,28.0,28.0,28.8905,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-04-21,39.85,40.0,41.1174,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-04-28,40.0,40.0,41.2722,$/package,3
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-11-03,31.5,31.5,32.283,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-11-10,34.5,37.5,35.3576,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-11-17,37.5,37.5,38.4321,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-11-24,36.75,34.5,37.6635,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-12-01,34.5,34.5,35.166,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-12-08,55.9,56.5,56.9792,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-12-15,52.1,51.0,53.1058,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-12-22,51.0,51.0,51.9846,$/package,2
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-12-29,51.0,51.0,51.9846,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-01-05,44.5,44.5,45.1066,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-01-12,43.7,42.5,44.2957,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-01-19,41.125,37.0,41.6856,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-01-26,37.0,37.0,37.5044,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-02-02,35.1,35.0,35.4148,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-02-09,35.0,35.0,35.3139,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-02-16,34.125,33.25,34.431,$/package,4
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-02-23,33.25,33.25,33.5482,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-03-02,34.65,35.0,34.9764,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-03-09,35.0,35.0,35.3297,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-03-16,38.6,41.0,38.9637,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-03-23,41.0,41.0,41.3863,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-03-30,41.8,43.0,42.1938,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-04-06,44.3,45.5,44.4241,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-04-13,45.5,45.5,45.6275,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-04-20,45.5,45.5,45.6275,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-04-27,46.7,47.5,46.8308,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-05-04,48.3,48.5,48.407,$/package,5
-terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-05-11,48.5,48.5,48.6074,$/package,1
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-01-04,27.75,27.75,35.4166,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-01-11,27.75,27.75,35.4166,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-01-18,27.75,27.75,35.4166,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-01-25,27.75,27.75,35.4166,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-02-01,29.15,29.5,37.1138,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-02-08,29.5,29.5,37.5594,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-02-15,29.5,29.5,37.5594,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-02-22,29.5,29.5,37.5594,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-03-01,28.3,26.5,35.9583,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-03-08,26.5,26.5,33.6712,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-03-15,26.5,26.5,33.6712,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-03-22,26.5,26.5,33.6712,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-03-29,26.5,26.5,33.6712,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-04-05,26.3125,26.25,33.2323,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-04-12,26.3,26.5,33.2165,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-04-19,26.5,26.5,33.4691,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-04-26,24.25,24.0,30.6274,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-05-03,24.0,24.0,30.222,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-05-10,23.8,23.5,29.9701,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-05-17,23.5,23.5,29.5923,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-05-24,27.75,27.75,34.9441,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2021-05-31,27.75,27.75,34.9441,$/package,2
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-06-27,38.0,38.0,42.3243,$/package,1
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-07-04,38.0,38.0,41.7337,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-07-11,38.0,38.0,41.7337,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-07-18,37.2,37.0,40.8551,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-07-25,36.75,35.75,40.3609,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-08-01,35.75,35.75,38.9918,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-08-08,35.75,35.75,38.9918,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-08-15,32.0,31.5,34.9017,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-08-22,31.5,31.5,34.3564,$/package,2
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-08-29,32.125,32.25,35.0381,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-09-05,32.25,32.25,34.9653,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-09-12,32.25,32.25,34.9653,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-09-19,31.95,31.5,34.6401,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-09-26,31.5,31.5,34.1522,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-10-03,30.5,30.5,32.8874,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-10-10,30.5,30.5,32.8874,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-10-17,31.5,30.0,33.9656,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-10-24,30.4,30.5,32.7795,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-10-31,30.5,30.5,32.8874,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-11-07,30.5,30.5,32.9003,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-11-14,31.1,31.25,33.5475,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-11-21,31.5,31.5,33.9789,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-11-28,32.0,32.5,34.5183,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-12-05,31.9,31.0,34.3178,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-12-12,30.95,30.75,33.2958,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-12-19,32.15,32.5,34.5868,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2022-12-26,30.6875,29.0,33.0134,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-01-02,33.25,33.75,35.4917,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-01-09,32.95,32.25,35.1715,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-01-16,32.25,32.25,34.4243,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-01-23,32.25,32.25,34.4243,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-01-30,32.25,32.25,34.4243,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-02-06,32.25,32.25,34.3051,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-02-13,32.25,32.25,34.3051,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-02-20,32.25,32.25,34.3051,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-02-27,32.25,32.25,34.3051,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-03-06,32.25,32.25,34.3693,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-03-13,32.25,32.25,34.3693,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-03-20,32.25,32.25,34.3693,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-03-27,32.25,32.25,34.3693,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-04-03,32.3,32.5,34.3759,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-04-10,32.5,32.5,34.5887,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-04-17,32.5,32.5,34.5887,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-04-24,32.5,32.5,34.5887,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-05-01,35.65,36.25,37.9152,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-05-08,37.15,38.5,39.5105,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-05-15,38.5,38.5,40.9463,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-05-22,40.1,42.5,42.6479,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-05-29,52.3125,52.5,55.6364,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-06-05,52.5,52.5,55.8728,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-07-03,34.5,34.5,36.5809,$/package,1
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-07-10,34.5,34.5,36.5809,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-07-17,34.25,34.25,36.3158,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-07-24,34.75,34.75,36.846,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-07-31,34.75,34.75,36.846,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-08-07,34.75,34.75,36.8143,$/package,3
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-08-14,34.5,34.5,36.5494,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-08-21,34.9,35.0,36.9732,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-08-28,35.0,35.0,37.0791,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-09-04,35.0,35.0,37.0536,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-09-11,35.0,35.0,37.0536,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-09-18,35.0,35.0,37.0536,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-09-25,35.15,35.75,37.2124,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-10-02,35.75,35.75,37.7405,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-10-09,35.75,35.75,37.7405,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-10-16,35.75,35.75,37.7405,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-10-23,37.0,37.0,39.0601,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-10-30,37.0,37.0,39.0601,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-11-06,36.625,36.5,38.8636,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-11-13,36.8,37.0,39.0493,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-11-20,35.0,35.0,37.1393,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-11-27,34.6,35.0,36.7149,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-12-04,35.0,35.0,37.1662,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-12-11,35.0,35.0,37.1662,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-12-18,35.5,36.25,37.6971,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2023-12-25,38.125,38.75,40.4846,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-01-01,38.75,38.75,40.8741,$/package,2
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-01-08,38.5,38.5,40.6104,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-01-15,42.75,42.75,45.0934,$/package,3
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-02-12,44.5625,44.0,46.9388,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-02-19,44.25,44.5,46.6096,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-02-26,44.5,44.5,46.8729,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-03-04,44.5,44.5,46.8795,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-03-11,44.5,44.5,46.8795,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-03-18,44.5,44.5,46.8795,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-03-25,44.5,44.5,46.8795,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-04-01,44.5,44.5,46.8365,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-04-08,44.4,43.0,46.7312,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-04-15,45.4,49.0,47.7837,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-04-22,49.0,49.0,51.5727,$/package,2
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-04-29,47.6,47.25,50.0992,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-05-06,47.25,47.25,49.7354,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-05-13,47.25,47.25,49.7354,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-05-20,47.25,47.25,49.7354,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-05-27,47.25,47.25,49.7354,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-06-24,32.5,32.5,34.2014,$/package,2
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-07-01,32.5,32.5,34.102,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-07-08,32.5,32.5,34.102,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-07-15,35.3,36.0,37.04,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-07-22,36.0,36.0,37.7745,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-07-29,36.0,36.0,37.7745,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-08-05,35.0,35.0,36.7541,$/package,3
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-08-12,35.0,35.0,36.7541,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-08-19,35.0,35.0,36.7541,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-08-26,35.0,35.0,36.7541,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-09-02,35.0,35.0,36.5911,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-09-09,35.8,36.0,37.4275,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-09-16,36.2,36.5,37.8456,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-09-23,36.5,36.5,38.1593,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-09-30,36.0,36.0,37.6365,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-10-07,35.0,35.0,36.5397,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-10-14,35.0,35.0,36.5397,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-10-21,35.4,35.5,36.9573,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-10-28,35.5,35.5,37.0617,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-11-04,35.5,35.5,37.0891,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-11-11,35.0,35.0,36.5667,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-11-18,35.0,35.0,36.5667,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-11-25,35.0,35.0,36.5667,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-12-02,35.1,35.5,36.6227,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-12-09,36.0,36.0,37.5617,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-12-16,37.5,38.5,39.1268,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-12-23,38.5,38.5,40.1702,$/package,3
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2024-12-30,38.5,38.5,40.1702,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-01-06,45.0,45.0,46.5662,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-01-13,45.0,45.0,46.5662,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-01-20,45.0,45.0,46.5662,$/package,3
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-01-27,42.3,42.0,43.7722,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-02-03,42.0,42.0,43.4132,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-02-10,42.0,42.0,43.4132,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-02-17,42.0,42.0,43.4132,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-02-24,34.0,34.0,35.144,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-03-03,32.875,32.875,33.8149,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-03-10,32.875,32.875,33.8149,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-03-17,32.875,32.875,33.8149,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-03-24,32.875,32.875,33.8149,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-03-31,32.85,32.85,33.7891,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-04-07,31.56,29.625,32.5638,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-04-14,29.625,29.625,30.5672,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-04-21,31.175,33.5,32.1665,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-04-28,33.5,33.5,34.5655,$/package,3
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-11-03,34.2,34.5,35.0501,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-11-10,33.5,32.5,34.3327,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-11-17,37.3,38.5,38.2272,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-11-24,39.0,39.0,39.9694,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-12-01,39.0,39.0,39.7529,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-12-08,42.7,41.5,43.5243,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-12-15,42.1,42.5,42.9128,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-12-22,42.5,42.5,43.3205,$/package,2
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2025-12-29,41.75,41.5,42.556,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-01-05,40.5,38.5,41.0521,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-01-12,38.5,38.5,39.0248,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-01-19,37.5,36.5,38.0112,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-01-26,35.7,34.5,36.1866,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-02-02,34.5,34.5,34.8094,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-02-09,33.7,33.5,34.0022,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-02-16,32.0,31.5,32.287,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-02-23,31.5,31.5,31.7825,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-03-02,31.5,31.5,31.7968,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-03-09,30.9,30.5,31.1911,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-03-16,30.7,31.5,30.9892,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-03-23,31.5,31.5,31.7968,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-03-30,35.1,40.5,35.4307,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-04-06,40.4,40.5,40.5132,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-04-13,40.5,40.5,40.6135,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-04-20,40.5,40.5,40.6135,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-04-27,40.5,40.5,40.6135,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-05-04,38.5,38.0,38.5853,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-05-11,38.0,38.0,38.0842,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-05-18,37.8,37.5,37.8837,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-05-25,36.3125,36.25,36.3929,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-06-01,36.85,38.5,36.8646,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-06-08,38.5,38.5,38.5152,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-06-15,38.5,38.5,38.5152,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-06-22,42.9,44.0,42.9169,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-06-29,46.25,48.5,46.2683,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-07-06,48.5,48.5,48.5173,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-07-13,48.5,48.5,48.5173,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-07-20,50.1,50.5,50.1179,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-07-27,50.5,50.5,50.5181,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-08-03,49.1,47.0,49.1394,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-08-10,42.5,42.5,42.5341,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-08-17,41.9,41.5,41.9336,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-08-24,37.5,36.5,37.5301,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-08-31,35.1,34.5,35.1282,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-09-07,34.5,34.5,34.5,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-09-14,34.3,33.5,34.3,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-09-21,33.5,33.5,33.5,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-09-28,33.9,34.5,33.9,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-10-05,34.5,34.5,34.5,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-10-12,34.5,34.5,34.5,$/package,4
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-10-19,33.3,31.5,33.3,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-10-26,33.9,35.5,33.9,$/package,5
+terminal-atlanta-grapes-red-globe-18-19-lb-containers-bagged-extra-large-n,Grapes,Atlanta,terminal,2026-11-02,35.5,35.5,35.5,$/package,5
 terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-large-extra-large-n,Grapes,Atlanta,terminal,2022-03-07,33.3333,33.5,38.4953,$/package,3
 terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-large-extra-large-n,Grapes,Atlanta,terminal,2022-03-14,33.5,33.5,38.6878,$/package,5
 terminal-atlanta-grapes-white-seedless-type-18-19-lb-containers-bagged-large-extra-large-n,Grapes,Atlanta,terminal,2022-03-21,33.5,33.5,38.6878,$/package,5

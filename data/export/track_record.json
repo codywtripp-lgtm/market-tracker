@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-07",
+ "asOf": "2026-11-08",
  "forecasts_live": {
   "scored": 871,
   "since": "2026-09-21",
@@ -20,14 +20,14 @@
    },
    "3": {
     "miss_pct": 11.5,
-    "no_change_miss_pct": 13.0
+    "no_change_miss_pct": 12.9
    },
    "4": {
-    "miss_pct": 13.5,
+    "miss_pct": 13.6,
     "no_change_miss_pct": 15.3
    }
   },
-  "range_coverage_pct": 82.4
+  "range_coverage_pct": 82.3
  },
  "alerts": {
   "issued": 71,
