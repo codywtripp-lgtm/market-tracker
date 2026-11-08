@@ -421,6 +421,7 @@ def actions(rows, market):
                 f'<li><a href="{item_link(i["commodity"], market)}"><span>{esc(name(i["commodity"]))}'
                 + {"topping": ' <small class="turn">firm this week first</small>',
                    "bottoming": ' <small class="turn">easing this week first</small>'}.get(i["dir"], "")
+                + (f' <small class="turn">{esc(i["try"])} better value</small>' if key == "high" and i.get("try") else "")
                 + '</span>'
                 f'<span class="num">{money(i["price"])}'
                 + (f' <span class="to">to about {whole(expected(i)[0])}</span>'
@@ -729,8 +730,16 @@ def quote(i, hist, today, opts, note=""):
     arrow, word, tone = DIR[i["dir"] or "steady"]
     sz = ""
     if opts:
-        sz = ('<h2 class="sh">Other counts today</h2><table class="t sizes"><thead><tr><th>Count</th><th>Case price</th></tr></thead><tbody>'
-              + "".join(f"<tr><td>{esc(o[1])}</td><td>{money(o[2] * o[0])}</td></tr>" for o in opts) + "</tbody></table>")
+        best = brief.best_count(opts)
+        main = next(o for o in opts if o["main"])
+        pick = (f'<p class="pick">Better buy right now: <strong>{esc(best["label"])}</strong> ({esc(count_vs(best))}) '
+                f'instead of {esc(main["label"])} ({esc(count_vs(main))}).</p>' if best else "")
+        sz = ('<h2 class="sh">Counts quoted this week</h2><p class="note">Each count against its own usual price for '
+              'the time of year. When one count is tight, another is often the better buy.</p>' + pick
+              + '<table class="t sizes"><thead><tr><th>Count</th><th class="n">Case</th><th>For the season</th></tr></thead><tbody>'
+              + "".join(f'<tr{" class=main" if o["main"] else ""}><td>{esc(o["label"])}{" (main)" if o["main"] else ""}</td>'
+                        f'<td class="n">{money(o["case"])}</td><td>{esc(count_vs(o))}</td></tr>' for o in opts)
+              + "</tbody></table>")
     return (f'<div class="quote"><div class="q-main"><span class="q-price">{money(i["price"])}</span>'
             f'<span class="q-unit">a case</span><span class="q-pack">{esc(i["pack"])}</span>'
             + (f'<span class="q-range">{esc(quote_text(i["quote"]))}</span>{other_areas(i["quote"])}' if i.get("quote") else "") + '</div>'
@@ -746,6 +755,14 @@ def quote(i, hist, today, opts, note=""):
             + (f'<div class="todo {tone}"><h2>What to do</h2><p>{esc(i["action"])}</p></div>' if i["action"] else "")
             + (f'<div class="supply-note"><h2>Supply news</h2><p>{esc(note)}</p></div>' if note else "")
             + chart(hist.get(i["series_id"], []), i) + sz)
+
+
+def count_vs(o):
+    if o["vs_norm"] is None or o["status"] not in SEASON:
+        return "not enough history"
+    if o["status"] == "normal":
+        return "within the usual range"
+    return f'{brief.vs_usual(o["vs_norm"])} usual'
 
 
 def faq(commodity, rows):
@@ -858,6 +875,9 @@ def build():
         i["quote"] = quotes.get(i["series_id"])
     as_of = as_of or max(dt.date.fromisoformat(r["week_start"]) for r in latest) + dt.timedelta(days=6)
     sizes = brief.size_options(latest, series)
+    for i in items:
+        best = brief.best_count(sizes.get((i["commodity"], i["market"]), []))
+        i["try"] = best["label"] if best else ""
 
     notes = supply_notes(as_of)
     out = {"home": home(items, hist, today, alerts, as_of, record, notes)}

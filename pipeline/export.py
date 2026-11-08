@@ -519,6 +519,11 @@ def write_csv(path, fields, rows):
         w.writerows(rows)
 
 
+# The usual range is at least this far either side of the usual price. Bananas and other contract-priced items
+# barely move, so the middle half of past years can be under a dollar wide and a 50-cent change read as "high".
+MIN_BAND = 0.05
+
+
 def seasonal_status(weekly, week, value):
     """Compare a week's value with the same weeks in prior years."""
     iso_year, iso_wk = week.isocalendar()[:2]
@@ -536,10 +541,13 @@ def seasonal_status(weekly, week, value):
     norm = statistics.median(history)
     # mid-rank percentile: ties count half, so a flat history reads as 50th, not 0th
     pct = (sum(1 for h in history if h < value) + 0.5 * sum(1 for h in history if h == value)) / len(history)
-    status = "cheap" if pct <= 0.25 else "expensive" if pct >= 0.75 else "normal"
     ranked = sorted(history)
-    # the usual range: the middle half of past years, the same cutoffs that decide cheap / normal / expensive
-    low, high = ranked[round(0.25 * (len(ranked) - 1))], ranked[round(0.75 * (len(ranked) - 1))]
+    # the usual range: the middle half of past years, the same cutoffs that decide cheap / normal / expensive,
+    # widened to at least MIN_BAND either side of the usual price
+    low = min(ranked[round(0.25 * (len(ranked) - 1))], norm * (1 - MIN_BAND))
+    high = max(ranked[round(0.75 * (len(ranked) - 1))], norm * (1 + MIN_BAND))
+    status = ("cheap" if pct <= 0.25 and value < low else "expensive" if pct >= 0.75 and value > high
+              else "normal")
     return {"seasonal_norm": round(norm, 4), "usual_low": round(low, 2), "usual_high": round(high, 2), "pct_vs_norm": round((value / norm - 1) * 100, 1) if norm else "",
             "percentile": round(pct * 100), "status": status, "years_of_history": len(years)}
 

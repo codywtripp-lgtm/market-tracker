@@ -238,24 +238,52 @@ def weekly_history(items, weeks=12):
 
 # ---------- other counts of the same pack ----------
 def size_options(latest, series):
-    """(commodity, market) -> [(count, size, price per piece)] when a market quotes the same pack in 2+ counts.
+    """(commodity, market) -> [{count, label, case, vs_norm, status, main}] when a market quotes the headline's
+    variety and pack in 2+ counts within the same week.
 
-    Buyers can often spec a different count (48s or 60s avocados, 175s or 200s limes), so the
-    brief shows the case price for each count side by side.
+    Buyers can spec a different count when one is tight (FreshPoint, Sysco and Markon market reports all give size
+    availability: "subbing 113s for 138s"), so each count is compared with its own usual price for the season.
     """
     groups = {}
     for r in latest:
         s_ = series.get(r["series_id"], {})
         size, price = s_.get("item_size", ""), _num(r.get("last_price")) or _num(r["compare_price"])
         m = re.search(r"(\d+)s\b", size) or re.search(r"(\d+) dozen", size)
-        if r["market_type"] != "terminal" or not m or not price:
+        if r["market_type"] != "terminal" or not m or not price or s_.get("organic") in ("Y", "Yes"):
             continue
         count = int(m.group(1)) * (12 if "dozen" in size else 1)
         key = (r["commodity"], r["market"], s_.get("variety", ""), s_.get("pack_size", ""))
         label = size.replace("film bags ", "").replace("film wrapped", "").strip()
-        groups.setdefault(key, []).append((count, label, price / count))
+        groups.setdefault(key, []).append({
+            "count": count, "label": label, "case": price, "date": r.get("last_date", ""),
+            "vs_norm": _num(r.get("pct_vs_norm")), "status": r.get("status", ""), "main": s_.get("headline") == "Y"})
     out = {}
     for (c, mkt, _, _), opts in groups.items():
-        if len({n for n, _, _ in opts}) >= 2:
-            out.setdefault((c, mkt), sorted(opts))
+        if not any(o["main"] for o in opts):  # only the headline's own variety and pack
+            continue
+        newest = max(o["date"] for o in opts)
+        week_ago = (dt.date.fromisoformat(newest) - dt.timedelta(days=7)).isoformat() if newest else ""
+        opts = [o for o in opts if o["date"] >= week_ago]  # a count USDA stopped quoting isn't on offer
+        if len({o["count"] for o in opts}) >= 2:
+            out[(c, mkt)] = sorted(opts, key=lambda o: o["count"])
     return out
+
+
+def best_count(opts):
+    """The next count up or down to look at instead of the main one: clearly cheaper for the season (10+ points below the main
+    count against each one's own usual price). None when the main count is as good as any."""
+    main = next((o for o in opts if o["main"]), None)
+    if not main or main["vs_norm"] is None:
+        return None
+    # only the next count up or down: a buyer on 72s apples can take 80s, not 113s
+    at = opts.index(main)
+    other = [o for o in opts[max(at - 1, 0):at + 2] if not o["main"] and o["vs_norm"] is not None
+             and max(o["count"], main["count"]) <= 1.4 * min(o["count"], main["count"])]
+    if not other:
+        return None
+    best = min(other, key=lambda o: o["vs_norm"])
+    rank = {"cheap": 0, "normal": 1, "expensive": 2}
+    worse, better = rank.get(main["status"], -1), rank.get(best["status"], 9)
+    # both inside the usual range is no news; otherwise the other count must not sit in a worse band
+    return best if (best["vs_norm"] <= main["vs_norm"] - 10 and better <= worse
+                    and not (better == worse == 1)) else None

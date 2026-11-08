@@ -530,6 +530,12 @@ NICE = {"Lettuce, Romaine": "Romaine", "Lettuce, Iceberg": "Iceberg", "Tomatoes,
 LICENSE = "https://creativecommons.org/licenses/by/4.0/"
 
 CHANGES = (
+    ("November 8, 2026", "Wholesale item pages compare each count with its own usual price for the time of year and name "
+     "the next count up or down when it is clearly the better buy (for example 80s russets 53% above usual against 70% "
+     "for 70s). The High for the season list on the market board shows the same."),
+    ("November 8, 2026", "The usual range is now at least 5% either side of the usual price. Bananas barely move, so a "
+     "50-cent change had been labelled high or low for the season. Five wholesale prices moved back to normal: bananas in "
+     "New York, Chicago and Miami, Granny Smith apples in Atlanta and Red Delicious apples in Boston."),
     ("November 5, 2026", "Wholesale apples are now priced by variety. Gala, Honeycrisp, Granny Smith, Red Delicious and Fuji "
      "each have their own page and compare like for like across markets; before, each city showed one variety (Gala in New "
      "York, Granny Smith in Los Angeles, Red Delicious in Miami). Apples still get no firming or softening calls: by variety, "
