@@ -339,7 +339,7 @@ def chart(hist, i, noun="case price", money_fn=None, label=None):
                  + "".join(f"L{x(dt.date.fromisoformat(p['week'])):.1f},{y(p['mid']):.1f}" for p in fut) + '"/>')
     g.append(f'<path class="price" d="M{line}"/>')
     g.append(f'<circle class="now" cx="{x(last):.1f}" cy="{y(pts[-1][1]):.1f}" r="4.5"/>')
-    label = (label or f"{name(i['commodity'])} in {i['market']}, weekly case price over the last year") + (
+    label = (label or f"{cap(in_sentence(i['commodity']))} in {i['market']}, weekly case price over the last year") + (
         f", from {money_(pts[0][1])} to {money_(pts[-1][1])}")
     legend = (f'<div class="legend"><span><i class="k-price"></i>Weekly {noun}</span>'
               '<span><i class="k-usual"></i>Usual range for the time of year</span>'
@@ -492,7 +492,8 @@ def short_place(district):
     """'MEXICO CROSSINGS THROUGH OTAY MESA CALIFORNIA' -> 'Mexico via Otay Mesa, CA'."""
     t = place(district)
     t = re.sub(r"^Mexico Crossings through ", "Mexico via ", t)
-    t = re.sub(r"^(\w+) Imports - Ports of Entry ", lambda m: f"{m.group(1)} imports via ", t)
+    t = re.sub(r"^(.+?) Imports - Ports? of Entry ", lambda m: f"{m.group(1)} imports via ", t)
+    t = re.sub(r" Area$", "", t)
     t = t.replace(" district", "")
     for st, ab in ABBR.items():
         t = re.sub(rf", {st}$", f", {ab}", t)
@@ -508,10 +509,50 @@ def place(district):
         t = t.replace(small, small.lower())
     for st in STATES:
         before = t[: -len(st) - 1].split(" ")[-1] if t.endswith(" " + st) else ""
-        if before and before not in ("and", "through", "of", "-") and not before.endswith(","):
+        # "South Georgia" and "North, Central and South Florida" are areas inside the state, not "South, GA"
+        if before and before not in ("and", "through", "of", "-", *COMPASS) and not before.endswith(","):
             t = t[: -len(st) - 1] + ", " + st
             break
     return t
+
+
+COMPASS = ("North", "South", "East", "West", "Central", "Northern", "Southern", "Eastern", "Western")
+
+
+def area_name(district):
+    from . import seasons
+    return seasons.NAMES.get(district) or short_place(district)
+
+
+def coming_lines(commodity, limit=4):
+    """'Salinas-Watsonville, CA usually finishes in late November.' from the changeover calendar."""
+    evs = _COMING.get(config.base(commodity), [])[:limit]
+    return [f"{area_name(e['area'])} usually {'starts shipping' if e['kind'] == 'start' else 'finishes'} in "
+            f"{seasons_when(e['week'])}." for e in evs]
+
+
+def seasons_when(d):
+    from . import seasons
+    return seasons.when(d)
+
+
+def coming_section(limit=8):
+    """Board: items with a growing-area change in the next five weeks, soonest first."""
+    rows = []
+    for c in PAGES:
+        if c.startswith("Apples, ") or not _COMING.get(config.base(c)):
+            continue
+        rows.append((_COMING[config.base(c)][0]["week"], c))
+    if not rows:
+        return ""
+    lis = "".join(f'<li><a href="{item_link(c)}">{esc(name(c))}</a><span>{esc(" ".join(coming_lines(c, 2)))}</span></li>'
+                  for _, c in sorted(rows)[:limit])
+    return ('<h2>Coming up</h2><p class="note">Growing areas that usually start or finish in the next five weeks. '
+            'Supply gaps and price jumps tend to come around these changeovers.</p>'
+            f'<ul class="notes">{lis}</ul>')
+
+
+_COMING = {}  # base commodity -> changeover events, set in build()
 
 
 # names that keep their capital inside a sentence ("Mexico", "California") once USDA's casing is undone
@@ -659,7 +700,7 @@ def market_panel(market, rows, hist, today, alerts, notes):
     return (f'<section class="panel" id="m-{k}">'
             f'<p class="lede">{esc(lede(rows, market))}</p>'
             f'<h2>What to do today</h2>{actions(rows, market)}'
-            + notes_section(notes)
+            + notes_section(notes) + coming_section()
             + (f'<h2>Signs of a move</h2><p class="note">Patterns that came before a price move at least two times in '
                f'three over the last 10 years. They only show here when the forecast agrees.</p>{warnings(alerts, market)}'
                if warnings(alerts, market) else "")
@@ -754,6 +795,9 @@ def quote(i, hist, today, opts, note=""):
             + "</dl></div>"
             + (f'<div class="todo {tone}"><h2>What to do</h2><p>{esc(i["action"])}</p></div>' if i["action"] else "")
             + (f'<div class="supply-note"><h2>Supply news</h2><p>{esc(note)}</p></div>' if note else "")
+            + (f'<div class="supply-note"><h2>Coming up</h2><ul class="coming">{"".join(f"<li>{esc(t)}</li>" for t in coming_lines(i["commodity"]))}</ul>'
+               '<p class="fine">From the weeks USDA quoted each growing area over the past six seasons.</p></div>'
+               if coming_lines(i["commodity"]) else "")
             + chart(hist.get(i["series_id"], []), i) + sz)
 
 
@@ -880,6 +924,9 @@ def build():
         i["try"] = best["label"] if best else ""
 
     notes = supply_notes(as_of)
+    from . import seasons
+    _COMING.clear()
+    _COMING.update(seasons.events(seasons.scan(as_of), as_of))
     out = {"home": home(items, hist, today, alerts, as_of, record, notes)}
     # imported here: the site deploy imports this module for page names only, without the fetch libraries
     from . import cpi, grocery, grocery_view, meat_view
