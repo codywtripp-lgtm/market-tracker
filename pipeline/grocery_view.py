@@ -228,7 +228,9 @@ def page(today, items, aisle="produce"):
                  '<a href="@/wholesale/">See wholesale produce prices and two-week forecasts</a>.</p></section>')
     data = {"@context": "https://schema.org", "@type": "Dataset", "name": f"Supermarket {what} prices this week",
             "description": f"Average advertised supermarket prices for {what} in the U.S., compared with the same "
-                           "weeks in past years.", "isBasedOn": "https://www.ams.usda.gov/market-news/retail"}
+                           "weeks in past years.", "isBasedOn": "https://www.ams.usda.gov/market-news/retail",
+            "creator": {"@type": "Organization", "name": "Produce Price Tracker"},
+            "license": "https://creativecommons.org/licenses/by/4.0/"}  # same terms as the About page
     parts.append(f'<script type="application/ld+json">{json.dumps(data)}</script>')
     return "\n".join(parts) + "\n"
 
