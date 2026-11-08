@@ -361,6 +361,8 @@ a.sname:hover, .buy h3 a:hover, .pricey h3 a:hover, .all th a:hover { text-decor
 .data td small { display: block; color: var(--ink-2); font-weight: 400; }
 .data caption { text-align: left; color: var(--ink-2); padding-bottom: 12px; }
 .sizes { max-width: 420px; }
+.pick { margin: 0 0 16px; max-width: 60ch; }
+.sizes tr.main td { font-weight: 600; }
 .faq { max-width: 68ch; }
 .faq h3 { margin-top: 32px; }
 .faq p { color: var(--ink-2); }
