@@ -219,7 +219,9 @@ def expect_text(i, unit=" a case"):
     if mid is None:
         return ""
     move = "" if abs(chg) < 0.02 else f", {'up' if chg > 0 else 'down'} about {abs(round(100 * chg))}%"
-    return f"about {whole(mid)}{unit}{move}"
+    # cents when whole dollars would hide the move ("$15.00 now, about $15, up about 3%")
+    shown = money(mid) if move and whole(mid) == whole(i["price"]) else whole(mid)
+    return f"about {shown}{unit}{move}"
 
 
 def day_note(v):

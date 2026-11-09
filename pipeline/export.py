@@ -112,7 +112,8 @@ MAIN_PACK_MARKET = {
        for m in ("Philadelphia", "Boston", "Atlanta", "Detroit", "Miami")},
     ("Corn, Sweet", "Detroit"): {"pack_size": r"^cartons/crates$", "item_size": r"^4 dozen$", "properties": r"^Bi-color"},
     ("Cucumbers", "Boston"): {"variety": r"^$", "pack_size": r"^1 1/9 bushel cartons/crates$", "item_size": r"^medium$"},
-    ("Cucumbers", "Detroit"): {"variety": r"^Long seedless$", "pack_size": r"^cartons film wrapped$", "item_size": r"^12s medium$"},
+    # the slicer bushel the other markets show; English (long seedless) cucumbers are a different product
+    ("Cucumbers", "Detroit"): {"variety": r"^$", "pack_size": r"^1 1/9 bushel cartons/crates$", "item_size": r"^medium-large$"},
     ("Lemons", "Miami"): {"pack_size": r"^7/10 bushel cartons$", "item_size": r"^(140|165)s$"},
     ("Lettuce, Romaine", "Philadelphia"): {"variety": r"^$", "pack_size": r"^cartons film lined$", "item_size": r"^24s$"},
     ("Lettuce, Romaine", "Atlanta"): {"variety": r"^$", "pack_size": r"^cartons$", "item_size": r"^24s$"},
@@ -351,6 +352,9 @@ def shipped_before(shipments, commodity, area, day):
     return sum(shipments.get((commodity, week - dt.timedelta(weeks=n), part), 0) for part in area.split("-") for n in range(1, 5))
 
 
+STICK = 0.8  # keep yesterday's main area while it has at least this share of the leader's quote days
+
+
 def main_areas(by_day, shipped=None):
     """date -> the day's main growing area: of the areas quoted that day, the one quoted on the most of the previous
     MAIN_AREA_DAYS days. USDA often quotes several every day, so ties go to the most pounds shipped (shipped(area, day)),
@@ -373,8 +377,13 @@ def main_areas(by_day, shipped=None):
         tied = [a for a in prices if counts[a] == max(counts[b] for b in prices)]
         quoted = {a: sum(a in areas for _, areas in year) for a in tied}
         unlisted = {a for a in tied if shipped and not shipped(a, day) and quoted[a] and quoted[a] == max(quoted.values())}
-        lead = min(prices, key=lambda a: (-counts[a], a not in unlisted, -(shipped(a, day) if shipped else 0), a != lead,
+        best = min(prices, key=lambda a: (-counts[a], a not in unlisted, -(shipped(a, day) if shipped else 0), a != lead,
                                           statistics.median(prices[a])))
+        # yesterday's area stays while it is quoted and still close on quote days: two areas quoted about as often
+        # flipped the price back and forth (New York iceberg Canada / California, Philadelphia lemons Arizona /
+        # California, 15%+ each time)
+        if not (lead in prices and counts[lead] >= STICK * counts[best]):
+            lead = best
         out[d] = lead
         seen.append((day, set(prices)))
         year.append((day, set(prices)))
@@ -484,9 +493,14 @@ def daily_value(rows, area=None, chosen=None):
         rows = [r for r in rows if lot(r) == chosen]
     price = statistics.median(fnum(r["unit_price"]) for r in rows)
     norms = [fnum(r["normalized_price"]) for r in rows if fnum(r["normalized_price"]) is not None]
+    # the range shown is one real USDA quote: the row at the median, not the lowest low and highest high of several
+    # same-label rows (New York mushrooms had $16-18, $20-21 and $16-18, shown as "$16 to $21", a range nobody quoted)
     lows, highs = quote_range(rows)
-    mostly_lows = [fnum(r["mostly_low_price"]) for r in rows if fnum(r["mostly_low_price"]) is not None]
-    mostly_highs = [fnum(r["mostly_high_price"]) for r in rows if fnum(r["mostly_high_price"]) is not None]
+    inside = [i for i, (lo, hi) in enumerate(zip(lows, highs)) if lo is not None and lo <= price <= hi]
+    quoted = [rows[min(inside, key=lambda i: abs(fnum(rows[i]["unit_price"]) - price))]] if len(rows) > 1 and inside else rows
+    lows, highs = quote_range(quoted)
+    mostly_lows = [fnum(r["mostly_low_price"]) for r in quoted if fnum(r["mostly_low_price"]) is not None]
+    mostly_highs = [fnum(r["mostly_high_price"]) for r in quoted if fnum(r["mostly_high_price"]) is not None]
     origins = sorted({r["origin"] for r in rows if r["origin"]})
     # USDA reporter's read of the market ("MARKET ABOUT STEADY", "Slightly Higher"); most common that day
     tones = [r["market_tone"] for r in rows if r["market_tone"]]

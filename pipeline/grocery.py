@@ -220,6 +220,7 @@ def build(rows, deflator=None, live=None):
         ads = {m: statistics.median(v) for m, v in ads_month.items()}
         peak = sorted(ads, key=ads.get, reverse=True)[:3] if len(ads) >= 6 else []
         item = {"commodity": commodity, "slug": slug(commodity), "name": display(commodity, key[0]),
+                "value_pack": key[0] == "Value pack",
                 "aisle": staples.AISLE.get(commodity, "produce"),
                 "short": sentence(NAMES.get(commodity, commodity)), "unit": unit(key[1]), "price": round(price, 2),
                 "stores": int(stores), "this_week": this_week, "last_date": last,

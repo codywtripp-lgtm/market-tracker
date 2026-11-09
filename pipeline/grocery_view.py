@@ -11,7 +11,7 @@ import math
 import re
 import statistics
 
-from . import grocery, quality
+from . import grocery, quality, staples
 
 
 def esc(s):
@@ -472,14 +472,22 @@ def faq(i, today):
     return qa
 
 
+def priced(i):
+    """' for boneless strip steak (value packs)': names the cut when the item name could mean several."""
+    cut = staples.CUT.get(i["commodity"])
+    if not cut and not i.get("value_pack"):
+        return ""
+    return f" for {cut or i['short'].lower()}" + (" (value packs)" if i.get("value_pack") else "")
+
+
 def item_page(i, today, all_items):
     h1 = f"How much {verb(i)} {i['short'].lower()} this week?"
     up, label = {"meat": ("@/meat-prices/", "Meat & poultry"), "dairy": ("@/dairy-and-egg-prices/", "Dairy & eggs")}.get(
         i["aisle"], ("@/", "Produce"))
     parts = [f'<nav class="crumbs" aria-label="Breadcrumb"><a href="{up}">{label}</a><span>/</span>{esc(i["short"])}</nav>',
              f'<section class="intro"><h1>{esc(h1)}</h1>'
-             f'<p class="date">Week of {today:%B} {today.day}, {today.year}. Average advertised price at U.S. supermarkets, '
-             'checked against the same week in past years.</p>'
+             f'<p class="date">Week of {today:%B} {today.day}, {today.year}. Average advertised price{priced(i)} at U.S. '
+             'supermarkets, checked against the same week in past years.</p>'
              f'<p class="answer">{answer(i, today)}</p></section>']
     if i["this_week"]:
         word, tone = STATUS[i["status"]]

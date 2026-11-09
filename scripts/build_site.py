@@ -119,6 +119,10 @@ def main():
     for ms in board.MARKET_SLUG.values():  # apples split by variety 2026-11-05: city pages now live per variety
         if ms != "new-york":
             redirect(f"apple-prices/{ms}", "../")
+    for slug, _ in board.PAGES.values():  # a city that stops quoting an item (Detroit slicer cucumbers in winter)
+        for ms in board.MARKET_SLUG.values():
+            if (OUT / slug / "index.html").exists() and not (OUT / slug / ms / "index.html").exists():
+                redirect(f"{slug}/{ms}", "../")
     seo_files(urls)
     print(f"site: {len(latest)} items, {len(weekly)} series histories, {len(urls)} pages")
 
@@ -530,6 +534,9 @@ NICE = {"Lettuce, Romaine": "Romaine", "Lettuce, Iceberg": "Iceberg", "Tomatoes,
 LICENSE = "https://creativecommons.org/licenses/by/4.0/"
 
 CHANGES = (
+    ("November 9, 2026", "Grocery meat prices are each one cut. Several items had averaged cuts that sell at different prices, so the price moved whenever the mix of store ads changed: chicken breasts now leave out thin-sliced cutlets ($2.45 became $2.09 a pound this week), pork chops are boneless center-cut ($3.87 became $4.33), strip, ribeye and top sirloin steaks are boneless, and pork ribs are back ribs. Each page says which cut."),
+    ("November 9, 2026", "A wholesale price now stays with its growing area while that area is still quoted about as often as any other. Two areas quoted equally had swapped the price back and forth (New York iceberg between Canada and California, Philadelphia lemons between Arizona and California). Calls right moved from 75.6% to 75.5%, big swings flagged ahead from 30.8% to 30.9%."),
+    ("November 9, 2026", "Detroit cucumbers show no price while Detroit isn't quoting the standard bushel slicer the other markets show (since October 23, when Michigan's season ended), instead of English (long seedless) cucumbers. New York mushrooms show one USDA quote's range ($16 to $18) instead of joining three quotes into $16 to $21."),
     ("November 8, 2026", "Wholesale pages show which growing areas usually start or finish shipping in the next five "
      "weeks (for example the desert starting broccoli in mid November), from the weeks USDA quoted each area over the "
      "past six seasons. Replayed over 2022 to 2025, 83% of starts and 89% of finishes came within two weeks of the "

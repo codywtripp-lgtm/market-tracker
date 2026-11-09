@@ -156,6 +156,11 @@ def call(status, change, stable, commodity="", change1=None, unsettled=False):
     return d, ""
 
 
+# Varieties that are a different product from the item the site names: English, Persian and pickling cucumbers are
+# not the slicer every market prices (Detroit stops quoting slicers when Michigan's season ends in October)
+OTHER_PRODUCT = {"Cucumbers": r"long seedless|english|persian|pickl|mini"}
+
+
 def headline_items(latest, series, forecasts, card):
     """One row per commodity x terminal market: the headline (main trade pack) series, else best-covered."""
     best = {}
@@ -163,6 +168,8 @@ def headline_items(latest, series, forecasts, card):
         if r["market_type"] != "terminal" or r["market"] not in MARKETS or r["commodity"] not in PRODUCE_NAMES:
             continue
         s = series.get(r["series_id"], {})
+        if re.search(OTHER_PRODUCT.get(r["commodity"], "(?!)"), s.get("variety", ""), re.I):
+            continue  # a different product under the same USDA commodity: no price beats the wrong one
         key = (r["commodity"], r["market"])
         cov = (s.get("headline") == "Y", _num(s.get("coverage_last_year")) or 0)
         if key not in best or cov > best[key][0]:
