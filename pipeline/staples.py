@@ -10,8 +10,10 @@ import re
 AISLES = {"meat": "Meat & poultry", "dairy": "Dairy & eggs"}
 
 # (item, aisle, USDA commodity, product-type pattern, unit pattern or None, condition pattern or None)
+# One cut per item: averaging cuts that sell at different prices (boneless strip $13, bone-in $11; nine pork chop cuts
+# from $2 to $4 a lb) moved the price whenever the mix of ads changed. Each item is the cut stores advertise most.
 CATALOG = [
-    ("Chicken breasts", "meat", "Chicken", r"breast.*boneless.*skinless(?!.*iqf)", r"per lb", r"fresh"),
+    ("Chicken breasts", "meat", "Chicken", r"breast.*boneless.*skinless(?!.*(iqf|thin))", r"per lb", r"fresh"),
     ("Chicken thighs", "meat", "Chicken", r"^thighs?\b(?!.*boneless)", r"per lb", r"fresh"),
     ("Boneless chicken thighs", "meat", "Chicken", r"thighs?.*boneless", r"per lb", r"fresh"),
     ("Chicken drumsticks", "meat", "Chicken", r"drumsticks?", r"per lb", r"fresh"),
@@ -23,16 +25,16 @@ CATALOG = [
     ("Chuck roast", "meat", "Beef", r"chuck roast|chuck/shldr/arm roast", r"per lb", r"fresh"),
     ("T-bone steak", "meat", "Beef", r"t-bone", r"per lb", r"fresh"),
     ("London broil", "meat", "Beef", r"london broil", r"per lb", r"fresh"),
-    ("Strip steak", "meat", "Beef", r"strip steak", r"per lb", r"fresh"),
-    ("Ribeye steak", "meat", "Beef", r"ribeye steak|rib ?eye steak", r"per lb", r"fresh"),
-    ("Sirloin steak", "meat", "Beef", r"sirloin steak", r"per lb", r"fresh"),
+    ("Strip steak", "meat", "Beef", r"bnls new york strip|strip steak, boneless", r"per lb", r"fresh"),
+    ("Ribeye steak", "meat", "Beef", r"bnls rib ?eye steak|rib ?eye steak, boneless", r"per lb", r"fresh"),
+    ("Sirloin steak", "meat", "Beef", r"bnls top sirloin steak|top sirloin steak, boneless", r"per lb", r"fresh"),
     ("Stew beef", "meat", "Beef", r"stew meat", r"per lb", r"fresh"),
     ("Bacon", "meat", "Pork", r"sliced bacon", None, r"fresh"),
-    ("Pork chops", "meat", "Pork", r"chops?", r"per lb", r"fresh"),
+    ("Pork chops", "meat", "Pork", r"^cc (loin )?chops,? (bnls|boneless)$", r"per lb", r"fresh"),
     ("Pork tenderloin", "meat", "Pork", r"tenderloin", r"per lb", r"fresh"),
     ("Pork shoulder", "meat", "Pork", r"butt roast|shoulder|boston butt|butt fresh", r"per lb", r"fresh"),
     ("Pork loin roast", "meat", "Pork", r"loin roast", r"per lb", r"fresh"),
-    ("Pork ribs", "meat", "Pork", r"backribs|back ribs|spareribs|st[.] louis", r"per lb", r"fresh"),
+    ("Pork ribs", "meat", "Pork", r"backribs|back ribs", r"per lb", r"fresh"),
     ("Italian sausage", "meat", "Pork", r"italian sausage", None, r"fresh"),
     ("Spiral ham", "meat", "Pork", r"spiral", r"per lb", None),
     ("Breakfast sausage", "meat", "Pork", r"breakfast sausage|bkfst sausage", None, r"fresh"),
@@ -56,6 +58,11 @@ CATALOG = [
     ("Eggnog", "dairy", "Eggnog", r".*", None, None),
 ]
 AISLE = {item: aisle for item, aisle, *_ in CATALOG}
+# what the price is for, where the item name alone could mean several cuts
+CUT = {"Chicken breasts": "boneless, skinless chicken breasts", "Strip steak": "boneless strip steak",
+       "Ribeye steak": "boneless ribeye steak", "Sirloin steak": "boneless top sirloin steak",
+       "Pork chops": "boneless center-cut pork chops", "Pork ribs": "pork back ribs",
+       "Boneless chicken thighs": "boneless, skinless chicken thighs", "Chicken thighs": "bone-in chicken thighs"}
 # USDA's egg report also lists eggnog under "Egg"; deli tubs, fried chicken and service-deli items are not shopper staples
 SKIP = re.compile(r"deli|tub|pouch|fried|baked|egg nog|liquid|cooked|marinated|seasoned|breaded|stuffed", re.I)
 
