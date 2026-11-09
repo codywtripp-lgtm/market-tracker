@@ -1,25 +1,25 @@
 commodity,market,no_change_miss_pct,forecast_miss_pct,uses,better_by_pct
 Mushrooms,Atlanta,0.2,0.3,no change,-50.0
 Bananas,Atlanta,0.5,0.5,no change,0.0
-Sweet Potatoes,Atlanta,0.9,0.9,no change,0.0
+Sweet Potatoes,Atlanta,0.5,0.5,no change,0.0
 "Apples, Fuji",Atlanta,1.4,1.4,no change,0.0
+"Apples, Red Delicious",Atlanta,1.4,1.4,no change,0.0
 "Apples, Gala",Atlanta,1.5,1.5,no change,0.0
-"Apples, Red Delicious",Atlanta,1.5,1.5,no change,0.0
 Pears,Atlanta,1.5,1.5,no change,0.0
-Apples,Atlanta,1.7,1.7,no change,0.0
+Apples,Atlanta,1.6,1.6,no change,0.0
 "Apples, Granny Smith",Atlanta,1.6,1.7,no change,-6.0
 "Apples, Honeycrisp",Atlanta,1.8,1.8,no change,0.0
 Oranges,Atlanta,2.5,2.5,no change,0.0
-"Onions, Dry",Atlanta,3.4,3.4,no change,0.0
+"Onions, Dry",Atlanta,2.8,2.8,no change,0.0
+Carrots,Atlanta,3.5,3.5,no change,0.0
 Potatoes,Atlanta,3.8,3.5,model,8.0
-Lemons,Atlanta,3.7,3.7,no change,0.0
-Carrots,Atlanta,3.9,3.9,no change,0.0
+Lemons,Atlanta,3.6,3.6,no change,0.0
 Pineapples,Atlanta,4.9,4.2,model,14.0
 Grapes,Atlanta,4.4,4.6,no change,-5.0
-Mangoes,Atlanta,6.1,6.9,no change,-13.0
-Cabbage,Atlanta,8.2,7.6,model,7.0
-Celery,Atlanta,10.2,7.7,model,25.0
-Cantaloupes,Atlanta,9.0,8.0,model,11.0
+Mangoes,Atlanta,6.0,6.2,no change,-3.0
+Cabbage,Atlanta,7.6,7.0,model,8.0
+Celery,Atlanta,10.3,7.7,model,25.0
+Cantaloupes,Atlanta,8.9,7.8,model,12.0
 Avocados,Atlanta,10.0,8.9,model,11.0
 Watermelons,Atlanta,8.7,9.0,model,-3.0
 Broccoli,Atlanta,11.4,10.1,model,11.0
@@ -29,148 +29,148 @@ Tomatoes,Atlanta,13.4,11.0,model,18.0
 Limes,Atlanta,14.6,11.7,model,20.0
 "Tomatoes, Plum Type",Atlanta,13.3,11.8,model,11.0
 Cauliflower,Atlanta,15.7,13.4,model,15.0
-Blueberries,Atlanta,13.8,13.8,model,0.0
+Blueberries,Atlanta,13.5,13.7,model,-1.0
 "Lettuce, Iceberg",Atlanta,18.4,14.2,model,23.0
-"Corn, Sweet",Atlanta,17.9,14.5,model,19.0
-"Peppers, Bell Type",Atlanta,19.0,17.2,model,9.0
-Strawberries,Atlanta,20.8,17.3,model,17.0
+"Corn, Sweet",Atlanta,18.0,14.6,model,19.0
+"Peppers, Bell Type",Atlanta,18.9,17.2,model,9.0
+Strawberries,Atlanta,20.8,17.4,model,16.0
 Mushrooms,Boston,0.1,0.1,no change,0.0
 Bananas,Boston,0.4,0.4,no change,0.0
-Sweet Potatoes,Boston,0.4,0.5,no change,-25.0
-"Apples, Fuji",Boston,0.8,0.8,no change,0.0
+Sweet Potatoes,Boston,0.5,0.5,no change,0.0
+Apples,Boston,0.8,0.8,no change,0.0
+"Apples, Fuji",Boston,0.9,0.8,no change,11.0
 Pears,Boston,0.8,0.8,no change,0.0
-"Apples, Red Delicious",Boston,0.9,0.9,no change,0.0
-Apples,Boston,1.0,1.0,no change,0.0
-"Apples, Gala",Boston,1.3,1.3,no change,0.0
+"Apples, Red Delicious",Boston,1.0,0.9,no change,10.0
+"Apples, Gala",Boston,1.1,1.1,no change,0.0
 "Apples, Granny Smith",Boston,1.9,1.9,no change,0.0
+Potatoes,Boston,4.2,4.1,model,2.0
 Oranges,Boston,4.2,4.2,model,0.0
-Potatoes,Boston,4.2,4.2,model,0.0
-"Apples, Honeycrisp",Boston,5.0,5.0,no change,0.0
-"Onions, Dry",Boston,5.3,5.4,no change,-2.0
-Lemons,Boston,5.8,5.8,no change,0.0
-Carrots,Boston,6.3,6.3,no change,0.0
-Cabbage,Boston,7.5,7.0,model,7.0
+Carrots,Boston,4.8,4.9,no change,-2.0
+"Apples, Honeycrisp",Boston,5.2,5.2,no change,0.0
+"Onions, Dry",Boston,5.2,5.3,no change,-2.0
+Lemons,Boston,5.8,5.9,model,-2.0
+Cabbage,Boston,7.0,6.7,model,4.0
 Celery,Boston,11.8,8.3,model,30.0
 Avocados,Boston,10.0,8.9,model,11.0
 Pineapples,Boston,10.5,9.0,model,14.0
 "Tomatoes, Plum Type",Boston,13.3,10.0,model,25.0
-Cantaloupes,Boston,12.5,10.4,model,17.0
-"Lettuce, Romaine",Boston,13.1,10.5,model,20.0
-Tomatoes,Boston,12.9,10.9,model,16.0
-Broccoli,Boston,13.7,11.0,model,20.0
-Limes,Boston,14.8,11.0,model,26.0
+Cantaloupes,Boston,12.4,10.3,model,17.0
+"Lettuce, Romaine",Boston,13.0,10.4,model,20.0
+Tomatoes,Boston,13.1,10.7,model,18.0
+Limes,Boston,14.8,10.9,model,26.0
+Broccoli,Boston,13.5,11.0,model,19.0
 Grapes,Boston,12.0,11.5,model,4.0
-Mangoes,Boston,13.4,11.7,model,13.0
-Watermelons,Boston,12.5,11.9,model,5.0
-Cauliflower,Boston,14.5,13.8,model,5.0
-"Corn, Sweet",Boston,16.7,14.4,model,14.0
-"Lettuce, Iceberg",Boston,19.9,15.5,model,22.0
+Mangoes,Boston,13.6,12.0,model,12.0
+Watermelons,Boston,12.5,12.0,model,4.0
+Cauliflower,Boston,14.4,13.8,model,4.0
+"Corn, Sweet",Boston,16.6,14.3,model,14.0
+"Lettuce, Iceberg",Boston,19.9,15.4,model,23.0
 "Peppers, Bell Type",Boston,17.1,15.8,model,8.0
-Cucumbers,Boston,19.3,19.4,model,-1.0
-Blueberries,Boston,21.5,19.5,model,9.0
-Strawberries,Boston,31.4,26.9,model,14.0
+Cucumbers,Boston,19.3,19.3,model,0.0
+Blueberries,Boston,21.7,19.8,model,9.0
+Strawberries,Boston,31.8,27.4,model,14.0
 Mushrooms,Chicago,0.3,0.4,no change,-33.0
-Sweet Potatoes,Chicago,2.4,2.4,model,0.0
+Sweet Potatoes,Chicago,2.3,2.3,model,0.0
 "Apples, Red Delicious",Chicago,3.1,3.0,no change,3.0
-Bananas,Chicago,3.7,3.5,model,5.0
+Bananas,Chicago,3.9,3.8,model,3.0
 "Apples, Gala",Chicago,4.2,4.1,no change,2.0
 Apples,Chicago,4.3,4.3,no change,0.0
 "Apples, Granny Smith",Chicago,4.4,4.3,no change,2.0
-Pears,Chicago,4.7,4.5,model,4.0
+Pears,Chicago,4.5,4.3,model,4.0
+Carrots,Chicago,4.7,4.7,no change,0.0
 Oranges,Chicago,5.3,4.9,model,8.0
 "Apples, Honeycrisp",Chicago,5.2,5.2,no change,0.0
 "Apples, Fuji",Chicago,5.4,5.4,no change,0.0
-Carrots,Chicago,5.6,5.6,no change,0.0
+"Onions, Dry",Chicago,5.6,5.5,model,2.0
 Potatoes,Chicago,6.4,5.9,model,8.0
-"Onions, Dry",Chicago,6.5,6.3,model,3.0
-Lemons,Chicago,8.4,8.4,model,0.0
-Cabbage,Chicago,9.5,9.0,model,5.0
+Lemons,Chicago,8.3,8.3,model,0.0
+Cabbage,Chicago,9.7,9.1,model,6.0
 Avocados,Chicago,10.3,9.2,model,11.0
+Pineapples,Chicago,10.5,9.2,model,12.0
+Mangoes,Chicago,10.2,9.3,model,9.0
 Watermelons,Chicago,10.5,9.3,model,11.0
-Mangoes,Chicago,10.3,9.4,model,9.0
-Pineapples,Chicago,10.7,9.4,model,12.0
-Cantaloupes,Chicago,13.3,11.3,model,15.0
-Grapes,Chicago,11.7,11.6,model,1.0
-Celery,Chicago,15.1,11.9,model,21.0
-Cucumbers,Chicago,15.9,13.3,model,16.0
+Cantaloupes,Chicago,13.4,11.5,model,14.0
+Celery,Chicago,14.9,11.5,model,23.0
+Grapes,Chicago,11.5,11.7,model,-2.0
 Limes,Chicago,17.1,13.3,model,22.0
-"Tomatoes, Plum Type",Chicago,17.1,15.1,model,12.0
-"Lettuce, Romaine",Chicago,19.9,16.0,model,20.0
+Cucumbers,Chicago,16.0,13.6,model,15.0
+"Tomatoes, Plum Type",Chicago,17.1,15.2,model,11.0
+"Lettuce, Romaine",Chicago,20.0,16.1,model,19.0
 Blueberries,Chicago,18.2,16.5,model,9.0
-Broccoli,Chicago,20.4,16.8,model,18.0
-"Corn, Sweet",Chicago,20.2,17.1,model,15.0
-Cauliflower,Chicago,18.1,17.5,model,3.0
-"Peppers, Bell Type",Chicago,21.2,19.4,model,8.0
-"Lettuce, Iceberg",Chicago,25.1,20.2,model,20.0
-Strawberries,Chicago,24.4,21.2,model,13.0
-Tomatoes,Chicago,23.8,21.4,model,10.0
+Broccoli,Chicago,20.3,16.8,model,17.0
+"Corn, Sweet",Chicago,20.3,17.1,model,16.0
+Cauliflower,Chicago,18.0,17.3,model,4.0
+"Peppers, Bell Type",Chicago,21.3,19.5,model,8.0
+"Lettuce, Iceberg",Chicago,24.8,20.1,model,19.0
+Tomatoes,Chicago,23.2,20.5,model,12.0
+Strawberries,Chicago,24.4,21.1,model,14.0
 Bananas,Detroit,0.2,0.2,no change,0.0
 Mushrooms,Detroit,0.7,0.7,no change,0.0
 Sweet Potatoes,Detroit,1.2,1.2,no change,0.0
+"Apples, Fuji",Detroit,2.2,2.2,no change,0.0
 "Apples, Red Delicious",Detroit,2.3,2.2,no change,4.0
-"Apples, Fuji",Detroit,2.7,2.7,no change,0.0
 "Apples, Gala",Detroit,3.4,3.4,no change,0.0
-Apples,Detroit,3.9,3.9,no change,0.0
-Pears,Detroit,3.9,3.9,no change,0.0
+Apples,Detroit,3.6,3.5,no change,3.0
+Pears,Detroit,3.6,3.6,no change,0.0
 "Apples, Granny Smith",Detroit,4.2,4.2,no change,0.0
+Carrots,Detroit,4.5,4.4,model,2.0
 "Apples, Honeycrisp",Detroit,4.7,4.7,no change,0.0
 Potatoes,Detroit,4.7,4.7,no change,0.0
-Carrots,Detroit,5.1,5.2,model,-2.0
-Lemons,Detroit,5.3,5.4,model,-2.0
+"Onions, Dry",Detroit,5.0,5.0,no change,0.0
+Lemons,Detroit,5.3,5.4,no change,-2.0
 Oranges,Detroit,5.6,5.5,model,2.0
-"Onions, Dry",Detroit,5.9,6.0,no change,-2.0
-Cabbage,Detroit,6.7,6.8,no change,-1.0
+Cabbage,Detroit,6.2,6.2,no change,0.0
 Cantaloupes,Detroit,7.5,7.0,model,7.0
 Pineapples,Detroit,8.4,7.4,model,12.0
 Avocados,Detroit,9.9,9.0,model,9.0
-Celery,Detroit,12.1,9.6,model,21.0
-Grapes,Detroit,10.8,10.7,no change,1.0
-Broccoli,Detroit,13.7,10.9,model,20.0
+Celery,Detroit,12.0,9.5,model,21.0
+Grapes,Detroit,10.6,10.6,no change,0.0
+Broccoli,Detroit,13.6,10.8,model,21.0
 Limes,Detroit,14.7,11.3,model,23.0
-"Tomatoes, Plum Type",Detroit,14.0,11.4,model,19.0
+"Tomatoes, Plum Type",Detroit,14.0,11.5,model,18.0
 Mangoes,Detroit,12.2,12.3,no change,-1.0
-Watermelons,Detroit,12.4,12.4,model,0.0
 Cauliflower,Detroit,12.5,12.5,no change,0.0
-"Lettuce, Romaine",Detroit,14.5,12.7,model,12.0
+Watermelons,Detroit,12.4,12.5,model,-1.0
+"Lettuce, Romaine",Detroit,14.5,12.8,model,12.0
 "Corn, Sweet",Detroit,18.1,13.4,model,26.0
-Tomatoes,Detroit,15.6,13.5,model,13.0
-"Peppers, Bell Type",Detroit,15.4,15.5,no change,-1.0
-Blueberries,Detroit,17.1,15.6,model,9.0
-Strawberries,Detroit,21.0,17.2,model,18.0
+Tomatoes,Detroit,15.6,13.6,model,13.0
+"Peppers, Bell Type",Detroit,14.9,15.1,no change,-1.0
+Blueberries,Detroit,16.8,15.3,model,9.0
+Cucumbers,Detroit,16.2,16.2,no change,0.0
+Strawberries,Detroit,21.1,17.3,model,18.0
 "Lettuce, Iceberg",Detroit,24.1,19.3,model,20.0
-Cucumbers,Detroit,19.5,19.4,no change,1.0
 Mushrooms,Los Angeles,0.4,0.4,no change,0.0
 Sweet Potatoes,Los Angeles,0.9,0.9,no change,0.0
-Bananas,Los Angeles,2.3,2.1,model,9.0
+Bananas,Los Angeles,2.1,2.0,model,5.0
 "Apples, Fuji",Los Angeles,2.3,2.3,no change,0.0
-"Apples, Red Delicious",Los Angeles,2.4,2.4,no change,0.0
 Apples,Los Angeles,2.5,2.5,no change,0.0
+"Apples, Red Delicious",Los Angeles,2.4,2.5,no change,-4.0
+Carrots,Los Angeles,2.6,2.6,no change,0.0
 "Apples, Gala",Los Angeles,3.2,3.1,no change,3.0
-Carrots,Los Angeles,3.0,3.1,no change,-3.0
 "Apples, Honeycrisp",Los Angeles,3.4,3.3,no change,3.0
 "Apples, Granny Smith",Los Angeles,4.0,4.0,no change,0.0
-Potatoes,Los Angeles,5.1,4.7,model,8.0
+Potatoes,Los Angeles,5.0,4.6,model,8.0
 Oranges,Los Angeles,5.9,5.3,model,10.0
-"Onions, Dry",Los Angeles,5.7,5.4,model,5.0
+"Onions, Dry",Los Angeles,5.9,5.4,model,8.0
 Lemons,Los Angeles,6.0,5.8,model,3.0
-Avocados,Los Angeles,8.4,7.1,model,15.0
+Avocados,Los Angeles,8.5,7.2,model,15.0
 Pineapples,Los Angeles,9.8,7.9,model,19.0
-Watermelons,Los Angeles,10.2,8.1,model,21.0
+Watermelons,Los Angeles,10.2,8.2,model,20.0
 Cabbage,Los Angeles,9.9,8.6,model,13.0
-Mangoes,Los Angeles,12.2,9.7,model,20.0
+Mangoes,Los Angeles,12.1,9.5,model,21.0
 "Lettuce, Romaine",Los Angeles,13.4,10.5,model,22.0
-Cantaloupes,Los Angeles,13.7,10.9,model,20.0
-Grapes,Los Angeles,11.5,11.4,no change,1.0
+Cantaloupes,Los Angeles,13.5,10.7,model,21.0
+Grapes,Los Angeles,11.6,11.4,no change,2.0
 Cucumbers,Los Angeles,13.5,12.0,model,11.0
 Celery,Los Angeles,15.6,12.1,model,22.0
 "Corn, Sweet",Los Angeles,15.9,12.8,model,19.0
 Limes,Los Angeles,15.9,12.9,model,19.0
-Broccoli,Los Angeles,18.0,13.9,model,23.0
-"Peppers, Bell Type",Los Angeles,16.4,14.6,model,11.0
+Broccoli,Los Angeles,18.0,13.8,model,23.0
+"Peppers, Bell Type",Los Angeles,16.5,14.6,model,12.0
 Strawberries,Los Angeles,19.7,15.1,model,23.0
 "Tomatoes, Plum Type",Los Angeles,18.9,15.3,model,19.0
-Blueberries,Los Angeles,19.2,16.2,model,16.0
-Tomatoes,Los Angeles,18.1,16.9,model,7.0
+Blueberries,Los Angeles,18.7,15.9,model,15.0
+Tomatoes,Los Angeles,18.0,16.7,model,7.0
 Cauliflower,Los Angeles,23.2,20.0,model,14.0
 "Lettuce, Iceberg",Los Angeles,26.1,21.5,model,18.0
 "Apples, Gala",Miami,0.2,0.2,no change,0.0
@@ -181,97 +181,97 @@ Apples,Miami,0.7,0.7,no change,0.0
 Pears,Miami,0.6,0.7,no change,-17.0
 Oranges,Miami,0.8,0.9,no change,-12.0
 "Apples, Granny Smith",Miami,1.3,1.3,no change,0.0
-Lemons,Miami,2.1,2.2,no change,-5.0
-Carrots,Miami,2.4,2.5,no change,-4.0
+Lemons,Miami,1.8,1.9,no change,-6.0
+Carrots,Miami,2.6,2.6,no change,0.0
 Potatoes,Miami,2.7,2.8,no change,-4.0
-Bananas,Miami,3.3,3.3,model,0.0
+Bananas,Miami,3.2,3.2,model,0.0
+"Onions, Dry",Miami,3.7,3.8,model,-3.0
 Cabbage,Miami,3.9,4.0,no change,-3.0
-Grapes,Miami,3.8,4.0,no change,-5.0
-"Onions, Dry",Miami,4.0,4.0,no change,0.0
+Grapes,Miami,3.8,4.1,no change,-8.0
 Pineapples,Miami,4.4,4.5,model,-2.0
-Avocados,Miami,8.0,7.4,model,7.0
+Avocados,Miami,8.0,7.3,model,9.0
 Cucumbers,Miami,8.3,8.9,no change,-7.0
-Mangoes,Miami,10.4,9.3,model,11.0
-Cantaloupes,Miami,10.4,9.4,model,10.0
-Cauliflower,Miami,9.2,9.6,no change,-4.0
-Celery,Miami,11.5,9.6,model,17.0
+Mangoes,Miami,10.7,9.2,model,14.0
+Cantaloupes,Miami,10.3,9.3,model,10.0
+Celery,Miami,11.4,9.5,model,17.0
+Cauliflower,Miami,9.3,9.6,no change,-3.0
 "Tomatoes, Plum Type",Miami,12.8,9.9,model,23.0
-Broccoli,Miami,12.8,10.6,model,17.0
-"Lettuce, Romaine",Miami,14.3,11.3,model,21.0
-Limes,Miami,16.1,11.7,model,27.0
+Broccoli,Miami,12.8,10.3,model,20.0
+"Lettuce, Romaine",Miami,14.1,11.2,model,21.0
+Limes,Miami,16.2,11.7,model,28.0
 Strawberries,Miami,15.1,11.9,model,21.0
 "Corn, Sweet",Miami,15.9,13.1,model,18.0
-"Lettuce, Iceberg",Miami,18.1,13.6,model,25.0
-Blueberries,Miami,14.8,13.7,model,7.0
-Tomatoes,Miami,16.7,13.9,model,17.0
-"Peppers, Bell Type",Miami,17.7,19.8,no change,-12.0
+"Lettuce, Iceberg",Miami,18.0,13.6,model,24.0
+Blueberries,Miami,14.9,13.7,model,8.0
+Tomatoes,Miami,16.6,13.9,model,16.0
+"Peppers, Bell Type",Miami,17.6,19.7,no change,-12.0
 Mushrooms,New York,0.1,0.1,no change,0.0
-Bananas,New York,1.5,1.5,no change,0.0
+Bananas,New York,1.7,1.7,no change,0.0
 Sweet Potatoes,New York,2.1,2.1,no change,0.0
-"Apples, Red Delicious",New York,3.4,3.4,no change,0.0
-Pears,New York,3.8,3.7,model,3.0
-"Onions, Dry",New York,3.7,3.8,no change,-3.0
-"Apples, Gala",New York,4.0,4.0,no change,0.0
-Apples,New York,4.0,4.1,no change,-2.0
+Apples,New York,3.2,3.2,no change,0.0
+"Apples, Red Delicious",New York,3.3,3.4,no change,-3.0
+"Onions, Dry",New York,3.3,3.5,no change,-6.0
+"Apples, Gala",New York,3.6,3.6,no change,0.0
+Pears,New York,3.6,3.6,model,0.0
+Carrots,New York,4.1,4.1,model,0.0
 Oranges,New York,4.8,4.7,model,2.0
-Carrots,New York,5.0,5.1,model,-2.0
 "Apples, Granny Smith",New York,5.3,5.3,no change,0.0
 Potatoes,New York,6.9,6.3,model,9.0
 Watermelons,New York,7.6,6.3,model,17.0
-"Apples, Honeycrisp",New York,6.6,6.7,no change,-2.0
+"Apples, Honeycrisp",New York,6.5,6.5,no change,0.0
+"Apples, Fuji",New York,7.0,6.9,no change,1.0
 Lemons,New York,6.9,6.9,model,0.0
-"Apples, Fuji",New York,7.6,7.5,no change,1.0
-Cabbage,New York,7.4,7.7,no change,-4.0
-Celery,New York,12.8,9.8,model,23.0
+Cabbage,New York,7.0,7.2,no change,-3.0
 Avocados,New York,11.0,10.0,model,9.0
-Grapes,New York,10.9,10.9,no change,0.0
+Celery,New York,12.8,10.0,model,22.0
+Grapes,New York,10.8,10.8,no change,0.0
 Pineapples,New York,14.2,11.3,model,20.0
-Broccoli,New York,15.9,12.5,model,21.0
-"Lettuce, Romaine",New York,15.6,12.9,model,17.0
-Cantaloupes,New York,17.4,14.4,model,17.0
-Limes,New York,18.7,14.4,model,23.0
-Mangoes,New York,17.2,14.4,model,16.0
-Cucumbers,New York,19.5,16.6,model,15.0
-"Tomatoes, Plum Type",New York,17.4,16.7,model,4.0
-"Lettuce, Iceberg",New York,22.8,18.6,model,18.0
-"Corn, Sweet",New York,23.3,20.8,model,11.0
+Broccoli,New York,15.7,12.3,model,22.0
+"Lettuce, Romaine",New York,15.7,12.9,model,18.0
+Cantaloupes,New York,17.5,14.4,model,18.0
+Limes,New York,18.7,14.5,model,22.0
+Mangoes,New York,17.6,14.6,model,17.0
+Cucumbers,New York,19.6,16.8,model,14.0
+"Tomatoes, Plum Type",New York,17.6,16.9,model,4.0
+"Lettuce, Iceberg",New York,22.7,18.4,model,19.0
+"Corn, Sweet",New York,23.3,20.7,model,11.0
 Tomatoes,New York,24.2,20.9,model,14.0
 Cauliflower,New York,28.6,22.8,model,20.0
 Blueberries,New York,27.0,23.1,model,14.0
-"Peppers, Bell Type",New York,26.0,23.5,model,10.0
-Strawberries,New York,43.1,38.7,model,10.0
+"Peppers, Bell Type",New York,25.5,23.6,model,7.0
+Strawberries,New York,43.2,38.5,model,11.0
 Mushrooms,Philadelphia,0.3,0.3,no change,0.0
-Sweet Potatoes,Philadelphia,3.6,3.6,model,0.0
+Sweet Potatoes,Philadelphia,3.7,3.7,model,0.0
 Bananas,Philadelphia,4.3,4.3,no change,0.0
 Potatoes,Philadelphia,5.5,5.0,model,9.0
-"Onions, Dry",Philadelphia,6.6,6.0,model,9.0
+"Onions, Dry",Philadelphia,6.0,5.5,model,8.0
 Oranges,Philadelphia,6.3,6.2,model,2.0
-Carrots,Philadelphia,8.1,7.8,model,4.0
-Cabbage,Philadelphia,8.0,7.9,model,1.0
-"Apples, Red Delicious",Philadelphia,8.2,8.2,no change,0.0
+Carrots,Philadelphia,7.1,7.1,model,0.0
+Cabbage,Philadelphia,8.1,8.1,no change,0.0
+"Apples, Red Delicious",Philadelphia,8.3,8.3,no change,0.0
 Avocados,Philadelphia,9.6,8.4,model,12.0
 "Apples, Granny Smith",Philadelphia,8.6,8.6,no change,0.0
-Lemons,Philadelphia,9.0,8.9,model,1.0
+Lemons,Philadelphia,9.0,8.8,model,2.0
 Celery,Philadelphia,13.5,10.3,model,24.0
-Watermelons,Philadelphia,11.9,10.4,model,13.0
-Pineapples,Philadelphia,12.3,10.6,model,14.0
+Watermelons,Philadelphia,11.9,10.3,model,13.0
+Pineapples,Philadelphia,12.4,10.6,model,15.0
 Mangoes,Philadelphia,13.3,10.7,model,20.0
-"Apples, Gala",Philadelphia,11.1,11.0,no change,1.0
-"Apples, Fuji",Philadelphia,11.2,11.2,no change,0.0
+"Apples, Fuji",Philadelphia,11.1,11.1,no change,0.0
+"Apples, Gala",Philadelphia,11.2,11.1,no change,1.0
 Cantaloupes,Philadelphia,14.0,11.7,model,16.0
-"Apples, Honeycrisp",Philadelphia,11.8,11.9,no change,-1.0
+"Apples, Honeycrisp",Philadelphia,11.9,12.0,no change,-1.0
+Apples,Philadelphia,12.2,12.2,no change,0.0
 Limes,Philadelphia,15.8,12.3,model,22.0
-Apples,Philadelphia,12.8,12.7,no change,1.0
 Grapes,Philadelphia,12.9,13.0,model,-1.0
 "Lettuce, Romaine",Philadelphia,16.9,13.5,model,20.0
-Broccoli,Philadelphia,17.3,13.8,model,20.0
-Pears,Philadelphia,14.5,14.1,model,3.0
-"Tomatoes, Plum Type",Philadelphia,17.3,14.3,model,17.0
-Tomatoes,Philadelphia,18.8,15.3,model,19.0
-"Lettuce, Iceberg",Philadelphia,20.8,16.3,model,22.0
+Broccoli,Philadelphia,17.2,13.6,model,21.0
+Pears,Philadelphia,14.5,14.2,model,2.0
+"Tomatoes, Plum Type",Philadelphia,17.6,14.6,model,17.0
+Tomatoes,Philadelphia,18.7,15.5,model,17.0
+"Lettuce, Iceberg",Philadelphia,20.8,16.5,model,21.0
 "Corn, Sweet",Philadelphia,18.9,16.7,model,12.0
-Cucumbers,Philadelphia,21.0,18.3,model,13.0
-Blueberries,Philadelphia,21.8,18.8,model,14.0
-Cauliflower,Philadelphia,22.2,19.5,model,12.0
-"Peppers, Bell Type",Philadelphia,23.6,21.3,model,10.0
-Strawberries,Philadelphia,32.3,31.1,model,4.0
+Cucumbers,Philadelphia,21.4,18.6,model,13.0
+Blueberries,Philadelphia,21.8,18.9,model,13.0
+Cauliflower,Philadelphia,22.2,19.4,model,13.0
+"Peppers, Bell Type",Philadelphia,23.7,21.3,model,10.0
+Strawberries,Philadelphia,32.2,30.9,model,4.0

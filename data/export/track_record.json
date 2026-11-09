@@ -1,40 +1,50 @@
 {
- "asOf": "2026-11-08",
+ "asOf": "2026-11-09",
  "forecasts_live": {
-  "scored": 871,
+  "scored": 1140,
   "since": "2026-09-21",
-  "in_range_pct": 75.4,
-  "miss_pct": 14.3,
-  "no_change_miss_pct": 16.2
+  "in_range_pct": 73.6,
+  "miss_pct": 14.6,
+  "no_change_miss_pct": 16.6
  },
  "forecasts_backtest": {
   "years": "2021-2026",
   "by_horizon": {
    "1": {
-    "miss_pct": 5.0,
-    "no_change_miss_pct": 5.9
+    "miss_pct": 4.9,
+    "no_change_miss_pct": 5.8
    },
    "2": {
-    "miss_pct": 8.7,
-    "no_change_miss_pct": 9.9
+    "miss_pct": 8.6,
+    "no_change_miss_pct": 9.8
    },
    "3": {
-    "miss_pct": 11.5,
-    "no_change_miss_pct": 12.9
+    "miss_pct": 11.4,
+    "no_change_miss_pct": 12.8
    },
    "4": {
-    "miss_pct": 13.6,
-    "no_change_miss_pct": 15.3
+    "miss_pct": 13.4,
+    "no_change_miss_pct": 15.1
    }
   },
-  "range_coverage_pct": 82.3
+  "range_coverage_pct": 82.4
  },
  "alerts": {
-  "issued": 71,
-  "decided": 49,
-  "came_true": 35,
-  "pending": 21,
+  "issued": 72,
+  "decided": 56,
+  "came_true": 40,
+  "pending": 15,
   "recent": [
+   {
+    "first_seen": "2026-11-09",
+    "commodity": "Tomatoes, Plum Type",
+    "market": "New York",
+    "direction": "up",
+    "signal": "usda_tone",
+    "headline": "Tomatoes, Plum Type: USDA reporters in New York call the market higher (\u201cMarket slightly higher\u201d).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
    {
     "first_seen": "2026-11-04",
     "commodity": "Peppers, Bell Type",
@@ -182,8 +192,8 @@
     "direction": "down",
     "signal": "usda_tone",
     "headline": "Lettuce, Iceberg: USDA reporters in New York call the market lower (\u201cMarket slightly lower\u201d).",
-    "status": "pending",
-    "moved_pct": NaN
+    "status": "came true",
+    "moved_pct": -21.1
    },
    {
     "first_seen": "2026-10-28",
@@ -192,8 +202,8 @@
     "direction": "down",
     "signal": "usda_tone",
     "headline": "Lettuce, Iceberg: USDA reporters in Los Angeles call the market lower (\u201cMarket slightly lower\u201d).",
-    "status": "pending",
-    "moved_pct": NaN
+    "status": "came true",
+    "moved_pct": -35.9
    },
    {
     "first_seen": "2026-10-23",
@@ -224,16 +234,6 @@
     "headline": "Lettuce, Iceberg: USDA reporters in New York call the market lower (\u201cMarket slightly lower\u201d).",
     "status": "came true",
     "moved_pct": -17.4
-   },
-   {
-    "first_seen": "2026-10-21",
-    "commodity": "Tomatoes, Plum Type",
-    "market": "New York",
-    "direction": "up",
-    "signal": "usda_tone",
-    "headline": "Tomatoes, Plum Type: USDA reporters in New York call the market higher (\u201cMarket slightly higher\u201d).",
-    "status": "did not happen",
-    "moved_pct": -3.4
    }
   ]
  }

@@ -1,19 +1,6 @@
 {
- "asOf": "2026-11-08",
+ "asOf": "2026-11-09",
  "alerts": [
-  {
-   "signal": "sp_lead",
-   "commodity": "Lettuce, Romaine",
-   "market": "Chicago",
-   "direction": "down",
-   "headline": "Lettuce, Romaine: shipping point down 13% this week; Chicago hasn't followed yet (-3% this week).",
-   "expect": "Expect Chicago prices to fall within ~2 weeks.",
-   "record": "Chicago followed 23 of the last 25 times (normally 35%).",
-   "hit_rate": 0.92,
-   "sp_change": -13.2,
-   "terminal_change": -3.0,
-   "id": "sp_lead|Lettuce, Romaine|Chicago|down|2026-11-02"
-  },
   {
    "signal": "usda_tone",
    "commodity": "Tomatoes, Plum Type",
@@ -23,18 +10,7 @@
    "expect": "Expect New York prices to rise next week.",
    "record": "That happened 35 of the last 46 times (normally 31%).",
    "hit_rate": 0.761,
-   "id": "usda_tone|Tomatoes, Plum Type|New York|up|2026-11-02"
-  },
-  {
-   "signal": "usda_tone",
-   "commodity": "Lettuce, Iceberg",
-   "market": "New York",
-   "direction": "down",
-   "headline": "Lettuce, Iceberg: USDA reporters in New York call the market lower (\u201cMarket slightly lower\u201d).",
-   "expect": "Expect New York prices to fall next week.",
-   "record": "That happened 38 of the last 57 times (normally 37%).",
-   "hit_rate": 0.667,
-   "id": "usda_tone|Lettuce, Iceberg|New York|down|2026-11-02"
+   "id": "usda_tone|Tomatoes, Plum Type|New York|up|2026-11-09"
   }
  ]
 }
