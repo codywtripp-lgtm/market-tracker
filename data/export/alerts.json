@@ -1,16 +1,16 @@
 {
- "asOf": "2026-11-09",
+ "asOf": "2026-11-11",
  "alerts": [
   {
    "signal": "usda_tone",
-   "commodity": "Tomatoes, Plum Type",
+   "commodity": "Lettuce, Iceberg",
    "market": "New York",
-   "direction": "up",
-   "headline": "Tomatoes, Plum Type: USDA reporters in New York call the market higher (\u201cMarket slightly higher\u201d).",
-   "expect": "Expect New York prices to rise next week.",
-   "record": "That happened 35 of the last 46 times (normally 31%).",
-   "hit_rate": 0.761,
-   "id": "usda_tone|Tomatoes, Plum Type|New York|up|2026-11-09"
+   "direction": "down",
+   "headline": "Lettuce, Iceberg: USDA reporters in New York call the market lower (\u201cMarket slightly lower\u201d).",
+   "expect": "Expect New York prices to fall next week.",
+   "record": "That happened 38 of the last 57 times (normally 37%).",
+   "hit_rate": 0.667,
+   "id": "usda_tone|Lettuce, Iceberg|New York|down|2026-11-09"
   }
  ]
 }

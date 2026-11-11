@@ -71,3 +71,4 @@ usda_tone|Limes|New York|up|2026-11-02,2026-11-03,usda_tone,Limes,New York,up,Li
 "usda_tone|Tomatoes, Plum Type|New York|up|2026-11-02",2026-11-04,usda_tone,"Tomatoes, Plum Type",New York,up,"Tomatoes, Plum Type: USDA reporters in New York call the market higher (“Market slightly higher”)."
 "sp_lead|Peppers, Bell Type|Chicago|up|2026-11-02",2026-11-04,sp_lead,"Peppers, Bell Type",Chicago,up,"Peppers, Bell Type: shipping point up 15% this week; Chicago hasn't followed yet (-1% this week)."
 "usda_tone|Tomatoes, Plum Type|New York|up|2026-11-09",2026-11-09,usda_tone,"Tomatoes, Plum Type",New York,up,"Tomatoes, Plum Type: USDA reporters in New York call the market higher (“Market slightly higher”)."
+"usda_tone|Lettuce, Iceberg|New York|down|2026-11-09",2026-11-11,usda_tone,"Lettuce, Iceberg",New York,down,"Lettuce, Iceberg: USDA reporters in New York call the market lower (“Market slightly lower”)."
