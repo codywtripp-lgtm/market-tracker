@@ -212,6 +212,10 @@ a.sname:hover, .buy h3 a:hover, .pricey h3 a:hover, .all th a:hover { text-decor
 .sname { font-weight: 700; }
 .sword { font-size: 16px; font-weight: 700; }
 .sword.good { color: var(--good); } .sword.bad { color: var(--bad); } .sword.flat { color: var(--ink-3); font-weight: 400; }
+/* what's in season: price on top, the verdict under it, right-aligned */
+.sprice { text-align: right; font-stretch: var(--narrow); font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.sprice small { font-weight: 400; font-size: 16px; }
+.sprice .sword { display: block; }
 
 /* pricey */
 .pricey { list-style: none; margin: 0; padding: 0; max-width: 760px; }
@@ -554,3 +558,4 @@ main.dash { min-width: 0; }
   .data .num { white-space: normal; }
 }
 .q-facts .season b { white-space: normal; }
+.band p.more { margin: 24px 0 0; }

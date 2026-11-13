@@ -188,7 +188,8 @@ def page(today, items, aisle="produce"):
                         for i in season)
         parts.append(f'<section class="band"><h2>In season now</h2><p class="sub">Peak flavor and supply this '
                      f'{grocery.season_of(today)}, per USDA’s seasonal produce guide, and how each is priced this week.</p>'
-                     f'<ul class="season-list">{chips}</ul></section>')
+                     f'<ul class="season-list">{chips}</ul><p class="more"><a href="@/whats-in-season/">'
+                     f'See what’s in season in {today:%B}</a>, with what’s coming next month.</p></section>')
     if pricey:
         rows = "".join(
             f'<li><h3>{link(i)}<span class="pprice">{money(i["price"])}{esc(i["unit"])}</span></h3>{row_lines(i, today)}</li>'
@@ -530,4 +531,126 @@ def item_page(i, today, all_items):
     rest = " and ".join(f'<a href="{u}">{n}</a>' for a, (u, n) in aisles.items() if a != i["aisle"])
     parts.append(f'<section><h2>More {aisles[i["aisle"]][1].lower()}</h2><nav class="others">{others}</nav>'
                  f'<p class="fine">Other aisles: {rest}</p></section>')
+    return "\n".join(parts) + "\n"
+
+
+# ---------- what's in season this month (/whats-in-season/) ----------
+# One page at one address, updated as the months change (Google's John Mueller: reuse one URL for recurring
+# seasonal content so it keeps its links). Fruit vs vegetable follows USDA MyPlate's food groups
+# (avocados, tomatoes and plantains are vegetables there).
+FRUITS = {"Apple Pears", "Apples", "Apricots", "Bananas", "Blackberries", "Blueberries", "Cactus Pears", "Cantaloupes",
+          "Cherries", "Clementines", "Coconut", "Cranberries", "Dekopon (Shiranui)", "Dragon Fruit (Pitaya)", "Grapefruit",
+          "Grapes", "Honeydews", "Kiwifruit", "Lemons", "Limes", "Mangoes", "Nectarines", "Oranges", "Papaya", "Peaches",
+          "Pears", "Persimmons", "Pineapples", "Plums", "Pomegranates", "Raspberries", "Satsumas", "Strawberries",
+          "Tangelos", "Tangerines/Mandarins", "Watermelons"}
+NOT_PRODUCE = {"Honey"}
+KEEP_NAME = ("Brussels sprouts", "Swiss chard")
+
+
+def names_list(ns):
+    ns = list(ns)
+    return ns[0] if len(ns) == 1 else ", ".join(ns[:-1]) + " and " + ns[-1]
+
+
+def in_text(rows):
+    """Names as they read mid-sentence: 'apples', 'Brussels sprouts'."""
+    return [i["short"] if i["short"] in KEEP_NAME else i["short"].lower() for i in rows]
+
+
+def season_rows(rows):
+    def right(i):
+        if not i["this_week"]:
+            return '<span class="sword flat">No price this week</span>'
+        return (f'<span class="sprice">{money(i["price"])}<small>{esc(i["unit"])}</small>'
+                f'<span class="sword {STATUS[i["status"]][1]}">{esc(STATUS[i["status"]][0])}</span></span>')
+    return "".join(f'<li><span><a class="sname" href="@/grocery/{i["slug"]}/">{esc(i["short"])}</a>{qual(i)}</span>'
+                   f'{right(i)}</li>' for i in rows)
+
+
+def season_page(today, items):
+    """Fruits and vegetables in season this month, each with this week's supermarket price and the quality to expect.
+    In season = USDA SNAP-Ed Seasonal Produce Guide (as everywhere on the site); "also at their best" = rated
+    excellent this month in the quality calendar without being on USDA's list (clementines in November)."""
+    produce = [i for i in items if i["aisle"] == "produce" and i["commodity"] not in NOT_PRODUCE]
+    if not produce:
+        return None
+    month = grocery.MONTHS[today.month - 1]
+    nxt = dt.date(today.year + (today.month == 12), today.month % 12 + 1, 15)
+    next_month = grocery.MONTHS[nxt.month - 1]
+    order = {"low": 0, "typical": 1, "new": 2, "high": 3, "absent": 4}
+
+    def level(i):
+        return (i.get("quality") or ("", ""))[0]
+
+    def key(i):
+        return (not i["this_week"], order.get(i["status"], 4), -grocery.q_rank(i) if i.get("quality") else 0, i["short"])
+
+    def by_name(rows):
+        return sorted(rows, key=lambda i: i["short"])
+    season = [i for i in produce if i["in_season"]]
+    best = [i for i in produce if not i["in_season"] and level(i) == "Excellent"]
+    fruits = sorted((i for i in season if i["commodity"] in FRUITS), key=key)
+    veg = sorted((i for i in season if i["commodity"] not in FRUITS), key=key)
+    value = sorted((i for i in season + best if i["this_week"] and i["status"] == "low" and level(i) not in ("Poor", "Fair")),
+                   key=lambda i: i["vs_usual"] or 0)[:6]
+    # coming next month: on USDA's list next month or rated excellent next month, and neither now
+    coming = by_name(i for i in produce if not i["in_season"] and level(i) != "Excellent" and (
+        i["commodity"] in grocery.SEASONS[grocery.season_of(nxt)]
+        or (quality.quality(i["commodity"], nxt.month) or ("",))[0] == "Excellent"))
+    past = sorted((i for i in produce if i["this_week"] and not i["in_season"] and level(i) in ("Poor", "Fair")),
+                  key=lambda i: (level(i) != "Poor", i["short"]))
+
+    lede = ""
+    peak = [i for i in fruits + veg if level(i) == "Excellent"][:8]  # name the answer first (it is also the search snippet)
+    if peak:
+        names = names_list(in_text(peak))
+        lede = f"{names[:1].upper() + names[1:]} are at their best in {month}. "
+    if fruits and veg:
+        lede += f"In all, {len(fruits)} fruits and {len(veg)} vegetables are in season, per USDA’s seasonal produce guide. "
+    if value:
+        lede += f"The best value this week: {names_list(in_text(value))}, all priced below usual at U.S. supermarkets."
+    parts = [f'<section class="intro"><h1>What’s in season in {month}</h1>'
+             f'<p class="date">Prices for the week of {today:%B} {today.day}, {today.year}</p>'
+             f'<p class="lede">{esc(lede.strip())}</p>'
+             '<p class="value">Each item shows the quality to expect this month and its average price at U.S. '
+             'supermarkets this week, compared with the same weeks in past years.</p></section>']
+    for head, rows in (("Fruits", fruits), ("Vegetables", veg)):
+        if rows:
+            parts.append(f'<section><h2>{head} in season in {month}</h2>'
+                         f'<ul class="season-list in-month">{season_rows(rows)}</ul></section>')
+    if best:
+        parts.append(f'<section><h2>Also at their best in {month}</h2><p class="sub">Not on USDA’s list for '
+                     f'{grocery.season_of(today)}, but this is their peak harvest.</p>'
+                     f'<ul class="season-list in-month">{season_rows(sorted(best, key=key))}</ul></section>')
+    if coming:
+        links = names_list([f'<a href="@/grocery/{i["slug"]}/">{esc(i["short"])}</a>' for i in coming])
+        parts.append(f'<section><h2>Coming into season in {next_month}</h2><p>{links}.</p></section>')
+    if past:
+        parts.append(f'<section><h2>Past their best in {month}</h2><p class="sub">Still in stores, but out of season, '
+                     'so most likely imported or from storage. Tap a rating for the reason.</p>'
+                     f'<ul class="season-list in-month">{season_rows(past)}</ul></section>')
+    qa = []
+    for head, rows in (("fruits", fruits), ("vegetables", veg)):
+        if rows:
+            qa.append((f"What {head} are in season in {month}?",
+                       f"Per USDA’s seasonal produce guide: {names_list(in_text(by_name(rows)))}."))
+    if value:
+        qa.append(("Which in-season produce is the best value this week?",
+                   names_list([f"{n[:1].upper() + n[1:] if k == 0 else n} ({money(i['price'])}{i['unit']}, "
+                               f"{abs(i['vs_usual'])}% below usual)" for k, (n, i) in enumerate(zip(in_text(value), value))])
+                   + ", at U.S. supermarkets this week."))
+    if coming:
+        names = names_list(in_text(coming))
+        qa.append((f"What comes into season in {next_month}?", names[:1].upper() + names[1:] + "."))
+    if qa:
+        parts.append('<section class="faq"><h2>Questions shoppers ask</h2>'
+                     + "".join(f"<h3>{esc(q)}</h3><p>{esc(a)}</p>" for q, a in qa) + "</section>")
+        ld = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in qa]}
+        parts.append(f'<script type="application/ld+json">{json.dumps(ld)}</script>')
+    parts.append('<section class="how"><h2>How this works</h2><p>“In season” follows USDA’s SNAP-Ed Seasonal Produce '
+                 'Guide. Quality is what to expect this month: new crop and peak harvest rate excellent; storage, imports '
+                 'and the end of a season rate fair or poor. Prices are the average U.S. supermarkets advertised this week, '
+                 'reported by USDA; your store’s price may differ. Fruits and vegetables are grouped the way USDA’s MyPlate '
+                 'groups them, so avocados and tomatoes count as vegetables.</p></section>')
     return "\n".join(parts) + "\n"

@@ -112,9 +112,9 @@ def unit(pack):
     m = re.match(r"(\d+) count", p)
     if m:
         return f" for {m.group(1)}"
-    m = re.match(r"([0-9./-]+ (?:oz|lb|pint|quart|pt|qt))", p)
+    m = re.match(r"([0-9./-]+?)[ -](oz|lb|pound|pint|quart|pt|qt)\b", p)  # '1-lb containers with lids' -> ' for 1 lb'
     if m:
-        return f" for {m.group(1)}"
+        return f" for {m.group(1)} {m.group(2).replace('pound', 'lb')}"
     return f" for a {p}"
 
 
