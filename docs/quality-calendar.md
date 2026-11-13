@@ -64,7 +64,8 @@ Real conditions (USDA quality flags, short supply, shipments) can lower a rating
   - Jan, Feb, Mar, Apr, Nov, Dec: **Excellent**. Peak Florida and Texas season.
   - May, Jun, Jul, Aug, Sep, Oct: **Fair**. Late season and imports.
 - **Grapes**
-  - Jul, Aug, Sep, Oct, Nov: **Excellent**. Peak California season.
+  - Jul, Aug, Sep, Oct: **Excellent**. Peak California season.
+  - Nov: **Good**. Late California season: the harvest winds down and some grapes come from cold storage.
   - Jan, Dec: **Fair**. California grapes from storage.
   - Feb, Mar, Apr: **Good**. Imported from Chile and Peru.
   - May, Jun: **Fair**. Between seasons: early Mexican and late Chilean grapes.

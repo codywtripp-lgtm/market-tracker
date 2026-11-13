@@ -94,6 +94,9 @@ def run(client, start, end, sources, added_only=False, new_markets=False):
 
     if "beef" in sources:
         for section in config.BEEF_SECTIONS:
+            if any(f[0] == "beef" for f in failures):
+                log.warning("beef: datamart failing, skipping %s tonight", section)
+                continue
             job("beef", section, lambda section=section: [
                 row
                 for r in client.datamart(config.BEEF_REPORT, section, start, end)

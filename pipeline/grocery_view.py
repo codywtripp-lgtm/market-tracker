@@ -597,7 +597,9 @@ def season_page(today, items):
     coming = by_name(i for i in produce if not i["in_season"] and level(i) != "Excellent" and (
         i["commodity"] in grocery.SEASONS[grocery.season_of(nxt)]
         or (quality.quality(i["commodity"], nxt.month) or ("",))[0] == "Excellent"))
-    past = sorted((i for i in produce if i["this_week"] and not i["in_season"] and level(i) in ("Poor", "Fair")),
+    soon = {i["commodity"] for i in coming}  # before their season is not "past their best" (leeks in November)
+    past = sorted((i for i in produce if i["this_week"] and not i["in_season"] and level(i) in ("Poor", "Fair")
+                   and i["commodity"] not in soon),
                   key=lambda i: (level(i) != "Poor", i["short"]))
 
     lede = ""

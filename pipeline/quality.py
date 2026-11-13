@@ -67,7 +67,8 @@ CALENDAR = {
         ((9, 10, 11, 12, 1, 2, 3, 4, 5), "Good", "Mostly from Mexico."),
     ],
     "Grapes": [
-        ((7, 8, 9, 10, 11), "Excellent", "Peak California season."),
+        ((7, 8, 9, 10), "Excellent", "Peak California season."),
+        ((11,), "Good", "Late California season: the harvest winds down and some grapes come from cold storage."),
         ((12, 1), "Fair", "California grapes from storage."),
         ((2, 3, 4), "Good", "Imported from Chile and Peru."),
         ((5, 6), "Fair", "Between seasons: early Mexican and late Chilean grapes."),
