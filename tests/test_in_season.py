@@ -30,3 +30,21 @@ def test_pack_with_hyphen_reads_as_a_size():
     assert grocery.unit("1-lb containers with lids") == " for 1 lb"
     assert grocery.unit("2 pound bags") == " for 2 lb"
     assert grocery.unit("8-10 oz package") == " for 8-10 oz"
+
+
+def test_beef_datamart_fails_fast(monkeypatch):
+    import requests
+    from pipeline import usda
+    calls = []
+
+    class Hung:
+        def get(self, url, params=None, auth=None, timeout=None):
+            calls.append(timeout)
+            raise requests.Timeout("hung")
+    monkeypatch.setattr(usda.time, "sleep", lambda s: None)
+    c = usda.Client(api_key="x", session=Hung())
+    try:
+        c.datamart("2453", "Ground Beef", dt.date(2026, 11, 2), dt.date(2026, 11, 12))
+    except usda.USDAError:
+        pass
+    assert calls == [90, 90]

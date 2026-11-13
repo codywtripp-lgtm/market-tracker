@@ -21,11 +21,11 @@ class Client:
         self.api_key = api_key if api_key is not None else os.environ.get("MARS_API_KEY", "").strip()
         self.session = session or requests.Session()
 
-    def _get(self, url, params, auth, tries=4):
+    def _get(self, url, params, auth, tries=4, timeout=300):
         last = None
         for attempt in range(tries):
             try:
-                r = self.session.get(url, params=params, auth=auth, timeout=300)
+                r = self.session.get(url, params=params, auth=auth, timeout=timeout)
             except requests.RequestException as e:
                 last = repr(e)
             else:
@@ -43,13 +43,13 @@ class Client:
             return payload.get("results", []) or []
         return payload or []
 
-    def _ranged(self, base, section, start, end, auth, date_field, chunk_days):
+    def _ranged(self, base, section, start, end, auth, date_field, chunk_days, **get):
         rows = []
         s = start
         while s <= end:
             e = min(s + dt.timedelta(days=chunk_days - 1), end)
             q = f"{date_field}={s:%m/%d/%Y}:{e:%m/%d/%Y}"
-            rows += self._rows(self._get(f"{base}/{section}", {"q": q}, auth))
+            rows += self._rows(self._get(f"{base}/{section}", {"q": q}, auth, **get))
             s = e + dt.timedelta(days=1)
         return rows
 
@@ -60,5 +60,7 @@ class Client:
                             (self.api_key, ""), "report_begin_date", chunk_days)
 
     def datamart(self, slug, section, start, end, chunk_days=92):
+        # The LMR datamart sometimes hangs for minutes and then errors (2026-11-10 and 11-12: three beef sections at
+        # 4 tries x 5 minutes used up the nightly job's hour, so produce never updated). Fail fast instead.
         return self._ranged(f"{config.DATAMART}/reports/{slug}", section, start, end,
-                            None, "report_date", chunk_days)
+                            None, "report_date", chunk_days, tries=2, timeout=90)

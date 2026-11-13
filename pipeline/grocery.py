@@ -37,21 +37,28 @@ NAMES = {
     "Lettuce, Iceberg": "Iceberg lettuce", "Lettuce, Romaine": "Romaine lettuce", "Tomatoes, Plum Type": "Roma tomatoes",
 }
 
-# USDA SNAP-Ed Seasonal Produce Guide, mapped to the retail report's names.
+# USDA SNAP-Ed Seasonal Produce Guide, mapped to the retail report's names. Checked 2026-11-13 against the guide's
+# last published version (web.archive.org copy of snaped.fns.usda.gov/resources/nutrition-education-materials/
+# seasonal-produce-guide, August 2026; the page went offline in USDA's reorganization). "Herbs" = cilantro and
+# parsley; "Peas" = snow and sugar snap peas; "Winter Squash"/"Summer Squash" = the report's Squash. The guide's
+# rhubarb, turnips, rutabagas, lima beans and zucchini have no retail item of their own.
+HERBS = "Cilantro Curly_Parsley Plain_Parsley"
+PEAS = "Snow_Peas Sugar_Snap_Peas"
 SEASONS = {
-    "spring": "Apples Apricots Asparagus Avocados Bananas Broccoli Cabbage Carrots Celery Collards Garlic Cilantro Kale "
-              "Kiwifruit Lemons Lettuce Limes Mushrooms Onions,_Dry Peas Pineapples Radishes Spinach Strawberries "
-              "Swiss_Chard",
-    "summer": "Apples Apricots Avocados Bananas Beets Peppers,_Bell_Type Blackberries Blueberries Cantaloupes Carrots "
-              "Celery Cherries Corn-Sweet Cucumbers Eggplant Garlic Beans Cilantro Honeydews Lemons Limes Mangoes Okra "
-              "Peaches Plums Raspberries Strawberries Squash Tomatillos Tomatoes Watermelons Nectarines",
-    "fall": "Apples Bananas Beets Peppers,_Bell_Type Broccoli Brussels_Sprouts Cabbage Carrots Cauliflower Celery Collards "
-            "Cranberries Garlic Ginger Grapes Beans Cilantro Kale Kiwifruit Lemons Lettuce Limes Mangoes Mushrooms "
-            "Onions,_Dry Parsnips Pears Peas Pineapples Potatoes Pumpkins Radishes Raspberries Spinach Sweet_Potatoes "
-            "Swiss_Chard Squash",
-    "winter": "Apples Avocados Bananas Beets Brussels_Sprouts Cabbage Carrots Celery Collards Grapefruit Cilantro Kale "
-              "Kiwifruit Lemons Limes Onions,_Dry Oranges Parsnips Pears Pineapples Potatoes Pumpkins Sweet_Potatoes "
-              "Swiss_Chard Squash",
+    "spring": f"Apples Apricots Asparagus Avocados Bananas Blackberries Broccoli Cabbage Carrots Celery Collards Garlic {HERBS} "
+              f"Kale Kiwifruit Lemons Lettuce Limes Mushrooms Onions,_Dry {PEAS} Pineapples Plantains Radishes Spinach "
+              "Strawberries Swiss_Chard",
+    "summer": f"Apples Apricots Avocados Bananas Beets Peppers,_Bell_Type Blackberries Blueberries Cantaloupes Carrots "
+              f"Celery Cherries Corn-Sweet Cucumbers Eggplant Garlic Grapes Beans {HERBS} Honeydews Lemons Limes Mangoes Okra "
+              f"Onions,_Dry Peaches Pears {PEAS} Pineapples Plantains Plums Raspberries Strawberries Squash Tomatillos Tomatoes "
+              "Watermelons",
+    "fall": f"Apples Bananas Beets Peppers,_Bell_Type Broccoli Brussels_Sprouts Cabbage Carrots Cauliflower Celery Collards "
+            f"Cranberries Garlic Ginger Grapes Beans {HERBS} Kale Kiwifruit Lemons Lettuce Limes Mangoes Mushrooms Okra "
+            f"Onions,_Dry Parsnips Pears {PEAS} Plantains Pomegranates Potatoes Pumpkins Radishes Raspberries Spinach "
+            "Sweet_Potatoes Swiss_Chard Squash",
+    "winter": f"Apples Avocados Bananas Beets Brussels_Sprouts Cabbage Carrots Celery Collards Grapefruit Grapes {HERBS} Kale "
+              "Kiwifruit Leeks Lemons Limes Onions,_Dry Oranges Parsnips Pears Plantains Pomegranates Potatoes Pumpkins "
+              "Sweet_Potatoes Swiss_Chard Squash",
 }
 SEASONS = {k: {w.replace("_", " ") for w in v.split()} for k, v in SEASONS.items()}
 
