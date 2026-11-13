@@ -1,16 +1,55 @@
 {
- "asOf": "2026-11-11",
+ "asOf": "2026-11-13",
  "alerts": [
   {
-   "signal": "usda_tone",
-   "commodity": "Lettuce, Iceberg",
+   "signal": "sp_lead",
+   "commodity": "Broccoli",
+   "market": "Chicago",
+   "direction": "up",
+   "headline": "Broccoli: shipping point up 11% this week; Chicago hasn't followed yet (-6% this week).",
+   "expect": "Expect Chicago prices to rise within ~2 weeks.",
+   "record": "Chicago followed 43 of the last 54 times (normally 37%).",
+   "hit_rate": 0.796,
+   "sp_change": 10.7,
+   "terminal_change": -6.3,
+   "id": "sp_lead|Broccoli|Chicago|up|2026-11-09"
+  },
+  {
+   "signal": "sp_lead",
+   "commodity": "Broccoli",
    "market": "New York",
-   "direction": "down",
-   "headline": "Lettuce, Iceberg: USDA reporters in New York call the market lower (\u201cMarket slightly lower\u201d).",
-   "expect": "Expect New York prices to fall next week.",
-   "record": "That happened 38 of the last 57 times (normally 37%).",
-   "hit_rate": 0.667,
-   "id": "usda_tone|Lettuce, Iceberg|New York|down|2026-11-09"
+   "direction": "up",
+   "headline": "Broccoli: shipping point up 11% this week; New York hasn't followed yet (+0% this week).",
+   "expect": "Expect New York prices to rise within ~2 weeks.",
+   "record": "New York followed 45 of the last 57 times (normally 36%).",
+   "hit_rate": 0.789,
+   "sp_change": 10.7,
+   "terminal_change": 0.0,
+   "id": "sp_lead|Broccoli|New York|up|2026-11-09"
+  },
+  {
+   "signal": "usda_tone",
+   "commodity": "Peppers, Bell Type",
+   "market": "Chicago",
+   "direction": "up",
+   "headline": "Peppers, Bell Type: USDA reporters in Chicago call the market higher (\u201cMarket mexico 5kg/11 lb cartons higher; others about steady\u201d).",
+   "expect": "Expect Chicago prices to rise next week.",
+   "record": "That happened 11 of the last 16 times (normally 22%).",
+   "hit_rate": 0.688,
+   "id": "usda_tone|Peppers, Bell Type|Chicago|up|2026-11-09"
+  },
+  {
+   "signal": "sp_lead",
+   "commodity": "Broccoli",
+   "market": "Los Angeles",
+   "direction": "up",
+   "headline": "Broccoli: shipping point up 11% this week; Los Angeles hasn't followed yet (-8% this week).",
+   "expect": "Expect Los Angeles prices to rise within ~2 weeks.",
+   "record": "Los Angeles followed 30 of the last 46 times (normally 34%).",
+   "hit_rate": 0.652,
+   "sp_change": 10.7,
+   "terminal_change": -7.9,
+   "id": "sp_lead|Broccoli|Los Angeles|up|2026-11-09"
   }
  ]
 }
