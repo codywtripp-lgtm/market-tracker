@@ -14,6 +14,7 @@ import hashlib
 import datetime as dt
 import html
 import json
+from urllib.parse import urljoin
 import re
 import shutil
 from collections import defaultdict
@@ -274,7 +275,7 @@ def write(path, text):
 
 def redirect(path, to):
     write(OUT / path / "index.html", f'<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex">'
-                                     f'<meta http-equiv="refresh" content="0; url={to}"><link rel="canonical" href="{SITE_URL}">'
+                                     f'<meta http-equiv="refresh" content="0; url={to}"><link rel="canonical" href="{urljoin(f"{SITE_URL}{path}/", to)}">'
                                      f'<title>{SITE_NAME}</title><a href="{to}">{SITE_NAME}</a>')
 
 
@@ -410,7 +411,8 @@ def board_pages():
                    "status": og.get(slug, {}).get("out", "").split(",")[0], "tone": og.get(slug, {}).get("tone", ""),
                    "where": "Hunts Point", "aka": c})
         for m, ms in board.MARKET_SLUG.items():
-            if (BOARD / "items" / f"{slug}--{ms}.html").exists():
+            # New York is the item page itself; a /new-york/ copy was a duplicate Google had to choose between (2026-11-13)
+            if m != "New York" and (BOARD / "items" / f"{slug}--{ms}.html").exists():
                 place = "Hunts Point" if m == "New York" else m
                 emit(f"{slug}/{ms}/", f"items/{slug}--{ms}", f"{n} Wholesale Prices Today in {place}",
                      2, og_key=slug, desc=f"{n} wholesale prices today at {place}, per case: how they compare with the "
