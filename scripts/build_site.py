@@ -361,6 +361,12 @@ def board_pages():
             emit(rel, key, title, 1, view="grocery", day=g_day, aisle=rel,
                  find={"name": AISLE_NAME[rel], "status": "This week’s best buys", "aka": find[3]},
                  head=crumbs_ld(("Grocery prices", SITE_URL), (AISLE_NAME[rel], f"{SITE_URL}{rel}")))
+    if (BOARD / "in-season.html").exists():  # one evergreen address; the month in the title changes with the data
+        month = dt.date.fromisoformat(g_day).strftime("%B")
+        emit("whats-in-season/", "in-season", f"What's in Season in {month}: Fruits and Vegetables", 1, view="grocery",
+             day=g_day, find={"name": "What’s in season", "status": f"Fruits and vegetables in season in {month}",
+                              "aka": "seasonal produce fruits vegetables in season"},
+             head=crumbs_ld(("Grocery prices", SITE_URL), ("What’s in season", f"{SITE_URL}whats-in-season/")))
     emit("wholesale/", "home", "Wholesale Produce Prices Today at 8 U.S. Terminal Markets", 1, active="wholesale/",
          desc="Wholesale produce prices today at Hunts Point, Los Angeles, Chicago, Philadelphia, Boston, Atlanta, Detroit and Miami: what’s firming, "
               "what’s softening, and a two-week outlook, per case.",
@@ -536,6 +542,7 @@ NICE = {"Lettuce, Romaine": "Romaine", "Lettuce, Iceberg": "Iceberg", "Tomatoes,
 LICENSE = "https://creativecommons.org/licenses/by/4.0/"
 
 CHANGES = (
+    ("November 13, 2026", "New page: What’s in season, with the fruits and vegetables in season this month (USDA’s seasonal produce guide), each with this week’s supermarket price and the quality to expect, plus what comes into season next month and what is past its best. Pack sizes such as “1-lb containers with lids” now read “for 1 lb”."),
     ("November 9, 2026", "Grocery meat prices are each one cut. Several items had averaged cuts that sell at different prices, so the price moved whenever the mix of store ads changed: chicken breasts now leave out thin-sliced cutlets ($2.45 became $2.09 a pound this week), pork chops are boneless center-cut ($3.87 became $4.33), strip, ribeye and top sirloin steaks are boneless, and pork ribs are back ribs. Each page says which cut."),
     ("November 9, 2026", "A wholesale price now stays with its growing area while that area is still quoted about as often as any other. Two areas quoted equally had swapped the price back and forth (New York iceberg between Canada and California, Philadelphia lemons between Arizona and California). Calls right moved from 75.6% to 75.5%, big swings flagged ahead from 30.8% to 30.9%."),
     ("November 9, 2026", "Detroit cucumbers show no price while Detroit isn't quoting the standard bushel slicer the other markets show (since October 23, when Michigan's season ended), instead of English (long seedless) cucumbers. New York mushrooms show one USDA quote's range ($16 to $18) instead of joining three quotes into $16 to $21."),

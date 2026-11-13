@@ -941,6 +941,9 @@ def build():
                 out[f"aisle-{aisle}"] = body
         for gi in g_items:
             out[f"grocery/{gi['slug']}"] = grocery_view.item_page(gi, g_day, g_items)
+        body = grocery_view.season_page(g_day, g_items)
+        if body:
+            out["in-season"] = body
     for m in MARKETS:
         out[f"market-{MKEY[m]}"] = home(items, hist, today, alerts, as_of, record, notes, only=m)
     for commodity, (slug, _) in PAGES.items():
