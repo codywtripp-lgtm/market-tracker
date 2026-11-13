@@ -1015,6 +1015,9 @@ def main():
         for old in (OUT / sub).glob("*.html"):
             old.unlink()
     for key, body in pages.items():
+        if body is None:  # an empty page keeps yesterday's file rather than stopping every other page
+            print(f"board: no page for {key}, kept the previous one")
+            continue
         (OUT / (f"{key}.json" if key in ("og", "outlook_record") else f"{key}.html")).write_text(body, encoding="utf-8")
     (OUT / "as_of.txt").write_text(as_of.isoformat())
     if "grocery" in pages:

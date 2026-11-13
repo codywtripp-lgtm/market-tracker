@@ -134,3 +134,11 @@ def test_when_to_buy_chart_is_a_labeled_line_that_doesnt_exaggerate_pennies():
     swing = {**flat, 7: 1.50}
     assert gv.price_note(swing, 7, "/lb").startswith("Usually cheapest in July, at $1.50/lb")
     assert "Low: $1.50" in gv.price_line(swing, 7)
+
+
+def test_meat_ads_posted_first_do_not_age_the_produce_aisle():
+    # 11-13: USDA posted the new week's meat ads before the produce report; produce must still be this week's
+    rows = history("Apples", 1.2, today="2026-11-06") + history("Chicken breasts", 3.0, today="2026-11-13")
+    today, items = grocery.build(live={}, rows=rows)
+    assert str(today) == "2026-11-06"
+    assert all(i["this_week"] for i in items)
