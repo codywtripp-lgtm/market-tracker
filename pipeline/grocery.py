@@ -182,8 +182,13 @@ def build(rows, deflator=None, live=None):
     data = load(rows, organic)
     if not data:
         return None, []
-    latest = max(d for packs in data.values() for days in packs.values() for d in days)
-    today = dt.date.fromisoformat(latest)
+    # each aisle's week runs from its own latest report: meat and egg ads can post days before the produce report,
+    # and dating the produce aisle by them would make every produce price look a week old (empty page, 11-13)
+    aisle_day = defaultdict(str)
+    for commodity, packs in data.items():
+        a = staples.AISLE.get(commodity, "produce")
+        aisle_day[a] = max(aisle_day[a], max(d for days in packs.values() for d in days))
+    today = dt.date.fromisoformat(aisle_day.get("produce") or max(aisle_day.values()))
     year_ago = (today - dt.timedelta(days=365)).isoformat()
     season = season_of(today)
     items = []
@@ -199,7 +204,8 @@ def build(rows, deflator=None, live=None):
             week[d] = (sum(p * s for p, s in xs) / stores, stores)
         # reports close on different days (produce Friday, dairy Sunday): within the week counts as this week
         last = max(week)
-        this_week = last >= (today - dt.timedelta(days=6)).isoformat()
+        ref = dt.date.fromisoformat(aisle_day[staples.AISLE.get(commodity, "produce")])
+        this_week = last >= (ref - dt.timedelta(days=6)).isoformat()
         price, stores = week[last]
         real = {d: p * deflator.factor(d) for d, (p, _) in week.items()}
         pool, years, past_stores = [], set(), defaultdict(float)
@@ -207,9 +213,9 @@ def build(rows, deflator=None, live=None):
             dd = dt.date.fromisoformat(d)
             for back in range(1, 11):
                 try:
-                    same = today.replace(year=today.year - back)
+                    same = ref.replace(year=ref.year - back)
                 except ValueError:
-                    same = today.replace(year=today.year - back, day=28)
+                    same = ref.replace(year=ref.year - back, day=28)
                 if abs((dd - same).days) <= WINDOW_DAYS:
                     pool.append(real[d])
                     years.add(back)
