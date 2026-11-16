@@ -147,7 +147,9 @@ def lede(items, buys, pricey):
     if not names:
         return "Prices at the store are close to normal for the time of year."
     s = (names[0] if len(names) == 1 else ", ".join(names[:-1]) + " and " + names[-1])
-    s = s[:1].upper() + s[1:] + (" is" if len(names) == 1 else " are") + " the best buys this week."
+    one = len(names) == 1
+    s = (s[:1].upper() + s[1:] + (" is" if one and not plural(standout[0]) else " are")
+         + (" the best buy this week." if one else " the best buys this week."))
     high = [p["short"].lower() for p in pricey[:2]]
     if high:
         h = high[0] if len(high) == 1 else " and ".join(high)

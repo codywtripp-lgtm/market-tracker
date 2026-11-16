@@ -233,7 +233,9 @@ def snippet(text, limit=155):
         if len(out) + len(sentence) + 1 > limit:
             break
         out = f"{out} {sentence}".strip()
-    return out or text[:limit].rsplit(" ", 1)[0] + "…"
+    if len(out) < 110:  # one short sentence reads thin in results (Bing flags it): run on into the next, cut at a word
+        out = text[:limit].rsplit(" ", 1)[0].rstrip(",;:") + "…"
+    return out
 
 
 def page(title, desc, canonical, up, body, active=None, head="", og=None, main_class="wrap", view="wholesale",

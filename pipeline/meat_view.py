@@ -163,7 +163,7 @@ def item_page(i, items):
         f'<a href="@/{PAGE}/">Meat</a><span>/</span>{esc(i["name"])}</nav>',
         f'<div class="pagehead"><h1>{esc(i["name"])} wholesale price today</h1>'
         f'<p class="date">U.S. wholesale price {unit}, USDA report for {shown_date(i)}</p>'
-        f'<p class="answer">{esc(qa[0][1])} {esc(qa[2][1])}</p></div>',
+        f'<p class="answer">{esc(i["name"])}: {esc(qa[0][1])} {esc(qa[2][1])}</p></div>',
         '<section class="panel"><div class="quote"><div class="q-main">'
         f'<span class="q-price">{money(i["price"])}</span><span class="q-unit">{unit}</span>'
         f'<span class="q-pack">{esc(extra)}</span>' + (f'<span class="q-range">{esc(rng)}</span>' if rng else "") + "</div>"
