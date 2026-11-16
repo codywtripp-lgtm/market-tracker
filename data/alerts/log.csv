@@ -78,3 +78,11 @@ sp_lead|Broccoli|New York|up|2026-11-09,2026-11-13,sp_lead,Broccoli,New York,up,
 sp_lead|Broccoli|Los Angeles|up|2026-11-09,2026-11-13,sp_lead,Broccoli,Los Angeles,up,Broccoli: shipping point up 11% this week; Los Angeles hasn't followed yet (-8% this week).
 sp_lead|Limes|Los Angeles|up|2026-11-09,2026-11-14,sp_lead,Limes,Los Angeles,up,Limes: shipping point up 16% this week; Los Angeles hasn't followed yet (+0% this week).
 sp_lead|Limes|New York|up|2026-11-09,2026-11-14,sp_lead,Limes,New York,up,Limes: shipping point up 16% this week; New York hasn't followed yet (+1% this week).
+sp_lead|Limes|Los Angeles|up|2026-11-16,2026-11-16,sp_lead,Limes,Los Angeles,up,Limes: shipping point up 24% this week; Los Angeles hasn't followed yet (+0% this week).
+sp_lead|Broccoli|Chicago|up|2026-11-16,2026-11-16,sp_lead,Broccoli,Chicago,up,Broccoli: shipping point up 10% this week; Chicago hasn't followed yet (-4% this week).
+"sp_lead|Lettuce, Romaine|Los Angeles|down|2026-11-16",2026-11-16,sp_lead,"Lettuce, Romaine",Los Angeles,down,"Lettuce, Romaine: shipping point down 33% this week; Los Angeles hasn't followed yet (-1% this week)."
+sp_lead|Broccoli|New York|up|2026-11-16,2026-11-16,sp_lead,Broccoli,New York,up,Broccoli: shipping point up 10% this week; New York hasn't followed yet (-2% this week).
+usda_tone|Tomatoes|New York|down|2026-11-16,2026-11-16,usda_tone,Tomatoes,New York,down,"Tomatoes: USDA reporters in New York call the market lower (“Market mature greens slightly lower, others about steady”)."
+"sp_lead|Lettuce, Iceberg|New York|down|2026-11-16",2026-11-16,sp_lead,"Lettuce, Iceberg",New York,down,"Lettuce, Iceberg: shipping point down 21% this week; New York hasn't followed yet (+0% this week)."
+sp_lead|Limes|New York|up|2026-11-16,2026-11-16,sp_lead,Limes,New York,up,Limes: shipping point up 24% this week; New York hasn't followed yet (+1% this week).
+sp_lead|Broccoli|Los Angeles|up|2026-11-16,2026-11-16,sp_lead,Broccoli,Los Angeles,up,Broccoli: shipping point up 10% this week; Los Angeles hasn't followed yet (-3% this week).
