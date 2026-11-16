@@ -16,6 +16,7 @@ import csv
 import datetime as dt
 import re
 import statistics
+import sys
 from collections import defaultdict
 from pathlib import Path
 
@@ -254,8 +255,18 @@ def load(rows):
             continue
         if mt in ("terminal", "shipping point") and r["commodity"] == "Apples":
             r = {**r, "commodity": config.item_of("Apples", r["variety"])}
-        out[series_key(r)][r["report_date"]].append(r)
+        out[series_key(r)][r["report_date"]].append(slim(r))
     return out
+
+
+# columns export never reads after load(); with ten years of quotes held in memory, every row keeping them (and its
+# own copy of strings like the market name) took the nightly step to ~16 GB, the runner's limit (11-13, 11-15)
+UNUSED = {"row_id", "report_id", "report_title", "fetched_at", "reporter_comment", "supply_tone", "demand_tone",
+          "appearance", "condition", "quality"}
+
+
+def slim(r):
+    return {sys.intern(k): sys.intern(v) if isinstance(v, str) else v for k, v in r.items() if k not in UNUSED}
 
 
 def select(grouped, today):
