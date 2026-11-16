@@ -109,6 +109,7 @@ def main():
         (OUT / "data" / "s" / f"{sid}.json").write_text(json.dumps(with_usual(rows), separators=(",", ":")))
     urls = board_pages() + why_page() + charts_page() + about_page() + updates_page()
     redirect("brief", "../")
+    redirect("brief/2026-10-23", "../../")  # an old dated brief Google still asks for
     if KIT_FORM_ACTION:
         write(OUT / "thanks" / "index.html", page(
             "You’re Signed Up", "Check your inbox to confirm the weekly best-buys email.", f"{SITE_URL}thanks/", "../",
@@ -118,8 +119,7 @@ def main():
     redirect("cook-this-week", "../")  # removed 2026-10-29
     redirect("thanksgiving-produce-prices", "../")  # removed 2026-10-29
     for ms in board.MARKET_SLUG.values():  # apples split by variety 2026-11-05: city pages now live per variety
-        if ms != "new-york":
-            redirect(f"apple-prices/{ms}", "../")
+        redirect(f"apple-prices/{ms}", "../")  # New York too: Google still asks for it (404 in Search Console, 11-16)
     for slug, _ in board.PAGES.values():  # a city that stops quoting an item (Detroit slicer cucumbers in winter)
         for ms in board.MARKET_SLUG.values():
             if (OUT / slug / "index.html").exists() and not (OUT / slug / ms / "index.html").exists():
@@ -383,7 +383,10 @@ def board_pages():
         name = og.get(key, {}).get("title", f.stem.replace("-", " ").capitalize() + " prices this week")
         short = name.replace(" prices this week", "")
         card = og.get(key, {})
-        emit(f"grocery/{f.stem}/", f"grocery/{f.stem}", f"{singular(short).title().replace(' Of ', ' of ')} Prices This Week at the Grocery Store",
+        now = "" if card.get("out", "").startswith("No price") or not card.get("price") else             card["price"] + (card.get("unit", "") if card.get("unit", "").startswith("/") else " " + card.get("unit", ""))
+        # the current price in the title: searchers ask "how much is X", and a number answers it in the results
+        emit(f"grocery/{f.stem}/", f"grocery/{f.stem}", f"{singular(short).title().replace(' Of ', ' of ')} Prices This Week"
+             + (f": {now.strip()} at the Grocery Store" if now else " at the Grocery Store"),
              2, og_key=key, view="grocery", day=g_day, aisle=card.get("aisle", ""),
              find={"name": short, "price": "" if card.get("tone") == "flat" and card.get("out", "").startswith("No price")
                    else (card.get("price", "") + ("" if card.get("unit", "").startswith("/") else " ") + card.get("unit", "")).strip(),
@@ -414,7 +417,8 @@ def board_pages():
             continue
         n = board.PAGES[c][1].title()
         trail = [("Wholesale prices", f"{SITE_URL}wholesale/"), (f"{n} prices", f"{SITE_URL}{slug}/")]
-        emit(f"{slug}/", f"items/{slug}", f"{n} Prices Today, Wholesale per Case", 1, og_key=slug, head=crumbs_ld(*trail),
+        emit(f"{slug}/", f"items/{slug}", f"{n} Prices Today: {og[slug]['price']} a Case, Wholesale" if og.get(slug)
+             else f"{n} Prices Today, Wholesale per Case", 1, og_key=slug, head=crumbs_ld(*trail),
              find={"name": board.name(c), "price": f"{og[slug]['price']} a case" if og.get(slug) else "",
                    "status": og.get(slug, {}).get("out", "").split(",")[0], "tone": og.get(slug, {}).get("tone", ""),
                    "where": "Hunts Point", "aka": c})
@@ -544,6 +548,8 @@ NICE = {"Lettuce, Romaine": "Romaine", "Lettuce, Iceberg": "Iceberg", "Tomatoes,
 LICENSE = "https://creativecommons.org/licenses/by/4.0/"
 
 CHANGES = (
+    ("November 16, 2026", "Wholesale item pages now show the same item’s supermarket price near the top, and page titles carry the current price."),
+    ("November 16, 2026", "Correction: on Monday, shipments for apples, pears, sweet potatoes and several other items showed as 40% to 100% below last year, because last week’s numbers were compared before USDA’s weekly report for them was out. A week now counts only once its reports are in. The shipment notes, the reasons given for prices and the two-week grocery calls that used those numbers are corrected."),
     ("November 16, 2026", "Dairy prices no longer drop off the Dairy & eggs page when USDA’s egg report comes out before its dairy report; until the new dairy report is out, the page shows last week’s dairy prices and says so."),
     ("November 13, 2026", "“In season” now follows the latest version of USDA’s seasonal produce guide (our copy was older): pomegranates, okra and plantains are in season this fall and pineapples are not; grapes, leeks and pomegranates are on the winter list. Parsley, snow peas and sugar snap peas now count, as the guide’s herbs and peas. November grapes rate good rather than excellent quality: California’s harvest is winding down and some grapes come from cold storage."),
     ("November 13, 2026", "New page: What’s in season, with the fruits and vegetables in season this month (USDA’s seasonal produce guide), each with this week’s supermarket price and the quality to expect, plus what comes into season next month and what is past its best. Pack sizes such as “1-lb containers with lids” now read “for 1 lb”."),

@@ -31,6 +31,13 @@ def weekly():
     return df.groupby(["commodity", "week"], as_index=False)["volume"].sum().rename(columns={"volume": "volume_lb"})
 
 
+def latest_report():
+    """The newest movement report date on file."""
+    dates = [pd.read_csv(p, usecols=["report_date"], dtype=str)["report_date"].max()
+             for p in sorted((store.DATA / "raw" / "movement").glob("*/*.csv"))[-2:]]
+    return pd.Timestamp(max(d for d in dates if isinstance(d, str)))
+
+
 def supply_features(vol):
     """Per commodity-week: supply vs the same weeks LAST YEAR, and recent change.
 
@@ -67,8 +74,11 @@ def main():
     if feats.empty:
         print("supply: no movement data")
         return
-    this_week = pd.Timestamp(dt.date.today()).to_period("W-SUN").start_time
-    done = feats[feats["week"] < this_week].dropna(subset=["supply_gap"])  # last COMPLETE week
+    # a week is complete once the next week's Tuesday report is in: apples, pears, sweet potatoes and others come as one
+    # "Week Ending" report the Monday after, so counting the week sooner read as shipments 97-100% below last year
+    # (live 11-16: apples -97%, pears -100%)
+    cutoff = latest_report() - pd.Timedelta(days=8)
+    done = feats[feats["week"] <= cutoff].dropna(subset=["supply_gap"])  # last COMPLETE week
     latest = done.sort_values("week").groupby("commodity").tail(1).merge(vol, on=["commodity", "week"])
     latest["vs_last_year_pct"] = (np.expm1(latest["supply_gap"]) * 100).round(0)
     latest["vs_prior_2wk_pct"] = (np.expm1(latest["supply_chg"]) * 100).round(0)

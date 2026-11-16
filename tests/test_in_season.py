@@ -48,3 +48,12 @@ def test_beef_datamart_fails_fast(monkeypatch):
     except usda.USDAError:
         pass
     assert calls == [90, 90]
+
+
+def test_week_waits_for_its_weekly_report(monkeypatch):
+    # 11-16: apples' "Week Ending" report comes the Monday after; counting the week before it read as -97%
+    import pandas as pd
+    from pipeline import volumes
+    monkeypatch.setattr(volumes, "latest_report", lambda: pd.Timestamp("2026-11-13"))
+    assert pd.Timestamp("2026-11-13") - pd.Timedelta(days=8) < pd.Timestamp("2026-11-09")
+    assert pd.Timestamp("2026-11-13") - pd.Timedelta(days=8) >= pd.Timestamp("2026-11-02")
