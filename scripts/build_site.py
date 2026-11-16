@@ -109,6 +109,7 @@ def main():
         (OUT / "data" / "s" / f"{sid}.json").write_text(json.dumps(with_usual(rows), separators=(",", ":")))
     urls = board_pages() + why_page() + charts_page() + about_page() + updates_page()
     redirect("brief", "../")
+    redirect("brief/2026-10-23", "../../")  # an old dated brief Google still asks for
     if KIT_FORM_ACTION:
         write(OUT / "thanks" / "index.html", page(
             "You’re Signed Up", "Check your inbox to confirm the weekly best-buys email.", f"{SITE_URL}thanks/", "../",
@@ -118,8 +119,7 @@ def main():
     redirect("cook-this-week", "../")  # removed 2026-10-29
     redirect("thanksgiving-produce-prices", "../")  # removed 2026-10-29
     for ms in board.MARKET_SLUG.values():  # apples split by variety 2026-11-05: city pages now live per variety
-        if ms != "new-york":
-            redirect(f"apple-prices/{ms}", "../")
+        redirect(f"apple-prices/{ms}", "../")  # New York too: Google still asks for it (404 in Search Console, 11-16)
     for slug, _ in board.PAGES.values():  # a city that stops quoting an item (Detroit slicer cucumbers in winter)
         for ms in board.MARKET_SLUG.values():
             if (OUT / slug / "index.html").exists() and not (OUT / slug / ms / "index.html").exists():
@@ -549,6 +549,7 @@ LICENSE = "https://creativecommons.org/licenses/by/4.0/"
 
 CHANGES = (
     ("November 16, 2026", "Wholesale item pages now show the same item’s supermarket price near the top, and page titles carry the current price."),
+    ("November 16, 2026", "Correction: on Monday, shipments for apples, pears, sweet potatoes and several other items showed as 40% to 100% below last year, because last week’s numbers were compared before USDA’s weekly report for them was out. A week now counts only once its reports are in. The shipment notes, the reasons given for prices and the two-week grocery calls that used those numbers are corrected."),
     ("November 16, 2026", "Dairy prices no longer drop off the Dairy & eggs page when USDA’s egg report comes out before its dairy report; until the new dairy report is out, the page shows last week’s dairy prices and says so."),
     ("November 13, 2026", "“In season” now follows the latest version of USDA’s seasonal produce guide (our copy was older): pomegranates, okra and plantains are in season this fall and pineapples are not; grapes, leeks and pomegranates are on the winter list. Parsley, snow peas and sugar snap peas now count, as the guide’s herbs and peas. November grapes rate good rather than excellent quality: California’s harvest is winding down and some grapes come from cold storage."),
     ("November 13, 2026", "New page: What’s in season, with the fruits and vegetables in season this month (USDA’s seasonal produce guide), each with this week’s supermarket price and the quality to expect, plus what comes into season next month and what is past its best. Pack sizes such as “1-lb containers with lids” now read “for 1 lb”."),
