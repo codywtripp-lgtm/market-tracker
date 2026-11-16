@@ -57,3 +57,15 @@ def test_week_waits_for_its_weekly_report(monkeypatch):
     monkeypatch.setattr(volumes, "latest_report", lambda: pd.Timestamp("2026-11-13"))
     assert pd.Timestamp("2026-11-13") - pd.Timedelta(days=8) < pd.Timestamp("2026-11-09")
     assert pd.Timestamp("2026-11-13") - pd.Timedelta(days=8) >= pd.Timestamp("2026-11-02")
+
+
+def test_other_kinds_named_like_shoppers_say_them():
+    assert grocery.kind_name("Plum type (roma)") == "Roma"
+    assert grocery.kind_name("Gala/royal gala") == "Gala"
+    assert grocery.kind_name("Romaine (hearts)") == "Romaine hearts"
+    assert grocery.kind_name("") == ""
+    packs = {("Vine ripes - on the vine", "per lb"): {"2026-11-13": [(2.35, 2000)]},
+             ("Plum type (roma)", "per lb"): {"2026-11-13": [(1.99, 600)]},
+             ("Cherry type", "1 pint package"): {"2026-11-13": [(2.5, 20)]}}
+    k = grocery.kinds(packs, ("Vine ripes - on the vine", "per lb"), "2026-11-13")
+    assert [x["kind"] for x in k] == ["Roma"] and k[0]["price"] == 1.99

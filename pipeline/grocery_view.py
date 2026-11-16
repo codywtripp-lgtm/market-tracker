@@ -457,6 +457,22 @@ def organic_sentence(i):
             f"({o['stores']:,} stores advertised it).")
 
 
+def main_kind(i):
+    """'tomatoes on the vine sold by the pound', 'russet potatoes in 5 lb bags', 'romaine hearts, 3 to a pack'"""
+    k = i.get("main_kind") or ""
+    k = k if k in grocery.PROPER.values() else k.lower()
+    noun = i["short"].lower()
+    pack = (i.get("main_pack") or "").strip().lower()
+    m = re.match(r"(\d+) count$", pack)
+    size = ("sold by the pound" if pack == "per lb" else "sold each" if pack == "each" else
+            f"{m.group(1)} to a pack" if m else f"in {pack}s" if pack else "")
+    if k.startswith("on the "):
+        return f"{noun} {k} {size}".strip()
+    if k.startswith("romaine"):
+        return f"{k}, {size}".strip(", ")
+    return f"{k + ' ' if k else ''}{noun} {size}".strip()
+
+
 def faq(i, today):
     name = i["short"].lower()
     qa = [(f"How much {'do' if plural(i) else 'does'} {name} cost at the grocery store?",
@@ -472,6 +488,12 @@ def faq(i, today):
     if ahead(i):
         qa.append((f"Will {name} get {'cheaper' if i['outlook'] < 0 else 'more expensive'} soon?",
                    f"{ahead(i)} {record_sentence()}".strip()))
+    named = [k for k in i.get("kinds") or [] if k["kind"]][:4]
+    if named and i["this_week"]:
+        qa.append((f"What other kinds of {name} are on sale this week?",
+                   "Also in this week’s store flyers: " + names_list(
+                       [f"{k['kind'].lower() if k['kind'] not in grocery.PROPER.values() else k['kind']} at "
+                        f"{money(k['price'])}{k['unit']} ({k['stores']:,} stores)" for k in named]) + "."))
     if i.get("organic"):
         qa.append((f"How much more {'do' if plural(i) else 'does'} organic {name} cost?", organic_sentence(i)
                    .replace("Organic: ", "Organic " + name + " averaged ", 1)))
@@ -507,6 +529,13 @@ def item_page(i, today, all_items):
                      + f'{price_bar(i, today)}</div></section>')
         if i.get("organic"):
             parts.append(f'<p class="organic">{esc(organic_sentence(i))}</p>')
+        if i.get("kinds"):
+            rows = "".join(f'<tr><td>{esc(k["kind"] or "Other")}</td><td class="n">{money(k["price"])}<small>{esc(k["unit"])}</small></td>'
+                           f'<td class="n">{k["stores"]:,}</td></tr>' for k in i["kinds"])
+            parts.append(f'<section><h2>Other kinds and sizes this week</h2><table class="t kinds"><thead><tr><th>Kind</th>'
+                         f'<th class="n">Average sale price</th><th class="n">Stores</th></tr></thead><tbody>{rows}</tbody></table>'
+                         f'<p class="note">The price above is for {main_kind(i)}, the kind and size stores advertise most. '
+                         'These are the others in this week’s flyers, most advertised first.</p></section>')
         if i["stores"] < grocery.MIN_STORES:
             parts.append(f'<p class="fine">Only {i["stores"]:,} stores listed {"them" if plural(i) else "it"} this '
                          "week, often a single chain, so treat the comparison loosely.</p>")

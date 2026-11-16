@@ -170,6 +170,45 @@ def load(rows, organic=None, reports=None):
     return out
 
 
+PROPER = {"granny smith": "Granny Smith", "pink lady": "Pink Lady", "red delicious": "Red Delicious",
+          "golden delicious": "Golden Delicious", "cosmic crisp": "Cosmic Crisp", "d'anjou": "Anjou", "fuji": "Fuji", "gala": "Gala", "honeycrisp": "Honeycrisp", "bartlett": "Bartlett", "bosc": "Bosc", "roma": "Roma"}
+KIND_MIN_STORES = 50  # a kind or size advertised by fewer stores is one or two chains' flyers: left out
+
+
+def kind_name(variety):
+    """USDA's variety label as shoppers say it: 'Plum type (roma)' -> 'Roma', 'Gala/royal gala' -> 'Gala',
+    'Vine ripes - on the vine' -> 'On the vine', 'Round red' -> 'Round red'."""
+    v = (variety or "").strip()
+    m = re.search(r"[(]([^)]+)[)]", v)
+    if m and v.lower().startswith("romaine"):
+        v = "romaine " + m.group(1)  # 'Romaine (hearts)'
+    elif m:
+        v = m.group(1)
+    v = v.split("/")[0]
+    if " - " in v:
+        v = v.split(" - ", 1)[1]
+    v = {"vine ripes": "vine-ripe"}.get(v.lower(), v)
+    v = re.sub(r" +type$", "", v, flags=re.I).strip()
+    if not v:
+        return ""
+    return PROPER.get(v.lower(), v[:1].upper() + v[1:])
+
+
+def kinds(packs, main_key, day):
+    """The other kinds and sizes advertised the same week as the item's main pack: [{kind, unit, price, stores}],
+    most-advertised first. Shoppers search them by name ('roma tomatoes price'), and USDA prices each one."""
+    out = []
+    for (variety, pack), days in packs.items():
+        if (variety, pack) == main_key or day not in days:
+            continue
+        stores = sum(s for _, s in days[day])
+        if stores < KIND_MIN_STORES or not kind_name(variety):  # unnamed rows say nothing a shopper can find
+            continue
+        out.append({"kind": kind_name(variety), "unit": unit(pack), "price": round(sum(p * s for p, s in days[day]) / stores, 2),
+                    "stores": int(stores)})
+    return sorted(out, key=lambda k: -k["stores"])[:10]
+
+
 def main_pack(packs, since=None):
     """The item's main pack: most store-weeks of ads in the year before `since` (default: its last year)."""
     if since is None:
@@ -269,6 +308,8 @@ def build(rows, deflator=None, live=None):
                         status="low" if pct <= LOW else "high" if pct >= HIGH else "typical")
             expected = statistics.mean(past_stores[y] for y in years) / 5  # stores per week, same weeks before
             item["featured"] = round(stores / expected, 2) if expected else None
+        item["kinds"] = kinds(packs, key, last)
+        item["main_kind"], item["main_pack"] = kind_name(key[0]), key[1]
         items.append(item)
     from . import why
     sig = why.signals() if live is None else {}  # supply and wholesale behind the price (tests pass live={})
