@@ -142,3 +142,14 @@ def test_meat_ads_posted_first_do_not_age_the_produce_aisle():
     today, items = grocery.build(live={}, rows=rows)
     assert str(today) == "2026-11-06"
     assert all(i["this_week"] for i in items)
+
+
+def test_dairy_report_posting_after_eggs_keeps_dairy_on_the_page():
+    # 11-16: USDA's egg ads (2757) were out for Nov 13, the dairy report (2995) not yet; dairy vanished from the aisle
+    from pipeline import grocery_view
+    rows = [r | {"report_id": "3324"} for r in history("Apples", 1.2, today="2026-11-13")]
+    _, items = grocery.build(live={}, rows=rows)
+    eggs = items[0] | {"commodity": "Eggs", "short": "Eggs", "slug": "eggs", "aisle": "dairy", "last_date": "2026-11-13"}
+    milk = items[0] | {"commodity": "Milk", "short": "Milk", "slug": "milk", "aisle": "dairy", "last_date": "2026-11-06"}
+    page = grocery_view.page(grocery.dt.date(2026, 11, 13), [eggs, milk], "dairy")
+    assert "grocery/milk/" in page and "Dairy prices are from the week of November 6" in page

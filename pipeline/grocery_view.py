@@ -173,8 +173,16 @@ def page(today, items, aisle="produce"):
     order = {"low": 0, "typical": 1, "new": 2, "high": 3}
     season = sorted((i for i in items if i["in_season"]), key=lambda i: (order[i["status"]], i["short"]))
     stores = max(i["stores"] for i in items) if items else 0
+    # USDA's reports post on different days: the dairy report can trail the egg report by a few days
+    days = sorted({i["last_date"] for i in items})
+    week = dt.date.fromisoformat(days[-1]) if aisle != "produce" else today
+    behind = ""
+    if aisle != "produce" and days[0] < days[-1]:
+        old = dt.date.fromisoformat(min(i["last_date"] for i in items))
+        behind = (f". {'Dairy' if aisle == 'dairy' else 'Some'} prices are from the week of {old:%B} {old.day} until "
+                  f"USDA’s next report is out")
     parts = [f'<section class="intro"><h1>{AISLE_HEAD[aisle]}</h1>'
-             f'<p class="date">Week of {today:%B} {today.day}, {today.year}</p><p class="value">Each price is compared with the same '
+             f'<p class="date">Week of {week:%B} {week.day}, {week.year}{behind}</p><p class="value">Each price is compared with the same '
              f'weeks in past years, adjusted for inflation. Quality comes from USDA crop reports, and every item gets a '
              f'two-week forecast.</p><p class="lede">{esc(lede(items, buys, pricey))}</p></section>']
     if buys:

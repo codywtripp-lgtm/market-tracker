@@ -135,10 +135,10 @@ def _num(s):
 STAPLE_IDS = set(config.STAPLE_REPORTS)
 
 
-def load(rows, organic=None):
+def load(rows, organic=None, reports=None):
     """item -> {(variety, pack): {date: [(price, stores)]}} for national, conventional sale prices.
     Meat, poultry, dairy and egg rows are mapped to shopper items (pipeline/staples.py). Pass a dict as `organic` to
-    collect the organic ads the same way."""
+    collect the organic ads the same way, and a dict as `reports` to record which USDA report each item comes from."""
     out = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
     for r in rows:
         if r["market"] != "National" or r["commodity"] in SKIP:
@@ -165,6 +165,8 @@ def load(rows, organic=None):
             continue
         v = (r["variety"] or "").strip()
         out[r["commodity"]][(v[:1].upper() + v[1:].lower(), r["pack_size"])][r["report_date"]].append((price, stores))
+        if reports is not None:
+            reports[r["commodity"]] = r.get("report_id") or ""
     return out
 
 
@@ -179,16 +181,20 @@ def build(rows, deflator=None, live=None):
     """live: this week's conditions per commodity (pipeline/conditions.py); computed from the reports when None."""
     deflator = deflator or cpi.Deflator({})
     organic = {}
-    data = load(rows, organic)
+    reports = {}
+    data = load(rows, organic, reports)
     if not data:
         return None, []
-    # each aisle's week runs from its own latest report: meat and egg ads can post days before the produce report,
-    # and dating the produce aisle by them would make every produce price look a week old (empty page, 11-13)
-    aisle_day = defaultdict(str)
+    # each USDA report's week runs from its own latest issue: meat and egg ads can post days before the produce report
+    # (empty produce page, 11-13) and the dairy report days after the egg one (dairy hidden, 11-16), and dating one
+    # report by another makes every price in it look a week old
+    def source(c):
+        return reports.get(c) or staples.AISLE.get(c, "produce")
+    report_day = defaultdict(str)
     for commodity, packs in data.items():
-        a = staples.AISLE.get(commodity, "produce")
-        aisle_day[a] = max(aisle_day[a], max(d for days in packs.values() for d in days))
-    today = dt.date.fromisoformat(aisle_day.get("produce") or max(aisle_day.values()))
+        report_day[source(commodity)] = max(report_day[source(commodity)], max(d for days in packs.values() for d in days))
+    produce = [d for c, d in report_day.items() if c not in STAPLE_IDS and c not in ("meat", "dairy")]
+    today = dt.date.fromisoformat(max(produce) if produce else max(report_day.values()))
     year_ago = (today - dt.timedelta(days=365)).isoformat()
     season = season_of(today)
     items = []
@@ -204,7 +210,7 @@ def build(rows, deflator=None, live=None):
             week[d] = (sum(p * s for p, s in xs) / stores, stores)
         # reports close on different days (produce Friday, dairy Sunday): within the week counts as this week
         last = max(week)
-        ref = dt.date.fromisoformat(aisle_day[staples.AISLE.get(commodity, "produce")])
+        ref = dt.date.fromisoformat(report_day[source(commodity)])
         this_week = last >= (ref - dt.timedelta(days=6)).isoformat()
         price, stores = week[last]
         real = {d: p * deflator.factor(d) for d, (p, _) in week.items()}
