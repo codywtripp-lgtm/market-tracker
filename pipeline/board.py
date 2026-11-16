@@ -837,8 +837,29 @@ def faq(commodity, rows):
     return qa
 
 
-def item_page(commodity, rows, hist, today, sizes, alerts, as_of, notes, only=None):
-    """rows: this item's headline row per market (New York first)."""
+def shop_text(commodity, shop):
+    """'Tomatoes average $1.99/lb at U.S. supermarkets this week, 8% below usual.' or '' without a current price."""
+    if not shop or not shop.get("this_week") or commodity not in GROCERY:
+        return ""
+    from .grocery_view import price_sentence
+    return re.sub(r"<[^>]+>", "", price_sentence(shop, dt.date.fromisoformat(shop["last_date"])))
+
+
+def shop_line(commodity, shop):
+    text = shop_text(commodity, shop)
+    return (f'<p class="fine">At the grocery store: {esc(text[:-1])}. <a href="@/grocery/{GROCERY[commodity]}/">'
+            f'Supermarket prices</a></p>') if text else ""
+
+
+def shop_answer(commodity, shop):
+    # only where the store item is the same product: the grocery report has no Roma or apple-variety price
+    text = shop_text(commodity, shop) if not commodity.startswith(("Apples, ", "Tomatoes, ", "Lettuce, ")) else ""
+    return (f"How much are {in_sentence(commodity)} at the grocery store?", text) if text else None
+
+
+def item_page(commodity, rows, hist, today, sizes, alerts, as_of, notes, only=None, shop=None):
+    """rows: this item's headline row per market (New York first). shop: the same item's grocery-store price
+    (pipeline/grocery.py item), shown near the top: most people searching "tomato prices" are shoppers."""
     title = name(commodity)
     lead = next(r for r in rows if r["market"] == only) if only else rows[0]
     h1 = f"{PAGES[commodity][1]} prices today" + (f", {only}" if only else "")  # "Strawberry prices today"
@@ -847,7 +868,7 @@ def item_page(commodity, rows, hist, today, sizes, alerts, as_of, notes, only=No
              + "</nav>",
              f'<div class="pagehead"><h1>{esc(h1)}</h1>'
              f'<p class="date">Wholesale price per case, updated {as_of:%A}, {as_of:%B} {as_of.day}, {as_of.year}</p>'
-             f'<p class="answer">{answer(lead)}</p>'
+             f'<p class="answer">{answer(lead)}</p>' + shop_line(commodity, shop)
              + (market_links([r["market"] for r in rows], lead["market"], lambda m: item_link(commodity, m), remember=not only)
                 if len(rows) > 1 else "") + "</div>",
              f'<section class="panel" id="m-{MKEY[lead["market"]]}">'
@@ -860,6 +881,8 @@ def item_page(commodity, rows, hist, today, sizes, alerts, as_of, notes, only=No
         parts.append('<h2>All markets</h2><p class="note">USDA’s latest quote. Each market shows its own main pack and growing area.</p><table class="t markets"><thead><tr><th>Market</th>'
                      f'<th class="n">Case</th><th>For the season</th><th>Next 2 weeks</th></tr></thead><tbody>{body}</tbody></table>')
     qa = faq(commodity, rows)
+    if shop_answer(commodity, shop):
+        qa.insert(1, shop_answer(commodity, shop))
     parts.append('<h2>Questions buyers ask</h2><div class="faq">'
                  + "".join(f"<h3>{esc(q)}</h3><p>{esc(a)}</p>" for q, a in qa) + "</div>")
     parts.append(f'<script type="application/ld+json">{json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in qa]})}</script>')
@@ -944,16 +967,18 @@ def build():
         body = grocery_view.season_page(g_day, g_items)
         if body:
             out["in-season"] = body
+    shops = {gi["slug"]: gi for gi in g_items}
     for m in MARKETS:
         out[f"market-{MKEY[m]}"] = home(items, hist, today, alerts, as_of, record, notes, only=m)
     for commodity, (slug, _) in PAGES.items():
         rows = sorted((i for i in items if i["commodity"] == commodity), key=lambda i: MARKETS.index(i["market"]))
         if not rows:
             continue
-        out[f"items/{slug}"] = item_page(commodity, rows, hist, today, sizes, alerts, as_of, notes)
+        shop = shops.get(GROCERY.get(commodity))
+        out[f"items/{slug}"] = item_page(commodity, rows, hist, today, sizes, alerts, as_of, notes, shop=shop)
         for i in rows if len(rows) > 1 else []:  # one market only: the item page already is that market's page
             out[f"items/{slug}--{MARKET_SLUG[i['market']]}"] = item_page(commodity, rows, hist, today, sizes, alerts,
-                                                                       as_of, notes, only=i["market"])
+                                                                       as_of, notes, only=i["market"], shop=shop)
     hub = apple_hub(items, as_of)
     if hub:
         out[f"items/{APPLE_HUB[0]}"] = hub

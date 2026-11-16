@@ -184,7 +184,7 @@ def page(today, items, aisle="produce"):
         behind = (f". {'Dairy' if aisle == 'dairy' else 'Some'} prices are from the week of {old:%B} {old.day} until "
                   f"USDA’s next report is out")
     parts = [f'<section class="intro"><h1>{AISLE_HEAD[aisle]}</h1>'
-             f'<p class="date">Week of {week:%B} {week.day}, {week.year}{behind}</p><p class="value">Each price is compared with the same '
+             f'<p class="date">Week of {week:%B} {week.day}, {week.year}{behind}</p><p class="value">{"Produce Price Tracker checks this week’s supermarket sale prices from USDA. " if aisle == "produce" else ""}Each price is compared with the same '
              f'weeks in past years, adjusted for inflation. Quality comes from USDA crop reports, and every item gets a '
              f'two-week forecast.</p><p class="lede">{esc(lede(items, buys, pricey))}</p></section>']
     if buys:
