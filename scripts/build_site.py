@@ -352,6 +352,8 @@ def board_pages():
                            {"@context": "https://schema.org", "@type": "Organization", "name": SITE_NAME, "url": SITE_URL,
                             "logo": f"{SITE_URL}apple-touch-icon.png"}])
         emit("", "grocery", f"{SITE_NAME}: This Week's Best Grocery Buys", 0,
+             desc=f"{SITE_NAME} checks this week's supermarket sale prices from USDA against past years: the best buys, "
+                  "what's in season and what's pricey.",
              og_key="home", view="grocery", day=g_day, head=f'<script type="application/ld+json">{site}</script>',
              find={"name": "Produce", "status": "This week’s best buys", "aka": "fruit vegetables"}, aisle="")
     for key, rel, title, find in (
@@ -719,9 +721,11 @@ chosen, labelled or forecast.</p></section>
             + "".join(f"<li><b>{day}.</b> {text}</li>" for day, text in CHANGES)
             + """</ul></section>
 <p>See something that looks off? Email <a href="mailto:""" + CONTACT + """">""" + CONTACT + """</a>.</p>""")
-    write(OUT / "updates" / "index.html", page("Site Updates: What’s Changed on Produce Price Tracker",
-                                               "Every change that moves a number on Produce Price Tracker, newest first, "
-                                               "including fixes and changes that lowered the forecast track record.",
+    write(OUT / "updates" / "index.html", page("Site Updates and Corrections",
+                                               # the site's name stays out of this page's title and description: Google
+                                               # showed it instead of the home page for searches of the name (11-16, 11-17)
+                                               "Every change that moves a number on this site, newest first, including "
+                                               "corrections and changes that lowered the forecast track record.",
                                                f"{SITE_URL}updates/", "../", body, active="updates/",
                                                main_class="wrap landing", view="grocery"))
     return [(f"{SITE_URL}updates/", dt.date.today().isoformat())]
