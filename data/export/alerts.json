@@ -3,6 +3,17 @@
  "alerts": [
   {
    "signal": "usda_tone",
+   "commodity": "Lettuce, Iceberg",
+   "market": "Los Angeles",
+   "direction": "down",
+   "headline": "Lettuce, Iceberg: USDA reporters in Los Angeles call the market lower (\u201cMarket lower\u201d).",
+   "expect": "Expect Los Angeles prices to fall next week.",
+   "record": "That happened 46 of the last 61 times (normally 32%).",
+   "hit_rate": 0.754,
+   "id": "usda_tone|Lettuce, Iceberg|Los Angeles|down|2026-11-16"
+  },
+  {
+   "signal": "usda_tone",
    "commodity": "Limes",
    "market": "New York",
    "direction": "up",
@@ -22,19 +33,6 @@
    "record": "That happened 49 of the last 69 times (normally 37%).",
    "hit_rate": 0.71,
    "id": "usda_tone|Tomatoes|New York|down|2026-11-16"
-  },
-  {
-   "signal": "sp_lead",
-   "commodity": "Limes",
-   "market": "New York",
-   "direction": "up",
-   "headline": "Limes: shipping point up 24% this week; New York hasn't followed yet (-1% this week).",
-   "expect": "Expect New York prices to rise within ~2 weeks.",
-   "record": "New York followed 19 of the last 28 times (normally 36%).",
-   "hit_rate": 0.679,
-   "sp_change": 24.3,
-   "terminal_change": -0.6,
-   "id": "sp_lead|Limes|New York|up|2026-11-16"
   },
   {
    "signal": "usda_tone",

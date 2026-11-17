@@ -88,3 +88,4 @@ sp_lead|Limes|New York|up|2026-11-16,2026-11-16,sp_lead,Limes,New York,up,Limes:
 sp_lead|Broccoli|Los Angeles|up|2026-11-16,2026-11-16,sp_lead,Broccoli,Los Angeles,up,Broccoli: shipping point up 10% this week; Los Angeles hasn't followed yet (-3% this week).
 usda_tone|Limes|New York|up|2026-11-16,2026-11-17,usda_tone,Limes,New York,up,"Limes: USDA reporters in New York call the market higher (“Market mexico higher, others about steady”)."
 "usda_tone|Lettuce, Iceberg|New York|down|2026-11-16",2026-11-17,usda_tone,"Lettuce, Iceberg",New York,down,"Lettuce, Iceberg: USDA reporters in New York call the market lower (“Market slightly lower”)."
+"usda_tone|Lettuce, Iceberg|Los Angeles|down|2026-11-16",2026-11-17,usda_tone,"Lettuce, Iceberg",Los Angeles,down,"Lettuce, Iceberg: USDA reporters in Los Angeles call the market lower (“Market lower”)."

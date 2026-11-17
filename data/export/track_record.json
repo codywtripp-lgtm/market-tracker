@@ -30,11 +30,21 @@
   "range_coverage_pct": 82.3
  },
  "alerts": {
-  "issued": 89,
+  "issued": 90,
   "decided": 63,
   "came_true": 44,
-  "pending": 25,
+  "pending": 26,
   "recent": [
+   {
+    "first_seen": "2026-11-17",
+    "commodity": "Lettuce, Iceberg",
+    "market": "Los Angeles",
+    "direction": "down",
+    "signal": "usda_tone",
+    "headline": "Lettuce, Iceberg: USDA reporters in Los Angeles call the market lower (\u201cMarket lower\u201d).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
    {
     "first_seen": "2026-11-17",
     "commodity": "Lettuce, Iceberg",
@@ -67,11 +77,11 @@
    },
    {
     "first_seen": "2026-11-16",
-    "commodity": "Broccoli",
-    "market": "Chicago",
+    "commodity": "Limes",
+    "market": "Los Angeles",
     "direction": "up",
     "signal": "sp_lead",
-    "headline": "Broccoli: shipping point up 10% this week; Chicago hasn't followed yet (-4% this week).",
+    "headline": "Limes: shipping point up 24% this week; Los Angeles hasn't followed yet (+0% this week).",
     "status": "pending",
     "moved_pct": NaN
    },
@@ -97,11 +107,11 @@
    },
    {
     "first_seen": "2026-11-16",
-    "commodity": "Limes",
-    "market": "Los Angeles",
+    "commodity": "Broccoli",
+    "market": "Chicago",
     "direction": "up",
     "signal": "sp_lead",
-    "headline": "Limes: shipping point up 24% this week; Los Angeles hasn't followed yet (+0% this week).",
+    "headline": "Broccoli: shipping point up 10% this week; Chicago hasn't followed yet (-4% this week).",
     "status": "pending",
     "moved_pct": NaN
    },
@@ -224,16 +234,6 @@
     "headline": "Tomatoes, Plum Type: USDA reporters in New York call the market higher (\u201cMarket slightly higher\u201d).",
     "status": "did not happen",
     "moved_pct": -3.9
-   },
-   {
-    "first_seen": "2026-11-04",
-    "commodity": "Lettuce, Romaine",
-    "market": "Los Angeles",
-    "direction": "down",
-    "signal": "sp_lead",
-    "headline": "Lettuce, Romaine: shipping point down 10% this week; Los Angeles hasn't followed yet (-1% this week).",
-    "status": "pending",
-    "moved_pct": NaN
    }
   ]
  }
