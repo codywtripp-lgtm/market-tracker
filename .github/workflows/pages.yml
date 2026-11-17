@@ -62,10 +62,10 @@ jobs:
         run: |
           python3 - <<'EOF'
           import json, re, time, urllib.request
-          site, key = "https://producepricetracker.com/", "065d7c9fc8c4a3edc5b711823b7a47c8"
+          site, key = "https://foodpricepal.com/", "065d7c9fc8c4a3edc5b711823b7a47c8"
           time.sleep(30)  # let the new deploy settle so the key file and sitemap are live
           urls = re.findall(r"<loc>(.*?)</loc>", urllib.request.urlopen(site + "sitemap.xml").read().decode())
-          body = json.dumps({"host": "producepricetracker.com", "key": key, "keyLocation": f"{site}{key}.txt",
+          body = json.dumps({"host": "foodpricepal.com", "key": key, "keyLocation": f"{site}{key}.txt",
                              "urlList": urls}).encode()
           req = urllib.request.Request("https://api.indexnow.org/indexnow", data=body,
                                        headers={"Content-Type": "application/json; charset=utf-8"})

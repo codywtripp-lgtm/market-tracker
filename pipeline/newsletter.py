@@ -16,7 +16,7 @@ import urllib.request
 
 from . import cpi, grocery, store
 
-SITE = "https://producepricetracker.com/"
+SITE = "https://foodpricepal.com/"
 API = "https://api.kit.com/v4/broadcasts"
 OUT = store.DATA / "newsletter"
 FONT = "font-family:Arial,Helvetica,sans-serif"
@@ -82,7 +82,7 @@ def build(today, items):
         subject = f"Best buys this week: {_names(top[:2])}"
     preview = (f"Pricey right now: {_names(pricey[:2])}." if pricey else "What's cheap and what's pricey this week.")
     body = (f'<div style="max-width:600px;margin:0 auto;padding:8px 16px">'
-            f'<p style="{FONT};font-size:14px;color:{INK2};margin:0">Produce Price Tracker</p>'
+            f'<p style="{FONT};font-size:14px;color:{INK2};margin:0">FoodPricePal</p>'
             f'<h1 style="{FONT};font-size:28px;line-height:34px;color:{INK};margin:4px 0 8px">Week of {today:%B} {today.day}, {today.year}</h1>'
             f'<p style="{FONT};font-size:16px;line-height:24px;color:{INK2};margin:0">Average advertised prices at U.S. '
             "supermarkets this week, compared with the same weeks in past years and adjusted for inflation.</p>"
