@@ -1,4 +1,4 @@
-// Produce Price Tracker, price charts page: filters on the left, big moves, what's going on, one chart, cheap/expensive list.
+// FoodPricePal, price charts page: filters on the left, big moves, what's going on, one chart, cheap/expensive list.
 "use strict";
 
 const MARKETS = [

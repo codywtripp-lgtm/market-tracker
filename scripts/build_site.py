@@ -129,15 +129,15 @@ def main():
 
 
 # ---------- page frame shared by every page ----------
-SITE_URL = "https://producepricetracker.com/"
+SITE_URL = "https://foodpricepal.com/"
 # visit counts: GoatCounter (free, no cookies, no personal data, no consent banner needed); dashboard at
 # https://producepricetracker.goatcounter.com. Its script ignores localhost, so previews aren't counted.
 GOATCOUNTER = "https://producepricetracker.goatcounter.com/count"
-CONTACT = "hello@producepricetracker.com"  # Porkbun email forwarding
+CONTACT = "hello@foodpricepal.com"  # Porkbun email forwarding
 # Weekly email sign-up: the "action" URL of the Kit form (Kit > Grow > Landing pages & forms > the form > Publish >
 # HTML). Public by design. Empty: no sign-up box is shown. Sending: pipeline/newsletter.py.
 KIT_FORM_ACTION = ""
-SITE_NAME = "Produce Price Tracker"
+SITE_NAME = "FoodPricePal"
 FONTS_REMOTE = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
          '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap">')
@@ -240,7 +240,7 @@ def snippet(text, limit=155):
 
 def page(title, desc, canonical, up, body, active=None, head="", og=None, main_class="wrap", view="wholesale",
          noindex=False, aisle=None):
-    full = f"{title} | {SITE_NAME}"
+    full = title if SITE_NAME in title else f"{title} | {SITE_NAME}"
     title = full if len(full) <= 65 else title  # Google shows about 60 characters; the site name shows anyway
     desc = snippet(desc)
     image = (f'<meta property="og:image" content="{SITE_URL}og/{og}.png">'
@@ -348,7 +348,7 @@ def board_pages():
         "spatialCoverage": ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Philadelphia, PA", "Boston, MA", "Atlanta, GA", "Detroit, MI", "Miami, FL"]})
     if (BOARD / "grocery.html").exists():
         site = json.dumps([{"@context": "https://schema.org", "@type": "WebSite", "name": SITE_NAME,
-                            "alternateName": ["producepricetracker.com"], "url": SITE_URL},
+                            "alternateName": ["Food Price Pal", "foodpricepal.com", "Produce Price Tracker"], "url": SITE_URL},
                            {"@context": "https://schema.org", "@type": "Organization", "name": SITE_NAME, "url": SITE_URL,
                             "logo": f"{SITE_URL}apple-touch-icon.png"}])
         emit("", "grocery", f"{SITE_NAME}: This Week's Best Grocery Buys", 0,
@@ -506,7 +506,7 @@ def seo_files(urls):
             f'<section><h2>Grocery store</h2><ul class="az" id="az">{az("g")}</ul></section>'
             f'<section><h2>Wholesale market</h2><ul class="az">{az("w")}</ul></section>')
     write(OUT / "search" / "index.html", page(
-        "All Prices A to Z", "Every grocery and wholesale price page on Produce Price Tracker, from apples to yogurt.",
+        "All Prices A to Z", "Every grocery and wholesale price page on FoodPricePal, from apples to yogurt.",
         f"{SITE_URL}search/", "../", body, view="grocery"))
     write(OUT / f"{INDEXNOW_KEY}.txt", INDEXNOW_KEY)
     write(OUT / "404.html", page("Page not found", "That page doesn’t exist.", SITE_URL, "/",
@@ -550,6 +550,7 @@ NICE = {"Lettuce, Romaine": "Romaine", "Lettuce, Iceberg": "Iceberg", "Tomatoes,
 LICENSE = "https://creativecommons.org/licenses/by/4.0/"
 
 CHANGES = (
+    ("November 17, 2026", "Produce Price Tracker is now FoodPricePal, at foodpricepal.com. Old links forward to the same page at the new address. Nothing else changed."),
     ("November 16, 2026", "Wholesale item pages now show the same item’s supermarket price near the top, and page titles carry the current price."),
     ("November 16, 2026", "Grocery item pages list the other kinds and sizes in this week’s store flyers (Roma and grape tomatoes, Honeycrisp and Gala apples, 10 lb potato bags) with their average sale price, and say which kind the main price is for."),
     ("November 16, 2026", "Correction: on Monday, shipments for apples, pears, sweet potatoes and several other items showed as 40% to 100% below last year, because last week’s numbers were compared before USDA’s weekly report for them was out. A week now counts only once its reports are in. The shipment notes, the reasons given for prices and the two-week grocery calls that used those numbers are corrected."),
@@ -739,7 +740,7 @@ def about_page():
                f" Tested on {rec['since']} to {dt.date.today().year} prices, the price moved the way it said "
                f"{round(100 * rec['right'] / rec['calls'])}% of the time.")
     body = """<section class="intro"><h1>How this site works</h1>
-<p class="lede">Produce Price Tracker shows what produce, meat, dairy and eggs cost at U.S. supermarkets this week,
+<p class="lede">FoodPricePal shows what produce, meat, dairy and eggs cost at U.S. supermarkets this week,
 whether that’s cheap or pricey for the time of year, and where wholesale produce prices are likely to go next. It’s free,
 has no ads and needs no sign-up. It was built by a former analytics manager at a major New York produce distributor.</p></section>
 <section><h2>Where the numbers come from</h2>
@@ -780,7 +781,7 @@ email has an unsubscribe link.</p></section>
 <section><h2>Limits</h2>
 <p>Grocery prices are what supermarkets advertise; your store’s shelf price can differ. Wholesale prices are USDA
 market reports, so a supplier’s quote can differ too. About one forecast in four is wrong.</p></section>"""
-    write(OUT / "about" / "index.html", page("How Produce Price Tracker Works: Sources and Methods",
+    write(OUT / "about" / "index.html", page("How FoodPricePal Works: Sources and Methods",
                                              "Where the prices come from (USDA), how great price, pricey and the forecasts are worked out, and who built the site.",
                                              f"{SITE_URL}about/", "../", body, active="about/", main_class="wrap landing",
                                              view="grocery"))
