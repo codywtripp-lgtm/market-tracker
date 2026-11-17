@@ -1,57 +1,16 @@
 {
- "asOf": "2026-11-16",
+ "asOf": "2026-11-17",
  "alerts": [
   {
-   "signal": "sp_lead",
+   "signal": "usda_tone",
    "commodity": "Limes",
-   "market": "Los Angeles",
-   "direction": "up",
-   "headline": "Limes: shipping point up 24% this week; Los Angeles hasn't followed yet (+0% this week).",
-   "expect": "Expect Los Angeles prices to rise within ~2 weeks.",
-   "record": "Los Angeles followed 24 of the last 27 times (normally 36%).",
-   "hit_rate": 0.889,
-   "sp_change": 24.3,
-   "terminal_change": 0.0,
-   "id": "sp_lead|Limes|Los Angeles|up|2026-11-16"
-  },
-  {
-   "signal": "sp_lead",
-   "commodity": "Broccoli",
-   "market": "Chicago",
-   "direction": "up",
-   "headline": "Broccoli: shipping point up 10% this week; Chicago hasn't followed yet (-4% this week).",
-   "expect": "Expect Chicago prices to rise within ~2 weeks.",
-   "record": "Chicago followed 43 of the last 54 times (normally 37%).",
-   "hit_rate": 0.796,
-   "sp_change": 10.5,
-   "terminal_change": -4.4,
-   "id": "sp_lead|Broccoli|Chicago|up|2026-11-16"
-  },
-  {
-   "signal": "sp_lead",
-   "commodity": "Lettuce, Romaine",
-   "market": "Los Angeles",
-   "direction": "down",
-   "headline": "Lettuce, Romaine: shipping point down 33% this week; Los Angeles hasn't followed yet (-1% this week).",
-   "expect": "Expect Los Angeles prices to fall within ~2 weeks.",
-   "record": "Los Angeles followed 19 of the last 24 times (normally 29%).",
-   "hit_rate": 0.792,
-   "sp_change": -33.4,
-   "terminal_change": -1.2,
-   "id": "sp_lead|Lettuce, Romaine|Los Angeles|down|2026-11-16"
-  },
-  {
-   "signal": "sp_lead",
-   "commodity": "Broccoli",
    "market": "New York",
    "direction": "up",
-   "headline": "Broccoli: shipping point up 10% this week; New York hasn't followed yet (-2% this week).",
-   "expect": "Expect New York prices to rise within ~2 weeks.",
-   "record": "New York followed 45 of the last 57 times (normally 36%).",
-   "hit_rate": 0.789,
-   "sp_change": 10.5,
-   "terminal_change": -2.1,
-   "id": "sp_lead|Broccoli|New York|up|2026-11-16"
+   "headline": "Limes: USDA reporters in New York call the market higher (\u201cMarket mexico higher, others about steady\u201d).",
+   "expect": "Expect New York prices to rise next week.",
+   "record": "That happened 40 of the last 56 times (normally 28%).",
+   "hit_rate": 0.714,
+   "id": "usda_tone|Limes|New York|up|2026-11-16"
   },
   {
    "signal": "usda_tone",
@@ -66,42 +25,27 @@
   },
   {
    "signal": "sp_lead",
-   "commodity": "Lettuce, Iceberg",
-   "market": "New York",
-   "direction": "down",
-   "headline": "Lettuce, Iceberg: shipping point down 21% this week; New York hasn't followed yet (+0% this week).",
-   "expect": "Expect New York prices to fall within ~2 weeks.",
-   "record": "New York followed 19 of the last 27 times (normally 42%).",
-   "hit_rate": 0.704,
-   "sp_change": -20.9,
-   "terminal_change": 0.0,
-   "id": "sp_lead|Lettuce, Iceberg|New York|down|2026-11-16"
-  },
-  {
-   "signal": "sp_lead",
    "commodity": "Limes",
    "market": "New York",
    "direction": "up",
-   "headline": "Limes: shipping point up 24% this week; New York hasn't followed yet (+1% this week).",
+   "headline": "Limes: shipping point up 24% this week; New York hasn't followed yet (-1% this week).",
    "expect": "Expect New York prices to rise within ~2 weeks.",
    "record": "New York followed 19 of the last 28 times (normally 36%).",
    "hit_rate": 0.679,
    "sp_change": 24.3,
-   "terminal_change": 1.1,
+   "terminal_change": -0.6,
    "id": "sp_lead|Limes|New York|up|2026-11-16"
   },
   {
-   "signal": "sp_lead",
-   "commodity": "Broccoli",
-   "market": "Los Angeles",
-   "direction": "up",
-   "headline": "Broccoli: shipping point up 10% this week; Los Angeles hasn't followed yet (-3% this week).",
-   "expect": "Expect Los Angeles prices to rise within ~2 weeks.",
-   "record": "Los Angeles followed 30 of the last 46 times (normally 34%).",
-   "hit_rate": 0.652,
-   "sp_change": 10.5,
-   "terminal_change": -3.1,
-   "id": "sp_lead|Broccoli|Los Angeles|up|2026-11-16"
+   "signal": "usda_tone",
+   "commodity": "Lettuce, Iceberg",
+   "market": "New York",
+   "direction": "down",
+   "headline": "Lettuce, Iceberg: USDA reporters in New York call the market lower (\u201cMarket slightly lower\u201d).",
+   "expect": "Expect New York prices to fall next week.",
+   "record": "That happened 38 of the last 57 times (normally 37%).",
+   "hit_rate": 0.667,
+   "id": "usda_tone|Lettuce, Iceberg|New York|down|2026-11-16"
   }
  ]
 }
