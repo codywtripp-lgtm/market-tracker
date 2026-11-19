@@ -336,9 +336,9 @@ def publish_downloads():
         out.mkdir(parents=True, exist_ok=True)
         files = []
         for m in board.MARKETS:
-            f = folder / downloads.file_name(board.MARKET_SLUG[m])
-            if f.exists():
-                name = downloads.dated(f.name, day)
+            f = downloads.find(folder, board.MARKET_SLUG[m])
+            if f:
+                name = downloads.dated(downloads.file_name(board.MARKET_SLUG[m]), day)
                 shutil.copy(f, out / name)
                 files.append((m, name))
         book = downloads.workbook(tabs, folder, day)
@@ -369,9 +369,10 @@ def downloads_page(as_of, days):
     for d in past:
         months[d[0][:7]].append(d)
     first_full = min((d for d, f, _ in days if f), default=None)
-    body = ['<section class="intro"><h1>Wholesale price downloads</h1>'
-            '<p class="lede">Every day’s wholesale produce prices as spreadsheets: one Excel file with a tab for each of '
-            f'the {len(board.MARKETS)} markets, or one CSV file per market. Each row is USDA’s latest quote for an '
+    body = ['<section class="intro"><h1>Terminal market price downloads</h1>'
+            '<p class="lede">Daily wholesale produce prices from USDA’s terminal market reports at Hunts Point, Los Angeles, '
+            f'Chicago and {len(board.MARKETS) - 3} other markets, as spreadsheets: one Excel file with a tab for each market, '
+            'or one CSV file per market. Each row is USDA’s latest quote for an '
             'item’s main trade pack from its main growing area, the same price the market pages show.</p></section>']
     if today:
         d, _, files = today[0]
@@ -391,8 +392,8 @@ def downloads_page(as_of, days):
     body.append(f'<p class="fine">Source: USDA Agricultural Marketing Service, Market News. Free to use with a link to '
                 f'{SITE_NAME} (<a href="{LICENSE}">Creative Commons Attribution 4.0</a>).</p>')
     write(OUT / downloads.FOLDER / "index.html", page(
-        "Wholesale Produce Price Downloads: Excel and CSV",
-        "Download daily wholesale produce prices for eight U.S. terminal markets as Excel or CSV files, today's and past days', "
+        "Terminal Market Price Downloads: Excel and CSV",
+        "Download daily terminal market prices, wholesale produce at eight U.S. markets including Hunts Point, as Excel or CSV files, today's and past days', "
         "from USDA Market News.", f"{SITE_URL}{downloads.FOLDER}/", "../", "\n".join(body), active=f"{downloads.FOLDER}/",
         main_class="wrap landing"))
     return [(f"{SITE_URL}{downloads.FOLDER}/", as_of or dt.date.today().isoformat())]
@@ -641,7 +642,7 @@ NICE = {"Lettuce, Romaine": "Romaine", "Lettuce, Iceberg": "Iceberg", "Tomatoes,
 LICENSE = "https://creativecommons.org/licenses/by/4.0/"
 
 CHANGES = (
-    ("November 19, 2026", "New: wholesale prices can be downloaded as spreadsheets, an Excel file with a tab for each market or a CSV file per market, from every market page and the new Downloads page, which also keeps past days."),
+    ("November 19, 2026", "New: terminal market prices can be downloaded as spreadsheets, an Excel file with a tab for each market or a CSV file per market, from every market page and the new Downloads page, which also keeps past days."),
     ("November 17, 2026", "Produce Price Tracker is now FoodPricePal, at foodpricepal.com. Old links forward to the same page at the new address. Nothing else changed."),
     ("November 16, 2026", "Wholesale item pages now show the same item’s supermarket price near the top, and page titles carry the current price."),
     ("November 16, 2026", "Grocery item pages list the other kinds and sizes in this week’s store flyers (Roma and grape tomatoes, Honeycrisp and Gala apples, 10 lb potato bags) with their average sale price, and say which kind the main price is for."),
