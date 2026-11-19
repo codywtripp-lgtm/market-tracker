@@ -71,3 +71,10 @@ def test_pages_show_the_latest_quote_and_measure_the_forecast_from_it():
         if i["range"] and i["change"] and not i["stable"]:
             two = next(p for p in i["points"] if p["h"] == 2)
             assert i["price"] * (1 + i["change"]) == pytest.approx(two["mid"], abs=0.01)
+
+
+def test_steady_move_never_shows_the_call_line():
+    from pipeline import board
+    i = {"price": 40.0, "dir": "steady", "range": (38, 45), "change": 0.046}
+    assert board.expect_text(i) == "about $41.84 a case, up about 4%"
+    assert board.expect_text({**i, "dir": "firming", "change": 0.05}).endswith("up about 5%")
