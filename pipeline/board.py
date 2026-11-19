@@ -14,6 +14,7 @@ Writes data/board/home.html, data/board/market-<key>.html and data/board/items/<
 import datetime as dt
 import json
 import re
+from collections import defaultdict
 
 from . import brief, config, store
 from .brief import esc, money, whole
@@ -707,7 +708,74 @@ def market_panel(market, rows, hist, today, alerts, notes):
                f'three over the last 10 years. They only show here when the forecast agrees.</p>{warnings(alerts, market)}'
                if warnings(alerts, market) else "")
             + f'<h2>All prices, {esc(MARKET_LONG[market])}</h2><p class="note">USDA’s latest quote for each item’s main growing area.</p>{board_rows(rows, hist, today, market)}'
-            "</section>")
+            + download_links(market, today_day(rows)) + "</section>")
+
+
+def today_day(rows):
+    days = [i["quote"]["date"] for i in rows if i.get("quote")]
+    return max(days) if days else None
+
+
+def download_links(market, day=None):
+    """Spreadsheet downloads of the table above; each click is counted in GoatCounter (data-goatcounter-click).
+    The saved file carries the market day in its name."""
+    from . import downloads as dl
+    csv_name = dl.file_name(MARKET_SLUG[market])
+    save = (lambda n: f'download="{dl.dated(n, day)}"') if day else (lambda n: "download")
+    return (f'<p class="fine dl">Download these prices: <a href="@/{dl.FOLDER}/{dl.XLSX}" {save(dl.XLSX)} '
+            f'data-goatcounter-click="{dl.CLICK}excel" data-goatcounter-title="Excel, all markets">Excel, all '
+            f'{len(MARKETS)} markets with a tab each</a>, or <a href="@/{dl.FOLDER}/{csv_name}" {save(csv_name)} '
+            f'data-goatcounter-click="{dl.CLICK}csv-{MARKET_SLUG[market]}" data-goatcounter-title="CSV, {esc(market)}">'
+            f'CSV, {esc(market)} only</a>. <a href="@/{dl.FOLDER}/">Past days</a></p>')
+
+
+def new_note(as_of):
+    """A short "New" line for a new feature, in the page's own type next to the prices it's about, for three weeks.
+    Not a banner box: readers skip ad-like boxes (banner blindness, docs/design.md)."""
+    from . import downloads as dl
+    if not as_of or as_of >= dl.NEW_UNTIL:
+        return ""
+    return (f'<p class="new-note"><b>New:</b> download wholesale prices as Excel or CSV files, for today or any past '
+            f'day. <a href="@/{dl.FOLDER}/" data-goatcounter-click="{dl.CLICK}notice" '
+            f'data-goatcounter-title="New downloads notice">See the downloads</a></p>')
+
+
+def quote_history(items):
+    """market day -> market -> CSV text of USDA's quotes for each item's main pack that day, for days before
+    full files were kept (no usual range or outlook: those weren't saved day by day)."""
+    from . import downloads as dl
+    by_id = {i["series_id"]: i for i in items}
+    rows = defaultdict(list)
+    for r in brief._read("prices_daily_365.csv"):
+        if r["series_id"] in by_id and brief._num(r["compare_price"]) is not None:
+            rows[r["series_id"]].append(r)
+    days = defaultdict(lambda: defaultdict(list))
+    today = defaultdict(dict)
+    for sid, rs in rows.items():
+        rs.sort(key=lambda r: r["date"])
+        i = by_id[sid]
+        for prev, r in zip([None] + rs[:-1], rs):
+            q = {"date": dt.date.fromisoformat(r["date"]), "area": r.get("area", ""), "lot": r.get("lot", ""),
+                 "areas": area_list(r.get("areas")), "other_lots": area_list(r.get("other_lots")),
+                 **{k: brief._num(r.get(k)) for k in ("low", "high", "mostly_low", "mostly_high")}}
+            price = brief._num(r["compare_price"])
+            if prev is not None and brief._num(prev["compare_price"]) and prev.get("area", "") == r.get("area", ""):
+                today[r["date"]][sid] = price / brief._num(prev["compare_price"]) - 1
+            days[r["date"]][i["market"]].append({"series_id": sid, "commodity": i["commodity"], "pack": i["pack"],
+                                                 "price": price, "quote": q, "status": "", "range": None})
+    words = {"name": name, "new_area": NEW_AREA, "expected": lambda i: None,
+             "season": lambda i: "", "direction": lambda i: ""}
+    return {d: {m: dl.to_csv(dl.rows(its, today[d], words)) for m, its in mk.items()} for d, mk in days.items()}
+
+
+def download_tables(items, today):
+    """market -> CSV text of the market's price table, in the page's own words."""
+    from . import downloads as dl
+    words = {"name": name, "new_area": NEW_AREA, "expected": lambda i: expected(i)[0],
+             "season": lambda i: SEASON[i["status"]][0] if i["status"] in SEASON else "Not enough history",
+             "direction": lambda i: DIR[i["dir"] or "steady"][1] if i["range"] else "No forecast"}
+    return {m: dl.to_csv(dl.rows([i for i in items if i["market"] == m], today, words))
+            for m in MARKETS if any(i["market"] == m for i in items)}
 
 
 def market_links(markets, current, href, remember=False):
@@ -728,7 +796,7 @@ def home(items, hist, today, alerts, as_of, record, notes, only=None):
     market = only or MARKETS[0]
     h1 = ("Wholesale produce prices today" if not only else
           f"{'Hunts Point' if only == 'New York' else only} wholesale produce prices today")
-    parts = [f'<div class="pagehead"><h1>{h1}</h1>{dateline(as_of)}'
+    parts = [f'<div class="pagehead"><h1>{h1}</h1>{dateline(as_of)}' + new_note(as_of)
              + market_links(MARKETS, market, lambda m: f"@/{MARKET_PAGES[m]}/", remember=not only) + "</div>",
              market_panel(market, [i for i in items if i["market"] == market], hist, today, alerts, notes)]
     live = record.get("forecasts_live", {})
@@ -953,6 +1021,15 @@ def build():
     _COMING.clear()
     _COMING.update(seasons.events(seasons.scan(as_of), as_of))
     out = {"home": home(items, hist, today, alerts, as_of, record, notes)}
+    from . import downloads as dl
+    archive = OUT / dl.FOLDER / dl.ARCHIVE
+    for m, text in download_tables(items, today).items():
+        out[f"{dl.FOLDER}/{dl.file_name(MARKET_SLUG[m])}"] = text
+        out[f"{dl.FOLDER}/{dl.ARCHIVE}/{as_of}/{dl.file_name(MARKET_SLUG[m])}"] = text  # the day's full file, kept
+    for d, mk in quote_history(items).items():  # past days once, from USDA's quotes; never over a kept full day
+        if d < as_of.isoformat() and not (archive / d).exists():
+            for m, text in mk.items():
+                out[f"{dl.FOLDER}/{dl.ARCHIVE}/{d}/{dl.file_name(MARKET_SLUG[m])}"] = text
     # imported here: the site deploy imports this module for page names only, without the fetch libraries
     from . import cpi, grocery, grocery_view, meat_view
     g_day, g_items = grocery.build(grocery.rows(), cpi.Deflator(cpi.load()))
@@ -1035,13 +1112,17 @@ def og_data(items, hist, as_of):
 
 def main():
     as_of, pages = build()
-    for sub in ("items", "grocery", "recipes", "meat"):
+    for sub in ("items", "grocery", "recipes", "meat", "downloads"):
         (OUT / sub).mkdir(parents=True, exist_ok=True)
-        for old in (OUT / sub).glob("*.html"):
+        for old in (OUT / sub).glob("*.html" if sub != "downloads" else "*.csv"):
             old.unlink()
     for key, body in pages.items():
         if body is None:  # an empty page keeps yesterday's file rather than stopping every other page
             print(f"board: no page for {key}, kept the previous one")
+            continue
+        if key.endswith(".csv"):  # newline="" keeps the CSV's own \r\n line ends
+            (OUT / key).parent.mkdir(parents=True, exist_ok=True)
+            (OUT / key).write_text(body, encoding="utf-8", newline="")
             continue
         (OUT / (f"{key}.json" if key in ("og", "outlook_record") else f"{key}.html")).write_text(body, encoding="utf-8")
     (OUT / "as_of.txt").write_text(as_of.isoformat())

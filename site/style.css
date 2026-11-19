@@ -559,3 +559,12 @@ main.dash { min-width: 0; }
 }
 .q-facts .season b { white-space: normal; }
 .band p.more { margin: 24px 0 0; }
+
+/* wholesale downloads: a "New" line in the page's own type (no banner box) and the past-days list */
+.new-note { margin: 16px 0 0; font-size: 17px; line-height: 24px; max-width: 60ch; }
+.new-note b { color: var(--leaf); }
+.dl a { font-weight: 600; }
+.dl-month { border-top: 1px solid var(--line); padding: 12px 0; }
+.dl-month summary { cursor: pointer; font-weight: 700; font-size: 18px; min-height: 44px; display: flex; align-items: center; }
+.dl-month .dl-days { list-style: none; margin: 4px 0 0; padding: 0; }
+.dl-days li { padding: 8px 0; border-top: 1px solid var(--line); line-height: 26px; }

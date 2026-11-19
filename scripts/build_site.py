@@ -24,6 +24,7 @@ import sys
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from pipeline import board  # noqa: E402
+from pipeline import downloads  # noqa: E402
 from pipeline.usual import with_usual  # noqa: E402
 EXPORT = ROOT / "data" / "export"
 OUT = ROOT / "_site"
@@ -107,7 +108,7 @@ def main():
     for sid, rows in weekly.items():
         rows.sort()
         (OUT / "data" / "s" / f"{sid}.json").write_text(json.dumps(with_usual(rows), separators=(",", ":")))
-    urls = board_pages() + why_page() + charts_page() + about_page() + updates_page()
+    urls = board_pages() + why_page() + charts_page() + about_page() + updates_page() + publish_downloads()
     redirect("brief", "../")
     redirect("brief/2026-10-23", "../../")  # an old dated brief Google still asks for
     if KIT_FORM_ACTION:
@@ -161,7 +162,8 @@ ICONS = ('<link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/p
          '<link rel="icon" href="/favicon.svg" type="image/svg+xml">'
          '<link rel="apple-touch-icon" href="/apple-touch-icon.png">')
 NAV = (("grocery", "", "Grocery prices"), ("wholesale", "wholesale/", "Wholesale prices"), ("about", "about/", "About"))
-WHOLESALE_NAV = (("wholesale/", "Produce"), ("wholesale-meat-prices/", "Meat"), ("charts/", "Price history"), ("why/", "Track record"))
+WHOLESALE_NAV = (("wholesale/", "Produce"), ("wholesale-meat-prices/", "Meat"), ("charts/", "Price history"),
+                 ("downloads/", "Downloads"), ("why/", "Track record"))
 # grocery aisles, the way a shopper walks the store (pages written by pipeline/board.py)
 AISLES = (("", "Produce"), ("meat-prices/", "Meat & poultry"), ("dairy-and-egg-prices/", "Dairy & eggs"))
 SEARCH = []  # dicts for /search.json and the A to Z page (see emit)
@@ -312,6 +314,90 @@ def _text(fragment, cls):
     return html.unescape(re.sub(r"<[^>]+>", "", m.group(1))) if m else ""
 
 
+def publish_downloads():
+    """Per-market CSVs from the nightly board run, one Excel workbook with a tab per market built from them, the same
+    for every kept past day (/downloads/<day>/, file names carry the day), and the /downloads/ page listing them."""
+    src = BOARD / downloads.FOLDER
+    if not src.exists():
+        return []
+    tabs = [(board.MARKET_LONG[m], board.MARKET_SLUG[m]) for m in board.MARKETS]
+    dest = OUT / downloads.FOLDER
+    dest.mkdir(parents=True, exist_ok=True)
+    for f in src.glob("*.csv"):
+        shutil.copy(f, dest / f.name)
+    as_of = (BOARD / "as_of.txt").read_text().strip() if (BOARD / "as_of.txt").exists() else ""
+    book = downloads.workbook(tabs, src, as_of)
+    if book:
+        (dest / downloads.XLSX).write_bytes(book)
+    days = []  # (day, full?, [(market, csv name)])
+    for folder in sorted((src / downloads.ARCHIVE).glob("*"), reverse=True):
+        day = folder.name
+        out = dest / day
+        out.mkdir(parents=True, exist_ok=True)
+        files = []
+        for m in board.MARKETS:
+            f = folder / downloads.file_name(board.MARKET_SLUG[m])
+            if f.exists():
+                name = downloads.dated(f.name, day)
+                shutil.copy(f, out / name)
+                files.append((m, name))
+        book = downloads.workbook(tabs, folder, day)
+        if book:
+            (out / downloads.dated(downloads.XLSX, day)).write_bytes(book)
+        days.append((day, downloads.full(folder), files))
+    return downloads_page(as_of, days)
+
+
+def downloads_page(as_of, days):
+    def click(name):
+        return f'data-goatcounter-click="{downloads.CLICK}{name}"'
+
+    def day_links(day, files, up=""):
+        xl = downloads.dated(downloads.XLSX, day)
+        return (f'<a href="{up}{day}/{xl}" download {click("past-excel")} data-goatcounter-title="Excel, past day">Excel, '
+                f'all markets</a>. CSV: ' + ", ".join(
+                    f'<a href="{up}{day}/{n}" download {click("past-csv")} data-goatcounter-title="CSV, past day">{_esc(m)}</a>'
+                    for m, n in files))
+
+    def nice(day):
+        d = dt.date.fromisoformat(day)
+        return f"{d:%A}, {d:%B} {d.day}"
+
+    today = [d for d in days if d[0] == as_of]
+    past = [d for d in days if d[0] != as_of]
+    months = defaultdict(list)
+    for d in past:
+        months[d[0][:7]].append(d)
+    first_full = min((d for d, f, _ in days if f), default=None)
+    body = ['<section class="intro"><h1>Wholesale price downloads</h1>'
+            '<p class="lede">Every day’s wholesale produce prices as spreadsheets: one Excel file with a tab for each of '
+            f'the {len(board.MARKETS)} markets, or one CSV file per market. Each row is USDA’s latest quote for an '
+            'item’s main trade pack from its main growing area, the same price the market pages show.</p></section>']
+    if today:
+        d, _, files = today[0]
+        body.append(f'<section><h2>Latest prices, {nice(d)}</h2><p>{day_links(d, files)}</p>'
+                    '<p class="fine">The Excel file has an “About this data” tab that explains each column.</p></section>')
+    if past:
+        body.append('<section><h2>Past days</h2>'
+                    + (f'<p class="note">Full files start {nice(first_full)}, {first_full[:4]}. Earlier days have USDA’s '
+                       'quotes only; the usual range and outlook columns are blank.</p>' if first_full else
+                       '<p class="note">These days have USDA’s quotes only; the usual range and outlook columns are blank.</p>'))
+        for n, (ym, ds) in enumerate(sorted(months.items(), reverse=True)):
+            label = dt.date.fromisoformat(ym + "-01").strftime("%B %Y")
+            items = "".join(f'<li><b>{nice(d)}.</b> {day_links(d, files)}</li>' for d, _, files in ds)
+            body.append(f'<details class="dl-month"{" open" if n == 0 else ""}><summary>{label}</summary>'
+                        f'<ul class="dl-days">{items}</ul></details>')
+        body.append("</section>")
+    body.append(f'<p class="fine">Source: USDA Agricultural Marketing Service, Market News. Free to use with a link to '
+                f'{SITE_NAME} (<a href="{LICENSE}">Creative Commons Attribution 4.0</a>).</p>')
+    write(OUT / downloads.FOLDER / "index.html", page(
+        "Wholesale Produce Price Downloads: Excel and CSV",
+        "Download daily wholesale produce prices for eight U.S. terminal markets as Excel or CSV files, today's and past days', "
+        "from USDA Market News.", f"{SITE_URL}{downloads.FOLDER}/", "../", "\n".join(body), active=f"{downloads.FOLDER}/",
+        main_class="wrap landing"))
+    return [(f"{SITE_URL}{downloads.FOLDER}/", as_of or dt.date.today().isoformat())]
+
+
 def board_pages():
     if not (BOARD / "home.html").exists():
         return []
@@ -345,7 +431,12 @@ def board_pages():
                        "two-week outlook.",
         "url": f"{SITE_URL}wholesale/", "creator": {"@type": "Organization", "name": SITE_NAME}, "license": LICENSE,
         "isBasedOn": "https://www.ams.usda.gov/market-news", "temporalCoverage": f"2016-01-01/{as_of.isoformat()}",
-        "spatialCoverage": ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Philadelphia, PA", "Boston, MA", "Atlanta, GA", "Detroit, MI", "Miami, FL"]})
+        "spatialCoverage": ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Philadelphia, PA", "Boston, MA", "Atlanta, GA", "Detroit, MI", "Miami, FL"],
+        "distribution": [{"@type": "DataDownload", "encodingFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                          "contentUrl": f"{SITE_URL}{downloads.FOLDER}/{downloads.XLSX}"}]
+                        + [{"@type": "DataDownload", "encodingFormat": "text/csv", "name": board.MARKET_LONG[m],
+                            "contentUrl": f"{SITE_URL}{downloads.FOLDER}/{downloads.file_name(board.MARKET_SLUG[m])}"}
+                           for m in board.MARKETS]})
     if (BOARD / "grocery.html").exists():
         site = json.dumps([{"@context": "https://schema.org", "@type": "WebSite", "name": SITE_NAME,
                             "alternateName": ["Food Price Pal", "foodpricepal.com", "Produce Price Tracker"], "url": SITE_URL},
@@ -550,6 +641,7 @@ NICE = {"Lettuce, Romaine": "Romaine", "Lettuce, Iceberg": "Iceberg", "Tomatoes,
 LICENSE = "https://creativecommons.org/licenses/by/4.0/"
 
 CHANGES = (
+    ("November 19, 2026", "New: wholesale prices can be downloaded as spreadsheets, an Excel file with a tab for each market or a CSV file per market, from every market page and the new Downloads page, which also keeps past days."),
     ("November 17, 2026", "Produce Price Tracker is now FoodPricePal, at foodpricepal.com. Old links forward to the same page at the new address. Nothing else changed."),
     ("November 16, 2026", "Wholesale item pages now show the same item’s supermarket price near the top, and page titles carry the current price."),
     ("November 16, 2026", "Grocery item pages list the other kinds and sizes in this week’s store flyers (Roma and grape tomatoes, Honeycrisp and Gala apples, 10 lb potato bags) with their average sale price, and say which kind the main price is for."),
