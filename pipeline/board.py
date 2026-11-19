@@ -219,9 +219,14 @@ def expect_text(i, unit=" a case"):
     mid, chg = expected(i)
     if mid is None:
         return ""
-    move = "" if abs(chg) < 0.02 else f", {'up' if chg > 0 else 'down'} about {abs(round(100 * chg))}%"
+    pct = abs(round(100 * chg))
+    # 4.6% rounds to 5%, the line for a firming/softening call: "steady, up about 5%" reads wrong, so say 4% with cents
+    capped = abs(chg) < brief.MOVE and pct >= 100 * brief.MOVE
+    if capped:
+        pct = int(100 * brief.MOVE) - 1
+    move = "" if abs(chg) < 0.02 else f", {'up' if chg > 0 else 'down'} about {pct}%"
     # cents when whole dollars would hide the move ("$15.00 now, about $15, up about 3%")
-    shown = money(mid) if move and whole(mid) == whole(i["price"]) else whole(mid)
+    shown = money(mid) if capped or (move and whole(mid) == whole(i["price"])) else whole(mid)
     return f"about {shown}{unit}{move}"
 
 

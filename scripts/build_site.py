@@ -642,6 +642,7 @@ NICE = {"Lettuce, Romaine": "Romaine", "Lettuce, Iceberg": "Iceberg", "Tomatoes,
 LICENSE = "https://creativecommons.org/licenses/by/4.0/"
 
 CHANGES = (
+    ("November 19, 2026", "Correction: a few wholesale pages called the market steady and then said prices would be up or down about 5% in two weeks. Steady means a move under 5%; the expected change was rounding up (4.6% shown as 5%). These pages now show the expected price to the cent and the change as about 4%."),
     ("November 19, 2026", "New: terminal market prices can be downloaded as spreadsheets, an Excel file with a tab for each market or a CSV file per market, from every market page and the new Downloads page, which also keeps past days."),
     ("November 17, 2026", "Produce Price Tracker is now FoodPricePal, at foodpricepal.com. Old links forward to the same page at the new address. Nothing else changed."),
     ("November 16, 2026", "Wholesale item pages now show the same item’s supermarket price near the top, and page titles carry the current price."),
