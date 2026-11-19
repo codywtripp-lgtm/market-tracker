@@ -698,7 +698,7 @@ def notes_section(notes, limit=5):
             f'<ul class="notes">{lis}</ul>')
 
 
-def market_panel(market, rows, hist, today, alerts, notes):
+def market_panel(market, rows, hist, today, alerts, notes, as_of=None):
     k = MKEY[market]
     return (f'<section class="panel" id="m-{k}">'
             f'<p class="lede">{esc(lede(rows, market))}</p>'
@@ -708,12 +708,7 @@ def market_panel(market, rows, hist, today, alerts, notes):
                f'three over the last 10 years. They only show here when the forecast agrees.</p>{warnings(alerts, market)}'
                if warnings(alerts, market) else "")
             + f'<h2>All prices, {esc(MARKET_LONG[market])}</h2><p class="note">USDA’s latest quote for each item’s main growing area.</p>{board_rows(rows, hist, today, market)}'
-            + download_links(market, today_day(rows)) + "</section>")
-
-
-def today_day(rows):
-    days = [i["quote"]["date"] for i in rows if i.get("quote")]
-    return max(days) if days else None
+            + download_links(market, as_of) + "</section>")
 
 
 def download_links(market, day=None):
@@ -735,7 +730,7 @@ def new_note(as_of):
     from . import downloads as dl
     if not as_of or as_of >= dl.NEW_UNTIL:
         return ""
-    return (f'<p class="new-note"><b>New:</b> download wholesale prices as Excel or CSV files, for today or any past '
+    return (f'<p class="new-note"><b>New:</b> download terminal market prices as Excel or CSV files, for today or any past '
             f'day. <a href="@/{dl.FOLDER}/" data-goatcounter-click="{dl.CLICK}notice" '
             f'data-goatcounter-title="New downloads notice">See the downloads</a></p>')
 
@@ -798,7 +793,7 @@ def home(items, hist, today, alerts, as_of, record, notes, only=None):
           f"{'Hunts Point' if only == 'New York' else only} wholesale produce prices today")
     parts = [f'<div class="pagehead"><h1>{h1}</h1>{dateline(as_of)}' + new_note(as_of)
              + market_links(MARKETS, market, lambda m: f"@/{MARKET_PAGES[m]}/", remember=not only) + "</div>",
-             market_panel(market, [i for i in items if i["market"] == market], hist, today, alerts, notes)]
+             market_panel(market, [i for i in items if i["market"] == market], hist, today, alerts, notes, as_of)]
     live = record.get("forecasts_live", {})
     if live.get("scored"):
         parts.append(f'<p class="record">Since going live, {live["in_range_pct"]:.0f}% of {live["scored"]:,} price '

@@ -50,8 +50,8 @@ def test_workbook_has_a_tab_per_market_and_about(tmp_path):
 
 def test_market_page_links_are_counted():
     html = board.download_links("Los Angeles")
-    assert 'href="@/downloads/wholesale-produce-prices.xlsx"' in html
-    assert 'href="@/downloads/wholesale-produce-prices-los-angeles.csv"' in html
+    assert 'href="@/downloads/terminal-market-prices.xlsx"' in html
+    assert 'href="@/downloads/terminal-market-prices-los-angeles.csv"' in html
     assert html.count("data-goatcounter-click=") == 2
 
 

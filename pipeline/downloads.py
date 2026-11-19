@@ -1,4 +1,4 @@
-"""Wholesale price downloads: one CSV per market (written nightly by pipeline.board into data/board/downloads/) and
+"""Terminal market price downloads (wholesale produce): one CSV per market (written nightly by pipeline.board into data/board/downloads/) and
 one Excel workbook with a tab per market (built by scripts/build_site.py from those CSVs at deploy time, so the
 repo only stores text files that diff well).
 
@@ -14,7 +14,7 @@ from xml.sax.saxutils import escape
 
 FOLDER = "downloads"
 ARCHIVE = "archive"  # data/board/downloads/archive/<market day>/<file>.csv, one folder per market day, kept for good
-XLSX = "wholesale-produce-prices.xlsx"
+XLSX = "terminal-market-prices.xlsx"
 CLICK = "download-"  # GoatCounter event name prefix (data-goatcounter-click), so downloads show in the dashboard
 # the "New" line at the top of the wholesale pages comes down on its own after three weeks
 NEW_UNTIL = dt.date(2026, 12, 10)
@@ -29,7 +29,7 @@ COLUMNS = [
 ]
 
 ABOUT = [
-    ("What this is", "Wholesale produce prices at eight U.S. terminal markets, one tab per market, from FoodPricePal (foodpricepal.com)."),
+    ("What this is", "Terminal market prices: wholesale produce prices at eight U.S. terminal markets, one tab per market, from FoodPricePal (foodpricepal.com)."),
     ("Source", "USDA Agricultural Marketing Service, Market News terminal market reports. Each row is USDA's latest quote "
                "for the item's main trade pack from its main growing area."),
     ("Prices", "U.S. dollars per package as USDA quotes it (a case, carton, sack or bin), not per pound."),
@@ -45,11 +45,22 @@ ABOUT = [
 
 
 def file_name(market_slug):
-    return f"wholesale-produce-prices-{market_slug}.csv"
+    return f"terminal-market-prices-{market_slug}.csv"
+
+
+OLD_NAMES = ("wholesale-produce-prices-{}.csv",)  # kept days saved before the 2026-11-19 rename
+
+
+def find(folder, market_slug):
+    """A market's CSV in a kept day's folder, under its current name or the name it was saved with."""
+    for name in (file_name(market_slug),) + tuple(n.format(market_slug) for n in OLD_NAMES):
+        if (folder / name).exists():
+            return folder / name
+    return None
 
 
 def dated(name, day):
-    """'wholesale-produce-prices.xlsx' -> 'wholesale-produce-prices-2026-11-18.xlsx': saved files don't overwrite
+    """'terminal-market-prices.xlsx' -> 'terminal-market-prices-2026-11-18.xlsx': saved files don't overwrite
     each other in a buyer's Downloads folder."""
     stem, dot, ext = name.rpartition(".")
     return f"{stem}-{day}.{ext}"
@@ -199,8 +210,8 @@ def workbook(markets, folder, as_of):
     """markets: [(tab name, market slug)] in site order. Markets without a CSV are left out."""
     sheets = []
     for tab, slug in markets:
-        path = folder / file_name(slug)
-        if path.exists():
+        path = find(folder, slug)
+        if path:
             header, table = read_csv(path)
             sheets.append((tab, header, table))
     if not sheets:
