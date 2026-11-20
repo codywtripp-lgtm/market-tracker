@@ -89,3 +89,5 @@ sp_lead|Broccoli|Los Angeles|up|2026-11-16,2026-11-16,sp_lead,Broccoli,Los Angel
 usda_tone|Limes|New York|up|2026-11-16,2026-11-17,usda_tone,Limes,New York,up,"Limes: USDA reporters in New York call the market higher (“Market mexico higher, others about steady”)."
 "usda_tone|Lettuce, Iceberg|New York|down|2026-11-16",2026-11-17,usda_tone,"Lettuce, Iceberg",New York,down,"Lettuce, Iceberg: USDA reporters in New York call the market lower (“Market slightly lower”)."
 "usda_tone|Lettuce, Iceberg|Los Angeles|down|2026-11-16",2026-11-17,usda_tone,"Lettuce, Iceberg",Los Angeles,down,"Lettuce, Iceberg: USDA reporters in Los Angeles call the market lower (“Market lower”)."
+"sp_lead|Lettuce, Romaine|Chicago|down|2026-11-16",2026-11-20,sp_lead,"Lettuce, Romaine",Chicago,down,"Lettuce, Romaine: shipping point down 34% this week; Chicago hasn't followed yet (-2% this week)."
+usda_tone|Tomatoes|Los Angeles|down|2026-11-16,2026-11-20,usda_tone,Tomatoes,Los Angeles,down,Tomatoes: USDA reporters in Los Angeles call the market lower (“Market california san diego county cartons 2 layer lower; others steady”).
