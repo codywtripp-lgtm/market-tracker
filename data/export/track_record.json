@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-20",
+ "asOf": "2026-11-21",
  "forecasts_live": {
   "scored": 1768,
   "since": "2026-09-21",
@@ -15,7 +15,7 @@
     "no_change_miss_pct": 5.8
    },
    "2": {
-    "miss_pct": 8.7,
+    "miss_pct": 8.6,
     "no_change_miss_pct": 9.9
    },
    "3": {

@@ -1,19 +1,6 @@
 {
- "asOf": "2026-11-20",
+ "asOf": "2026-11-21",
  "alerts": [
-  {
-   "signal": "sp_lead",
-   "commodity": "Lettuce, Romaine",
-   "market": "Chicago",
-   "direction": "down",
-   "headline": "Lettuce, Romaine: shipping point down 34% this week; Chicago hasn't followed yet (-2% this week).",
-   "expect": "Expect Chicago prices to fall within ~2 weeks.",
-   "record": "Chicago followed 23 of the last 25 times (normally 35%).",
-   "hit_rate": 0.92,
-   "sp_change": -34.0,
-   "terminal_change": -2.3,
-   "id": "sp_lead|Lettuce, Romaine|Chicago|down|2026-11-16"
-  },
   {
    "signal": "usda_tone",
    "commodity": "Tomatoes",
@@ -30,7 +17,7 @@
    "commodity": "Limes",
    "market": "New York",
    "direction": "up",
-   "headline": "Limes: USDA reporters in New York call the market higher (\u201cMarket mexico slightly higher, others about steady\u201d).",
+   "headline": "Limes: USDA reporters in New York call the market higher (\u201cMarket honduras slightly higher, others about steady\u201d).",
    "expect": "Expect New York prices to rise next week.",
    "record": "That happened 40 of the last 56 times (normally 28%).",
    "hit_rate": 0.714,
