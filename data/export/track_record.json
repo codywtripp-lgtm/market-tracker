@@ -1,11 +1,11 @@
 {
- "asOf": "2026-11-22",
+ "asOf": "2026-11-24",
  "forecasts_live": {
-  "scored": 1768,
+  "scored": 2859,
   "since": "2026-09-21",
-  "in_range_pct": 74.0,
-  "miss_pct": 12.9,
-  "no_change_miss_pct": 14.7
+  "in_range_pct": 73.3,
+  "miss_pct": 12.0,
+  "no_change_miss_pct": 13.8
  },
  "forecasts_backtest": {
   "years": "2021-2026",
@@ -30,11 +30,31 @@
   "range_coverage_pct": 82.3
  },
  "alerts": {
-  "issued": 92,
-  "decided": 63,
-  "came_true": 44,
-  "pending": 28,
+  "issued": 94,
+  "decided": 73,
+  "came_true": 52,
+  "pending": 20,
   "recent": [
+   {
+    "first_seen": "2026-11-24",
+    "commodity": "Lettuce, Iceberg",
+    "market": "Chicago",
+    "direction": "down",
+    "signal": "sp_lead",
+    "headline": "Lettuce, Iceberg: shipping point down 26% this week; Chicago hasn't followed yet (+1% this week).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
+   {
+    "first_seen": "2026-11-24",
+    "commodity": "Lettuce, Romaine",
+    "market": "Chicago",
+    "direction": "down",
+    "signal": "sp_lead",
+    "headline": "Lettuce, Romaine: shipping point down 36% this week; Chicago hasn't followed yet (-0% this week).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
    {
     "first_seen": "2026-11-20",
     "commodity": "Tomatoes",
@@ -87,11 +107,11 @@
    },
    {
     "first_seen": "2026-11-16",
-    "commodity": "Tomatoes",
+    "commodity": "Broccoli",
     "market": "New York",
-    "direction": "down",
-    "signal": "usda_tone",
-    "headline": "Tomatoes: USDA reporters in New York call the market lower (\u201cMarket mature greens slightly lower, others about steady\u201d).",
+    "direction": "up",
+    "signal": "sp_lead",
+    "headline": "Broccoli: shipping point up 10% this week; New York hasn't followed yet (-2% this week).",
     "status": "pending",
     "moved_pct": NaN
    },
@@ -117,21 +137,21 @@
    },
    {
     "first_seen": "2026-11-16",
-    "commodity": "Broccoli",
-    "market": "New York",
-    "direction": "up",
-    "signal": "sp_lead",
-    "headline": "Broccoli: shipping point up 10% this week; New York hasn't followed yet (-2% this week).",
-    "status": "pending",
-    "moved_pct": NaN
-   },
-   {
-    "first_seen": "2026-11-16",
     "commodity": "Lettuce, Romaine",
     "market": "Los Angeles",
     "direction": "down",
     "signal": "sp_lead",
     "headline": "Lettuce, Romaine: shipping point down 33% this week; Los Angeles hasn't followed yet (-1% this week).",
+    "status": "pending",
+    "moved_pct": NaN
+   },
+   {
+    "first_seen": "2026-11-16",
+    "commodity": "Tomatoes",
+    "market": "New York",
+    "direction": "down",
+    "signal": "usda_tone",
+    "headline": "Tomatoes: USDA reporters in New York call the market lower (\u201cMarket mature greens slightly lower, others about steady\u201d).",
     "status": "pending",
     "moved_pct": NaN
    },
@@ -202,8 +222,8 @@
     "direction": "up",
     "signal": "usda_tone",
     "headline": "Peppers, Bell Type: USDA reporters in Chicago call the market higher (\u201cMarket mexico 5kg/11 lb cartons higher; others about steady\u201d).",
-    "status": "pending",
-    "moved_pct": NaN
+    "status": "came true",
+    "moved_pct": 14.8
    },
    {
     "first_seen": "2026-11-13",
@@ -212,26 +232,6 @@
     "direction": "up",
     "signal": "sp_lead",
     "headline": "Broccoli: shipping point up 11% this week; New York hasn't followed yet (+0% this week).",
-    "status": "pending",
-    "moved_pct": NaN
-   },
-   {
-    "first_seen": "2026-11-13",
-    "commodity": "Broccoli",
-    "market": "Chicago",
-    "direction": "up",
-    "signal": "sp_lead",
-    "headline": "Broccoli: shipping point up 11% this week; Chicago hasn't followed yet (-6% this week).",
-    "status": "pending",
-    "moved_pct": NaN
-   },
-   {
-    "first_seen": "2026-11-11",
-    "commodity": "Lettuce, Iceberg",
-    "market": "New York",
-    "direction": "down",
-    "signal": "usda_tone",
-    "headline": "Lettuce, Iceberg: USDA reporters in New York call the market lower (\u201cMarket slightly lower\u201d).",
     "status": "pending",
     "moved_pct": NaN
    }
