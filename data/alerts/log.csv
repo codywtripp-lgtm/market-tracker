@@ -93,3 +93,7 @@ usda_tone|Limes|New York|up|2026-11-16,2026-11-17,usda_tone,Limes,New York,up,"L
 usda_tone|Tomatoes|Los Angeles|down|2026-11-16,2026-11-20,usda_tone,Tomatoes,Los Angeles,down,Tomatoes: USDA reporters in Los Angeles call the market lower (“Market california san diego county cartons 2 layer lower; others steady”).
 "sp_lead|Lettuce, Romaine|Chicago|down|2026-11-23",2026-11-24,sp_lead,"Lettuce, Romaine",Chicago,down,"Lettuce, Romaine: shipping point down 36% this week; Chicago hasn't followed yet (-0% this week)."
 "sp_lead|Lettuce, Iceberg|Chicago|down|2026-11-23",2026-11-24,sp_lead,"Lettuce, Iceberg",Chicago,down,"Lettuce, Iceberg: shipping point down 26% this week; Chicago hasn't followed yet (+1% this week)."
+sp_lead|Broccoli|Chicago|down|2026-11-23,2026-11-25,sp_lead,Broccoli,Chicago,down,Broccoli: shipping point down 13% this week; Chicago hasn't followed yet (-1% this week).
+usda_tone|Tomatoes|Los Angeles|down|2026-11-23,2026-11-25,usda_tone,Tomatoes,Los Angeles,down,Tomatoes: USDA reporters in Los Angeles call the market lower (“Market california san diego county lower; others about steady”).
+"usda_tone|Tomatoes, Plum Type|New York|up|2026-11-23",2026-11-25,usda_tone,"Tomatoes, Plum Type",New York,up,"Tomatoes, Plum Type: USDA reporters in New York call the market higher (“Market slightly higher”)."
+sp_lead|Broccoli|New York|down|2026-11-23,2026-11-25,sp_lead,Broccoli,New York,down,Broccoli: shipping point down 13% this week; New York hasn't followed yet (+6% this week).
