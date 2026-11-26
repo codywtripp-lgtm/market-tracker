@@ -97,3 +97,7 @@ sp_lead|Broccoli|Chicago|down|2026-11-23,2026-11-25,sp_lead,Broccoli,Chicago,dow
 usda_tone|Tomatoes|Los Angeles|down|2026-11-23,2026-11-25,usda_tone,Tomatoes,Los Angeles,down,Tomatoes: USDA reporters in Los Angeles call the market lower (“Market california san diego county lower; others about steady”).
 "usda_tone|Tomatoes, Plum Type|New York|up|2026-11-23",2026-11-25,usda_tone,"Tomatoes, Plum Type",New York,up,"Tomatoes, Plum Type: USDA reporters in New York call the market higher (“Market slightly higher”)."
 sp_lead|Broccoli|New York|down|2026-11-23,2026-11-25,sp_lead,Broccoli,New York,down,Broccoli: shipping point down 13% this week; New York hasn't followed yet (+6% this week).
+sp_lead|Celery|New York|down|2026-11-23,2026-11-26,sp_lead,Celery,New York,down,Celery: shipping point down 11% this week; New York hasn't followed yet (+12% this week).
+sp_lead|Celery|Chicago|down|2026-11-23,2026-11-26,sp_lead,Celery,Chicago,down,Celery: shipping point down 11% this week; Chicago hasn't followed yet (+5% this week).
+usda_tone|Tomatoes|New York|up|2026-11-23,2026-11-26,usda_tone,Tomatoes,New York,up,"Tomatoes: USDA reporters in New York call the market higher (“Market mature greens slightly higher, others steady”)."
+sp_lead|Celery|Los Angeles|down|2026-11-23,2026-11-26,sp_lead,Celery,Los Angeles,down,Celery: shipping point down 11% this week; Los Angeles hasn't followed yet (+23% this week).
