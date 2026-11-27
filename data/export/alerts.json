@@ -1,17 +1,17 @@
 {
- "asOf": "2026-11-26",
+ "asOf": "2026-11-27",
  "alerts": [
   {
    "signal": "sp_lead",
    "commodity": "Lettuce, Romaine",
    "market": "Chicago",
    "direction": "down",
-   "headline": "Lettuce, Romaine: shipping point down 26% this week; Chicago hasn't followed yet (-1% this week).",
+   "headline": "Lettuce, Romaine: shipping point down 18% this week; Chicago hasn't followed yet (-0% this week).",
    "expect": "Expect Chicago prices to fall within ~2 weeks.",
    "record": "Chicago followed 23 of the last 25 times (normally 35%).",
    "hit_rate": 0.92,
-   "sp_change": -25.9,
-   "terminal_change": -0.7,
+   "sp_change": -18.5,
+   "terminal_change": -0.4,
    "id": "sp_lead|Lettuce, Romaine|Chicago|down|2026-11-23"
   },
   {
@@ -30,11 +30,11 @@
    "commodity": "Broccoli",
    "market": "New York",
    "direction": "down",
-   "headline": "Broccoli: shipping point down 14% this week; New York hasn't followed yet (+7% this week).",
+   "headline": "Broccoli: shipping point down 12% this week; New York hasn't followed yet (+7% this week).",
    "expect": "Expect New York prices to fall within ~2 weeks.",
    "record": "New York followed 31 of the last 43 times (normally 38%).",
    "hit_rate": 0.721,
-   "sp_change": -13.6,
+   "sp_change": -12.1,
    "terminal_change": 7.4,
    "id": "sp_lead|Broccoli|New York|down|2026-11-23"
   },
@@ -43,12 +43,12 @@
    "commodity": "Celery",
    "market": "New York",
    "direction": "down",
-   "headline": "Celery: shipping point down 11% this week; New York hasn't followed yet (+12% this week).",
+   "headline": "Celery: shipping point down 15% this week; New York hasn't followed yet (+10% this week).",
    "expect": "Expect New York prices to fall within ~2 weeks.",
    "record": "New York followed 17 of the last 25 times (normally 34%).",
    "hit_rate": 0.68,
-   "sp_change": -11.0,
-   "terminal_change": 12.2,
+   "sp_change": -15.5,
+   "terminal_change": 9.5,
    "id": "sp_lead|Celery|New York|down|2026-11-23"
   },
   {
@@ -56,12 +56,12 @@
    "commodity": "Celery",
    "market": "Chicago",
    "direction": "down",
-   "headline": "Celery: shipping point down 11% this week; Chicago hasn't followed yet (+5% this week).",
+   "headline": "Celery: shipping point down 15% this week; Chicago hasn't followed yet (+8% this week).",
    "expect": "Expect Chicago prices to fall within ~2 weeks.",
    "record": "Chicago followed 20 of the last 30 times (normally 31%).",
    "hit_rate": 0.667,
-   "sp_change": -11.0,
-   "terminal_change": 5.3,
+   "sp_change": -15.5,
+   "terminal_change": 7.6,
    "id": "sp_lead|Celery|Chicago|down|2026-11-23"
   },
   {
@@ -80,11 +80,11 @@
    "commodity": "Celery",
    "market": "Los Angeles",
    "direction": "down",
-   "headline": "Celery: shipping point down 11% this week; Los Angeles hasn't followed yet (+23% this week).",
+   "headline": "Celery: shipping point down 15% this week; Los Angeles hasn't followed yet (+23% this week).",
    "expect": "Expect Los Angeles prices to fall within ~2 weeks.",
    "record": "Los Angeles followed 13 of the last 20 times (normally 34%).",
    "hit_rate": 0.65,
-   "sp_change": -11.0,
+   "sp_change": -15.5,
    "terminal_change": 22.5,
    "id": "sp_lead|Celery|Los Angeles|down|2026-11-23"
   }

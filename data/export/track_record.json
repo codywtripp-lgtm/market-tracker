@@ -1,9 +1,9 @@
 {
- "asOf": "2026-11-26",
+ "asOf": "2026-11-27",
  "forecasts_live": {
-  "scored": 2856,
+  "scored": 2853,
   "since": "2026-09-21",
-  "in_range_pct": 73.4,
+  "in_range_pct": 73.3,
   "miss_pct": 12.0,
   "no_change_miss_pct": 13.7
  },
